@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<pages>
-    <reportPopupPage id="printReportViewPage" title="printReportViewPage" reportFile="jacSendQualityReport.raq" parameter="id=?" width="900" height="450">
-        <inputUIs/>
-    </reportPopupPage>
-</pages>

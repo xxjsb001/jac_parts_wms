@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<pages>
-    <reportPopupPage id="reportOfficeBillingPage" title="printBillingDetailGroup1" reportFile="printOfficeBilling.raq" parameter="invoice.id" width="900" height="600">
-        <inputUIs/>
-    </reportPopupPage>
-</pages>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<crossDependence workflow="wmsASNProcess" depandenceflow="wmsASNPutawayProcess">
-<task id="close" title="关闭">
-		<dependence id="UNPUTAWAY"/>
-		<dependence id="PUTAWAY"/>
-</task>
-
-</crossDependence>

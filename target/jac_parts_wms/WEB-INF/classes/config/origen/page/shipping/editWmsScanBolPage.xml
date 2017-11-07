@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<pages>
-    <customPage id="editWmsScanBolPage" title="editWmsScanBolPage" className="com.vtradex.wms.client.scanBol.EditWmsScanBol" width="600" height="200"/>
-</pages>
