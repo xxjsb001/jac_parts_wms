@@ -1,0 +1,42 @@
+package com.vtradex.wms.server.telnet.shell.pick;
+
+import java.io.IOException;
+
+import net.wimpi.telnetd.net.Connection;
+
+import com.vtradex.kangaroo.shell.BreakException;
+import com.vtradex.kangaroo.shell.ContinueException;
+import com.vtradex.kangaroo.shell.Thorn4BaseShell;
+import com.vtradex.wms.server.telnet.dto.WmsPickContainerDTO;
+import com.vtradex.wms.server.telnet.pick.WmsPickRFManager;
+
+public class WmsPickContainerShell3 extends Thorn4BaseShell{
+	
+	public static final String PAGE_ID = "wmsPickContainerShell3";
+	
+	private final WmsPickRFManager pickRFManager;
+	
+	public WmsPickContainerShell3(WmsPickRFManager pickRFManager) {
+		this.pickRFManager = pickRFManager;
+	}
+	@Override
+	protected void mainProcess(Connection connection) throws BreakException,
+			ContinueException, IOException, Exception {
+		WmsPickContainerDTO dto = (WmsPickContainerDTO) this.getParentContext().get("CURRENT_DTO");
+		this.output("器具型号", dto.getType());
+		this.output("物料编码", dto.getItemCode());
+		this.output("物料名称", dto.getItemName());
+		this.output("供应商编码", dto.getSupplier());
+		this.output("待拣数量", dto.getUnMoveQuantityBU().toString());
+		String isFinished = this.getTextField("是否完成:是-1/否-0");
+		if("1".equals(isFinished)){
+			pickRFManager.confimPickByContainer(dto,true);
+			this.forward(WmsPickContainerCodeShell.PAGE_ID);
+		}else{
+			this.context.put("CURRENT_DTO", dto);
+			pickRFManager.confimPickByContainer(dto,false);
+			this.forward(WmsPickContainerShell4.PAGE_ID);
+		}
+	}
+
+}

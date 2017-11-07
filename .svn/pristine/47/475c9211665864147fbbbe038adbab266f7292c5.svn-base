@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainAddRoleGroupsPage" title="maintainAddRoleGroupsPage" entityClass="com.vtradex.thorn.server.model.security.Group" width="900" height="400" autoQuery="true">
+        <datasource type="hql"><![CDATA[SELECT 
+ g.id, 
+ g.code, 
+ g.name
+ FROM Group g, Role role 
+ WHERE 1=1
+ /~role.id: AND role.id = {role.id}~/
+ AND g NOT IN ELEMENTS (role.groups)
+ /~group.code: AND g.code LIKE {group.code}~/
+ /~group.name: AND g.name LIKE {group.name}~/]]></datasource>
+        <columns>
+            <column id="group.id" title="group.id" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="group.code" title="group.code" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="group.name" title="group.name" visible="true" horizonAlign="center" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

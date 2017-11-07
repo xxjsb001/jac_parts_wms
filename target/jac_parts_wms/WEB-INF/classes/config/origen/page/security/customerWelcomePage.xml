@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="customerWelcomePage" title="customerWelcomePage" className="com.vtradex.thorn.client.template.WelcomePageTemplate"/>
+</pages>

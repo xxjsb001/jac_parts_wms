@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWarehouseAndCompanyPage" title="editWarehouseAndCompanyPage" entityClass="com.vtradex.wms.server.model.organization.WmsWarehouseAndCompany">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="wwa.id" title="wwa.id" reserve="false"/>
+            <remote id="wwa.warehouse.id" title="wwa.warehouse.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT 
+warehouse.id,
+warehouse.code,
+warehouse.name
+FROM WmsWarehouse warehouse
+WHERE 1=1 AND warehouse.status = 'ENABLED'
+AND (warehouse.code LIKE :param OR warehouse.name LIKE :param)
+ 		]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="wwa.company.id" title="wwa.company.id" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT 
+company.id,
+company.code,
+company.name
+FROM WmsOrganization company
+WHERE company.beCompany = true
+and company.beVirtual =false
+AND company.status = 'ENABLED'
+AND (company.code LIKE :param OR company.name LIKE :param)
+ 		]]></hql>
+                <eventListeners/>
+            </remote>
+            <text id="wwa.description" title="wwa.description" row="2" col="1" span="1" width="200" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

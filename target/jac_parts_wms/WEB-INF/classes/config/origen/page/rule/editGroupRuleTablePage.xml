@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="editGroupRuleTablePage" title="editGroupRuleTablePage" pageLocale="false" entityClass="com.vtradex.rule.server.model.rule.GroupRuleTable" width="500" height="450">
+        <initListeners/>
+        <modify>
+	        <inputUIs>
+	            <hidden id="groupRuleTable.id" title="groupRuleTable.id" pageLocale="false" reserve="false"/>
+	            <text id="groupRuleTable.name" title="groupRuleTable.name" pageLocale="false" row="1" col="1" span="2" width="400px" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false"  trimSpace="true">
+	                <visibleExpression/>
+	                <hql/>
+	                <eventListeners/>
+	            </text>
+	            <text id="groupRuleTable.sortDesc" title="groupRuleTable.sortDesc" pageLocale="false" row="2" col="1" span="1" width="150px" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false"  trimSpace="true">
+	                <visibleExpression/>
+	                <hql/>
+	                <eventListeners/>
+	            </text>
+	            <text id="groupRuleTable.imageDesc" title="groupRuleTable.imageDesc" pageLocale="false" row="2" col="2" span="1" width="150px" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false"  trimSpace="true">
+	                <visibleExpression/>
+	                <hql/>
+	                <eventListeners/>
+	            </text>
+	            <text id="groupRuleTable.description" title="groupRuleTable.description" pageLocale="false" row="3" col="1" span="2" width="400px" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+	                <visibleExpression/>
+	                <hql/>
+	                <eventListeners/>
+	            </text>
+	        </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.rule.server.model.rule.RuleTable">
+            <datasource><![CDATA[SELECT ruleTable.id,
+ruleTable.name,
+ruleTable.description 
+ FROM RuleTable ruleTable ,GroupRuleTable groupRuleTable WHERE 1=1 AND ruleTable in elements(groupRuleTable.ruleTables) 
+ /~groupRuleTable.id: AND groupRuleTable.id = {groupRuleTable.id}~/
+ order by ruleTable.sortDesc]]></datasource>
+            <columns>
+               	<column id="ruleTable.id" title="ruleTable.id" pageLocale="false" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            	<column id="ruleTable.name" title="ruleTable.name" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            	<column id="ruleTable.description" title="ruleTable.description" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+       			</columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

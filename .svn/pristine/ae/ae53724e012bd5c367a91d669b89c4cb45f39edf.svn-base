@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsUserSupplierPage">
+    <main>
+        <process id="wmsUserSupplierProcess">
+            <tablePopup id="new" title="new" process="wmsUserSupplierProcess.new" enableType="none" containId="false" pageId="modifyWmsUserSupplierPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="wmsUserSupplierProcess.edit" enableType="single" containId="true" pageId="modifyWmsUserSupplierPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="wmsUserSupplierProcess.delete" enableType="multi">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsOrganizationManager" methodName="removeUserSupplierHead" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyPickedWaveDocPage">
+    <main/>
+    <detail>
+        <process id="wmsWaveDocProcess">
+            <tableCommit id="seprateConfirm" title="seprateConfirm" process="wmsWaveDocProcess.seprateConfirm" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.modifyPickedWaveDocPage.seprate">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsWaveDocManager" methodName="seprateAdjustConfirm" parameter="parentObj,obj,tableValues"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

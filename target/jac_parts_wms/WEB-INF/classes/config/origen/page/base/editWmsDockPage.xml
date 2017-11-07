@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsDockPage" title="editWmsDockPage" entityClass="com.vtradex.wms.server.model.warehouse.WmsDock" width="450" height="200" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="dock.id" title="dock.id" reserve="false"/>
+            <text id="dock.code" title="dock.code" row="1" col="1" span="1" width="118" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <list id="dock.warehouseArea.id" title="dock.warehouseArea.id" row="1" col="2" span="1" width="118" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                <visibleExpression/>
+                <hql><![CDATA[ select
+ zone.id,
+ zone.name
+ from WmsWarehouseArea zone
+ where 1=1 
+ and zone.warehouse = #{SESSION_WAREHOUSE} 
+ and zone.status = 'ENABLED']]></hql>
+                <eventListeners/>
+            </list>
+            <booleanList id="dock.beReceive" title="dock.beReceive" row="3" col="1" span="1" width="118" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </booleanList>
+            <booleanList id="dock.beShip" title="dock.beShip" row="3" col="2" span="1" width="118" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </booleanList>
+        </inputUIs>
+    </editPage>
+</pages>

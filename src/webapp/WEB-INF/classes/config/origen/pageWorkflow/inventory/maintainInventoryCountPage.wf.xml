@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainInventoryCountPage">
+    <main>
+        <process id="inventoryProcess">
+            <tablePopup id="inventoryCountReCompute" title="inventoryCountReCompute" process="inventoryProcess.inventoryCountReCompute" enableType="none" containId="false" pageId="inventoryCountReComputePage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

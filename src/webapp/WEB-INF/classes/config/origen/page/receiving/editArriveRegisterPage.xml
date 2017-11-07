@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editArriveRegisterPage" title="editArriveRegisterPage" entityClass="com.vtradex.wms.server.model.receiving.WmsBooking" width="350" height="300" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="asnPlan.id" title="asnPlan.id" reserve="false"/>
+            <date id="asnPlan.actualStartTime" title="asnPlan.actualStartTime" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="true" manualEditable="true" defaultCurrentDate="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+        </inputUIs>
+    </editPage>
+</pages>

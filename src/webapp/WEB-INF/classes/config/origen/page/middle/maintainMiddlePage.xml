@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainMiddlePage" title="maintainMiddlePage" autoQuery="true" entityClass="com.vtradex.wms.server.model.warehouse.WmsWarehouse">
+        <workflow/>
+        <datasource><![CDATA[SELECT warehouse.id,
+warehouse.code,
+warehouse.name,
+warehouse.status,
+warehouse.contact.contactName,
+warehouse.contact.postCode,
+warehouse.contact.address,
+warehouse.description 
+ FROM WmsWarehouse warehouse 
+ WHERE 1=2
+ ORDER BY warehouse.code]]></datasource>
+        <columns>
+            <column id="warehouse.id" title="warehouse.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="warehouse.code" title="warehouse.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="warehouse.name" title="warehouse.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="warehouse.status" title="warehouse.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>
+            <column id="warehouse.contact.contactName" title="contact.contactName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="warehouse.contact.address" title="contact.address" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="warehouse.contact.postCode" title="contact.postCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="warehouse.description" title="warehouse.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

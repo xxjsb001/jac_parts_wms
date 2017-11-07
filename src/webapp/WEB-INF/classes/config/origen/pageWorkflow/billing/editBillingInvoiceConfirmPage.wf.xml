@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editBillingInvoiceConfirmPage">
+    <main>
+        <process id="wmsBillingInvoiceProcess">
+            <formCommit id="makeInvoiceConfirm" title="makeInvoiceConfirm" process="wmsBillingInvoiceProcess.makeInvoiceConfirm" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsBillingManager" methodName="makeInvoiceConfirm" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

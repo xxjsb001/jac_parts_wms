@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="editGroupsPage" title="editGroupsPage" entityClass="com.vtradex.thorn.server.model.security.Group" onClose="refreshParent">
+        <modify>
+            <inputUIs>
+                <hidden id="group.id" reserve="false"/>
+                <text id="group.code" title="group.code" row="1" col="1" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="group.name" title="group.name" row="1" col="2" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+            </inputUIs>
+        </modify>
+        <detail autoQuery="false" entityClass="com.vtradex.thorn.server.model.security.Role">
+            <datasource><![CDATA[select role.id, role.code, role.name from Role role , Group g
+ where role in elements(g.roles)
+ /~group.id:AND g.id = {group.id} ~/]]></datasource>
+            <columns>
+                <column id="role.id" title="ID" visible="false"/>
+                <column id="role.code" title="role.code" visible="true"/>
+                <column id="role.name" title="role.name" visible="true"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

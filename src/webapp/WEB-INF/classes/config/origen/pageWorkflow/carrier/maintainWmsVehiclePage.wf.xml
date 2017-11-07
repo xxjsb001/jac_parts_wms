@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsVehiclePage">
+    <main>
+        <process id="WmsVehicleProcess">
+            <tablePopup id="new" title="new" process="WmsVehicleProcess.new" enableType="none" containId="false" pageId="editWmsVehicleTrailerPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="WmsVehicleProcess.modify" enableType="single" containId="true" pageId="editWmsVehicleTrailerPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="active" title="active" process="WmsVehicleProcess.active" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="unActive" title="unActive" process="WmsVehicleProcess.unActive" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsStationAndItemPage" title="maintainWmsStationAndItemPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.organization.WmsStationAndItem">
+        <workflow/>
+        <datasource><![CDATA[SELECT sa.id,
+item.code,
+item.name,
+sa.type,
+sa.loadage,
+sa.size 
+ from WmsStationAndItem sa ,WmsWarehouseAndCompany wwa
+left join sa.item item 
+where 1=1 
+and wwa.company.id=item.company.id  AND wwa.warehouse.id = #{SESSION_WAREHOUSE}]]></datasource>
+        <columns>
+            <column id="sa.id" title="sa.id" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="sa.item.name" title="sa.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="sa.type" title="sa.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="sa.loadage" title="sa.loadage" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+            <column id="sa.size" title="sa.size" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+        </columns>
+    </maintainPage>
+</pages>

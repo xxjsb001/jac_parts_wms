@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsWorkGroupPage">
+	<main>
+        <process id="workerProcess">
+            <formCommit id="save" title="save" process="workerProcess.new" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="edit" title="edit" process="workerProcess.edit" enableType="none" download="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail>
+    	<process id="workerProcess">
+	        <tablePopup id="addUser" title="add" process="workerProcess.addUser" enableType="none" containId="false" pageId="editWmsWorkerDetailPage">
+	            <enableExpression><![CDATA[${workGroup.id} != '']]></enableExpression>
+	        </tablePopup>
+	        <tableCommit id="removeUser" title="removeUser" process="workerProcess.removeUser" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+	            <enableExpression/>
+	            <mappings/>
+	            <actions>
+	                <action managerName="wmsOrganizationManager" methodName="removeWorkUser" parameter="obj"/>
+	            </actions>
+	            <forwards/>
+	        </tableCommit>
+	    </process>
+    </detail>
+</page>

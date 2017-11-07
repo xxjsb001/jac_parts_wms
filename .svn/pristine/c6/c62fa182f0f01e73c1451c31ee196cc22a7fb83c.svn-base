@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsQualityMoveSoiLogPage" title="maintainWmsQualityMoveSoiLogPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.inventory.WmsQualityMoveSoiLog">
+        <workflow/>
+        <datasource><![CDATA[SELECT 
+w.id,
+w.supCode,
+w.supName,
+w.qualityCode,
+w.type,
+w.storageDate,
+w.location,
+w.itemCode,
+w.itemName,
+w.quantity,
+w.inventoryStatus,
+w.qualityStatus,
+w.extendPropc1,
+w.description,
+w.updateInfo.createdTime,
+w.updateInfo.lastOperator,
+w.updateInfo.updateTime
+ FROM WmsQualityMoveSoiLog w
+ WHERE 1=1
+ AND w.warehouse = #{SESSION_WAREHOUSE} 
+ ORDER BY w.id ASC
+]]></datasource>
+        <columns>
+            <column id="w.id" title=" w.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="w.supCode" title="mis.supCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="w.supName" title="mis.supName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="w.qualityCode" title="moveDoc.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="w.type" title="mis.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="w.storageDate" title="wsn.storageDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="w.location" title="wsn.locationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="w.itemCode" title="asnDetail.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="w.itemName" title="asnDetail.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="w.quantity" title="inventory.quantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+			<column id="w.inventoryStatus" title="mis.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="w.qualityStatus" title="w.qualityStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="w.extendPropc1" title="mis.extendPropc1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="w.description" title="mis.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+			<column id="w.updateInfo.createdTime" title="updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+       		<column id="w.updateInfo.lastOperator" title="updateInfo.lastOperator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        	<column id="w.updateInfo.updateTime" title="updateInfo.updateTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+        </columns>
+    </maintainPage>
+</pages>

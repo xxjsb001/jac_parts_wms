@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainPalletSerialPage" title="maintainPalletSerialPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.receiving.JacPalletSerial" width="800" height="500" >
+        <workflow/>
+        <datasource><![CDATA[SELECT jps.id,
+ jps.palletNo,
+ jps.asnDetail.item.code,
+ jps.asnDetail.item.name,
+ jps.expectedQuantityBU,
+ asnDetail.palletNo, 
+ jps.asnDetail.receivedQuantityBU
+ FROM JacPalletSerial jps 
+		left join jps.asnDetail asnDetail 
+ WHERE 1=1
+ AND jps.asnDetail.asn.id = {parentId}
+ AND jps.toLocationId IS NULL
+ ORDER BY jps.expectedQuantityBU,jps.palletNo,jps.id
+ ]]></datasource>
+        <columns>
+            <column id="jps.id" title="jps.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="jps.palletNo" title="jps.palletNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="jps.asnDetail.item.code" title="asnDetail.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="jps.asnDetail.item.name" title="asnDetail.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="jps.expectedQuantityBU" title="jps.expectedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" color="red" inputUI="text" inputUIValidator="numberRequired"/>
+        	<column id="asnDetail.palletNo" title="asnDetail.palletNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+			<column id="jps.asnDetail.receivedQuantityBU" title="asnDetail.receivedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+        </columns>
+    </maintainPage>
+</pages>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsASNPlanNomalPage" title="maintainWmsASNPlanNomalPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.receiving.WmsBooking" onClose="refreshParent">
+        <workflow/>
+        <datasource><![CDATA[SELECT booking.id,
+booking.preId,
+dock.id,
+booking.code,
+dock.code,
+asn.code,
+booking.planDate,
+booking.classify,
+booking.asnPlannedStartTime,
+booking.asnPlannedEndTime,
+booking.actualStartTime,
+booking.finishTime,
+booking.status,
+booking.remark 
+ from WmsBooking booking
+  left join booking.dock dock
+  left join booking.asn asn
+		where booking.planType = '收货'
+		order by booking.id desc
+ ]]></datasource>
+        <columns>
+            <column id="booking.id" title="booking.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="booking.preId" title="booking.preId" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="dock.id" title="dock.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+			<column id="booking.code" title="booking.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="dock.code" title="dock.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="asn.code" title="asn.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="booking.planDate" title="booking.planDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="booking.classify" title="booking.classify" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="booking.asnPlannedStartTime" title="booking.asnPlannedStartTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="booking.asnPlannedEndTime" title="booking.asnPlannedEndTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="booking.actualStartTime" title="booking.actualStartTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="booking.finishTime" title="booking.finishTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="booking.status" title="booking.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsBookingStatus"/>
+            <column id="booking.remark" title="booking.remark" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

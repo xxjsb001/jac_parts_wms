@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainGroupRuleTablePage">
+    <main>
+        <process id="groupRuleTableProcess">
+            <tablePopup id="new" title="new" process="groupRuleTableProcess.new" enableType="none" containId="false" pageId="editGroupRuleTablePage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="groupRuleTableProcess.modify" enableType="single" containId="true" pageId="editGroupRuleTablePage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="groupRuleTableProcess.delete" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="groupRuleTableManager" methodName="deleteGroupRuleTable" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="import" title="import" process="groupRuleTableProcess.import" enableType="none" containId="false" pageId="importRuleTableConfigPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="export" title="export" process="groupRuleTableProcess.export" enableType="none" download="true" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="ruleTableConfigAction" methodName="export"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

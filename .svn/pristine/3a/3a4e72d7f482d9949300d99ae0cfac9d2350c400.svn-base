@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsInventoryQualityPage" title="editWmsInventoryQualityPage" width="600" height="160" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+        	<hidden id="beHiden001" title="beHiden001" reserve="false"/>
+        	<hidden id="beHiden002" title="beHiden002" reserve="false"/>
+        	
+        	<checkbox id="beView001" title="beView001" row="1" col="1" span="1"   
+				readOnly="false" required="false" reserve="false" forceOverride="true"   
+				focusUI="false" inVisible="false" defaultValue='false'>  
+				<visibleExpression/>  
+				 <hql/>  
+				<eventListeners>  
+				<eventListener id="beHiden001" index="1" refreshUI="true"/>  
+				</eventListeners>  
+			</checkbox>
+            <list id="status" title="inventory.status" row="1" col="3" span="2" width="120" readOnly="false" required="true" reserve="true" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                <visibleExpression><![CDATA[${beHiden001}== 'true']]></visibleExpression> 
+                <hql><![CDATA[SELECT itemState.name,itemState.name
+				 FROM WmsItemState itemState , WmsInventoryExtend wsn , WmsItem item
+				 WHERE itemState.company.id = item.company.id 
+				 AND item.id = wsn.item.id
+				 AND itemState.name not in (SELECT distinct ws.inventory.status
+				  FROM WmsInventoryExtend ws WHERE ws.id = {maintainInventorySerialNoPage.id})
+				  GROUP BY itemState.name]]></hql>
+                <eventListeners/>
+            </list>
+            
+            <checkbox id="beView002" title="beView002" row="2" col="1" span="1"   
+				readOnly="false" required="false" reserve="false" forceOverride="true"   
+				focusUI="false" inVisible="false" defaultValue='false'>  
+				<visibleExpression/>  
+				 <hql/>  
+				<eventListeners>  
+				<eventListener id="beHiden002" index="1" refreshUI="true"/>  
+				</eventListeners>  
+			</checkbox>
+            <list id="extendPropC1" title="lotInfo.extendPropC1" row="2" col="3" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="TypeOfExtendPropC1">
+                <visibleExpression><![CDATA[${beHiden002}== 'true']]></visibleExpression> 
+                <hql><![CDATA[SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'TypeOfExtendPropC1' 
+ AND enumerate.enumValue NOT IN (SELECT ws.inventory.itemKey.lotInfo.extendPropC1
+				  FROM WmsInventoryExtend ws WHERE ws.id = {maintainInventorySerialNoPage.id})
+ order by enumerate.id]]></hql>
+                <eventListeners/>
+            </list>
+            
+            <numberText id="qualityNum" title="qualityNum" row="3" col="1" span="1" readOnly="false" required="true" reserve="false" defaultValue="0" forceOverride="false" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+        </inputUIs>
+    </editPage>
+</pages>

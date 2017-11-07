@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainThornApprovePage" title="maintainThornApprovePage" autoQuery="false" entityClass="com.vtradex.thorn.server.model.approve.ThornApprove">
+        <workflow/>
+        <datasource><![CDATA[SELECT thornApprove.id,
+thornApprove.process,
+thornApprove.task,
+thornApprove.pageId 
+ from ThornApprove thornApprove where 1=1]]></datasource>
+        <columns>
+            <column id="thornApprove.id" title="thornApprove.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="thornApprove.process" title="thornApprove.process" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="thornApprove.task" title="thornApprove.task" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="thornApprove.pageId" title="thornApprove.pageId" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="modifyDetailQualityControlPage" title="modifyDetailQualityControlPage" entityClass="com.vtradex.wms.server.model.receiving.WmsASN" onClose="refreshParent" width="880" height="400">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="asn.id" title="asn.id" reserve="false"/>
+                <hidden id="asn.status" title="asn.status" reserve="false"/>
+                <text id="asn.code" title="asn.code" row="1" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <remote id="asn.company.id" title="asn.company.id" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT 
+ company.id,
+ company.code,
+ company.name
+ FROM   WmsOrganization   company 
+ WHERE   company.beCompany  = true 
+and company.beVirtual =false
+AND company.status = 'ENABLED' 
+AND (company.code  LIKE :param OR  company.name LIKE :param) ]]></hql>
+                    <eventListeners>
+                        <eventListener id="asn.billType.id" index="1" refreshUI="true"/>
+                    </eventListeners>
+                </remote>
+                <list id="asn.billType.id" title="asn.billType.id" row="1" col="3" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT
+ billType.id,
+ billType.name
+ FROM WmsBillType billType
+ WHERE 1=1 
+ AND billType.type = 'RECEIVE'					
+ AND billType.company.id = ${asn.company.id}
+ AND billType.status = 'ENABLED']]></hql>
+                    <eventListeners/>
+                </list>
+                <date id="asn.orderDate" title="asn.orderDate" row="1" col="4" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <date id="asn.estimateDate" title="asn.estimateDate" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <text id="asn.relatedBill1" title="asn.relatedBill1" row="2" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="asn.fromName" title="asn.fromName" row="2" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="asn.fromContact.contactName" title="asn.fromContact.contactName" row="2" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="asn.fromContact.telephone" title="asn.fromContact.telephone" row="3" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="asn.fromContact.address" title="asn.fromContact.address" row="3" col="2" span="6" width="550" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.inventory.WmsInventoryExtend">
+            <datasource><![CDATA[SELECT wsn.id,inventory.location.code,inventory.location.type,inventory.itemKey.item.code,inventory.itemKey.item.name,inventory.status,inventory.itemKey.lot,inventory.packageUnit.unit,wsn.quantityBU as adjustQuantityBU,wsn.quantityBU,inventory.putawayQuantityBU,inventory.allocatedQuantityBU,inventory.itemKey.lotInfo.soi,wsn.pallet,wsn.carton,wsn.serialNo,inventory.itemKey.item.id,inventory.packageUnit.id  
+ FROM WmsInventoryExtend wsn 
+ LEFT JOIN wsn.inventory inventory
+ LEFT JOIN inventory.location location
+ LEFT JOIN inventory.packageUnit packageUnit
+ LEFT JOIN inventory.itemKey itemKey
+ LEFT JOIN itemKey.item item 
+ WHERE 1=1 
+ AND wsn.quantityBU > 0
+ AND inventory.itemKey.lotInfo.soi = {asn.code} 
+ AND inventory.location.type <> 'COUNT' 
+ AND inventory.quantity <> 0
+ AND inventory.status in('质损','质检未通过','待检')
+ ]]></datasource>
+            <columns>
+                <column id="wsn.id" title="wsn.id" visible="false" sortable="false" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            	<column id="inventory.location.code" title="inventory.location.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="inventory.location.type" title="inventory.location.type" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsLocationType"/>
+                <column id="inventory.itemKey.item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="inventory.itemKey.item.name" title="item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="inventory.status" title="inventory.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="inventory.itemKey.lot" title="inventory.itemKey.lot" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="inventory.packageUnit.unit" title="inventory.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="adjustQuantityBU" title="inventory.adjustQuantityBU" visible="true" sortable="false" horizonAlign="center" verticalAlign="middle" inputUI="numberText"/>
+                <column id="inventory.quantityBU" title="inventory.quantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+                <column id="inventory.putawayQuantityBU" title="inventory.putawayQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+                <column id="inventory.allocatedQuantityBU" title="inventory.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+                <column id="inventory.itemKey.lotInfo.soi" title="inventory.itemKey.lotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="wsn.pallet" title="wsn.pallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            	<column id="wsn.carton" title="wsn.carton" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            	<column id="wsn.serialNo" title="wsn.serialNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            	<column id="inventory.itemKey.item.id" title="inventory.itemKey.item.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+                <column id="inventory.packageUnit.id" title="inventory.packageUnit.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="inventoryCountReComputePage" title="inventoryCountReComputePage" entityClass="com.vtradex.wms.server.model.inventory.WmsInventoryCount">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <date id="computeDate" title="computeDate" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <hidden id="inventoryCount.id" title="inventoryCount.id" reserve="false"/>
+        </inputUIs>
+    </editPage>
+</pages>

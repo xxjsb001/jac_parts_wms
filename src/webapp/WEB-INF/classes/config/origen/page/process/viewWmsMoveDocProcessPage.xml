@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="viewWmsMoveDocProcessPage" title="viewWmsMoveDocProcessPage" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc" width="820" height="600">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="moveDoc.id" title="moveDoc.id" reserve="false"/>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.move.WmsMoveDocDetail">
+        <datasource><![CDATA[SELECT moveDocDetail.id,
+ moveDocDetail.item.code,
+ moveDocDetail.item.name,
+ moveDocDetail.packageUnit.unit,
+ moveDocDetail.planQuantity,
+ moveDocDetail.planQuantityBU,
+ moveDocDetail.allocatedQuantityBU,
+ moveDocDetail.movedQuantityBU,
+ moveDocDetail.processQuantityBU,
+ moveDocDetail.shipLotInfo.soi,
+ moveDocDetail.shipLotInfo.supplier,
+ moveDocDetail.inventoryStatus
+ FROM WmsMoveDocDetail moveDocDetail
+ WHERE 1=1
+ /~moveDoc.id: AND moveDocDetail.moveDoc.id = {moveDoc.id}~/]]></datasource>
+            <columns>
+                <column id="moveDocDetail.id" title="ID" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.item.name" title="item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.packageUnit.unit" title="packageUnit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.planQuantity" title="moveDocDetail.planQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.planQuantityBU" title="moveDocDetail.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.allocatedQuantityBU" title="moveDocDetail.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.movedQuantityBU" title="moveDocDetail.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.processQuantityBU" title="moveDocDetail.processQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.shipLotInfo.soi" title="shipLotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.shipLotInfo.supplier" title="shipLotInfo.supplier" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.inventoryStatus" title="moveDocDetail.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+           </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

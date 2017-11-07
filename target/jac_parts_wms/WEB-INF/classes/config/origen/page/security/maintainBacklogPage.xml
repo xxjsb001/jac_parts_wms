@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="maintainBacklogPage" title="maintainBacklogPage" className="com.vtradex.thorn.client.ui.page.MaintainBacklogPage">
+    </customPage>
+</pages>
+

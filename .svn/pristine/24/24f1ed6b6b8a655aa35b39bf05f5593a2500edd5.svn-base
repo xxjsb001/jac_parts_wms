@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainTaskPage">
+    <main>
+        <process id="middleProcess">
+            <tableCommit id="billingContactExecute" title="billingContactExecute" process="middleProcess.middlesupplier" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsBillingExecuteManager" methodName="billingContactExecute" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="billExecuteTaskByEDI" title="billExecuteTaskByEDI" process="middleProcess.middledeliverydoc" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsBillingExecuteManager" methodName="billExecuteTaskByEDI" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="billExecute" title="billExecute" process="middleProcess.middlematerial" closeTransactional="true" enableType="multi" download="false" confirmMessage="confirmAdd">
+                <enableExpression><![CDATA[${task.status}=='READY']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsBillingExecuteManager" methodName="billExecuteTask" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="middlePickShip" title="middlePickShip" process="middleProcess.middlePickShip" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="milldleTableManager" methodName="sysPickShip" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            
+            <tablePopup id="middlequalitytesting" title="middlequalitytesting" process="middleProcess.middlequalitytesting" enableType="none" containId="false" pageId="editMiddlequalitytestingPage">
+                <enableExpression></enableExpression>
+            </tablePopup>
+            <!--  -->
+            <tableCommit id="middlequalityread" title="middlequalityread" process="middleProcess.middlequalityread" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="milldleTableManager" methodName="readMidQuality" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="interfaceInvoke" title="interfaceInvoke" process="middleProcess.interfaceInvoke" enableType="none" containId="false" pageId="editInvokeMethodPage">
+				<enableExpression/>
+			</tablePopup>
+			<tablePopup id="thornTaskMethod" title="thornTaskMethod" process="middleProcess.thornTaskMethod" enableType="none" containId="false" pageId="editInterfacePage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

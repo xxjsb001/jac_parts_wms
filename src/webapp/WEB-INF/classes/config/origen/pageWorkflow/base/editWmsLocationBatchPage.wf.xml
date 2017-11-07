@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsLocationBatchPage">
+    <main>
+        <process id="wmsLocationBaseProcess">
+            <formCommit id="batchCreate" title="batchCreate" process="wmsLocationBaseProcess.batchCreate" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="location.zone" className="int">
+                        <entries/>
+                    </mapping>
+                    <mapping id="zoneEnd" className="int">
+                        <entries/>
+                    </mapping>
+                    <mapping id="location.line" className="int">
+                        <entries/>
+                    </mapping>
+                    <mapping id="lineEnd" className="int">
+                        <entries/>
+                    </mapping>
+                    <mapping id="location.column" className="int">
+                        <entries/>
+                    </mapping>
+                    <mapping id="columnEnd" className="int">
+                        <entries/>
+                    </mapping>
+                    <mapping id="location.layer" className="int">
+                        <entries/>
+                    </mapping>
+                    <mapping id="layerEnd" className="int">
+                        <entries/>
+                    </mapping>
+                    <mapping id="location.warehouseArea.id" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="location.type" className="string">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsLocationManager" methodName="storeBatchLocation" parameter="location.zone,zoneEnd,location.line,lineEnd,location.column,columnEnd,location.layer,layerEnd,location.warehouseArea.id,location.type"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

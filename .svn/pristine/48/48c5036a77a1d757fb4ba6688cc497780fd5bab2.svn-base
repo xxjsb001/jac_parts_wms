@@ -1,0 +1,15 @@
+vehicle.status=\u72B6\u6001
+vehicle.vehicleType.name=\u8F66\u578B\u7C7B\u522B
+maintainWmsVehiclePage=\u8FD0\u8F93\u5DE5\u5177\u4FE1\u606F\u7BA1\u7406
+vehicle.length=\u957F
+vehicle.license=\u8F66\u724C\u53F7
+vehicle.width=\u5BBD
+vehicle.masterDriver.name=\u4E3B\u53F8\u673A
+attachment=\u9644\u4EF6\u7BA1\u7406
+vehicle.fuelConsumption=\u767E\u516C\u91CC\u6CB9\u8017
+vehicle.brands=\u54C1\u724C
+vehicle.height=\u9AD8
+vehicle.id=\u5E8F\u53F7
+vehicle.beTrailer=\u662F\u5426\u6302\u8F66
+vehicle.origin=\u8F66\u7C4D
+vehicle.cityResident.name=\u5E38\u9A7B\u57CE\u5E02

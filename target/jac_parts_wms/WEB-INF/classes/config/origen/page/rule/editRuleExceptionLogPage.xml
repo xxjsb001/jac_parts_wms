@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editRuleExceptionLogPage" title="editRuleExceptionLogPage" pageLocale="false" entityClass="com.vtradex.rule.server.model.exception.RuleExceptionLog" width="800" height="750">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="ruleExceptionLog.id" pageLocale="false" reserve="false"/>
+            <textArea id="ruleExceptionLog.operExceptionMess" title="ruleExceptionLog.operExceptionMess" pageLocale="false" row="1" col="1" span="4" width="720" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" rows="8" cols="56">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+            <textArea id="ruleExceptionLog.operException" title="ruleExceptionLog.operException" pageLocale="false" row="2" col="1" span="4" width="720" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" rows="8" cols="56">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+        </inputUIs>
+    </editPage>
+</pages>

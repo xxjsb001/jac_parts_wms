@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyMasterBOLPage">
+    <main>
+        <process id="masterBOLProcess">
+            <formCommit id="save" title="save" process="masterBOLProcess.new" enableType="none" download="false" closeTransactional="false" visibleType="new">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMasterBOLManager" methodName="storeMasterBOL" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="refreshParent" newEnabled="false" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="edit" title="edit" process="masterBOLProcess.edit" enableType="none" download="false" closeTransactional="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </formCommit>
+        </process>
+    </main>
+    <detail>
+        <process id="masterBOLProcess">
+            <tablePopup id="joinMasterBOL" title="joinMasterBOL" process="masterBOLProcess.joinMasterBOL" enableType="none" containId="false" pageId="popupBOLMaintainPage">
+                <enableExpression><![CDATA[${masterBOL.id} != '']]></enableExpression>
+            </tablePopup>
+            <tableCommit id="adjustLineNo" title="adjustLineNo" process="masterBOLProcess.adjustLineNo" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMasterBOLManager" methodName="adjustMasterBOLDetail" parameter="obj,tableValues"/>/>
+                </actions>
+            </tableCommit>
+        </process>
+        <process id="wmsMoveDocShipProcess">
+            <tableCommit id="exitMasterBOL" title="exitMasterBOL" process="masterBOLProcess.removeBOL" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.modifyMasterBOLPage.exitMasterBOL">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMasterBOLManager" methodName="removeBOLDetail" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsStationAndItemPage" title="editWmsStationAndItemPage" entityClass="com.vtradex.wms.server.model.organization.WmsStationAndItem">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="sa.id" title="sa.id" reserve="false"/>
+            <remote id="sa.item.id" title="sa.item.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT
+item.id,
+item.code,
+item.name
+FROM WmsItem item,WmsWarehouseAndCompany wwa 
+WHERE item.status = 'ENABLED' 
+AND (item.code LIKE :param OR item.name LIKE :param) AND wwa.company.id=item.company.id  AND wwa.warehouse.id = #{SESSION_WAREHOUSE}]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="sa.boxType.id" title="sa.boxType.id" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,代码,箱型">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT
+e.id,
+e.enumType,
+e.enumValue
+FROM WmsEnumType e
+WHERE e.enumType='xx'
+AND (e.enumType LIKE :param OR e.enumValue LIKE :param )]]></hql>
+                <eventListeners>
+                    <eventListener id="sa.type" index="3" refreshUI="false"/>
+                </eventListeners>
+            </remote>
+            <text id="sa.type" title="sa.type" row="3" col="1" span="1" readOnly="true" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <numberText id="sa.loadage" title="sa.loadage" row="2" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <numberText id="sa.size" title="sa.size" row="2" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+        </inputUIs>
+    </editPage>
+</pages>

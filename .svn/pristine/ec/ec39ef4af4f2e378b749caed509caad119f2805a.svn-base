@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <reportPopupPage id="printPickTask01ReportPage" title="printTask" reportFile="wmsPickContainer01.raq" reportFileIsJSExp="false" parameter="parentIds" width="900" height="450">
+        <inputUIs/>
+    </reportPopupPage>
+</pages>

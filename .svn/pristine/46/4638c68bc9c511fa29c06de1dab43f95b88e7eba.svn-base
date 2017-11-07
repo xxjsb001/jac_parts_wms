@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsMasterBOLPage" title="maintainWmsMasterBOLPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.shipping.WmsBOL">
+        <workflow/>
+        <datasource><![CDATA[SELECT bol.id,
+bol.code,
+bol.status,
+bol.carrier.name,
+bol.billTypeName,
+bol.vehicle.license,
+bol.quantity,
+bol.quantityBU,
+bol.wmsDriver.name,
+bol.shipTime,
+bol.printTime,
+bol.printWorker,
+bol.printTagTime,
+bol.printTagWorker,
+bol.updateInfo.creator,
+bol.updateInfo.createdTime,
+bol.updateInfo.lastOperator,
+bol.updateInfo.updateTime,
+bol.description 
+ FROM WmsBOL bol
+ LEFT JOIN bol.carrier 
+ LEFT JOIN bol.vehicle
+ LEFT JOIN bol.wmsDriver
+ WHERE 1=1
+ AND bol.warehouse = #{SESSION_WAREHOUSE}
+ ORDER BY bol.id DESC
+ ]]></datasource>
+        <columns>
+            <column id="bol.id" title="bol.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.code" title="bol.code" width="120" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.status" title="bol.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsBOLStatus"/>
+            <column id="bol.carrier.name" title="bol.carrier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.billTypeName" title="bol.billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.vehicle.license" title="bol.vehicle.license" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.quantity" title="bol.quantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="bol.quantityBU" title="bol.quantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="bol.wmsDriver.name" title="bol.wmsDriver.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.shipTime" title="bol.shipTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="bol.printTime" title="bol.printTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="bol.printWorker" title="bol.printWorker" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="bol.printTagTime" title="bol.printTagTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="bol.printTagWorker" title="bol.printTagWorker" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="bol.updateInfo.creator" title="updateInfo.creator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="bol.updateInfo.createdTime" title="updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="bol.updateInfo.lastOperator" title="bol.updateInfo.lastOperator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.updateInfo.updateTime" title="bol.updateInfo.updateTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="bol.description" title="bol.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

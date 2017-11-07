@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWelcomePage">
+    <main>
+        <process id="welcomeProcess">
+            <tablePopup id="new" title="new" process="welcomeProcess.new" enableType="none" containId="false" pageId="editWelcomePage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="welcomeProcess.modify" enableType="single" containId="true" pageId="editWelcomePage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="welcomeProcess.delete" enableType="multi" confirmMessage="confirm.delete">
+                <enableExpression><![CDATA[${welcomePage.isThornPage}=='false']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="welcomePageManager" methodName="deletePages" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </main>
+    <detail>
+        <process/>
+    </detail>
+</page>

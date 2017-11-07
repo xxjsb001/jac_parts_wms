@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editIGPPage">
+	<main>
+		<process id="IGPProcess">
+				<formCommit id="save" process="IGPProcess.new" title="save" enableType="none" invisible="false">
+                <mappings>
+                    <mapping id="globalParam" className="com.vtradex.thorn.server.config.globalparam.GlobalParam"/>
+                </mappings>
+                <actions>
+                    <action managerName="globalParamManager" methodName="storeGlobalParam" parameter="globalParam"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+		</process>
+	</main>
+</page>

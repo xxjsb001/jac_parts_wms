@@ -1,0 +1,1004 @@
+<ContentsModel>
+  <listeners serialization="custom">
+    <java.beans.PropertyChangeSupport>
+      <default>
+        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+        <source class="ContentsModel" reference="../../../.."/>
+      </default>
+      <null/>
+    </java.beans.PropertyChangeSupport>
+  </listeners>
+  <sourceList/>
+  <targetList/>
+  <id>countPlanProcess</id>
+  <control>status</control>
+  <childList>
+    <com.vtradex.diagram.model.NodesModel>
+      <listeners serialization="custom">
+        <java.beans.PropertyChangeSupport>
+          <default>
+            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+            <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+          </default>
+          <null/>
+        </java.beans.PropertyChangeSupport>
+      </listeners>
+      <sourceList>
+        <com.vtradex.diagram.model.AbstractConnectionModel>
+          <listeners serialization="custom">
+            <java.beans.PropertyChangeSupport>
+              <default>
+                <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+              </default>
+              <null/>
+            </java.beans.PropertyChangeSupport>
+          </listeners>
+          <sourceList/>
+          <targetList/>
+          <bendPoint/>
+          <source reference="../../.."/>
+          <target>
+            <listeners serialization="custom">
+              <java.beans.PropertyChangeSupport>
+                <default>
+                  <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                  <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                </default>
+                <null/>
+              </java.beans.PropertyChangeSupport>
+            </listeners>
+            <sourceList>
+              <com.vtradex.diagram.model.AbstractConnectionModel>
+                <listeners serialization="custom">
+                  <java.beans.PropertyChangeSupport>
+                    <default>
+                      <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                      <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                    </default>
+                    <null/>
+                  </java.beans.PropertyChangeSupport>
+                </listeners>
+                <sourceList/>
+                <targetList/>
+                <bendPoint/>
+                <source reference="../../.."/>
+                <target>
+                  <listeners serialization="custom">
+                    <java.beans.PropertyChangeSupport>
+                      <default>
+                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                        <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                      </default>
+                      <null/>
+                    </java.beans.PropertyChangeSupport>
+                  </listeners>
+                  <sourceList>
+                    <com.vtradex.diagram.model.AbstractConnectionModel>
+                      <listeners serialization="custom">
+                        <java.beans.PropertyChangeSupport>
+                          <default>
+                            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                            <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                          </default>
+                          <null/>
+                        </java.beans.PropertyChangeSupport>
+                      </listeners>
+                      <sourceList/>
+                      <targetList/>
+                      <bendPoint/>
+                      <source reference="../../.."/>
+                      <target>
+                        <listeners serialization="custom">
+                          <java.beans.PropertyChangeSupport>
+                            <default>
+                              <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                              <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                            </default>
+                            <null/>
+                          </java.beans.PropertyChangeSupport>
+                        </listeners>
+                        <sourceList>
+                          <com.vtradex.diagram.model.AbstractConnectionModel>
+                            <listeners serialization="custom">
+                              <java.beans.PropertyChangeSupport>
+                                <default>
+                                  <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                  <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                </default>
+                                <null/>
+                              </java.beans.PropertyChangeSupport>
+                            </listeners>
+                            <sourceList/>
+                            <targetList/>
+                            <bendPoint/>
+                            <source reference="../../.."/>
+                            <target>
+                              <listeners serialization="custom">
+                                <java.beans.PropertyChangeSupport>
+                                  <default>
+                                    <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                    <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                                  </default>
+                                  <null/>
+                                </java.beans.PropertyChangeSupport>
+                              </listeners>
+                              <sourceList>
+                                <com.vtradex.diagram.model.AbstractConnectionModel>
+                                  <listeners serialization="custom">
+                                    <java.beans.PropertyChangeSupport>
+                                      <default>
+                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                        <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                      </default>
+                                      <null/>
+                                    </java.beans.PropertyChangeSupport>
+                                  </listeners>
+                                  <sourceList/>
+                                  <targetList/>
+                                  <bendPoint/>
+                                  <source reference="../../.."/>
+                                  <target>
+                                    <listeners serialization="custom">
+                                      <java.beans.PropertyChangeSupport>
+                                        <default>
+                                          <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                          <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                                        </default>
+                                        <null/>
+                                      </java.beans.PropertyChangeSupport>
+                                    </listeners>
+                                    <sourceList>
+                                      <com.vtradex.diagram.model.AbstractConnectionModel>
+                                        <listeners serialization="custom">
+                                          <java.beans.PropertyChangeSupport>
+                                            <default>
+                                              <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                              <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                            </default>
+                                            <null/>
+                                          </java.beans.PropertyChangeSupport>
+                                        </listeners>
+                                        <sourceList/>
+                                        <targetList/>
+                                        <bendPoint/>
+                                        <source reference="../../.."/>
+                                        <target reference="../../../../../../../../../../../.."/>
+                                        <id></id>
+                                        <type></type>
+                                        <value></value>
+                                      </com.vtradex.diagram.model.AbstractConnectionModel>
+                                    </sourceList>
+                                    <targetList>
+                                      <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                                    </targetList>
+                                    <type>task</type>
+                                    <id>unactive</id>
+                                    <title>反激活</title>
+                                    <desc></desc>
+                                    <register>false</register>
+                                    <action></action>
+                                    <state></state>
+                                    <condition></condition>
+                                    <nodevalue></nodevalue>
+                                    <decisionToState/>
+                                    <constrains>
+                                      <x>665</x>
+                                      <y>229</y>
+                                      <width>-1</width>
+                                      <height>-1</height>
+                                    </constrains>
+                                  </target>
+                                  <id></id>
+                                  <type></type>
+                                  <value></value>
+                                </com.vtradex.diagram.model.AbstractConnectionModel>
+                                <com.vtradex.diagram.model.AbstractConnectionModel>
+                                  <listeners serialization="custom">
+                                    <java.beans.PropertyChangeSupport>
+                                      <default>
+                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                        <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                      </default>
+                                      <null/>
+                                    </java.beans.PropertyChangeSupport>
+                                  </listeners>
+                                  <sourceList/>
+                                  <targetList/>
+                                  <bendPoint/>
+                                  <source reference="../../.."/>
+                                  <target>
+                                    <listeners serialization="custom">
+                                      <java.beans.PropertyChangeSupport>
+                                        <default>
+                                          <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                          <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                                        </default>
+                                        <null/>
+                                      </java.beans.PropertyChangeSupport>
+                                    </listeners>
+                                    <sourceList/>
+                                    <targetList>
+                                      <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                                    </targetList>
+                                    <type>task</type>
+                                    <id>print</id>
+                                    <title>打印盘点单</title>
+                                    <desc></desc>
+                                    <register>false</register>
+                                    <action></action>
+                                    <state></state>
+                                    <condition></condition>
+                                    <nodevalue></nodevalue>
+                                    <decisionToState/>
+                                    <constrains>
+                                      <x>293</x>
+                                      <y>312</y>
+                                      <width>-1</width>
+                                      <height>-1</height>
+                                    </constrains>
+                                  </target>
+                                  <id></id>
+                                  <type></type>
+                                  <value></value>
+                                </com.vtradex.diagram.model.AbstractConnectionModel>
+                                <com.vtradex.diagram.model.AbstractConnectionModel>
+                                  <listeners serialization="custom">
+                                    <java.beans.PropertyChangeSupport>
+                                      <default>
+                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                        <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                      </default>
+                                      <null/>
+                                    </java.beans.PropertyChangeSupport>
+                                  </listeners>
+                                  <sourceList/>
+                                  <targetList/>
+                                  <bendPoint/>
+                                  <source reference="../../.."/>
+                                  <target>
+                                    <listeners serialization="custom">
+                                      <java.beans.PropertyChangeSupport>
+                                        <default>
+                                          <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                          <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                                        </default>
+                                        <null/>
+                                      </java.beans.PropertyChangeSupport>
+                                    </listeners>
+                                    <sourceList>
+                                      <com.vtradex.diagram.model.AbstractConnectionModel>
+                                        <listeners serialization="custom">
+                                          <java.beans.PropertyChangeSupport>
+                                            <default>
+                                              <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                              <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                            </default>
+                                            <null/>
+                                          </java.beans.PropertyChangeSupport>
+                                        </listeners>
+                                        <sourceList/>
+                                        <targetList/>
+                                        <bendPoint/>
+                                        <source reference="../../.."/>
+                                        <target>
+                                          <listeners serialization="custom">
+                                            <java.beans.PropertyChangeSupport>
+                                              <default>
+                                                <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                                <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                                              </default>
+                                              <null/>
+                                            </java.beans.PropertyChangeSupport>
+                                          </listeners>
+                                          <sourceList>
+                                            <com.vtradex.diagram.model.AbstractConnectionModel>
+                                              <listeners serialization="custom">
+                                                <java.beans.PropertyChangeSupport>
+                                                  <default>
+                                                    <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                                    <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                                  </default>
+                                                  <null/>
+                                                </java.beans.PropertyChangeSupport>
+                                              </listeners>
+                                              <sourceList/>
+                                              <targetList/>
+                                              <bendPoint/>
+                                              <source reference="../../.."/>
+                                              <target>
+                                                <listeners serialization="custom">
+                                                  <java.beans.PropertyChangeSupport>
+                                                    <default>
+                                                      <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                                      <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                                                    </default>
+                                                    <null/>
+                                                  </java.beans.PropertyChangeSupport>
+                                                </listeners>
+                                                <sourceList>
+                                                  <com.vtradex.diagram.model.AbstractConnectionModel>
+                                                    <listeners serialization="custom">
+                                                      <java.beans.PropertyChangeSupport>
+                                                        <default>
+                                                          <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                                          <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                                        </default>
+                                                        <null/>
+                                                      </java.beans.PropertyChangeSupport>
+                                                    </listeners>
+                                                    <sourceList/>
+                                                    <targetList/>
+                                                    <bendPoint/>
+                                                    <source reference="../../.."/>
+                                                    <target>
+                                                      <listeners serialization="custom">
+                                                        <java.beans.PropertyChangeSupport>
+                                                          <default>
+                                                            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                                            <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                                                          </default>
+                                                          <null/>
+                                                        </java.beans.PropertyChangeSupport>
+                                                      </listeners>
+                                                      <sourceList/>
+                                                      <targetList>
+                                                        <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                                                      </targetList>
+                                                      <type>state</type>
+                                                      <id>FINISHED</id>
+                                                      <title>完成</title>
+                                                      <desc></desc>
+                                                      <register>false</register>
+                                                      <action></action>
+                                                      <state></state>
+                                                      <condition></condition>
+                                                      <nodevalue></nodevalue>
+                                                      <decisionToState/>
+                                                      <constrains>
+                                                        <x>645</x>
+                                                        <y>545</y>
+                                                        <width>-1</width>
+                                                        <height>-1</height>
+                                                      </constrains>
+                                                    </target>
+                                                    <id></id>
+                                                    <type></type>
+                                                    <value></value>
+                                                  </com.vtradex.diagram.model.AbstractConnectionModel>
+                                                </sourceList>
+                                                <targetList>
+                                                  <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                                                </targetList>
+                                                <type>task</type>
+                                                <id>close</id>
+                                                <title>关闭</title>
+                                                <desc></desc>
+                                                <register>false</register>
+                                                <action></action>
+                                                <state></state>
+                                                <condition></condition>
+                                                <nodevalue></nodevalue>
+                                                <decisionToState/>
+                                                <constrains>
+                                                  <x>496</x>
+                                                  <y>549</y>
+                                                  <width>-1</width>
+                                                  <height>-1</height>
+                                                </constrains>
+                                              </target>
+                                              <id></id>
+                                              <type></type>
+                                              <value></value>
+                                            </com.vtradex.diagram.model.AbstractConnectionModel>
+                                            <com.vtradex.diagram.model.AbstractConnectionModel>
+                                              <listeners serialization="custom">
+                                                <java.beans.PropertyChangeSupport>
+                                                  <default>
+                                                    <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                                    <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                                  </default>
+                                                  <null/>
+                                                </java.beans.PropertyChangeSupport>
+                                              </listeners>
+                                              <sourceList/>
+                                              <targetList/>
+                                              <bendPoint/>
+                                              <source reference="../../.."/>
+                                              <target>
+                                                <listeners serialization="custom">
+                                                  <java.beans.PropertyChangeSupport>
+                                                    <default>
+                                                      <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                                      <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                                                    </default>
+                                                    <null/>
+                                                  </java.beans.PropertyChangeSupport>
+                                                </listeners>
+                                                <sourceList>
+                                                  <com.vtradex.diagram.model.AbstractConnectionModel>
+                                                    <listeners serialization="custom">
+                                                      <java.beans.PropertyChangeSupport>
+                                                        <default>
+                                                          <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                                          <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                                        </default>
+                                                        <null/>
+                                                      </java.beans.PropertyChangeSupport>
+                                                    </listeners>
+                                                    <sourceList/>
+                                                    <targetList/>
+                                                    <bendPoint/>
+                                                    <source reference="../../.."/>
+                                                    <target reference="../../../../../../../../../../../.."/>
+                                                    <id></id>
+                                                    <type></type>
+                                                    <value></value>
+                                                  </com.vtradex.diagram.model.AbstractConnectionModel>
+                                                </sourceList>
+                                                <targetList>
+                                                  <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                                                </targetList>
+                                                <type>task</type>
+                                                <id>cancelCount</id>
+                                                <title>取消盘点</title>
+                                                <desc></desc>
+                                                <register>false</register>
+                                                <action></action>
+                                                <state></state>
+                                                <condition></condition>
+                                                <nodevalue></nodevalue>
+                                                <decisionToState/>
+                                                <constrains>
+                                                  <x>289</x>
+                                                  <y>398</y>
+                                                  <width>92</width>
+                                                  <height>54</height>
+                                                </constrains>
+                                              </target>
+                                              <id></id>
+                                              <type></type>
+                                              <value></value>
+                                            </com.vtradex.diagram.model.AbstractConnectionModel>
+                                            <com.vtradex.diagram.model.AbstractConnectionModel>
+                                              <listeners serialization="custom">
+                                                <java.beans.PropertyChangeSupport>
+                                                  <default>
+                                                    <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                                    <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                                  </default>
+                                                  <null/>
+                                                </java.beans.PropertyChangeSupport>
+                                              </listeners>
+                                              <sourceList/>
+                                              <targetList/>
+                                              <bendPoint/>
+                                              <source reference="../../.."/>
+                                              <target reference="../../../../../.."/>
+                                              <id></id>
+                                              <type></type>
+                                              <value></value>
+                                            </com.vtradex.diagram.model.AbstractConnectionModel>
+                                          </sourceList>
+                                          <targetList>
+                                            <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                                          </targetList>
+                                          <type>state</type>
+                                          <id>COUNTING</id>
+                                          <title>盘点</title>
+                                          <desc></desc>
+                                          <register>false</register>
+                                          <action></action>
+                                          <state></state>
+                                          <condition></condition>
+                                          <nodevalue></nodevalue>
+                                          <decisionToState/>
+                                          <constrains>
+                                            <x>491</x>
+                                            <y>478</y>
+                                            <width>-1</width>
+                                            <height>-1</height>
+                                          </constrains>
+                                        </target>
+                                        <id></id>
+                                        <type></type>
+                                        <value></value>
+                                      </com.vtradex.diagram.model.AbstractConnectionModel>
+                                    </sourceList>
+                                    <targetList>
+                                      <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                                      <com.vtradex.diagram.model.AbstractConnectionModel reference="../../sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[3]"/>
+                                    </targetList>
+                                    <type>task</type>
+                                    <id>count</id>
+                                    <title>盘点</title>
+                                    <desc></desc>
+                                    <register>false</register>
+                                    <action></action>
+                                    <state></state>
+                                    <condition></condition>
+                                    <nodevalue></nodevalue>
+                                    <decisionToState/>
+                                    <constrains>
+                                      <x>491</x>
+                                      <y>399</y>
+                                      <width>-1</width>
+                                      <height>-1</height>
+                                    </constrains>
+                                  </target>
+                                  <id></id>
+                                  <type></type>
+                                  <value></value>
+                                </com.vtradex.diagram.model.AbstractConnectionModel>
+                              </sourceList>
+                              <targetList>
+                                <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                                <com.vtradex.diagram.model.AbstractConnectionModel reference="../../sourceList/com.vtradex.diagram.model.AbstractConnectionModel[3]/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[2]/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel"/>
+                              </targetList>
+                              <type>state</type>
+                              <id>ACTIVE</id>
+                              <title>生效</title>
+                              <desc></desc>
+                              <register>false</register>
+                              <action></action>
+                              <state></state>
+                              <condition></condition>
+                              <nodevalue></nodevalue>
+                              <decisionToState/>
+                              <constrains>
+                                <x>491</x>
+                                <y>311</y>
+                                <width>-1</width>
+                                <height>-1</height>
+                              </constrains>
+                            </target>
+                            <id></id>
+                            <type></type>
+                            <value></value>
+                          </com.vtradex.diagram.model.AbstractConnectionModel>
+                        </sourceList>
+                        <targetList>
+                          <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                        </targetList>
+                        <type>task</type>
+                        <id>active</id>
+                        <title>激活</title>
+                        <desc></desc>
+                        <register>false</register>
+                        <action></action>
+                        <state></state>
+                        <condition></condition>
+                        <nodevalue></nodevalue>
+                        <decisionToState/>
+                        <constrains>
+                          <x>491</x>
+                          <y>224</y>
+                          <width>-1</width>
+                          <height>-1</height>
+                        </constrains>
+                      </target>
+                      <id></id>
+                      <type></type>
+                      <value></value>
+                    </com.vtradex.diagram.model.AbstractConnectionModel>
+                    <com.vtradex.diagram.model.AbstractConnectionModel>
+                      <listeners serialization="custom">
+                        <java.beans.PropertyChangeSupport>
+                          <default>
+                            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                            <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                          </default>
+                          <null/>
+                        </java.beans.PropertyChangeSupport>
+                      </listeners>
+                      <sourceList/>
+                      <targetList/>
+                      <bendPoint/>
+                      <source reference="../../.."/>
+                      <target>
+                        <listeners serialization="custom">
+                          <java.beans.PropertyChangeSupport>
+                            <default>
+                              <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                              <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                            </default>
+                            <null/>
+                          </java.beans.PropertyChangeSupport>
+                        </listeners>
+                        <sourceList/>
+                        <targetList>
+                          <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                        </targetList>
+                        <type>task</type>
+                        <id>edit</id>
+                        <title>修改</title>
+                        <desc></desc>
+                        <register>false</register>
+                        <action></action>
+                        <state></state>
+                        <condition></condition>
+                        <nodevalue></nodevalue>
+                        <decisionToState/>
+                        <constrains>
+                          <x>665</x>
+                          <y>67</y>
+                          <width>-1</width>
+                          <height>-1</height>
+                        </constrains>
+                      </target>
+                      <id></id>
+                      <type></type>
+                      <value></value>
+                    </com.vtradex.diagram.model.AbstractConnectionModel>
+                    <com.vtradex.diagram.model.AbstractConnectionModel>
+                      <listeners serialization="custom">
+                        <java.beans.PropertyChangeSupport>
+                          <default>
+                            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                            <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                          </default>
+                          <null/>
+                        </java.beans.PropertyChangeSupport>
+                      </listeners>
+                      <sourceList/>
+                      <targetList/>
+                      <bendPoint/>
+                      <source reference="../../.."/>
+                      <target>
+                        <listeners serialization="custom">
+                          <java.beans.PropertyChangeSupport>
+                            <default>
+                              <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                              <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                            </default>
+                            <null/>
+                          </java.beans.PropertyChangeSupport>
+                        </listeners>
+                        <sourceList>
+                          <com.vtradex.diagram.model.AbstractConnectionModel>
+                            <listeners serialization="custom">
+                              <java.beans.PropertyChangeSupport>
+                                <default>
+                                  <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                  <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                                </default>
+                                <null/>
+                              </java.beans.PropertyChangeSupport>
+                            </listeners>
+                            <sourceList/>
+                            <targetList/>
+                            <bendPoint/>
+                            <source reference="../../.."/>
+                            <target>
+                              <listeners serialization="custom">
+                                <java.beans.PropertyChangeSupport>
+                                  <default>
+                                    <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                    <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                                  </default>
+                                  <null/>
+                                </java.beans.PropertyChangeSupport>
+                              </listeners>
+                              <sourceList/>
+                              <targetList>
+                                <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                              </targetList>
+                              <type>state</type>
+                              <id>CANCELED</id>
+                              <title>取消</title>
+                              <desc></desc>
+                              <register>false</register>
+                              <action></action>
+                              <state></state>
+                              <condition></condition>
+                              <nodevalue></nodevalue>
+                              <decisionToState/>
+                              <constrains>
+                                <x>295</x>
+                                <y>222</y>
+                                <width>-1</width>
+                                <height>-1</height>
+                              </constrains>
+                            </target>
+                            <id></id>
+                            <type></type>
+                            <value></value>
+                          </com.vtradex.diagram.model.AbstractConnectionModel>
+                        </sourceList>
+                        <targetList>
+                          <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                        </targetList>
+                        <type>task</type>
+                        <id>cancel</id>
+                        <title>取消</title>
+                        <desc></desc>
+                        <register>false</register>
+                        <action></action>
+                        <state></state>
+                        <condition></condition>
+                        <nodevalue></nodevalue>
+                        <decisionToState/>
+                        <constrains>
+                          <x>295</x>
+                          <y>147</y>
+                          <width>-1</width>
+                          <height>-1</height>
+                        </constrains>
+                      </target>
+                      <id></id>
+                      <type></type>
+                      <value></value>
+                    </com.vtradex.diagram.model.AbstractConnectionModel>
+                    <com.vtradex.diagram.model.AbstractConnectionModel>
+                      <listeners serialization="custom">
+                        <java.beans.PropertyChangeSupport>
+                          <default>
+                            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                            <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                          </default>
+                          <null/>
+                        </java.beans.PropertyChangeSupport>
+                      </listeners>
+                      <sourceList/>
+                      <targetList/>
+                      <bendPoint/>
+                      <source reference="../../.."/>
+                      <target>
+                        <listeners serialization="custom">
+                          <java.beans.PropertyChangeSupport>
+                            <default>
+                              <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                              <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                            </default>
+                            <null/>
+                          </java.beans.PropertyChangeSupport>
+                        </listeners>
+                        <sourceList/>
+                        <targetList>
+                          <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                        </targetList>
+                        <type>task</type>
+                        <id>addLocation</id>
+                        <title>增加盘点库位</title>
+                        <desc></desc>
+                        <register>false</register>
+                        <action></action>
+                        <state></state>
+                        <condition>${countPlan.status} == &apos;OPEN&apos;</condition>
+                        <nodevalue></nodevalue>
+                        <decisionToState/>
+                        <constrains>
+                          <x>665</x>
+                          <y>116</y>
+                          <width>-1</width>
+                          <height>-1</height>
+                        </constrains>
+                      </target>
+                      <id></id>
+                      <type></type>
+                      <value></value>
+                    </com.vtradex.diagram.model.AbstractConnectionModel>
+                    <com.vtradex.diagram.model.AbstractConnectionModel>
+                      <listeners serialization="custom">
+                        <java.beans.PropertyChangeSupport>
+                          <default>
+                            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                            <source class="com.vtradex.diagram.model.AbstractConnectionModel" reference="../../../.."/>
+                          </default>
+                          <null/>
+                        </java.beans.PropertyChangeSupport>
+                      </listeners>
+                      <sourceList/>
+                      <targetList/>
+                      <bendPoint/>
+                      <source reference="../../.."/>
+                      <target>
+                        <listeners serialization="custom">
+                          <java.beans.PropertyChangeSupport>
+                            <default>
+                              <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                              <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+                            </default>
+                            <null/>
+                          </java.beans.PropertyChangeSupport>
+                        </listeners>
+                        <sourceList/>
+                        <targetList>
+                          <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                        </targetList>
+                        <type>task</type>
+                        <id>removeLocation</id>
+                        <title>移除盘点库位</title>
+                        <desc></desc>
+                        <register>false</register>
+                        <action></action>
+                        <state></state>
+                        <condition>${countPlan.status} == &apos;OPEN&apos;</condition>
+                        <nodevalue></nodevalue>
+                        <decisionToState/>
+                        <constrains>
+                          <x>665</x>
+                          <y>170</y>
+                          <width>-1</width>
+                          <height>-1</height>
+                        </constrains>
+                      </target>
+                      <id></id>
+                      <type></type>
+                      <value></value>
+                    </com.vtradex.diagram.model.AbstractConnectionModel>
+                  </sourceList>
+                  <targetList>
+                    <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+                    <com.vtradex.diagram.model.AbstractConnectionModel reference="../../sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel"/>
+                  </targetList>
+                  <type>state</type>
+                  <id>OPEN</id>
+                  <title>打开</title>
+                  <desc></desc>
+                  <register>false</register>
+                  <action></action>
+                  <state></state>
+                  <condition></condition>
+                  <nodevalue></nodevalue>
+                  <decisionToState/>
+                  <constrains>
+                    <x>491</x>
+                    <y>147</y>
+                    <width>-1</width>
+                    <height>-1</height>
+                  </constrains>
+                </target>
+                <id></id>
+                <type></type>
+                <value></value>
+              </com.vtradex.diagram.model.AbstractConnectionModel>
+            </sourceList>
+            <targetList>
+              <com.vtradex.diagram.model.AbstractConnectionModel reference="../../.."/>
+            </targetList>
+            <type>task</type>
+            <id>new</id>
+            <title>新建</title>
+            <desc></desc>
+            <register>false</register>
+            <action></action>
+            <state></state>
+            <condition></condition>
+            <nodevalue></nodevalue>
+            <decisionToState/>
+            <constrains>
+              <x>491</x>
+              <y>67</y>
+              <width>-1</width>
+              <height>-1</height>
+            </constrains>
+          </target>
+          <id></id>
+          <type></type>
+          <value></value>
+        </com.vtradex.diagram.model.AbstractConnectionModel>
+      </sourceList>
+      <targetList/>
+      <type>start</type>
+      <id>start</id>
+      <title>start</title>
+      <desc></desc>
+      <register>false</register>
+      <action></action>
+      <state></state>
+      <condition></condition>
+      <nodevalue></nodevalue>
+      <decisionToState/>
+      <constrains>
+        <x>514</x>
+        <y>0</y>
+        <width>-1</width>
+        <height>-1</height>
+      </constrains>
+    </com.vtradex.diagram.model.NodesModel>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[3]/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[3]/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[2]/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[3]/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[4]/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[5]/target"/>
+    <com.vtradex.diagram.model.NodesModel>
+      <listeners serialization="custom">
+        <java.beans.PropertyChangeSupport>
+          <default>
+            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+            <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+          </default>
+          <null/>
+        </java.beans.PropertyChangeSupport>
+      </listeners>
+      <sourceList/>
+      <targetList/>
+      <type>task</type>
+      <id>view</id>
+      <title>查看</title>
+      <desc></desc>
+      <register>false</register>
+      <action></action>
+      <state></state>
+      <condition></condition>
+      <nodevalue></nodevalue>
+      <decisionToState/>
+      <constrains>
+        <x>295</x>
+        <y>67</y>
+        <width>-1</width>
+        <height>-1</height>
+      </constrains>
+    </com.vtradex.diagram.model.NodesModel>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[3]/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target"/>
+    <com.vtradex.diagram.model.NodesModel>
+      <listeners serialization="custom">
+        <java.beans.PropertyChangeSupport>
+          <default>
+            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+            <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+          </default>
+          <null/>
+        </java.beans.PropertyChangeSupport>
+      </listeners>
+      <sourceList/>
+      <targetList/>
+      <type>task</type>
+      <id>countUpdate</id>
+      <title>盘点登记</title>
+      <desc></desc>
+      <register>false</register>
+      <action></action>
+      <state></state>
+      <condition></condition>
+      <nodevalue></nodevalue>
+      <decisionToState/>
+      <constrains>
+        <x>665</x>
+        <y>399</y>
+        <width>-1</width>
+        <height>-1</height>
+      </constrains>
+    </com.vtradex.diagram.model.NodesModel>
+    <com.vtradex.diagram.model.NodesModel>
+      <listeners serialization="custom">
+        <java.beans.PropertyChangeSupport>
+          <default>
+            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+            <source class="com.vtradex.diagram.model.NodesModel" reference="../../../.."/>
+          </default>
+          <null/>
+        </java.beans.PropertyChangeSupport>
+      </listeners>
+      <sourceList/>
+      <targetList/>
+      <type>task</type>
+      <id>countInsert</id>
+      <title>盘点增补</title>
+      <desc></desc>
+      <register>false</register>
+      <action></action>
+      <state></state>
+      <condition></condition>
+      <nodevalue></nodevalue>
+      <decisionToState/>
+      <constrains>
+        <x>664</x>
+        <y>335</y>
+        <width>-1</width>
+        <height>-1</height>
+      </constrains>
+    </com.vtradex.diagram.model.NodesModel>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[2]/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[3]/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[3]/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target"/>
+    <com.vtradex.diagram.model.NodesModel reference="../com.vtradex.diagram.model.NodesModel/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[3]/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel/target/sourceList/com.vtradex.diagram.model.AbstractConnectionModel[2]/target"/>
+  </childList>
+</ContentsModel>

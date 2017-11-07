@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainUserPage" title="maintainUserPage" autoQuery="true" entityClass="com.vtradex.thorn.server.model.security.User">
+        <workflow/>
+        <datasource><![CDATA[SELECT user.id,
+user.loginName,
+user.name,
+user.email,
+user.status,
+user.locale,
+user.expiryDate,
+user.strExtend1
+ from User user  where 1=1
+]]></datasource>
+        <columns>
+            <column id="user.id" title="ID" visible="false"/>
+            <column id="user.loginName" title="user.loginName" visible="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="user.name" title="user.name" visible="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="user.email" title="user.email" visible="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="user.status" title="user.status" visible="true" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>
+            <column id="user.locale" title="user.locale" visible="true" dataType="enum" format="enumFormat" formatParam="LocalType"/>
+            <column id="user.expiryDate" title="user.expiryDate" visible="true" horizonAlign="center" verticalAlign="middle" dataType="date" format="dateFormat" formatParam="y-m-d"/>
+            <column id="user.strExtend1" title="user.strExtend1" visible="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+		</columns>
+    </maintainPage>
+</pages>

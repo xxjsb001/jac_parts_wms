@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="customerReportFilePage" title="customerReportFilePage" className="com.vtradex.repc.client.ui.page.ReportFilePage"/>
+</pages>
+

@@ -1,0 +1,68 @@
+drop table MIDDLE_DELIVERY_DOC_DETAIL_WMS;
+-- Create table
+CREATE TABLE MIDDLE_DELIVERY_DOC_DETAIL_WMS (
+  ID NUMBER(19) NOT NULL,
+  COMPANY varchar2(50) DEFAULT 106 NOT NULL,
+  DELIVERY_CODE varchar2(50 CHAR) NOT NULL,
+  JIT_CODE varchar2(255 CHAR) DEFAULT NULL,
+  PULL_TYPE varchar2(50 CHAR) NOT NULL,
+  HUB_WAREHOUSE_ABBR varchar2(50 CHAR) DEFAULT '江汽物流',
+  DESTINATION_PLANT varchar2(100 CHAR) NOT NULL,
+  DESTINATION_DOCK varchar2(100 CHAR) NOT NULL,
+  DESTINATION_WAREHOUSE varchar2(100 CHAR) NOT NULL,
+  SENDER varchar2(100 CHAR) NOT NULL,
+  REQUIRED_TIME TIMESTAMP(6) NOT NULL,
+  CREATE_TIME TIMESTAMP(6) DEFAULT systimestamp,
+  PUBLISHED_TIME TIMESTAMP(6) DEFAULT systimestamp,
+  CONFIRMED_TIME TIMESTAMP(6) NOT NULL,
+  DELIVERY_TIME TIMESTAMP(6) DEFAULT NULL,
+  RECEIVED_TIME TIMESTAMP(6) DEFAULT NULL,
+  CREATOR varchar2(50 CHAR) DEFAULT null,
+  PUBLISHEDUSER varchar2(50 CHAR) DEFAULT null,
+  SIGNER varchar2(50 CHAR) DEFAULT null,
+  SCANNER varchar2(50 CHAR) DEFAULT null,
+  MES_HEAD_MEMO varchar2(255 CHAR) DEFAULT null,
+  WMS_MEMO varchar2(255 CHAR) DEFAULT null,
+  FLAG NUMBER(10) DEFAULT 0 NOT NULL,
+
+  SUPPLIER_CODE varchar2(50 CHAR) NOT NULL,
+  MATERIAL_CODE varchar2(50 CHAR) NOT NULL,
+  MATERIAL_MAME varchar2(255 CHAR) DEFAULT null,
+  ORDER_CODE varchar2(100 CHAR) DEFAULT NULL,
+  MODEL varchar2(100 CHAR) DEFAULT NULL,
+  REQUIRED_QTY FLOAT NOT NULL,
+  RECEIVED_QTY FLOAT DEFAULT 0,
+  MATERIAL_WORKER varchar2(100 CHAR) DEFAULT NULL,
+  MATERIAL_KEEPER varchar2(100 CHAR) DEFAULT NULL,
+  MES_DETAIL_MEMO varchar2(255 CHAR) DEFAULT null,
+  MES_ID NUMBER(19) DEFAULT null, 
+  HASH_CODE varchar2(255 CHAR) DEFAULT null,
+  DEAL_TIME TIMESTAMP(6) DEFAULT null,
+  SEND_TIME TIMESTAMP(6) DEFAULT systimestamp
+)
+tablespace FDJ_ZZG
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table MIDDLE_DELIVERY_DOC_DETAIL_WMS
+  add primary key (ID)
+  using index 
+  tablespace FDJ_ZZG
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );

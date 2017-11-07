@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsCountRecordViewPage" title="maintainWmsCountRecordViewPage" entityClass="com.vtradex.wms.server.model.count.WmsCountRecord" onClose="refreshParent" width="900" height="400">
+        <workflow/>
+        <datasource><![CDATA[SELECT countRecord.id,countRecord.countPlan.code,countRecord.locationCode, countRecord.pallet,countRecord.item.code,countRecord.item.name,countRecord.packageUnit.unit,countRecord.quantityBU,countRecord.countQuantityBU,countRecord.deltaQuantityBU   FROM WmsCountRecord countRecord
+LEFT JOIN countRecord.item
+WHERE 1=1
+]]></datasource>
+        <columns>
+            <column id="countRecord.id" title="countRecord.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="countRecord.countPlan.code" title="countPlan.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="countRecord.locationCode" title="countRecord.locationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="countRecord.pallet" title="countRecord.pallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="countRecord.item.code" title="countRecord.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="countRecord.item.name" title="countRecord.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="countRecord.packageUnit.unit" title="packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="countRecord.quantityBU" title="countRecord.quantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="countRecord.countQuantityBU" title="countRecord.countQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" />
+            <column id="countRecord.deltaQuantityBU" title="countRecord.deltaQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+
+		 </columns>
+     </maintainPage>
+</pages>

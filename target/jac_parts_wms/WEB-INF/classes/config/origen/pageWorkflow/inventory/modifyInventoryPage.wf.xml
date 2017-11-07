@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyInventoryPage">
+    <main>
+        <process id="inventoryProcess">
+            <formCommit id="modify" title="modify" process="inventoryProcess.modify" enableType="none" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="modifyQuantity" className="double">
+                        <entries/>
+                    </mapping>
+                    <mapping id="modifyReason" className="string">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsInventoryManager" methodName="modifyInventory" parameter="obj,modifyQuantity,modifyReason"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,37 @@
+# Copyright (c) 2001-2005 vTradEx Information Technology Co.,Ltd. All Rights Reserved.
+#
+# This software is the confidential and proprietary information of vTradEx
+# Information Technology Co.,Ltd. ("Confidential Information").  You shall not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with vTradEx.
+#
+# VTRADEX MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
+# SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+# PURPOSE, OR NON-INFRINGEMENT. VTRADEX SHALL NOT BE LIABLE FOR ANY DAMAGES
+# SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
+# THIS SOFTWARE OR ITS DERIVATIVES.
+#
+# $Id: hibernate.properties,v 1.4 2016/03/04 00:20:14 yongcheng.min Exp $
+
+# (only applied with "dataSourceContext-hibernate.xml")
+#hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.dialect=org.hibernate.dialect.Oracle9Dialect
+#hibernate.dialect=org.hibernate.dialect.SQLServerDialect
+
+#hibernate.default_schema=e2tms
+hibernate.format_sql=false
+hibernate.show_sql=false
+hibernate.hbm2ddl.auto=none
+
+hibernate.query.substitutions true=1, false=0
+hibernate.max_fetch_depth=0
+hibernate.jdbc.fetch_size=50
+hibernate.jdbc.batch_size=25
+hibernate.cglib.use_reflection_optimizer=true
+hibernate.jdbc.use_scrollable_resultset=true
+#hibernate.cache.provider_cache=org.hibernate.cache.EhCacheProvider
+hibernate.cache.use_second_level_cache=false
+hibernate.cache.use_query_cache=false
+

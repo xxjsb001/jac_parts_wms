@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editMiddlequalitytestingPage">
+    <main>
+        <process id="middleProcess">
+            <formCommit id="save" title="save" process="middleProcess.middlequalitytesting" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings>
+                	 <mapping id="movedocid" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="createQuality" parameter="movedocid"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

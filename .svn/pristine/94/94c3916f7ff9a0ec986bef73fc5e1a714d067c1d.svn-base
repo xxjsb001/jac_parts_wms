@@ -1,0 +1,869 @@
+package com.vtradex.wms.server.service.interfaces.pojo;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import com.vtradex.thorn.server.exception.BusinessException;
+import com.vtradex.thorn.server.service.WorkflowManager;
+import com.vtradex.thorn.server.service.pojo.DefaultBaseManager;
+import com.vtradex.wms.server.model.base.BaseStatus;
+import com.vtradex.wms.server.model.base.Contact;
+import com.vtradex.wms.server.model.base.LotInfo;
+import com.vtradex.wms.server.model.base.ShipLotInfo;
+import com.vtradex.wms.server.model.move.WmsMoveDocStatus;
+import com.vtradex.wms.server.model.organization.WmsBillType;
+import com.vtradex.wms.server.model.organization.WmsItem;
+import com.vtradex.wms.server.model.organization.WmsOrganization;
+import com.vtradex.wms.server.model.organization.WmsPackageUnit;
+import com.vtradex.wms.server.model.organization.WmsStationAndItem;
+import com.vtradex.wms.server.model.receiving.WmsASN;
+import com.vtradex.wms.server.model.receiving.WmsASNDetail;
+import com.vtradex.wms.server.model.receiving.WmsASNShelvesStauts;
+import com.vtradex.wms.server.model.receiving.WmsASNStatus;
+import com.vtradex.wms.server.model.receiving.WmsSource;
+import com.vtradex.wms.server.model.shipping.WmsPickTicket;
+import com.vtradex.wms.server.model.shipping.WmsPickTicketDetail;
+import com.vtradex.wms.server.model.shipping.WmsPickTicketStatus;
+import com.vtradex.wms.server.model.warehouse.WmsWarehouse;
+import com.vtradex.wms.server.service.interfaces.WmsDealInterfaceDataManager;
+import com.vtradex.wms.server.service.middle.MiddleTableName;
+import com.vtradex.wms.server.service.sequence.WmsBussinessCodeManager;
+
+public class DefaultWmsDealInterfaceDataManager  
+				extends DefaultBaseManager implements WmsDealInterfaceDataManager{
+
+	private WmsBussinessCodeManager codeManager;
+	private WorkflowManager workflowManager;
+	//数据源
+	private DataSource dataSource;
+	
+	public DataSource getDataSource() {
+		return dataSource;
+	}
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+	public WmsBussinessCodeManager getCodeManager() {
+		return codeManager;
+	}
+	public void setCodeManager(WmsBussinessCodeManager codeManager) {
+		this.codeManager = codeManager;
+	}
+	
+	public WorkflowManager getWorkflowManager() {
+		return workflowManager;
+	}
+	public void setWorkflowManager(WorkflowManager workflowManager) {
+		this.workflowManager = workflowManager;
+	}
+	@Override
+	public void dealMesAndSrmOrder() {
+		logger.error("-----------开始处理MES、SRM以及ERP中间表数据-----------");
+		Connection conn = getConnection();
+		if(null == conn){
+			throw new BusinessException("获取数据库连接失败！！");
+		}
+		logger.error("-----------开始处理MES中间表数据-----------");
+		WmsWarehouse warehouse = getwareHouse();//仓库
+		//处理MES退料单数据
+		String mesOrderSql = "select id,ASNNO,PONO,ITEMCODE,SUPPLY_NO,"
+				+ "STORECODE,UNIT,SENDQTY,REQDATE,ORD_TYPE,IS_MT,TRAYQTY "
+				+ " from "+MiddleTableName.W_ASN_TL+" where status=1";
+		PreparedStatement pre = null;// 创建预编译语句对象，一般都是用这个而不用Statement
+		ResultSet result = null;// 创建一个结果集对象
+		dealMesAndSrmData(warehouse,conn,pre,result,mesOrderSql,MiddleTableName.W_ASN_TL);
+		
+		logger.error("-----------开始处理SRM中间表数据-----------");
+		//处理SRM数据
+		String srmOrderSql = "select id,ASNNO,PONO,ITEMCODE,SUPPLY_NO,STORECODE,UNIT,"
+								+ "SENDQTY,REQDATE,ORD_TYPE,IS_MT,TRAYQTY from "
+								+ ""+MiddleTableName.W_ASN_SRM+" where status = 1";
+			
+		dealMesAndSrmData(warehouse,conn,pre,result,srmOrderSql,MiddleTableName.W_ASN_SRM);
+		
+		logger.error("-----------开始处理SRM中间表数据-----------");
+		//处理ERP数据
+		String erpSql = "select id,ASNNO,PONO,ITEMCODE,SUPPLY_NO,STORECODE,"
+							+ "UNIT,SENDQTY,REQDATE,ORD_TYPE,IS_MT,TRAYQTY "
+							+ "from "+MiddleTableName.W_ASN_ERP+" where status = 1";
+		dealMesAndSrmData(warehouse,conn,pre,result,erpSql,MiddleTableName.W_ASN_ERP);
+		
+		closeConnection(result, pre, conn);
+		logger.error("-----------结束处理MES、SRM以及ERP中间表数据-----------");
+	}
+	//公用处理接口数据的方法
+	void dealMesAndSrmData(WmsWarehouse warehouse,Connection conn,PreparedStatement pre,
+								ResultSet result,String sql,String tableName){
+		List<String> errorLog = new ArrayList<String>();//记录错误日志
+		Date date = new Date();
+		try {
+			pre = conn.prepareStatement(sql);
+			result = pre.executeQuery();// 执行查询，注意括号中不需要再加参数
+			while(result.next()){
+				Long id = result.getLong(1);
+				String relateBill1 = result.getString(2);//送货单号
+				String orderNo = result.getString(3).toUpperCase();//订单号
+				String itemCode = result.getString(4).toUpperCase();//货品编码
+				String supplyNo = result.getString(5).toUpperCase();//供应商编码
+				String fware = result.getString(6).toUpperCase();//货主
+				String unit = result.getString(7);//包装单位
+				Double qty =  result.getDouble(8);//数量
+				Date demandDate = result.getDate(9);//生产日期
+				String billCode = result.getString(10).toUpperCase();//单据类型
+				Boolean isMt = result.getBoolean(11);//是否码托
+				Integer palletNo = result.getInt(12);//托盘总个数
+				//数据校验
+				WmsOrganization company = validateOrg(errorLog, fware,"hz",Boolean.TRUE);//货主
+				WmsItem item = validateItem(errorLog, itemCode,fware,Boolean.FALSE);//物料
+				WmsOrganization supplier = validateOrg(errorLog, supplyNo,"gys",Boolean.TRUE);//供应商
+				WmsBillType type = validateBillType(errorLog, billCode,fware);//单据类型
+				WmsPackageUnit packageUnit = validatePackageUnit(errorLog, item,unit);//包装单位
+				
+				String asnCode = getCodeByRule(errorLog, company, type, warehouse, "ASN");//获取单据编码
+				
+				if(errorLog.size() == 0){//如果数据没问题,保存数据
+					WmsASN asn = findAsnByRelateBill1(relateBill1);//根据送货单号找ASN,找到就增加明细,不创建重复ASN
+					Integer lineNo = 10;//行号
+					if(null == asn){
+						asn = new WmsASN(warehouse, company, type, asnCode,WmsASNStatus.OPEN, relateBill1,
+												orderNo,date,WmsASNShelvesStauts.UNPUTAWAY,supplier,WmsMoveDocStatus.OPEN,
+												0d, WmsSource.INTERFACE,qty,Boolean.FALSE);
+						commonDao.store(asn);
+					}else{
+						lineNo = getMaxLineNo(null,asn,qty);
+					}
+					
+					
+					WmsASNDetail detail = new WmsASNDetail(asn, lineNo, item, qty, packageUnit, qty, 0d, 0d, palletNo, 0.0,isMt);
+					LotInfo lotInfo = new LotInfo(demandDate, asn.getCode(), supplier, "-");
+					detail.setLotInfo(lotInfo);
+					commonDao.store(detail);
+					//更新状态
+					updateMiddleStatus(tableName, conn, pre, errorLog, id);
+				}else{//如果有错误信息,记录错误信息以及更新状态
+					updateMiddleStatus(tableName, conn, pre, errorLog, id);
+				}
+				errorLog.clear();//清空错误信息
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	WmsASN findAsnByRelateBill1(String relateBill1){
+		String hql = "from WmsASN w where w.relatedBill1 = :relatedBill1 and status='OPEN'";
+		WmsASN asn = (WmsASN) commonDao.findByQueryUniqueResult(hql, "relatedBill1", relateBill1);
+		return asn;
+	}
+	/**
+	 * @param errorLog
+	 * @param fware
+	 * @param type = 供应商/货主
+	 * @param notNull = true 不能为空 false=可为空,不记错误信息
+	 * @return
+	 */
+	WmsOrganization validateOrg(List<String> errorLog,String fware,String type,Boolean notNull){
+		String hql = "from WmsOrganization o where o.code=:code";
+		WmsOrganization org = (WmsOrganization) commonDao.findByQueryUniqueResult(hql, "code", fware);
+		if(null == org && notNull){
+			if("hz".equals(type)){
+				errorLog.add("根据编码("+fware+")未找到对应的货主!\n");
+			}else{
+				errorLog.add("根据编码("+fware+")未找到对应的供应商!\n");
+			}
+		}
+		hql = null;
+		return org;
+	}
+	
+	/**
+	 * @param errorLog
+	 * @param itemCode
+	 * @param companyCode
+	 * @param isNull == true 如果没有找到货品,不记录错误信息
+	 * @return
+	 */
+	WmsItem validateItem(List<String> errorLog,String itemCode,String companyCode,Boolean isNull){
+		String hql = "from WmsItem item where item.code=:code and status='ENABLED' AND company.code=:companyCode";
+		WmsItem item = (WmsItem) commonDao.findByQueryUniqueResult(hql, 
+										new String[]{"code","companyCode"}, 
+											new Object[]{itemCode,companyCode});
+		if(null == item && !isNull){
+			errorLog.add("根据编码("+itemCode+")+货主("+companyCode+")未找到对应的货品!\n");
+		}
+		if(null != item && isNull){//货品已经存在,记录错误信息
+			errorLog.add("根据编码("+itemCode+")+货主("+companyCode+")已经找到了对应货品!\n");
+		}
+		hql = null;
+		return item;
+	}
+	
+	WmsBillType validateBillType(List<String> errorLog,String billCode,String companyCode){
+		String hql = "from WmsBillType where code=:code and status='ENABLED' and company.code=:companyCode";
+		WmsBillType bType = (WmsBillType) commonDao.findByQueryUniqueResult(hql, 
+										new String[]{"code","companyCode"},
+												new Object[]{billCode,companyCode});
+		if(null == bType){
+			errorLog.add("根据编码("+billCode+")+货主("+companyCode+")未找到对应的单据类型!\n");
+		}
+		hql = null;
+		return bType;
+	}
+	
+	/**
+	 * 校验接口表中包装单位与wms货品对应的包装单位是否一致
+	 * @param errorLog
+	 * @param item
+	 * @param unit
+	 * @return
+	 */
+	WmsPackageUnit validatePackageUnit(List<String> errorLog, WmsItem item,String unit){
+		if(item == null){
+			return null;
+		}
+		@SuppressWarnings("unchecked")
+		List<WmsPackageUnit> list = commonDao.
+				findByQuery("from WmsPackageUnit where item_id=:id","id",
+						item.getId());//包装单位
+		if(list.size() <= 0){
+			errorLog.add("根据物料编码("+item.getCode()+")未找到包装单位,请检查!!\n");
+			return null;
+		}
+		if(null == unit || "".equals(unit)){//如果PCS为空,说明当前表里没有PCS字段,不校验包装单位
+			return list.get(0);
+		}
+		if(!unit.equals(list.get(0).getUnit())){
+			errorLog.add("物料编码的包装单位与接口表中的包装单位不符,请检查!!\n");
+		}
+		return list.get(0);
+	}
+	
+	WmsWarehouse getwareHouse(){
+		WmsWarehouse warehouse = (WmsWarehouse) commonDao.findByQueryUniqueResult
+							("from WmsWarehouse where name='新港仓库' and status='ENABLED'","","");
+		if(null == warehouse){
+			throw new BusinessException("未找到新港仓库");
+		}
+		return warehouse;
+	}
+	
+	/**
+	 * 获取数据库连接
+	 * @return
+	 */
+	private Connection getConnection() {
+		Connection connection = null;
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return connection;
+	}
+	
+	/**
+	 * 关闭连接
+	 * @param rs
+	 * @param ps
+	 * @param connection
+	 */
+	private void closeConnection(ResultSet rs ,PreparedStatement ps,Connection connection){
+		try {
+			if (rs != null) { // 关闭记录集
+				rs.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null) { // 关闭声明
+					ps.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (connection != null) { // 关闭连接对象
+					try {
+						connection.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}
+	}
+	@Override
+	public void dealAsnData(WmsASN asn) {
+		String hql = "from WmsASNDetail d where d.receivedQuantityBU > 0 and d.asn.id=:id";
+		@SuppressWarnings("unchecked")
+		List<WmsASNDetail> details = commonDao.findByQuery(hql,"id",asn.getId());
+		Date date = new Date();
+		int i = 0;//行号
+		Connection connection = getConnection();
+		PreparedStatement pre = null;
+		ResultSet rs = null;
+		for(WmsASNDetail detail : details){
+			i += 1;
+			String sql = "insert into "+MiddleTableName.W_RECEIVE_ERP+" (ID, ASNNO,"
+					+ "SHDK,LINE_NO,ORDER_CODE,ORDER_LINE_NO, REC_QTY, INV_LOC, UNIT, "
+					+ "ITEMCODE, SUPPLY_CODE,ORDER_TYPE, RECEIVE_DATE, STATUS)"
+					+ "values (wseq_W_RECEIVE_ERP.nextval,?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
+			if(null == connection){
+				throw new BusinessException("数据库连接失败!!!");
+			}
+			try {
+				pre = connection.prepareStatement(sql);
+				pre.setString(1,asn.getCode());//收货单号
+				pre.setString(2, asn.getRelatedBill1());//SRM收货单号
+				pre.setInt(3,i);//收货单行号
+				pre.setString(4, asn.getRelatedBill2());//订单号
+				pre.setInt(5, i);//订单行号
+				pre.setDouble(6, asn.getReceivedQuantityBU());//收货数量
+				pre.setString(7, asn.getWarehouse().getCode());//仓库代码
+				pre.setString(8, detail.getPackageUnit().getUnit());//包装单位
+				pre.setString(9, detail.getItem().getCode());//货品代码
+				pre.setString(10, detail.getLotInfo().getSupplier().getCode());//供应商
+				pre.setString(11, asn.getBillType().getCode());//单据类型
+				pre.setDate(12, new java.sql.Date(date.getTime()));//收货日期
+				pre.setInt(13, 1);//状态
+				pre.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		closeConnection(rs, pre, connection);
+	}
+	@Override
+	public void dealPicketTicketData() {
+		logger.error("-----------开始处理发货单中间表数据-----------");
+		Connection conn = getConnection();
+		if(null == conn){
+			throw new BusinessException("获取数据库连接失败！！");
+		}
+		WmsWarehouse warehouse = getwareHouse();//新港仓库
+		
+		//MES料单
+		String orderJhSql = "select id,ODR_NO,ODR_TYPE,DEMAND_DATE,SUPPLY_NO,ITEM,"
+								+ "QTY,FWARE,ODR_SU,DWARE,PRODUCT_LINE,SHDK,IS_JP,"
+								+ "BATCH,STATION,SLR from "+MiddleTableName.W_ORDER_JH
+								+" where status  = 1";
+		PreparedStatement pre = null;// 创建预编译语句对象，一般都是用这个而不用Statement
+		ResultSet result = null;// 创建一个结果集对象
+		createPickTicketByMiddleData(warehouse,conn,pre,result,orderJhSql,MiddleTableName.W_ORDER_JH);
+		
+		logger.error("-----------开始处理时序件料单中间表数据-----------");
+		//时序件料单
+		String orderSxSql = "select id,ODR_NO,ODR_TYPE,DEMAND_DATE,SUPPLY_NO,"
+						+ "ITEM,QTY,FWARE,ODR_SU,DWARE,PRODUCT_LINE,SHDK,IS_JP,"
+						+ "BATCH,STATION,SLR,SX from "+MiddleTableName.W_ORDER_SPS
+						+" where status = 1";
+		createPickTicketByMiddleData(warehouse,conn,pre,result,orderSxSql,MiddleTableName.W_ORDER_SPS);
+		
+		logger.error("-----------开始处理看板件料单中间表数据-----------");
+		//看板件料单
+		String orderKbSql = "select id,ODR_NO,ODR_TYPE,DEMAND_DATE,SUPPLY_NO,"
+						+ "ITEM,QTY,FWARE,ODR_SU,DWARE,PRODUCT_LINE,SHDK,IS_JP,"
+						+ "BATCH,STATION,SX,SMALL_QTY,PCS from "+MiddleTableName.W_ORDER_KB+" where status = 1";
+		createPickTicketByMiddleData(warehouse,conn,pre,result,orderKbSql,MiddleTableName.W_ORDER_KB);
+		
+		logger.error("-----------开始处理临采件调整中间表数据-----------");
+		//临采件调整出库发货单
+		String erpSql = "select ID,ODR_NO,ODR_TYPE,DEMAND_DATE,SUPPLY_NO,"
+							+ " ITEM,QTY,FWARE,PCS from "+MiddleTableName.W_ORDER_ERP
+							+ " where status = 1";
+		createPickTicketByMiddleData(warehouse, conn, pre, result, erpSql, MiddleTableName.W_ORDER_ERP);
+		
+		
+		closeConnection(result, pre, conn);
+		logger.error("-----------结束处理发货单中间表数据-----------");
+	}	
+	
+	void createPickTicketByMiddleData(WmsWarehouse warehouse,Connection connection,
+									PreparedStatement pre,ResultSet result,String sql,
+									String tableName){
+		List<String> errorLog = new ArrayList<String>();//记录错误日志
+		Date date = new Date();
+		try {
+			pre = connection.prepareStatement(sql);
+			result = pre.executeQuery();// 执行查询，注意括号中不需要再加参数
+			while(result.next()){
+				Long id = result.getLong(1);
+				String odrNo = result.getString(2).toUpperCase();//相关单号
+				String odrType = result.getString(3)==null ? 
+									result.getString(3) : result.getString(3).toUpperCase();//单据类型
+				Date arriveDate = result.getDate(4);//要求到达日期
+				String supplyNo = result.getString(5) == null ? 
+									null : result.getString(5).toUpperCase();//供应商编码
+				String itemCode = result.getString(6).toUpperCase();//货品编码
+				Double qty =  result.getDouble(7);//数量
+				String fware = result.getString(8).trim().toUpperCase();//货主
+				if(tableName.equals(MiddleTableName.W_ORDER_ERP)){
+					String pcs = result.getString(9);
+					saveErpData(connection,errorLog,id,odrNo,odrType,arriveDate,supplyNo,
+							itemCode,qty,fware,pcs,warehouse,tableName,pre);
+					errorLog.clear();//清空错误信息
+					continue;
+				}
+				String odrSu = result.getString(9);//计划需求公司
+				String dware = result.getString(10);//目的仓库
+				String productLine = result.getString(11);//生产线
+				String shdk = result.getString(12);//收货道口
+				String isJpStr = result.getString(13).toUpperCase();//是否集配Y/N
+				String batch = result.getString(14);//批次
+				String station = result.getString(15);//工位
+				
+				//数据校验
+				WmsOrganization company = validateOrg(errorLog, fware,"hz",Boolean.TRUE);//货主
+				WmsItem item = validateItem(errorLog, itemCode,fware,Boolean.FALSE);//物料
+				WmsOrganization supplier = validateOrg(errorLog, supplyNo,"gys",Boolean.FALSE);//供应商
+				WmsBillType type = validateBillType(errorLog, odrType,fware);//单据类型
+				Boolean isjp = validateYesOrNo(errorLog,isJpStr,"是否集配只能填Y/N!!\n");//校验是否集配值是否是Y/N
+				String slr = null;
+				String pcs = null;
+				Double minQty = 0d;
+				Integer sx = null;
+				if(!tableName.equals(MiddleTableName.W_ORDER_KB)){
+					slr = result.getString(16);//备料工&备料工号
+				}else{
+					sx = result.getInt(16);
+					minQty = result.getDouble(17);
+					pcs = result.getString(18);
+				}
+				String code = getCodeByRule(errorLog, company, type, warehouse,  "发货单");//获取单据编码
+				WmsPackageUnit packageUnit = validatePackageUnit(errorLog,item,pcs);//包装单位
+				if(errorLog.size() == 0){//如果数据没问题,保存数据
+					WmsPickTicket pickTicket = findPickByOdrNo(odrNo);//根据相关单号查发货单,如果查到就新增明细,不再创建发货单
+					Integer lineNo = 10;//行号
+					if(null == pickTicket){
+						pickTicket = new WmsPickTicket(warehouse,company, type, code, odrNo, 
+													WmsPickTicketStatus.OPEN, arriveDate, qty, 0d, 0d, 0d,
+													dware, shdk,WmsSource.INTERFACE,date,odrSu,batch);
+						commonDao.store(pickTicket);
+					}else{
+						lineNo = getMaxLineNo(pickTicket,null,qty);
+					}
+					ShipLotInfo shipLotInfo = new ShipLotInfo(supplier == null ? null : supplier.getCode());
+					WmsPickTicketDetail detail = new WmsPickTicketDetail(pickTicket, item, 
+											shipLotInfo,packageUnit, qty, qty, 0d, 0d, 0d, slr, 
+											slr, productLine, station, isjp,lineNo,sx,minQty,pcs,supplier);
+					if(tableName.equals(MiddleTableName.W_ORDER_SPS)){//时序件料单多个字段
+						sx = result.getInt(17);
+						detail.setSx(sx);
+					}
+					commonDao.store(detail);
+					
+					//更新状态
+					updateMiddleStatus(tableName, connection, pre, errorLog,id);
+				}else{//如果有错误信息,记录错误信息以及更新状态
+					updateMiddleStatus(tableName, connection, pre, errorLog, id);
+				}
+				errorLog.clear();
+			}	
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 更新数据状态
+	 * @param tableName
+	 * @param connection
+	 * @param pre
+	 * @param errorLog
+	 * @param sql
+	 */
+	void updateMiddleStatus(String tableName,Connection connection,
+							PreparedStatement pre,List<String> errorLog,Long id){
+		String sql = "update "+tableName+" set status=:status,"
+								+ "EXCEPTION_MESS=:errorLog where id="+id;
+		try {
+			pre = connection.prepareStatement(sql);
+			if(errorLog.size() == 0){
+				pre.setInt(1,  3);
+				pre.setString(2,  "");
+			}else{
+				pre.setInt(1,  0);
+				pre.setString(2,  errorLog.toString());
+			}
+			pre.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	Boolean validateYesOrNo(List<String> errorLog,String value,String msg){
+		if(!value.equals("Y") && !value.equals("N")){
+			errorLog.add(msg);
+			return Boolean.FALSE;
+		}else if(value.equals("Y")){
+			return Boolean.TRUE;
+		}else{
+			return Boolean.FALSE;
+		}
+	}
+	/**
+	 * 根据相关单号去找发货单
+	 * @param ordNo
+	 * @return
+	 */
+	WmsPickTicket findPickByOdrNo(String ordNo){
+		String hql = "from WmsPickTicket p where p.relatedBill1=:relatedBill1 and status='OPEN'";
+		WmsPickTicket pickTicket = (WmsPickTicket) commonDao.
+											findByQueryUniqueResult(hql,"relatedBill1", ordNo);
+		return pickTicket;
+	}
+	
+	void saveErpData(Connection connection,List<String> errorLog,Long id,String odrNo,
+						String odrType,Date arriveDate,String supplyNo,String itemCode,
+						Double qty,String fware,String pcs,WmsWarehouse warehouse,
+						String tableName,PreparedStatement pre){
+		/**数据校验*/
+		WmsOrganization company = validateOrg(errorLog, fware,"hz",Boolean.TRUE);//货主
+		WmsItem item = validateItem(errorLog, itemCode,fware,Boolean.FALSE);//物料
+		WmsOrganization supplier = validateOrg(errorLog, supplyNo,"gys",Boolean.FALSE);//供应商
+		WmsBillType type = validateBillType(errorLog, odrType,fware);//单据类型
+		WmsPackageUnit packageUnit = validatePackageUnit(errorLog,item,pcs);//包装单位
+		
+		String code = getCodeByRule(errorLog, company, type, warehouse, "发货单") ;//获取单据编码
+		
+		if(errorLog.size() == 0){//如果数据没问题,保存数据
+			WmsPickTicket pickTicket = findPickByOdrNo(odrNo);//根据相关单号查发货单,如果查到就新增明细,不再创建发货单
+			Integer lineNo = 10;
+			if(null == pickTicket){
+				pickTicket = new WmsPickTicket(warehouse, company, type, code, odrNo, 
+											WmsPickTicketStatus.OPEN, qty, 0d, 0d, 0d, WmsSource.INTERFACE);
+				commonDao.store(pickTicket);
+			}else{
+				lineNo = getMaxLineNo(pickTicket,null,qty);//获取行号
+			}
+			ShipLotInfo shipLotInfo = new ShipLotInfo(supplier == null ? null : supplier.getCode());
+			
+			WmsPickTicketDetail detail = new WmsPickTicketDetail(pickTicket, lineNo, item, shipLotInfo, 
+														packageUnit, qty, qty, 0d, 0d, 0d,supplier);
+			commonDao.store(detail);
+			
+			
+			//更新状态
+			updateMiddleStatus(tableName, connection, pre, errorLog, id);
+		}else{
+			//更新状态
+			updateMiddleStatus(tableName, connection, pre, errorLog, id);
+		}
+	}
+	Integer getMaxLineNo(WmsPickTicket pickTicket,WmsASN asn,Double qty){
+		String hql = "";
+		String updateHql = "";
+		if(null == asn){
+			hql = "select max(lineNo),sum(expectedQuantityBU) "
+					+ "from WmsPickTicketDetail where pickTicket.id="+pickTicket.getId();
+			updateHql = "update WmsPickTicket set "
+							+ "expectedQuantityBU=:qtyParam where id="+pickTicket.getId();//更新整单数量
+		}else{
+			hql = "select max(lineNo),sum(expectedQuantityBU) "
+					+ "from WmsASNDetail where asn.id="+asn.getId();
+			updateHql = "update WmsASN set expectedQuantityBU=:qtyParam where id="+asn.getId();
+		}	
+		@SuppressWarnings("unchecked")
+		List<Object[]> list = commonDao.findByQuery(hql);
+		if(list.size() > 0){
+			Double detailQty = list.get(0)[1] == null ? 0d : (Double)list.get(0)[1];//明细数量
+			commonDao.executeByHql(updateHql,"qtyParam" , detailQty+qty);
+			
+			return list.get(0)[0] == null ? 10 : ((Integer)list.get(0)[0]+ 10);
+		}
+		return 10;
+	}
+	
+	/**
+	 * 获取单据编码,有异常(例如数据未在规则表维护)则保存错误信息
+	 * @param errorLog
+	 * @param company
+	 * @param billType
+	 * @param warehouse
+	 * @param type
+	 * @return
+	 */
+	String getCodeByRule(List<String> errorLog,WmsOrganization company,
+							WmsBillType billType,WmsWarehouse warehouse,String type){
+		if(null == warehouse || null == billType || null == billType){
+			return null;
+		}
+		String code = "";
+		if(null != company && null != billType){
+			try{
+				code = codeManager.generateCodeByRule(warehouse, company.getName(),type, billType.getName());
+			}catch(Exception e){
+				errorLog.add(e.getMessage());
+			}
+		}
+		return code;
+	}
+	@Override
+	public void dealStationAndItemData() {
+		logger.error("-----------开始处理器具物料对应关系表数据-----------");
+		Connection connection = getConnection();//获取连接
+		if(null == connection){
+			throw new BusinessException("获取数据库连接失败,请检查!");
+		}
+//		WmsWarehouse warehouse = getwareHouse();//新港仓库
+		List<String> errorLog = new ArrayList<String>();//记录错误信息
+		/**器具物料对应关系*/
+		String applianceItemMesSql = "select id,APPLIANCE_TYPE,ITEMCODE,FULLAMOUNT,"
+							+ " SIZES from "+MiddleTableName.W_APPLIANCE_ITEM_MES
+							+ " where STATUS = 1";
+		PreparedStatement pre = null;// 创建预编译语句对象，一般都是用这个而不用Statement
+		ResultSet result = null;// 创建一个结果集对象
+		try {
+			pre = connection.prepareStatement(applianceItemMesSql);
+			result = pre.executeQuery();// 执行查询，注意括号中不需要再加参数
+			while(result.next()){
+				Long id = result.getLong(1);//
+				String type = result.getString(2);//器具型号
+				String itemCode = result.getString(3);//货品编码
+				Integer loadage = result.getInt(4);//装载量
+				Double size = result.getDouble(5);//尺寸
+				WmsItem item = validateItem(errorLog, itemCode);
+				
+				if(errorLog.size() == 0){
+					WmsStationAndItem sai = new WmsStationAndItem(type, item, loadage, size);
+					commonDao.store(sai);
+					
+					/**更新中间表数据状态=成功,清空错误信息*/
+					updateMiddleStatus(MiddleTableName.W_APPLIANCE_ITEM_MES, connection, pre, errorLog,id);
+				}else{
+					/**更新中间表数据状态=错误,记录错误信息*/
+					updateMiddleStatus(MiddleTableName.W_APPLIANCE_ITEM_MES, connection, pre, errorLog,id);
+				}
+				errorLog.clear();//清空错误信息,继续处理下条数据
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			closeConnection(result, pre, connection);
+		}
+		logger.error("-----------结束处理器具物料对应关系表数据-----------");
+	}
+	WmsItem validateItem(List<String> errorLog,String itemCode){
+		String hql = "from WmsItem item where item.code=:itemCode and status='ENABLED'";
+		WmsItem item = (WmsItem) commonDao.findByQueryUniqueResult(hql, "itemCode", itemCode);
+		if(null == item){
+			errorLog.add("根据货品编码："+itemCode+"未找到对应的货品!!");
+		}
+		return item;
+	}
+	@Override
+	public void dealSupplierAndItemData() {
+//		logger.error("-----------开始处理供应商物料关系对应表数据-----------");
+//		Connection connection = getConnection();//获取连接
+//		if(null == connection){
+//			throw new BusinessException("获取数据库连接失败,请检查!");
+//		}
+////		WmsWarehouse warehouse = getwareHouse();//新港仓库
+//		List<String> errorLog = new ArrayList<String>();//记录错误信息
+//		//器具物料对应关系
+//		String applianceItemMesSql = "select id,COMPANY,SUPPLY_NO,ITEMCODE,INV_LOC,SXRQ,"
+//							+ "GQRQ from W_SUPPLY_ITEM_ERP where STATUS in (0,1)";
+//		PreparedStatement pre = null;// 创建预编译语句对象，一般都是用这个而不用Statement
+//		ResultSet result = null;// 创建一个结果集对象
+//		String updateHql = "";//根据接口表状态Hql
+//		try {
+//			pre = connection.prepareStatement(applianceItemMesSql);
+//			result = pre.executeQuery();// 执行查询，注意括号中不需要再加参数
+//			while(result.next()){
+//				Long id = result.getLong(1);//
+//				String companyCode = result.getString(2);//货主
+//				String supplierCode = result.getString(3);//供应商编码
+//				String itemCode = result.getString(4);//货品编码
+//				String invLoc = result.getString(5);//寄存林采仓库
+//				Date activeDate = result.getDate(6);//生效日期
+//				Date gqDate = result.getDate(7);//过期日期 
+//			}
+//		}catch (SQLException e) {
+//			e.printStackTrace();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}finally{
+//			closeConnection(result, pre, connection);
+//		}
+//		logger.error("-----------结束处理供应商物料关系对应表数据-----------");
+	}
+	@Override
+	public void dealErpItemData() {
+		logger.error("-----------开始处理物料关系中间表数据-----------");
+		Connection connection = getConnection();//获取连接
+		if(null == connection){
+			throw new BusinessException("获取数据库连接失败,请检查!");
+		}
+		List<String> errorLog = new ArrayList<String>();//记录错误信息
+		
+		/**物料基础信息数据*/
+		String applianceItemMesSql = "select id,COMPANY,CODE,NAME,UNIT "
+				+ "from "+MiddleTableName.W_ITEM_ERP+" where STATUS = 1";
+		
+		PreparedStatement pre = null;// 创建预编译语句对象，一般都是用这个而不用Statement
+		ResultSet result = null;// 创建一个结果集对象
+		try {
+			pre = connection.prepareStatement(applianceItemMesSql);
+			result = pre.executeQuery();// 执行查询，注意括号中不需要再加参数
+			while(result.next()){
+				Long id = result.getLong(1);//
+//				String warehouse = result.getString(2);//仓库
+				String itemCode = result.getString(3).toUpperCase();//货品编码
+				String itemName = result.getString(4).toUpperCase();//货品名称
+				String unit = result.getString(5);//包装单位
+				
+				/**校验数据*/
+				List<WmsOrganization> company = getcompanyByItemCode(connection,
+									pre,itemCode,errorLog,result);
+						
+				if(errorLog.size() == 0){
+					for(WmsOrganization com : company){
+						WmsItem item = new WmsItem(com, itemCode, itemName, unit, BaseStatus.ENABLED);
+						commonDao.store(item);
+						workflowManager.sendMessage(item, "itemProcess.new");//新建包装单位
+					}
+					/**更新中间表数据状态=成功,清空错误信息*/
+					updateMiddleStatus(MiddleTableName.W_ITEM_ERP, connection, pre, errorLog,id);
+				}else{
+					
+					/**更新中间表数据状态=错误,记录错误信息*/
+					updateMiddleStatus(MiddleTableName.W_ITEM_ERP, connection, pre, errorLog,id);
+				}
+				errorLog.clear();//清空错误信息,继续处理下条数据
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			closeConnection(result, pre, connection);
+		}
+		logger.error("-----------结束处理物料关系中间表数据-----------");
+	}
+	
+	/**
+	 * 根据接口表里的物料编码
+	 * 		去供应商物料关系表里查货主,没查到则记录报错信息
+	 * @param connection
+	 * @param pre
+	 * @param itemCode
+	 * @param errorLog
+	 * @param result
+	 * @return
+	 */
+	List<WmsOrganization> getcompanyByItemCode(Connection connection,PreparedStatement pre,
+			String itemCode,List<String> errorLog,ResultSet result){
+		List<WmsOrganization> orgs = new ArrayList<WmsOrganization>();//记录货主
+		String sql = "select INV_LOC from "
+						+ MiddleTableName.W_SUPPLY_ITEM_ERP + " where ITEMCODE=:itemCode";
+		try {
+			pre = connection.prepareStatement(sql);
+			pre.setString(1, itemCode);
+			result = pre.executeQuery();
+			
+			while(result.next()){
+				String companyCode = result.getString(1);
+				WmsOrganization org = validateOrg(errorLog, companyCode, null, Boolean.FALSE);
+				if(null == org){//校验货主在WMS里是否存在
+					errorLog.add("根据物料编码("+itemCode+")在"
+							+ "供应商物料关系表里找到的货主("+companyCode+")在WMS系统里不存在!\n");
+				}else{
+					WmsItem item = validateItem(errorLog,itemCode,
+							companyCode,Boolean.TRUE);//如果货主已经存在,再校验此货品是否已经存在
+					if(null != item){
+						errorLog.add("编码("+itemCode+")和货主("+companyCode+")"
+								+ "对应的货品在WMS已经存在,请检查!!");
+					}
+					orgs.add(org);
+				}
+			}
+			if(orgs.size() == 0){
+				errorLog.add("根据物料编码("+itemCode+")在供应商物料关系表中未找到对应数据,请检查!!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return orgs;
+	}
+	
+	@Override
+	public void dealErpSupplierData() {
+		logger.error("-----------开始处理供应商中间表数据-----------");
+		Connection connection = getConnection();//获取连接
+		if(null == connection){
+			throw new BusinessException("获取数据库连接失败,请检查!");
+		}
+		List<String> errorLog = new ArrayList<String>();//记录错误信息
+		
+		/**供应商基础信息数据*/
+		String applianceItemMesSql = "select id,COMPANY,SUPPLY_NO,SUPPLY_NAME,"
+							+ " PROVINCE,CITY,CONTACT_USER,TEL,MOBILE,FAX,EMAIL,"
+							+ " ADDRESS from "+MiddleTableName.W_SUPPLY_ERP
+							+ " where STATUS in (0,1)";
+		
+		PreparedStatement pre = null;// 创建预编译语句对象，一般都是用这个而不用Statement
+		ResultSet result = null;// 创建一个结果集对象
+		try {
+			pre = connection.prepareStatement(applianceItemMesSql);
+			result = pre.executeQuery();// 执行查询，注意括号中不需要再加参数
+			while(result.next()){
+				Long id = result.getLong(1);//
+//				String companyCode = result.getString(2);//仓库
+				String supplierNo = result.getString(3).toUpperCase().toUpperCase();//供应商编码
+				String supplierName = result.getString(4).toUpperCase();//供应商名称
+				String province = result.getString(5);//省份
+				String city = result.getString(6);//城市
+				String contactUser = result.getString(7);//联系人
+				String tel = result.getString(8);//电话
+				String mobile = result.getString(9);//手机
+				String fax = result.getString(10);//传真
+				String email = result.getString(11);//邮箱
+				String address = result.getString(12);//地址
+				
+				/**校验数据*/
+				WmsOrganization supplier = validateOrg(errorLog,supplierNo,null,Boolean.FALSE);
+				if(null != supplier){
+					errorLog.add("编码为"+supplierNo+"的供应商在WMS系统已存在,请检查!!\n");
+				}
+				
+				if(errorLog.size() == 0){
+					Contact contact = new Contact(contactUser, tel, 
+										mobile, fax, email, province, city, address);
+					WmsOrganization org = new WmsOrganization(supplierNo, 
+										supplierName, contact, BaseStatus.ENABLED);
+					commonDao.store(org);
+					
+					/**更新中间表数据状态=成功,清空错误信息*/
+					updateMiddleStatus(MiddleTableName.W_SUPPLY_ERP, connection, pre, errorLog,id);
+				}else{
+					
+					/**更新中间表数据状态=错误,记录错误信息*/
+					updateMiddleStatus(MiddleTableName.W_SUPPLY_ERP, connection, pre, errorLog,id);
+				}
+				errorLog.clear();//清空错误信息,继续处理下条数据
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			closeConnection(result, pre, connection);
+		}
+		logger.error("-----------结束处理供应商中间表数据-----------");
+		
+	}
+}

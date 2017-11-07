@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.move.QisPlan" table="QIS_PLAN">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">WSEQ_QIS_PLAN</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+		
+		<property name="planYear" column="PLAN_YEAR" type="string"/>      
+		<property name="planMonth" column="PLAN_MONTH" type="string" />
+		<property name="factory" column="FACTORY" type="string" />
+		<property name="partNo" column="PART_NO" type="string" />
+		<property name="supplyNo" column="SUPPLIER_CODE" type="string" />
+		<property name="partName" column="PART_NAME" type="string" />
+		<property name="supplyName" column="SUPPLIER_NAME" type="string" />
+		<property name="note" column="note" type="string" />
+		<property name="quantity" type="string" column="QUANTITY"/>
+		<property name="createTime" type="timestamp" column="CREATE_TIME"/>
+	</class>
+</hibernate-mapping>

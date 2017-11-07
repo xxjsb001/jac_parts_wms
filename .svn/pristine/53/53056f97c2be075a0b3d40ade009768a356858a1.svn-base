@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process id="ruleProcess" control="upline">
+	<state id="true" title="上线"/>
+	<state id="false" title="下线"/>
+
+	<task id="import" title="导入" />
+	<task id="export" title="导出" />
+	<task id="newDirectory" title="新增目录" />
+	<task id="newDataSourceItem" title="新增数据源" />
+	<task id="newFeeRuleItem" title="新增规则" />
+	<task id="deleteDataSource" title="删除数据源" />
+	<task id="deleteFeeRule" title="删除规则" />
+	<task id="deleteDirectory" title="删除目录" />
+	<task id="onLine" title="上线" >
+		<from id="false" type="state"/>
+		<to id="true" type="state"/>
+	</task>
+	<task id="downLine" title="下线">
+		<from id="true" type="state"/>
+		<to id="false" type="state"/>
+	</task>
+	<task id="directorySave" title="保存目录" />
+	<task id="dataSourceSave" title="保存数据源" />
+	<task id="feeRuleSave" title="保存规则" />
+	
+	
+</process>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="wmsASNPutawayProcess" control="shelvesStauts">
+
+	<state id="UNPUTAWAY" title="待上架"/>
+
+	<state id="PUTAWAY" title="上架中"/>
+
+	<state id="FINISHED" title="上架完成"/>
+
+	<task id="close" title="关闭">
+		<from id="UNPUTAWAY" type="state"/>
+		<from id="PUTAWAY" type="state"/>
+		<to id="FINISHED" type="state"/>
+	</task>
+
+	<task id="createMoveDoc" title="创建上架单">
+		<from id="UNPUTAWAY" type="state"/>
+		<from id="PUTAWAY" type="state"/>
+		<to id="wmsASNMoveStatusDecision" type="decision"/>
+	</task>
+
+	<task id="moveConfirm" title="上架作业完成">
+		<from id="PUTAWAY" type="state"/>
+		<from id="UNPUTAWAY" type="state"/>
+		<to id="wmsASNMoveStatusDecision" type="decision"/>
+	</task>
+
+	<task id="cancelMoveDoc" title="取消上架单">
+		<from id="PUTAWAY" type="state"/>
+		<from id="FINISHED" type="state"/>
+		<from id="UNPUTAWAY" type="state"/>
+		<to id="wmsASNMoveStatusDecision" type="decision"/>
+	</task>
+
+	<task id="new" title="新建">
+		<from id="PUTAWAY" type="state"/>
+		<from id="UNPUTAWAY" type="state"/>
+	</task>
+
+	<decision id="wmsASNMoveStatusDecision" action="wmsASNMoveStatusDecisionAction">
+		<to id="FINISHED" value="FINISHED" type="state" />
+		<to id="PUTAWAY" value="PUTAWAY" type="state" />
+		<to id="UNPUTAWAY" value="UNPUTAWAY" type="state" />
+	</decision>
+
+</process>

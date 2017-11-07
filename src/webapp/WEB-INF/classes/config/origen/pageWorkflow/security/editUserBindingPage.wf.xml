@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editUserBindingPage">
+	<main>
+		<process id="groupProcess">
+                <formCommit id="save" process="groupProcess.new" title="save" enableType="none" invisible="false">
+                     <forwards>
+                        <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                    </forwards>
+                </formCommit>
+		</process>
+	</main>
+	<detail>
+		<process id="groupProcess">
+				<tablePopup id="addUser" process="groupProcess.add" title="addUser" invisible="false" containId="false" pageId="userGroupBindingPage"/>
+                <tableCommit id="deleteUser" process="groupProcess.delete" title="deleteUser" enableType="multi" invisible="false" confirmMessage="confirm.delete">
+                    <actions>
+                        <action managerName="userManager" methodName="cancelGroupUsers" parameter="parentObj,obj"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                    </forwards>
+                </tableCommit>
+		</process>
+	</detail>
+</page>

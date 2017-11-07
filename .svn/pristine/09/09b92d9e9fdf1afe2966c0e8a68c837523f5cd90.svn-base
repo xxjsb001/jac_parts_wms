@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsMoveDocProcessRecordPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <formCommit id="processRecord" title="processRecord" process="wmsProcessRecordProcess.processRecord" enableType="none" download="false">
+                <enableExpression/>
+                <mappings>               
+                    <mapping id="processDoc.addProcessQuantityBU" className="double">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsProcessManager" methodName="processRecord" parameter="obj,processDoc.addProcessQuantityBU"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+	        </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

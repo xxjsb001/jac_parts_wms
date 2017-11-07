@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="replenishmentProcess" control="status">
+
+	<task id="requirement" title="按需求补货">
+	</task>
+
+</process>

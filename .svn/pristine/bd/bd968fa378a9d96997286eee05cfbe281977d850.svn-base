@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsCountRecordPage">
+    <main>
+        <process id="countPlanProcess">
+            <tableCommit id="countUpdate" title="countUpdate" process="countPlanProcess.countUpdate" enableType="multi" download="false" closeTransactional="false" confirmMessage="confirm.countUpdate">
+		 		<enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsCountPlanManager" methodName="record" parameter="obj, tableValues"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="countInsert" title="countInsert" process="countPlanProcess.countInsert" enableType="none" containId="false" pageId="editAddWmsCountRecordPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

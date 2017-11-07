@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsbillingCategoryPage">
+    <main>
+        <process id="wmsBillingCategoryProcess">
+            <tablePopup id="new" title="new" process="wmsBillingCategoryProcess.new" enableType="none" containId="false" pageId="editWmsBillingCategoryPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="wmsBillingCategoryProcess.edit" enableType="single" containId="true" pageId="editWmsBillingCategoryPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="enable" title="enable" process="wmsBillingCategoryProcess.enable" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainPage.enable">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="disable" title="disable" process="wmsBillingCategoryProcess.disable" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainPage.disable">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

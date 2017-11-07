@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editSaveStorageData" title="editSaveStorageData" entityClass="com.vtradex.wms.server.model.inventory.WmsTheKont" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+        	<hidden id="mis.id" title="mis.id" reserve="false"/>
+            <date id="storageDate" title="editSaveStorageData.storageDate" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <textArea id="description" title="editSaveStorageData.description" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+            <textArea id="note" title="note" defaultValue="日结(次日)指日结数据当天的第二日,如选择2002-01-02则系统生成2002-01-01的日结数据,系统只生成所选日期的前一日数据" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+        </inputUIs>
+    </editPage>
+</pages>

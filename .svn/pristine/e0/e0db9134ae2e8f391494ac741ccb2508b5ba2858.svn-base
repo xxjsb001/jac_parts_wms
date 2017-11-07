@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editPrintBarCodeByItemPage">
+    <main>
+        <process id="itemProcess">
+            <formDirectPrint id="printTag" title="print" process="itemProcess.printTag" enableType="none" download="false" closeTransactional="false" visibleType="none" raq="wmsBarCode.raq">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="printNumber" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsItemManager" methodName="printBarCode" parameter="obj,printNumber"/>
+                </actions>
+                <forwards/>
+            </formDirectPrint>
+        </process>
+    </main>
+    <detail/>
+</page>

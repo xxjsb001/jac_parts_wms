@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWorkDocPage">
+    <main>
+        <process id="workDocProcess">
+            <tablePopup id="viewWorkDoc" title="viewWorkDoc" process="workDocProcess.viewWorkDoc" enableType="single" containId="true" pageId="viewWorkDocPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="workDocProcess.edit" enableType="single" containId="true" pageId="modifyWorkDocDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="print" title="print" process="workDocProcess.print" enableType="multi" containId="true" pageId="printWmsWorkDocReportPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="workConfirm" title="workConfirm" process="workDocProcess.confirm" enableType="single" containId="true" pageId="modifyWorkConfirmPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="view" title="view" process="workDocProcess.view" enableType="single" containId="true" pageId="viewWmsTaskLogPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

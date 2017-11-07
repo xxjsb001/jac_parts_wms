@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="modifyWmsMoveDocCancelAllocatePage" title="modifyWmsMoveDocCancelAllocatePage" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc" onClose="refreshParent" width="800" height="500">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="moveDoc.id" title="moveDoc.id" reserve="false"/>
+                <hidden id="moveDoc.status" title="moveDoc.status" reserve="false"/>
+                <text id="moveDoc.code" title="moveDoc.code" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.warehouse.name" title="moveDoc.warehouse.name" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.company.name" title="moveDoc.company.name" row="1" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <date id="moveDoc.updateInfo.createdTime" title="moveDoc.createTime" row="1" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <text id="moveDoc.billType.name" title="moveDoc.billType.name" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.originalBillCode" title="moveDoc.originalBillCode" row="2" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.planQuantityBU" title="moveDoc.planQuantityBU" row="2" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.movedQuantityBU" title="moveDoc.movedQuantityBU" row="2" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.move.WmsTask">
+            <datasource><![CDATA[SELECT task.id,
+task.type,
+task.status,
+task.fromLocationCode,
+task.toLocationCode,
+task.itemKey.item.code,
+task.itemKey.item.name,
+task.packageUnit.unit,
+task.planQuantity,
+task.planQuantityBU,
+task.movedQuantityBU,
+task.updateInfo.createdTime
+ FROM WmsTask task
+ LEFT JOIN task.moveDocDetail
+ WHERE 1=1 
+ AND task.planQuantityBU > 0 
+ AND task.moveDocDetail.moveDoc.id = {moveDoc.id}
+ ORDER BY task.updateInfo.createdTime desc]]></datasource>
+            <columns>
+	            <column id="task.id" title="task.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+	            <column id="task.type" title="task.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsTaskType"/>
+	            <column id="task.status" title="task.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsTaskStatus"/>
+	            <column id="task.fromLocationCode" title="task.fromLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	            <column id="task.toLocationCode" title="task.toLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	            <column id="task.itemKey.item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	            <column id="task.itemKey.item.name" title="item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	            <column id="task.packageUnit.unit" title="packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	            <column id="task.planQuantity" title="task.planQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+	            <column id="task.planQuantityBU" title="task.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+	            <column id="task.movedQuantityBU" title="task.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+	            <column id="task.updateInfo.createdTime" title="task.updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+	        </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

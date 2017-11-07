@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editP2CMPage" title="editP2CMPage" entityClass="com.vtradex.thorn.server.model.imports.Property2ColMapping">
+        <inputUIs>
+            <hidden id="p2cm.id" reserve="false"/>
+            <text id="p2cm.propertyName" title="editP2CMPage.p2cm.propertyName" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+            <text id="p2cm.colSN" title="editP2CMPage.p2cm.colSN" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" inVisible="false" validator="positiveIntegerRequired" trimSpace="true" isPrecision="true"/>
+            <text id="p2cm.propertyLocaleName" title="editP2CMPage.p2cm.propertyLocaleName" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+            <text id="p2cm.value" title="editP2CMPage.p2cm.value" row="2" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+            <text id="p2cm.propertyDefaultValue" title="editP2CMPage.p2cm.propertyDefaultValue" row="3" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+            <checkbox id="p2cm.allowNull" title="editP2CMPage.p2cm.allowNull" row="3" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false"/>
+        </inputUIs>
+    </editPage>
+</pages>

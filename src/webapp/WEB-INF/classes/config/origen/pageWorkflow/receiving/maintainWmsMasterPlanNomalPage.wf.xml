@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsMasterPlanNomalPage">
+    <main>
+        <process id="wmsBookingProcess">
+            <tablePopup id="editPlan" title="editPlan" process="wmsBookingProcess.newMasterPlan" enableType="single" containId="true" pageId="editWmsMasterPlan1Page">
+                <enableExpression><![CDATA[${booking.status} == 'OPEN']]></enableExpression>
+            </tablePopup>
+            <tablePopup id="arriveRegister" title="arriveRegister" process="wmsBookingProcess.arriveRegister" enableType="single" containId="true" pageId="editArriveRegisterPage">
+                <enableExpression><![CDATA[${booking.status} == 'OPEN']]></enableExpression>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="wmsBookingProcess.delete" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainWmsMasterPlanNomalPage.delete">
+                <enableExpression><![CDATA[${booking.status} == 'OPEN']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="maintainWmsBookingPage" methodName="deleteBooking" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

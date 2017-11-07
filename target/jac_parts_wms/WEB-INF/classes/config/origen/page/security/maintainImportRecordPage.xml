@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainImportRecordPage" title="maintainImportRecordPage">
+        <workflow/>
+        <datasource><![CDATA[SELECT importReocrd.id,
+importReocrd.importDate,
+importReocrd.updateInfo.creator,
+importReocrd.type,
+importReocrd.fileName,
+importReocrd.status,
+importReocrd.totalNumber,
+importReocrd.successNumber,
+importReocrd.failNumber ,
+importReocrd.storeFile
+ from ImportRecord importReocrd where 1=1 and updateInfo.creatorId = #{SESSION_USERS} order by importReocrd.id desc]]></datasource>
+        <columns>
+            <column id="importReocrd.id" title="importReocrd.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="importReocrd.importDate" title="importReocrd.importDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="importReocrd.updateInfo.creator" title="importReocrd.updateInfo.creator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="importReocrd.type" title="importReocrd.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="importReocrd.fileName" title="importReocrd.fileName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="importReocrd.status" title="importReocrd.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="ImportRecord" />
+            <column id="importReocrd.totalNumber" title="importReocrd.totalNumber" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+            <column id="importReocrd.successNumber" title="importReocrd.successNumber" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+            <column id="importReocrd.failNumber" title="importReocrd.failNumber" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+            <column id="importReocrd.storeFile" title="importReocrd.storeFile" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string" format="importRecordFormat"/>
+        </columns>
+    </maintainPage>
+</pages>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainRuleTableItemPage" title="maintainRuleTableItemPage" pageLocale="false" autoQuery="true" entityClass="com.vtradex.rule.server.model.rule.RuleTableItem" width="800" height="600">
+        <workflow/>
+        <datasource><![CDATA[SELECT ruleTableItem.id,
+ruleTableItem.reference,
+ruleTableItem.type,
+ruleTableItem.gradeItem 
+ FROM RuleTableItem ruleTableItem WHERE 1=1 AND ruleTableItem.type != '3_MULTIPLE' AND 
+ ruleTableItem.ruleTable.id in ({parentIds})  
+ORDER BY ruleTableItem.type,ruleTableItem.lineNO]]></datasource>
+        <columns>
+            <column id="ruleTableItem.id" title="ruleTableItem.id" pageLocale="false" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="ruleTableItem.reference" title="ruleTableItem.reference" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="ruleTableItem.type" title="ruleTableItem.type" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="RuleTableItem"/>
+            <column id="ruleTableItem.gradeItem" title="ruleTableItem.gradeItem" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
+        </columns>
+    </maintainPage>
+</pages>

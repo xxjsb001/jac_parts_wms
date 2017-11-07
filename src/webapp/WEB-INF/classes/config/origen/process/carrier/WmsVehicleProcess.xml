@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="WmsVehicleProcess" control="status">
+
+	<state id="ENABLED" title="生效"/>
+
+	<state id="DISABLED" title="失效"/>
+
+	<task id="new" title="新建">
+		<to id="ENABLED" type="state"/>
+	</task>
+
+	<task id="unActive" title="失效">
+		<from id="ENABLED" type="state"/>
+		<to id="DISABLED" type="state"/>
+	</task>
+
+	<task id="active" title="生效">
+		<from id="DISABLED" type="state"/>
+		<to id="ENABLED" type="state"/>
+	</task>
+
+	<task id="view" title="查看">
+		<from id="ENABLED" type="state"/>
+	</task>
+
+	<task id="modify" title="修改">
+		<from id="ENABLED" type="state"/>
+	</task>
+
+	<task id="attachment" title="附件管理">
+		<from id="ENABLED" type="state"/>
+	</task>
+
+	<task id="import" title="导入">
+	</task>
+
+</process>

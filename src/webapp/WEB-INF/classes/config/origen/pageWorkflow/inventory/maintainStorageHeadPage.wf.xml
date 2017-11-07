@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainStorageHeadPage">
+    <main>
+        <process id="inventoryProcess">
+            <tablePopup id="saveStorageData" title="saveStorageData" process="inventoryProcess.saveStorageData" enableType="none" containId="false" pageId="editSaveStorageData">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="initdayend" title="initdayend" process="inventoryProcess.initdayend" closeTransactional="true" enableType="none" download="false" confirmMessage="initdayend">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="theKnotManager" methodName="saveStorageDataSys" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

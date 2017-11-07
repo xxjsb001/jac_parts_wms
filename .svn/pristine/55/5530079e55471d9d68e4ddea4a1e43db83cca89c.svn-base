@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.move.WmsTaskLog" table="WMS_TASK_LOG">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_tasklog</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+        
+        <many-to-one name="task" class="com.vtradex.wms.server.model.move.WmsTask">
+			<column name="TASK_ID" not-null="true"/>
+		</many-to-one>
+		
+		<property name="fromLocationId" type="long" column="FROM_LOC_ID" not-null="true"/>
+		<property name="fromLocationCode" type="string" column="FROM_LOC_CODE" length="20" not-null="true"/>      
+        <property name="fromPallet" type="string" column="FROM_PALLET" length="50"/>
+        <property name="fromCarton" type="string" column="FROM_CARTON" length="50"/>
+        <property name="fromSerialNo" type="string" column="FROM_SERIALNO" length="50"/>
+		<property name="srcInventoryId" type="long" column="SRC_INVENTORY_ID" not-null="true"/>
+		<property name="toLocationId" type="long" column="TO_LOC_ID" not-null="true"/>
+		<property name="toLocationCode" type="string" column="TO_LOC_CODE" length="20" not-null="true"/>      
+        <property name="toPallet" type="string" column="TO_PALLET" length="50"/>
+        <property name="toCarton" type="string" column="TO_CARTON" length="50"/>
+		<property name="descInventoryId" type="long" column="DESC_INVENTORY_ID" not-null="true"/>
+		
+		<many-to-one name="itemKey" class="com.vtradex.wms.server.model.inventory.WmsItemKey">
+			<column name="ITEM_KEY_ID" not-null="true"/>
+		</many-to-one>	
+        <many-to-one name="packageUnit" class="com.vtradex.wms.server.model.organization.WmsPackageUnit">
+			<column name="PACKAGE_UNIT_ID" not-null="true"/>
+		</many-to-one>
+        <property name="inventoryStatus" type="string" column="INVENTORY_STATUS" length="100" not-null="true"/>
+		
+		<property name="movedQuantity" type="double" column="MOVED_QUANTITY" not-null="true"/>
+		<property name="movedQuantityBU" type="double" column="MOVED_QUANTITY_BU" not-null="true"/>
+		<property name="pickBackQuantityBU" type="double" column="PICKBACK_QUANTITY_BU" not-null="true"/>
+		
+		<property name="bePickBack" column="BE_PICKBACK" type="yes_no"/>
+		
+		<many-to-one name="worker" class="com.vtradex.wms.server.model.warehouse.WmsWorker">
+			<column name="WORKER_ID"/>
+		</many-to-one>
+		<property name="storageDate" type="timestamp" column="STORAGE_DATE"/>
+		<property name="productDate" type="timestamp" column="PRODUCT_DATE"/>
+		<property name="expireDate" type="timestamp" column="EXPIRE_DATE"/>
+		<property name="warnDate" type="timestamp" column="WARN_DATE"/>
+		<property name="receivedDate" type="timestamp" column="RECEIVED_DATE"/>
+
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	</class>
+</hibernate-mapping>

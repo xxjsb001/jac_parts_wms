@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsWorkGroupPage" title="maintainWmsWorkGroupPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.warehouse.WmsWorker">
+        <workflow/>
+        <datasource><![CDATA[SELECT workGroup.id,
+workGroup.code,
+workGroup.name,
+workGroup.status,
+workGroup.description 
+ FROM WmsWorker workGroup 
+ WHERE 1=1
+ AND workGroup.warehouse = #{SESSION_WAREHOUSE}
+ AND workGroup.type = 'GROUP' 
+ ORDER BY workGroup.code]]></datasource>
+        <columns>
+            <column id="workGroup.id" title="workGroup.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="workGroup.code" title="workGroup.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="workGroup.name" title="workGroup.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="workGroup.status" title="workGroup.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>
+            <column id="workGroup.description" title="workGroup.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

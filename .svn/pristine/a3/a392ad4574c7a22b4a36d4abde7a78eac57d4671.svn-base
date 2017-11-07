@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.interfaces.MiddleOrderSps" table="MIDDLE_ORDER_SPS" >
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">WSEQ_MIDDLE_ORDER_SPS</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id> 
+		<property name="odrNo" type="string" column="ODR_NO"/>
+		<many-to-one name="billType" class="com.vtradex.wms.server.model.organization.WmsBillType">
+			<column name="BILL_TYPE_ID" not-null="true"/>
+		</many-to-one>
+		<many-to-one name="supply" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="SUPPLY_ID" not-null="true"/>
+		</many-to-one>
+		<many-to-one name="company" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="COMPANY_ID" not-null="true"/>
+		</many-to-one>
+		<many-to-one name="item" class="com.vtradex.wms.server.model.organization.WmsItem">
+			<column name="ITEM_ID" not-null="true"/>
+		</many-to-one>
+		<property name="demandDate" type="date" column="DEMAND_DATE"/>
+		<property name="isJp" type="boolean">
+			<column name="IS_JP" default="0"></column>
+		</property>
+		<many-to-one name="packageUnit" class="com.vtradex.wms.server.model.organization.WmsPackageUnit">
+			<column name="PACKAGE_ID" not-null="true"/>
+		</many-to-one>
+		<property name="qty" type="double" column="QTY"/>
+		<property name="odrSu" type="string" column="ODR_SU"/>
+		<property name="dware" type="string" column="DWARE"/>
+		<property name="productLine" type="string" column="PRODUCT_LINE"/>
+		<property name="shdk" type="string" column="SHDK"/>
+		<property name="batch" type="string" column="BATCH"/>
+		<property name="station" type="string" column="STATION"/>
+		<property name="slr" type="string" column="SLR"/>
+		<property name="packageNo" type="string" length="20" column="PACKAGE_NO"/>
+		<property name="packageNum" type="double" column="PACKAGE_NUM"/>
+		<property name="packageQty" type="double" column="PACKAGE_QTY"/>
+		<property name="remark" type="string" column="REMARK"/>
+		<property name="fromSource" type="string" column="FROM_SOURCE"/>
+		<many-to-one name="head" class="com.vtradex.wms.server.model.interfaces.WHead">
+			<column name="HEAD_ID" not-null="true"/>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process id="reportProcess" control="status">
+    <state id="ACTIVE" title="生效" />
+    <state id="UNACTIVE" title="失效" />
+    
+   	<task id="new" title="新建">
+   		<to id="UNACTIVE" type="state" />
+	</task>
+	<task id="modify" title="修改">
+		<from id="UNACTIVE" type="state" />
+	</task>
+	<task id="delete" title="删除">
+		<from id="UNACTIVE" type="state" />
+	</task>
+	<task id="view" title="查看" />
+	<task id="add" title="添加" />
+	<task id="import" title="导入" />
+	<task id="export" title="导出" />
+	<task id="up" title="上移" />
+	<task id="down" title="下移" />
+	
+	<task id="active" title="生效">
+		<from id="UNACTIVE" type="state" />
+		<to id="ACTIVE" type="state" />
+	</task>
+	
+	<task id="unActive" title="失效">
+		<from id="ACTIVE" type="state" />
+		<to id="UNACTIVE" type="state" />
+	</task>
+	
+	<task id="colInput" title="列录入">
+		<from id="UNACTIVE" type="state" />
+	</task>
+	<task id="paramInput" title="参数录入">
+		<from id="UNACTIVE" type="state" />
+	</task>
+</process>

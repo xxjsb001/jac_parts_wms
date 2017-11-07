@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyWmsMoveDocHandPage">
+    <main/>
+    <detail>
+        <process id="wmsMoveDocProcess">
+            <tablePopup id="allocate" title="allocate" process="wmsMoveDocProcess.allocate" enableType="single" containId="true" pageId="choseLocationPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </detail>
+</page>

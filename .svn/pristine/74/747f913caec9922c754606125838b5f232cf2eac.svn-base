@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editUserPassword">
+	<main>
+		<process id="userProcess">
+                <formCommit id="save" process="userProcess.new" title="save" enableType="none" invisible="false">
+                     <mappings>
+                    <mapping id="user.password" className="string"/>
+                    <mapping id="newPassword" className="string"/>
+                    <mapping id="confirmPassword" className="string"/>
+                </mappings>
+                <actions>
+                    <action managerName="userManager" methodName="modifyPassword" parameter="user.password,newPassword,confirmPassword"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+                </formCommit>
+		</process>
+	</main>
+</page>

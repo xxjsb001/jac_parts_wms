@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="difQuantityAdjustPage">
+    <main>
+        <process id="inventoryProcess">
+            <formCommit id="countAdjust" title="countAdjust" process="inventoryProcess.countAdjust" enableType="none" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="modifyQuantity" className="double">
+                        <entries/>
+                    </mapping>
+                    <mapping id="description" className="string">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsInventoryManager" methodName="countAdjust" parameter="parentObj,modifyQuantity,description"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

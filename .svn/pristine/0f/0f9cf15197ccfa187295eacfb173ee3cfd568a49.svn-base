@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editRolesPage">
+	<main>
+		<process id="roleProcess">
+				<formCommit id="save" process="roleProcess.new" title="save" >
+	                <forwards>
+                        <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                        <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    </forwards>
+				</formCommit>
+		</process>
+	</main>
+	<detail>
+		<process id="roleProcess">
+				<tablePopup id="addGroup" process="roleProcess.add" title="addGroup" invisible="false" containId="false" pageId="maintainAddRoleGroupsPage"/>
+				<tableCommit id="deleteGroup" process="roleProcess.delete" title="deleteGroup" enableType="multi" invisible="false" confirmMessage="confirm.delete">
+                    <actions>
+                        <action managerName="roleManager" methodName="removeRoleGroups" parameter="parentObj,obj"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                    </forwards>
+                </tableCommit>
+		</process>
+	</detail>
+</page>

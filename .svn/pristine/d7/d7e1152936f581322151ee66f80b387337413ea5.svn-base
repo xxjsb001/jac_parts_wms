@@ -1,0 +1,8 @@
+package com.vtradex.wms.server.model.interfaces;
+
+public interface HeadType {
+
+	/**ASN*/
+	public static String ASN = "ASN";
+	
+}

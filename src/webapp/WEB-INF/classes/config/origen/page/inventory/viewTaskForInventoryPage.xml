@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="viewTaskForInventoryPage" title="viewTaskForInventoryPage" entityClass="com.vtradex.wms.server.model.inventory.WmsInventory" width="700" height="500">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="inventory.id" title="inventory.id" reserve="false"/>
+            </inputUIs>
+        </modify>
+        <detail>
+            <datasource><![CDATA[SELECT task.id,task.workDoc.code,task.originalBillCode,task.type,(SELECT fromLocation.code FROM WmsLocation fromLocation WHERE fromLocation.id = task.fromLocationId),(SELECT toLocation.code FROM WmsLocation toLocation WHERE toLocation.id = task.toLocationId),task.itemKey.item.code,task.itemKey.item.name,task.packageUnit.unit,task.planQuantity,task.planQuantityBU,task.movedQuantityBU,task.status  FROM WmsTask task LEFT JOIN task.workDoc
+ WHERE 1=1
+ AND (task.srcInventoryId ={inventory.id} OR task.descInventoryId = {inventory.id})
+ AND task.status != 'FINISHED']]></datasource>
+            <columns>
+                <column id="task.id" title="task.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.workDoc.code" title="task.workDoc.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.originalBillCode" title="task.originalBillCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.type" title="task.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsTaskType"/>
+                <column id="task.fromLocationCode" title="task.fromLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.toLocationCode" title="task.toLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.itemKey.item.code" title="task.itemKey.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.itemKey.item.name" title="task.itemKey.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.packageUnit.unit" title="task.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.planQuantity" title="task.planQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.planQuantityBU" title="task.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.movedQuantityBU" title="task.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.status" title="task.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsTaskStatus"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

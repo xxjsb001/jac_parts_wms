@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="modifyPickedWaveDocPage" title="modifyPickedWaveDocPage" entityClass="com.vtradex.wms.server.model.shipping.WmsWaveDocDetail" onClose="refreshParent" width="900" height="500">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="waveDocDetail.id" title="waveDocDetail.id" reserve="false"/>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.shipping.WmsWaveDocDetail" autoQuery="true">
+           <datasource><![CDATA[SELECT
+pickedWaveDocDetail.id,
+pickTicket.code,
+item.code,
+item.name,
+packageUnit.unit,
+0 AS seprateQuantity,
+pickedWaveDocDetail.expectedQuantity,
+pickedWaveDocDetail.expectedQuantityBU,
+pickedWaveDocDetail.allocatedQuantityBU,
+pickedWaveDocDetail.pickedQuantityBU,
+pickedWaveDocDetail.splitedQuantityBU,
+pickedWaveDocDetail.shipLotInfo.soi,
+pickedWaveDocDetail.shipLotInfo.supplier
+FROM WmsWaveDocDetail pickedWaveDocDetail,WmsWaveDocDetail waveDocDetail
+LEFT JOIN waveDocDetail.waveMoveDocDetails waveMoveDocDetails
+LEFT JOIN waveMoveDocDetails.waveDocDetails waveDocDetails
+LEFT JOIN pickedWaveDocDetail.item item 
+LEFT JOIN pickedWaveDocDetail.packageUnit packageUnit
+LEFT JOIN pickedWaveDocDetail.moveDocDetail.moveDoc.pickTicket pickTicket
+WHERE 1=1
+AND waveDocDetail.id = {waveDocDetail.id}
+AND waveDocDetails.id <> {waveDocDetail.id}
+AND pickedWaveDocDetail in waveDocDetails
+AND pickedWaveDocDetail.splitedQuantityBU > 0
+ORDER BY pickedWaveDocDetail.id DESC]]></datasource>
+            <columns>
+                <column id="pickedWaveDocDetail.id" title="waveDocDetail.id" visible="false" sortable="true"/>
+                <column id="pickTicket.code" title="pickTicket.code" visible="true" sortable="true" horizonAlign="left"/>
+                <column id="item.code" title="item.code" visible="true" sortable="true" horizonAlign="left"/>
+                <column id="item.name" title="item.name" visible="true" sortable="true" horizonAlign="left"/>
+                <column id="packageUnit.unit" title="packageUnit.unit" visible="true" sortable="true" horizonAlign="left"/>
+                <column id="seprateQuantity" title="seprateQuantity" visible="true" sortable="false" horizonAlign="center" verticalAlign="middle" dataType="double" inputUI="numberText"/>
+                <column id="pickedWaveDocDetail.expectedQuantity" title="waveDocDetail.expectedQuantity" visible="true" sortable="true" horizonAlign="left"/>
+                <column id="pickedWaveDocDetail.expectedQuantityBU" title="waveDocDetail.expectedQuantityBU" visible="true" sortable="true" horizonAlign="right"/>
+                <column id="pickedWaveDocDetail.allocatedQuantityBU" title="waveDocDetail.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="right"/>
+                <column id="pickedWaveDocDetail.pickedQuantityBU" title="waveDocDetail.pickedQuantityBU" visible="true" sortable="true" horizonAlign="right"/>
+                <column id="pickedWaveDocDetail.splitedQuantityBU" title="waveDocDetail.splitedQuantityBU" visible="true" sortable="true" horizonAlign="right"/>
+                <column id="pickedWaveDocDetail.shipLotInfo.soi" title="shipLotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="pickedWaveDocDetail.shipLotInfo.supplier" title="shipLotInfo.supplier" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

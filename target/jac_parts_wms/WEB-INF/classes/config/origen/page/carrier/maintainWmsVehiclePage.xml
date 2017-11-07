@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsVehiclePage" title="maintainWmsVehiclePage" autoQuery="true" entityClass="com.vtradex.wms.server.model.carrier.WmsVehicle">
+        <workflow/>
+        <datasource><![CDATA[SELECT vehicle.id,
+vehicle.license,
+vehicle.beTrailer,
+vehicle.vehicleType.name,
+vehicle.origin,
+vehicle.brands,
+vehicle.length,
+vehicle.width,
+vehicle.height,
+vehicle.fuelConsumption,
+vehicle.masterDriver.name,
+vehicle.cityResident.name,
+vehicle.status 
+ FROM WmsVehicle vehicle 
+ LEFT JOIN vehicle.vehicleType
+ LEFT JOIN vehicle.masterDriver
+ LEFT JOIN vehicle.cityResident
+ WHERE 1=1 ORDER BY vehicle.id DESC]]></datasource>
+        <columns>
+            <column id="vehicle.id" title="vehicle.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="vehicle.license" title="vehicle.license" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="vehicle.beTrailer" title="vehicle.beTrailer" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="booleanFormat"/>
+            <column id="vehicle.vehicleType.name" title="vehicle.vehicleType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="vehicle.origin" title="vehicle.origin" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="vehicle.brands" title="vehicle.brands" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="vehicle.length" title="vehicle.length" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="vehicle.width" title="vehicle.width" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="vehicle.height" title="vehicle.height" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="vehicle.fuelConsumption" title="vehicle.fuelConsumption" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="vehicle.masterDriver.name" title="vehicle.masterDriver.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="vehicle.cityResident.name" title="vehicle.cityResident.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="vehicle.status" title="vehicle.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string" format="enumFormat" formatParam="BaseStatus"/>
+        </columns>
+    </maintainPage>
+</pages>

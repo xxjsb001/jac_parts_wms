@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyWmsMoveDocCancelAllocatePage">
+    <main/>
+    <detail>
+        <process id="wmsMoveDocProcess">
+            <tableCommit id="cancelAllocateFull" title="cancelAllocateFull" process="wmsMoveDocProcess.cancelAllocateTask" enableType="none">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="cancelAllocateWhole" parameter="parentObj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="cancelAllocatePart" title="cancelAllocatePart" process="wmsMoveDocProcess.cancelAllocateTask" enableType="multi">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="cancelAllocatePart" parameter="parentObj,obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

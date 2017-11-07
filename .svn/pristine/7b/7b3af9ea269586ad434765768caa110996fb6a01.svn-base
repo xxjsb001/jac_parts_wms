@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyThornApprovePage">
+    <main>
+        <process id="thornApproveProcess">
+            <formCommit id="new" title="new" process="thornApproveProcess.new" enableType="none" download="false" closeTransactional="false" visibleType="new">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="modify" title="modify" process="thornApproveProcess.modify" enableType="none" download="false" closeTransactional="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail>
+        <process id="thornApproveProcess">
+            <tablePopup id="new" title="new" process="thornApproveProcess.new" enableType="none" containId="false" pageId="editThornApproveDetailPage">
+                <enableExpression><![CDATA[${thornApprove.id} != '']]></enableExpression>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="thornApproveProcess.modify" enableType="single" containId="true" pageId="editThornApproveDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="thornApproveProcess.delete" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+	<maintainPage id="addRoleUsersPage" title="addRoleUsersPage" entityClass="com.vtradex.thorn.server.model.security.User" width="900" height="400" autoQuery="false">
+        <datasource type="hql"><![CDATA[SELECT 
+ user.id, 
+ user.loginName, 
+ user.name
+ FROM Role r, User user 
+ WHERE 1=1
+ /~role.id: AND r.id = {role.id}~/
+ AND user NOT IN ELEMENTS (r.users)
+ /~user.code: AND user.code LIKE {user.code}~/
+ /~user.name: AND user.name LIKE {user.name}~/]]></datasource>
+        <columns>
+            <column id="user.id" title="user.id" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="user.loginName" title="user.loginName" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="user.name" title="user.name" visible="true" horizonAlign="center" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

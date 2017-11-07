@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editVersionPage">
+    <main>
+        <process id="versionProcess">
+            <formCommit id="save" title="save" pageLocale="false" process="versionProcess.new" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="version" className="com.vtradex.rule.server.model.rule.Version">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="versionManager" methodName="storeVersion" parameter="version"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="saveModify" title="saveModify" pageLocale="false" process="versionProcess.modify" enableType="none" download="false" visibleType="edit">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="version" className="com.vtradex.rule.server.model.rule.Version">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="versionManager" methodName="storeVersion" parameter="version"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

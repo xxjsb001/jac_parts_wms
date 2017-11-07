@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editSingleWorkConfirmPage">
+    <main>
+        <process id="taskProcess">
+            <formCommit id="singleConfirm" title="singleConfirm" process="taskProcess.singleConfirm" enableType="single" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="toLocationId" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="fromLocationId" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="quantityBU" className="double">
+                        <entries/>
+                    </mapping>
+                    <mapping id="workerId" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="singleWorkConfirm" parameter="obj,toLocationId,fromLocationId,quantityBU,workerId"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

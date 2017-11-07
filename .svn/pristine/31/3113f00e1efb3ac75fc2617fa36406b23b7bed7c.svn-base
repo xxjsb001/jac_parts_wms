@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.move.WmsMoveDocLocation" table="WMS_MOVE_DOC_LOCATION">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_moveDocLocation</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+		
+		<many-to-one name="moveDoc" class="com.vtradex.wms.server.model.move.WmsMoveDoc">
+			<column name="MOVE_DOC_ID"/>
+		</many-to-one>
+		<many-to-one name="worker" class="com.vtradex.wms.server.model.warehouse.WmsWorker">
+			<column name="WORKER_ID"/>
+		</many-to-one>
+		<many-to-one name="location" class="com.vtradex.wms.server.model.warehouse.WmsLocation">
+			<column name="LOCATION_ID"/>
+		</many-to-one>
+		<property name="isEnd" column="IS_END" type="yes_no"/>
+	</class>
+</hibernate-mapping>

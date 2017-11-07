@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyWmsMoveDocQualityPage">
+    <main/>
+    <detail>
+        <process id="wmsMoveDocProcess">
+            <tablePopup id="allocate" title="manualAllocate" process="wmsMoveDocProcess.allocate" enableType="single" containId="true" pageId="choseQualityLocationPage">
+               <enableExpression><![CDATA[${task.beManual} == 'true']]></enableExpression>
+            </tablePopup>
+            <tableCommit id="autoAllocate" title="autoAllocate" process="wmsMoveDocProcess.autoAllocate" enableType="multi">
+                <enableExpression></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="manualAllocateQuality" parameter="parentObj,obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit> 
+        </process>
+    </detail>
+</page>

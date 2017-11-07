@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="addWmsInventoryPage" title="addWmsInventoryPage" entityClass="com.vtradex.wms.server.model.inventory.WmsInventory" width="250" height="340" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="inventory.id" title="inventory.id" reserve="false"/>
+            <remote id="inventory.location.id" title="inventory.location.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,库区,库位">
+                <visibleExpression/>
+                <hql><![CDATA[select location.id, location.warehouseArea.code, location.code FROM WmsLocation location 
+ WHERE 1=1
+ AND location.status='ENABLED'
+ AND location.warehouse = #{SESSION_WAREHOUSE} AND location.type = 'STORAGE' 
+ AND (location.code like :param or location.warehouseArea.code like :param) order by location.warehouseArea.code,location.code]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="inventory.itemKey.item.company.id" title="inventory.itemKey.item.company.id" row="2" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT 
+company.id,
+company.code,
+company.neiBuName
+FROM WmsOrganization company,WmsWarehouseAndCompany wwa 
+WHERE company.beCompany = true
+and company.beVirtual =false
+AND company.status = 'ENABLED'
+AND (company.code LIKE :param OR company.name LIKE :param) 
+and wwa.company.id=company.id
+AND wwa.warehouse.id = #{SESSION_WAREHOUSE}]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="inventory.itemKey.item.id" title="inventory.itemKey.item.id" row="3" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称" intercepter="shipLotInfoInterceptor">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT
+item.id,
+item.code,
+item.name
+FROM WmsItem item
+WHERE item.status = 'ENABLED'
+AND item.company.id = ${inventory.itemKey.item.company.id}
+AND (item.code LIKE :param OR item.name LIKE :param)]]></hql>
+                <eventListeners>
+                    <eventListener id="inventory.itemKey.lotInfo" index="4" refreshUI="false"/>
+                    <eventListener id="inventory.packageUnit.id" index="1" refreshUI="false"/>
+                </eventListeners>
+            </remote>
+            <list id="inventory.packageUnit.id" title="inventory.packageUnit.id" row="4" col="1" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT
+packageUnit.id,
+packageUnit.unit
+FROM WmsPackageUnit packageUnit
+WHERE 1=1
+AND packageUnit.item.id = ${inventory.itemKey.item.id}
+ORDER BY packageUnit.lineNo]]></hql>
+                <eventListeners/>
+            </list>
+            <numberText id="inventory.quantity" title="inventory.quantity" row="5" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" validator="positiveNumberRequired">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <complex id="inventory.itemKey.lotInfo" title="inventory.itemKey.lotInfo" row="6" col="1" span="2" type="inventoryLotInfo"/>
+            <text id="inventory.addReason" title="inventory.addReason" row="30" col="1" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

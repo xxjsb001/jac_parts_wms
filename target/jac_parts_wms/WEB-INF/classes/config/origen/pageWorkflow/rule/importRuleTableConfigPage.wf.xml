@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="importRuleTableConfigPage">
+    <main>
+        <process id="groupRuleTableProcess">
+            <formCommit id="import" title="import" process="groupRuleTableProcess.import" enableType="none" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="importFile" className="file">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="ruleFileManager" methodName="importRuleTable" parameter="importFile"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,38 @@
+<html>
+<head>
+<META http-equiv="X-UA-Compatible" content="chrome=1">
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+<link rel="Shortcut Icon" href="favicon.ico">
+<link rel="Bookmark" href="favicon.ico">
+<style>
+body {
+  background-color: white;
+  color: black;
+  margin: 0px 0px 0px 0px;
+  overflow-x:hidden;
+  overflow-y:hidden
+}
+</style>
+<script type="text/javascript" >
+var gwtState = false;
+function gwtInitOk() {
+	gwtState = true;
+}
+function callGwt() {
+	if (parent.gwtState==false)
+	{
+		setTimeout("callGwt()", 500);
+	}
+	else {
+		conn.foo();
+	}
+}
+</script>
+</head>
+<title>唯智ELOG Enterprise WMS系统</title>
+<body onload="callGwt();">
+<div id="myc" style="left:0;top:0;width:100%;height:100%">
+<iframe id="conn" name="conn" src="WMS.html" width=100% height=100% frameborder=0 scrolling=no></iframe>
+</div>
+</body>
+</html>

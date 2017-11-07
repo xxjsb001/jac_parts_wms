@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editBOPage">
+	<main>
+		<process id="BOProcess">
+				<formCommit id="save" process="BOProcess.new" title="save" >
+	                <forwards>
+                        <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                        <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    </forwards>
+				</formCommit>
+		</process>
+	</main>
+	<detail>
+		<process id="BOProcess">
+				<tablePopup id="new" process="BOProcess.new" title="new" invisible="false" containId="false" pageId="editP2CMPage"/>
+				<tablePopup id="modify" process="BOProcess.modify" title="modify" enableType="single" invisible="false" containId="true" pageId="editP2CMPage"/>
+				
+				<tableCommit id="delete" process="BOProcess.delete" title="delete" enableType="multi" invisible="false" confirmMessage="confirm.delete">
+                    <mappings>
+                        <mapping id="id" className="long"/>
+                        <mapping id="ibo.id" className="long"/>
+                    </mappings>
+                    <actions>
+                        <action managerName="businessObjectManager" methodName="removeMapping" parameter="ibo.id,id"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                    </forwards>
+                </tableCommit>
+		</process>
+	</detail>
+</page>

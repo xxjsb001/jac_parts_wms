@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process id="IGPProcess" control="status">
+   	<task id="new" title="新建" />
+	<task id="modify" title="修改" />
+</process>

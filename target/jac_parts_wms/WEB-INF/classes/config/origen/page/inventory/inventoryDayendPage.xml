@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="inventoryDayendPage" title="inventoryDayendPage">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <date id="beginDate" title="beginDate" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <date id="endDate" title="endDate" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <hidden id="daily.id" title="daily.id" reserve="false"/>
+        </inputUIs>
+    </editPage>
+</pages>

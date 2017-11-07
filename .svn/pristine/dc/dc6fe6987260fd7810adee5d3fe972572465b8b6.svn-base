@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="viewWmsTaskLogFromMoveDoc" title="viewWmsTaskLogFromMoveDoc" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc" onClose="refreshParent" width="800" height="500">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="moveDoc.id" title="moveDoc.id" reserve="false"/>
+                <text id="moveDoc.code" title="moveDoc.code" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.warehouse.name" title="moveDoc.warehouse.name" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.company.name" title="moveDoc.company.name" row="1" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <date id="moveDoc.updateInfo.createdTime" title="moveDoc.createTime" row="1" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <text id="moveDoc.billType.name" title="moveDoc.billType.name" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.originalBillCode" title="moveDoc.originalBillCode" row="2" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.planQuantityBU" title="moveDoc.planQuantityBU" row="2" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.movedQuantityBU" title="moveDoc.movedQuantityBU" row="2" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+            </inputUIs>
+        </modify>
+        <detail>
+            <datasource><![CDATA[SELECT task.id,task.fromLocationCode,task.pallet,
+            task.toLocationCode,itemKey.item.code,itemKey.item.name,
+            task.packageUnit.unit,task.movedQuantityBU,task.inventoryStatus,
+            itemKey.lotInfo.soi,itemKey.lotInfo.supplier.name,
+            task.updateInfo.updateTime  
+            FROM WmsTask task 
+ LEFT JOIN task.moveDocDetail
+ LEFT JOIN task.itemKey.lotInfo.supplier
+ LEFT JOIN task.itemKey itemKey
+ WHERE 1=1 
+ /~moveDoc.id: AND task.moveDocDetail.moveDoc.id = {moveDoc.id} ~/
+ ORDER BY task.id ]]></datasource>
+            <columns>
+                <column id="task.id" title="task.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.fromLocationCode" title="taskLog.fromLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.pallet" title="taskLog.fromPallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.toLocationCode" title="taskLog.toLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="itemKey.item.code" title="taskLog.itemKey.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="itemKey.item.name" title="taskLog.itemKey.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.packageUnit.unit" title="taskLog.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.movedQuantityBU" title="taskLog.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.inventoryStatus" title="taskLog.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="itemKey.lotInfo.soi" title="inventory.itemKey.lotInfo.soi" visible="true" sortable="false" horizonAlign="center" verticalAlign="middle"/>
+                <column id="itemKey.lotInfo.supplier.name" title="inventory.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.updateInfo.updateTime" title="taskLog.occurTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

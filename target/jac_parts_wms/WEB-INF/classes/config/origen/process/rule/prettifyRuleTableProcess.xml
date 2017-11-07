@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="prettifyRuleTableProcess" control="status">
+
+	<task id="new" title="新建">
+	</task>
+	<task id="modify" title="修改">
+	</task>
+	<task id="delete" title="删除">
+	</task>
+	<task id="save" title="保存">
+	</task>
+	<task id="search" title="查询">
+	</task>
+</process>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainRolePage">
+	<main>
+		<process id="roleProcess">
+				<tablePopup id="new" process="roleProcess.new" title="new"
+					enableType="none" containId="false" pageId="editRolesPage" />
+				<tablePopup id="roleProcess.modify" title="modify" enableType="single" containId="true" pageId="editRolesPage" />
+				
+				<tableCommit id="delete" process="roleProcess.delete"  title="delete"
+					enableType="multi" confirmMessage="confirm.delete">
+	                <actions>
+	                    <action managerName="roleManager" methodName="deleteRoles" parameter="obj"/>
+	                </actions>
+	                <forwards>
+	                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+	                </forwards>
+				</tableCommit>
+				<tablePopup id="bindUser" process="roleProcess.add"  title="bindUser" enableType="single" containId="true" pageId="editRoleUsersPage" />
+				<tablePopup id="roleMenuPermissionPage" title="menuPermissionPage" pageLocale="false" process="roleProcess.menuPermission" enableType="single" containId="true" pageId="roleMenuPermissionPage">
+                <enableExpression/>
+	            </tablePopup>
+	            <tablePopup id="roleBizPermissionPage" title="invokePermission" pageLocale="false" process="roleProcess.dataPermission" enableType="single" containId="true" pageId="roleBizPermissionPage">
+	                <enableExpression/>
+	            </tablePopup>
+	            <tablePopup id="roleReportPermissionPage" title="reportPermission" pageLocale="false" process="roleProcess.reportPermission" enableType="single" containId="true" pageId="addReportPermissionPage">
+	                <enableExpression/>
+	            </tablePopup>
+	            
+	            <tableCommit id="initSystemFunction" process="roleProcess.add"  title="initSystemFunction"
+					enableType="none" >
+	                <actions>
+	                    <action managerName="roleManager" methodName="initSystemFunction" />
+	                </actions>
+	                <forwards>
+	                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+	                </forwards>
+				</tableCommit>
+		</process>
+	</main>
+</page>

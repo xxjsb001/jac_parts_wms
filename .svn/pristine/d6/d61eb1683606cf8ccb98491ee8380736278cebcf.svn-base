@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="wmsASNProcess" control="status">
+
+	<state id="OPEN" title="打开"/>
+
+	<state id="CANCELED" title="取消"/>
+
+	<state id="RECEIVING" title="部分收货"/>
+
+	<state id="RECEIVED" title="收货完成"/>
+
+	<state id="ACTIVE" title="生效"/>
+
+	<task id="new" title="新建">
+		<to id="OPEN" type="state"/>
+	</task>
+
+	<task id="modify" title="修改">
+		<from id="OPEN" type="state"/>
+	</task>
+
+	<task id="cancel" title="取消">
+		<from id="OPEN" type="state"/>
+		<to id="CANCELED" type="state"/>
+	</task>
+
+	<task id="addDetail" title="添加明细">
+
+		<condition><![CDATA[${asn.status} == 'OPEN']]></condition>
+		<from id="OPEN" type="state"/>
+	</task>
+
+	<task id="removeDetails" title="删除明细">
+
+		<condition><![CDATA[${asn.status} == 'OPEN']]></condition>
+		<from id="OPEN" type="state"/>
+	</task>
+
+	<task id="modifyDetail" title="修改明细">
+
+		<condition><![CDATA[${asn.status} == 'OPEN']]></condition>
+		<from id="OPEN" type="state"/>
+	</task>
+
+	<task id="close" title="关闭">
+		<from id="RECEIVING" type="state"/>
+		<from id="RECEIVED" type="state"/>
+		<to id="RECEIVED" type="state"/>
+	</task>
+
+	<task id="receive" title="收货">
+		<from id="RECEIVING" type="state"/>
+		<from id="ACTIVE" type="state"/>
+	</task>
+
+	<task id="receiveAll" title="整单收货">
+
+		<condition><![CDATA[${asn.status} == 'ACTIVE' || ${asn.status} == 'RECEIVING']]></condition>
+		<from id="RECEIVING" type="state"/>
+		<from id="ACTIVE" type="state"/>
+		<to id="receiveDecision" type="decision"/>
+	</task>
+
+	<task id="lineReceive" title="单一明细收货">
+
+		<condition><![CDATA[${asn.status} == 'ACTIVE'  || ${asn.status} == 'RECEIVING']]></condition>
+		<from id="RECEIVING" type="state"/>
+		<from id="ACTIVE" type="state"/>
+		<to id="receiveDecision" type="decision"/>
+	</task>
+
+	<task id="cancelReceive" title="取消收货">
+		<from id="RECEIVING" type="state"/>
+		<from id="RECEIVED" type="state"/>
+	</task>
+
+	<task id="view" title="查看">
+	</task>
+
+	<task id="print" title="打印">
+		<from id="OPEN" type="state"/>
+		<from id="ACTIVE" type="state"/>
+	</task>
+
+	<task id="viewReceivedRecord" title="查看收货日志">
+	</task>
+
+	<task id="cancelAll" title="整单取消">
+
+		<condition><![CDATA[${asn.status} == 'RECEIVED' || ${asn.status} == 'RECEIVING']]></condition>
+		<from id="RECEIVED" type="state"/>
+		<from id="RECEIVING" type="state"/>
+		<to id="receiveDecision" type="decision"/>
+	</task>
+
+	<task id="singleCanel" title="部分取消">
+
+		<condition><![CDATA[${asn.status} == 'RECEIVED' || ${asn.status} == 'RECEIVING']]></condition>
+		<from id="RECEIVED" type="state"/>
+		<from id="RECEIVING" type="state"/>
+		<from id="singleCanel" type="task"/>
+		<to id="receiveDecision" type="decision"/>
+		<to id="singleCanel" type="task"/>
+	</task>
+
+	<task id="printTrayTag" title="打印托盘标签">
+	</task>
+
+	<task id="active" title="激活">
+		<from id="OPEN" type="state"/>
+		<to id="ACTIVE" type="state"/>
+	</task>
+
+	<task id="unActive" title="反激活">
+		<from id="ACTIVE" type="state"/>
+		<to id="OPEN" type="state"/>
+	</task>
+
+	<task id="activeBySuppier" title="订单确认">
+		<from id="OPEN" type="state"/>
+	</task>
+
+	<task id="putawayAutoAllocate" title="上架分配">
+		<from id="RECEIVED" type="state"/>
+		<from id="RECEIVING" type="state"/>
+	</task>
+
+	<task id="palletSerial" title="码托">
+		<from id="RECEIVING" type="state"/>
+		<from id="RECEIVED" type="state"/>
+	</task>
+
+	<task id="unPutawayAutoAllocate" title="取消分配">
+	</task>
+
+	<task id="shelvesConfirm" title="上架确认">
+	</task>
+
+	<task id="confirmAll" title="整单确认">
+	</task>
+
+	<task id="singleConfirm" title="单一确认">
+	</task>
+
+	<task id="putawayAutoByHand" title="手工分配">
+	</task>
+
+	<task id="multiReceive" title="批量收货">
+
+		<condition><![CDATA[${asn.status} == 'ACTIVE'  || ${asn.status} == 'RECEIVING']]></condition>
+		<from id="RECEIVING" type="state"/>
+		<from id="ACTIVE" type="state"/>
+		<to id="receiveDecision" type="decision"/>
+	</task>
+
+	<task id="importFile" title="导入">
+	</task>
+
+	<task id="printASNBak" title="补打ASN">
+	</task>
+
+	<task id="viewShelvesConfirm" title="查看上架日志">
+	</task>
+
+	<decision id="receiveDecision" action="wmsConfirmDecisionAction">
+		<to id="RECEIVING" value="1" type="state" />
+		<to id="RECEIVED" value="0" type="state" />
+		<to id="ACTIVE" value="-1" type="state" />
+	</decision>
+
+</process>

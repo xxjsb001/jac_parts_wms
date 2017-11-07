@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsLotRulePage" title="editWmsLotRulePage" entityClass="com.vtradex.wms.server.model.organization.WmsLotRule" width="300" height="560" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="lotRule.id" title="lotRule.id" reserve="false"/>
+            <text id="lotRule.code" title="lotRule.code" row="1" col="1" span="2" width="200" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="normal" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="lotRule.description" title="lotRule.description" row="2" col="1" span="2" width="200" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <checkbox id="lotRule.trackSupplier" title="lotRule.trackSupplier" row="3" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackProduceDate" title="lotRule.trackProduceDate" row="3" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC1" title="lotRule.trackExtendPropC1" row="7" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC2" title="lotRule.trackExtendPropC2" row="7" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC3" title="lotRule.trackExtendPropC3" row="8" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC4" title="lotRule.trackExtendPropC4" row="8" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC5" title="lotRule.trackExtendPropC5" row="9" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC6" title="lotRule.trackExtendPropC6" row="9" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC7" title="lotRule.trackExtendPropC7" row="10" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC8" title="lotRule.trackExtendPropC8" row="10" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC9" title="lotRule.trackExtendPropC9" row="11" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC10" title="lotRule.trackExtendPropC10" row="11" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC11" title="lotRule.trackExtendPropC11" row="12" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC12" title="lotRule.trackExtendPropC12" row="12" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC13" title="lotRule.trackExtendPropC13" row="13" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC14" title="lotRule.trackExtendPropC14" row="13" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC15" title="lotRule.trackExtendPropC15" row="14" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC16" title="lotRule.trackExtendPropC16" row="14" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC17" title="lotRule.trackExtendPropC17" row="15" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC18" title="lotRule.trackExtendPropC18" row="15" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC19" title="lotRule.trackExtendPropC19" row="16" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="lotRule.trackExtendPropC20" title="lotRule.trackExtendPropC20" row="16" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+        </inputUIs>
+    </editPage>
+</pages>

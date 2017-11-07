@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsMoveDocProcessPage" title="maintainWmsMoveDocProcessPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc">
+        <workflow/>
+        <datasource><![CDATA[SELECT moveDoc.id,
+moveDoc.code,
+moveDoc.billType.name,
+moveDoc.status,
+moveDoc.processStatus,
+moveDoc.processPlan.name,
+moveDoc.planQuantityBU,
+moveDoc.allocatedQuantityBU,
+moveDoc.movedQuantityBU,
+moveDoc.processQuantityBU,
+(moveDoc.processPlan.price * moveDoc.processQuantityBU) as processFee,
+moveDoc.worker.name,
+moveDoc.updateInfo.creator,
+moveDoc.updateInfo.createdTime,
+moveDoc.updateInfo.lastOperator,
+moveDoc.updateInfo.updateTime 
+ FROM WmsMoveDoc moveDoc 
+ left join moveDoc.billType
+ left join moveDoc.processPlan 
+ left join moveDoc.worker 
+ WHERE 1=1
+ AND moveDoc.type = 'MV_PROCESS_PICKING'
+ AND moveDoc.warehouse = #{SESSION_WAREHOUSE} 
+ ORDER BY moveDoc.id desc
+ ]]></datasource>
+        <columns>
+            <column id="moveDoc.id" title="moveDoc.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="moveDoc.code" title="moveDoc.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.billType.name" title="moveDoc.billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.status" title="moveDoc.pickStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocStatus"/>
+            <column id="moveDoc.processStatus" title="moveDoc.processStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocProcessStatus"/>
+            <column id="moveDoc.processPlan.name" title="moveDoc.processPlan.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDoc.planQuantityBU" title="processDoc.planQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDoc.allocatedQuantityBU" title="processDoc.allocatedQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDoc.movedQuantityBU" title="processDoc.movedQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDoc.processQuantityBU" title="processDoc.processQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="processFee" title="processDoc.processFee" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDoc.worker.name" title="moveDoc.worker.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.updateInfo.creator" title="moveDoc.updateInfo.creator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.updateInfo.createdTime" title="moveDoc.updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="moveDoc.updateInfo.lastOperator" title="moveDoc.updateInfo.lastOperator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.updateTime" title="moveDoc.updateTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+        </columns>
+    </maintainPage>
+</pages>

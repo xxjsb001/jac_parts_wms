@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsVehicleTrailerPage" title="editWmsVehicleTrailerPage" entityClass="com.vtradex.wms.server.model.carrier.WmsVehicle" width="680" height="400" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="vehicle.id" title="vehicle.id" reserve="false"/>
+            <remote id="vehicle.vehicleType.id" title="vehicle.vehicleType.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[select vehicleType.id,vehicleType.code, 
+vehicleType.name from WmsVehicleType vehicleType where 1=1 
+and vehicleType.status='ACTIVE'
+and (vehicleType.code like :param or vehicleType.name like :param) ]]></hql>
+                <eventListeners/>
+            </remote>
+            <text id="vehicle.license" title="vehicle.license" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.drivingLicense" title="vehicle.drivingLicense" row="1" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.origin" title="vehicle.origin" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.brands" title="vehicle.brands" row="2" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.carAge" title="vehicle.carAge" row="2" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.underpanNo" title="vehicle.underpanNo" row="3" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.axles" title="vehicle.axles" row="3" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.length" title="vehicle.length" row="4" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.width" title="vehicle.width" row="4" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.height" title="vehicle.height" row="4" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <numberText id="vehicle.curbWeight" title="vehicle.curbWeight" row="5" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <numberText id="vehicle.coreSetTotalMass" title="vehicle.coreSetTotalMass" row="5" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <text id="vehicle.gps" title="vehicle.gps" row="5" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <date id="vehicle.produceDate" title="vehicle.produceDate" row="6" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <date id="vehicle.registrationDate" title="vehicle.registrationDate" row="6" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <remote id="vehicle.cityResident.id" title="vehicle.cityResident.id" row="6" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[select city.id,city.code,city.name from WmsCity city where 1=1 and (city.code like :param or city.name like :param)
+and city.status='ACTIVE']]></hql>
+                <eventListeners/>
+            </remote>
+            <checkbox id="vehicle.beTrailer" title="vehicle.beTrailer" row="7" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners>
+                    <eventListener id="vehicle.fuelConsumption" index="0" refreshUI="true"/>
+                </eventListeners>
+            </checkbox>
+            <text id="vehicle.hangingType" title="vehicle.hangingType" row="8" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='true']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <date id="vehicle.copStartDate" title="vehicle.copStartDate" row="8" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='true']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <text id="vehicle.engineNumber" title="vehicle.engineNumber" row="9" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.carOwnersName" title="vehicle.carOwnersName" row="9" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.carOwnersId" title="vehicle.carOwnersId" row="9" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.carOwnersCompany" title="vehicle.carOwnersCompany" row="10" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.carOwnersAdd" title="vehicle.carOwnersAdd" row="10" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.carOwnersTel" title="vehicle.carOwnersTel" row="11" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.carOwnersMob" title="vehicle.carOwnersMob" row="11" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <remote id="vehicle.trailerLicense.id" title="vehicle.trailerLicense.id" row="11" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,车牌号">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql><![CDATA[select vehicle.id, vehicle.license 
+from WmsVehicle  vehicle
+where 1=1 
+and vehicle.beTrailer=true
+and vehicle.status='ACTIVE'
+and vehicle.id not in (select vehicle.trailerLicense.id from WmsVehicle vehicle where vehicle.beTrailer=false
+and vehicle.trailerLicense.id is not null
+)
+and vehicle.license like :param ]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="vehicle.masterDriver.id" title="vehicle.masterDriver.id" row="12" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql><![CDATA[select driver.id, driver.code, driver.name from WmsDriver driver  where 1=1 and driver.status='AVAILABLE' and (driver.code like :param or driver.name like :param) ]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="vehicle.minorDriver.id" title="vehicle.minorDriver.id" row="12" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql><![CDATA[select driver.id, driver.code, driver.name from WmsDriver driver  where 1=1 and driver.status='AVAILABLE' and (driver.code like :param or driver.name like :param) ]]></hql>
+                <eventListeners/>
+            </remote>
+            <date id="vehicle.purchaseDate" title="vehicle.purchaseDate" row="12" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <date id="vehicle.reimbursementDate" title="vehicle.reimbursementDate" row="13" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <text id="vehicle.location" title="vehicle.location" row="13" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="vehicle.fuelConsumption" title="vehicle.fuelConsumption" row="13" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="true" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${vehicle.beTrailer}=='false']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <textArea id="vehicle.description" title="vehicle.description" row="14" col="1" span="3" width="600" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" rows="8">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+        </inputUIs>
+    </editPage>
+</pages>

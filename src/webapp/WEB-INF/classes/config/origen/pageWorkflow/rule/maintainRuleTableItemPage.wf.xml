@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainRuleTableItemPage">
+    <main>
+        <process id="ruleTableProcess">
+            <tablePopup id="new" title="new" pageLocale="false" process="ruleTableProcess.new" enableType="none" containId="false" pageId="editRuleTableItemPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" pageLocale="false" process="ruleTableProcess.modify" enableType="single" containId="true" pageId="editRuleTableItemPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" pageLocale="false" process="ruleTableProcess.delete" enableType="multi" download="false">
+                <enableExpression/>
+                <actions>
+                    <action managerName="ruleTableManager" methodName="deleteRuleTableItem" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

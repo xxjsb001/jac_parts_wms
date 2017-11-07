@@ -1,0 +1,48 @@
+package com.vtradex.wms.server.service.interfaces.pojo;
+
+import java.util.List;
+
+
+import com.vtradex.thorn.server.model.message.Task;
+import com.vtradex.thorn.server.model.message.TaskStatus;
+import com.vtradex.thorn.server.service.pojo.DefaultBaseManager;
+import com.vtradex.wms.server.model.interfaces.MiddleAsnSrmDetail;
+import com.vtradex.wms.server.model.interfaces.WHead;
+import com.vtradex.wms.server.service.interfaces.WmsDealTaskManager;
+import com.vtradex.wms.server.utils.MyUtils;
+
+public class DefaultWmsDealTaskManager 
+			extends DefaultBaseManager implements WmsDealTaskManager{
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void handleInterfaceAsn() {
+		
+		List<Task> tasks = commonDao.findByQuery("FROM Task t WHERE 1=1"
+				+ " AND t.status =:status AND t.type = 'ASN'", 
+				new String[]{"status"},new Object[]{TaskStatus.STAT_READY});
+		if(tasks != null && tasks.size() > 0){
+			for(Task task : tasks){
+				try {
+					task.getSubscriber().split(MyUtils.spilt1)[0].equals("wmsBillingExecuteManager");
+				} catch (Exception e) {
+					e.printStackTrace();
+					logger.error("异常TASK_ID="+task.getId());
+				}
+			}
+		}
+		
+	}
+	
+	public void dealAsn(Long id){
+		WHead w = commonDao.load(WHead.class, id);
+		if(w==null){
+			return;
+		}
+		List<MiddleAsnSrmDetail> mm = commonDao.findByQuery("", "", "");
+		//生效ASN...
+		
+		//如果成功就将WHead的状态改了
+	}
+
+}

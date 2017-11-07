@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editManulPalletPage" title="editManulPalletPage" entityClass="com.vtradex.wms.server.model.inventory.WmsInventoryExtend">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="wsn.id" title="wsn.id" reserve="false"/>
+            <hidden id="wsn.locationId" title="wsn.locationId" reserve="false"/>
+            <text id="palletQuantity" title="palletQuantity" span="1" readOnly="false" required="true" reserve="true" forceOverride="true" focusUI="false" inVisible="false" validator="number" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+			<list id="dstPalletNo" title="manulPallet.dstPallet" row="2" col="1" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT DISTINCT
+inventoryExtend.pallet,
+inventoryExtend.pallet
+FROM WmsInventoryExtend inventoryExtend
+WHERE 1=1
+AND inventoryExtend.locationId = ${wsn.locationId}
+AND (inventoryExtend.pallet IS NOT NULL AND inventoryExtend.pallet <> '-')]]></hql>
+                <eventListeners/>
+            </list>
+			<!--remote id="inventoryExtendId" title="manulPallet.dstPallet" row="2" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="false" focusUI="false" inVisible="false" editModel="normal" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,托盘号">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT
+inventoryExtend.id,
+inventoryExtend.pallet
+FROM WmsInventoryExtend inventoryExtend
+WHERE 1=1
+AND inventoryExtend.locationId = ${wsn.locationId}
+AND (inventoryExtend.pallet IS NOT NULL AND inventoryExtend.pallet <> '-')
+AND inventoryExtend.pallet LIKE :param]]></hql>
+                <eventListeners/>
+            </remote-->
+        </inputUIs>
+    </editPage>
+</pages>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="roleBizPermissionPage" title="rolePermissionPage"  width="685" height="555"  className="com.vtradex.thorn.client.ui.page.RolePermissionPage" onClose="refreshParent"/>
+</pages>

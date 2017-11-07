@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsSafeInventoryPage" title="maintainWmsSafeInventoryPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.inventory.WmsSafeInventory">
+        <workflow/>
+        <datasource><![CDATA[SELECT wsi.id,
+wsi.type,
+wsi.suppiler.code,
+wsi.suppiler.name,
+wsi.item.code,
+wsi.item.name,
+wsi.status,
+wsi.realInventory,
+wsi.safeInvQty,
+wsi.minInvQty,
+wsi.artStatus,
+wsi.remark,
+wsi.isRed 
+ FROM WmsSafeInventory wsi
+ WHERE 1=1]]></datasource>
+        <columns>
+            <column id="wsi.id" title="wsi.id" width="400" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="wsi.type" title="wsi.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsSafeInventoryType"/>
+            <column id="wsi.suppiler.code" title="wsi.suppiler.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="wsi.suppiler.name" title="wsi.suppiler.name" width="250" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string" format="inventoryRedFormat"/>
+            <column id="wsi.item.code" title="wsi.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wsi.item.name" title="wsi.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wsi.status" title="wsi.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>
+            <column id="wsi.realInventory" title="wsi.realInventory" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="wsi.safeInvQty" title="wsi.safeInvQty" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="wsi.minInvQty" title="wsi.minInvQty" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="wsi.artStatus" title="wsi.artStatus" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="TypeOfExtendPropC1"/>
+            <column id="wsi.remark" title="wsi.remark" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wsi.isRed" title="wsi.isRed" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" formatParam="Boolean"/>
+        </columns>
+    </maintainPage>
+</pages>

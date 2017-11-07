@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editPalletAutoPage">
+    <main>
+        <process id="wmsASNProcess">
+            <formCommit id="save" title="save" process="wmsASNProcess.view" enableType="none" multiMapping="false" closeTransactional="false" visibleType="none">
+                <enableExpression></enableExpression>
+                <mappings>
+                    <mapping id="pallet" className="string">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="palletSerialAuto" parameter="pallet,parentObj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

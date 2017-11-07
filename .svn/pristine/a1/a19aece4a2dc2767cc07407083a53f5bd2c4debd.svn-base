@@ -1,0 +1,4 @@
+
+INSERT INTO  users  VALUES ('1', 'com.vtradex.thorn.server.model.security.User', 'admin', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', null, 'ACTIVE', 'zh', null, null, 'origen', null, null, null, null, null, null, null, null, null, '', null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO  users  VALUES ('2', 'com.vtradex.thorn.server.model.security.User', 'test', 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', '', 'ACTIVE', 'zh', null, null, 'origen', null, null, null, null, null, '', null, null, null, '', null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO  users  VALUES ('3', 'com.vtradex.thorn.server.model.security.User', 't1', 't1', 'e5353879bd69bfddcb465dad176ff52db8319d6f', '', 'ACTIVE', 'zh', null, null, 'origen', null, null, null, null, null, '', null, null, null, '', null, null, null, null, null, null, null, null, null, null, null, null, null, null);

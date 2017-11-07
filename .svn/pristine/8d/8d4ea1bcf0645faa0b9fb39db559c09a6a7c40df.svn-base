@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.shipping.WmsPickTicketDetail" table="WMS_PICK_TICKET_DETAIL">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_pickTicketDetail</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+		
+		<many-to-one name="pickTicket" class="com.vtradex.wms.server.model.shipping.WmsPickTicket" unique-key="UK_PICK_TICKET_DETAIL">
+			<column name="PICK_TICKET_ID" unique-key="UK_PICK_TICKET_DETAIL"/>
+		</many-to-one>
+		
+		<property name="lineNo" type="integer" column="LINE_NO" unique-key="UK_PICK_TICKET_DETAIL"/>
+				
+		<many-to-one name="item" class="com.vtradex.wms.server.model.organization.WmsItem">
+			<column name="ITEM_ID" not-null="true"/>
+		</many-to-one>
+		<property name="station" type="string" length="100" column="STATION"/>
+		<property name="isJp">
+			<column name="IS_JP" default="0"></column>
+		</property>
+		<property name="sx" type="integer" column="SX"/>
+		<property name="minQty" type="double" column="MIN_QTY"/>
+		<property name="pcs" type="string" column="PCS"/>
+		<component name="shipLotInfo" class="com.vtradex.wms.server.model.base.ShipLotInfo">
+	       	<property name="soi" type="string" column="SOI" length="50"/>
+			<property name="supplier" type="string" column="SUPPLIER" length="50"/>
+			<property name="storageDate" type="date" column="STORAGE_DATE"/>
+			<property name="extendPropC1" type="string" column="EXTEND_PROPC1" length="50"/>
+        	<property name="extendPropC2" type="string" column="EXTEND_PROPC2" length="50"/>
+			<property name="extendPropC3" type="string" column="EXTEND_PROPC3" length="50"/>
+			<property name="extendPropC4" type="string" column="EXTEND_PROPC4" length="50"/>
+			<property name="extendPropC5" type="string" column="EXTEND_PROPC5" length="50"/>
+			<property name="extendPropC6" type="string" column="EXTEND_PROPC6" length="50"/>
+			<property name="extendPropC7" type="string" column="EXTEND_PROPC7" length="50"/>
+			<property name="extendPropC8" type="string" column="EXTEND_PROPC8" length="50"/>
+			<property name="extendPropC9" type="string" column="EXTEND_PROPC9" length="50"/>							
+			<property name="extendPropC10" type="string" column="EXTEND_PROPC10" length="50"/>
+	       	<property name="extendPropC11" type="string" column="EXTEND_PROPC11" length="50"/>
+        	<property name="extendPropC12" type="string" column="EXTEND_PROPC12" length="50"/>
+			<property name="extendPropC13" type="string" column="EXTEND_PROPC13" length="50"/>
+			<property name="extendPropC14" type="string" column="EXTEND_PROPC14" length="50"/>
+			<property name="extendPropC15" type="string" column="EXTEND_PROPC15" length="50"/>
+			<property name="extendPropC16" type="string" column="EXTEND_PROPC16" length="50"/>
+			<property name="extendPropC17" type="string" column="EXTEND_PROPC17" length="50"/>
+			<property name="extendPropC18" type="string" column="EXTEND_PROPC18" length="50"/>
+			<property name="extendPropC19" type="string" column="EXTEND_PROPC19" length="50"/>
+			<property name="extendPropC20" type="string" column="EXTEND_PROPC20" length="50"/>
+        </component>
+		
+		<many-to-one name="packageUnit" class="com.vtradex.wms.server.model.organization.WmsPackageUnit">
+			<column name="PACKAGE_UNIT_ID" not-null="true"/>
+		</many-to-one>
+		
+		<property name="expectedQuantity" type="double" column="EXPECTED_QUANTITY" not-null="true"/>					
+		<property name="expectedQuantityBU" type="double" column="EXPECTED_QUANTITY_BU" not-null="true"/>		
+		<property name="allocatedQuantityBU" type="double" column="ALLOACTED_QUANTITY_BU" not-null="true"/>	
+		<property name="pickedQuantityBU" type="double" column="PICKED_QUANTITY_BU" not-null="true"/>
+		<property name="shippedQuantityBU" type="double" column="SHIPPED_QUANTITY_BU" not-null="true"/>
+			
+        <property name="inventoryStatus" type="string" column="INVENTORY_STATUS" length="100"/>	
+        <property name="hashCode" type="string" column="HASH_CODE" length="100"/>		
+	
+		<property name="backQuantityBU" type="double" column="BACK_QUANTITY_BU" not-null="true"/>
+		<property name="smWorker" type="string" length="50" column="SM_WORKER"/>
+		<property name="smDate" type="timestamp" column="SM_DATE"/>
+		<many-to-one name="supplier" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="SUPPLIER_ID"/>
+		</many-to-one>
+		<property name="description" type="string" column="DESCRPTION" length="255"/>
+		<property name="needTime" type="date" column="NEED_TIME"/>
+		<property name="pickWorker" type="string" length="100" column="PICK_WORKER"/>
+		<property name="pickWorkerCode" type="string" length="100" column="PICK_WORKER_CODE"/>
+		<property name="productionLine" type="string" length="100" column="PRODUCTION_LINE"/>
+		<property name="type" type="string" length="20" column="type"/>
+		<property name="packageNum" type="double" column="PACKAGE_NUM"/>
+		<property name="packageQty" type="double" column="PACKAGE_QTY"/>
+		<property name="remark" type="string" column="REMARK" length="255"/>
+		
+		<property name="fromSource" type="string" column="FROM_SOURCE"/>
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	</class>	
+</hibernate-mapping>

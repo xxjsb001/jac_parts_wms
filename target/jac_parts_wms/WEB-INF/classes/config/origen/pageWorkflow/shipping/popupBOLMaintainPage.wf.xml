@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="popupBOLMaintainPage">
+    <main>
+        <process id="wmsMoveDocShipProcess">
+            <tableCommit id="joinMasterBOL" title="joinMasterBOL" process="wmsMoveDocShipProcess.joinMasterBOL" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.popupBOLMaintainPage.joinMasterBOL">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="masterBOL.id" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsMasterBOLManager" methodName="joinMasterBOLDetail" parameter="masterBOL.id,obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

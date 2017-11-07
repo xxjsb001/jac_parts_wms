@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="warehouseAreaProcess" control="status">
+
+	<state id="ENABLED" title="生效"/>
+
+	<state id="DISABLED" title="失效"/>
+
+	<task id="new" title="新建">
+		<to id="ENABLED" type="state"/>
+	</task>
+
+	<task id="enable" title="恢复">
+		<from id="DISABLED" type="state"/>
+		<to id="ENABLED" type="state"/>
+	</task>
+
+	<task id="disable" title="失效">
+		<from id="ENABLED" type="state"/>
+		<to id="DISABLED" type="state"/>
+	</task>
+
+	<task id="edit" title="修改">
+		<from id="ENABLED" type="state"/>
+	</task>
+
+</process>

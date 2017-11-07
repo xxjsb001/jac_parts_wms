@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWMSInvoiceDetailPage" title="editWMSInvoiceDetailPage" entityClass="com.vtradex.wms.server.model.billing.WMSContactDetail" width="560" height="480" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="contactDetail.id" title="contactDetail.id" reserve="false"/>
+            <numberText id="qualityQuantityBU" title="editWMSInvoiceDetailPage.qualityQuantityBU" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" returnType="Double" decimal="2" validator="numberRequired" >
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+        </inputUIs>
+    </editPage>
+</pages>

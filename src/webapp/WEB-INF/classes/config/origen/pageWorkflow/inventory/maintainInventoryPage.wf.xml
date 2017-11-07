@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainInventoryPage">
+    <main>
+        <process id="inventoryProcess">
+            <tablePopup id="viewTask" title="viewTask" process="inventoryProcess.viewTask" enableType="single" containId="true" pageId="viewTaskForInventoryPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="viewSerialNo" title="viewSerialNo" process="inventoryProcess.viewSerialNo" enableType="single" containId="true" pageId="viewSerialNoForInventoryPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

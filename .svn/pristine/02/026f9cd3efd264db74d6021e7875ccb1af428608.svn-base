@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainInventorySerialNoPage">
+    <main>
+        <process id="inventoryProcess">
+            <tablePopup id="addInventory" title="addInventory" process="inventoryProcess.addInventory" enableType="none" containId="false" pageId="addWmsInventoryPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="inventoryQuality" title="inventoryQuality" process="inventoryProcess.inventoryQuality" enableType="single" containId="true" pageId="editWmsInventoryQualityPage">
+                <enableExpression><![CDATA[${inventory.location.lockCount} != 'true']]></enableExpression>
+            </tablePopup>
+            <!-- 按状态锁定
+            <tablePopup id="lockByStatus" title="lockByStatus" process="inventoryProcess.lockByStatus" enableType="single" containId="true" pageId="lockInventoryByCondition">
+                <enableExpression><![CDATA[${wsn.quantityBU} > 0]]></enableExpression>
+            </tablePopup>
+             -->
+             <!-- 按状态解锁
+            <tablePopup id="unlockByStatus" title="unlockByStatus" process="inventoryProcess.unlockByStatus" enableType="single" containId="true" pageId="unlockInventoryByCondition">
+                <enableExpression><![CDATA[${wsn.quantityBU} > 0 && ${inventory.status} != "-"]]></enableExpression>
+            </tablePopup>
+             -->
+            <tablePopup id="move" title="move" process="inventoryProcess.move" enableType="single" containId="true" pageId="editManualMovePage">
+                <enableExpression><![CDATA[${inventory.location.lockCount} != 'true']]></enableExpression>
+            </tablePopup>
+            <!--<tableCommit id="autoPallet" title="autoPallet" process="inventoryProcess.autoPallet" enableType="single" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainInventorySerialNoPage.autoPallet">
+                <enableExpression><![CDATA[${inventory.status} == "-" && ${wsn.pallet} == '-']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsInventoryManager" methodName="autoPallet" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>-->
+            <!-- 手工码托
+            <tablePopup id="manualPallet" title="manualPallet" process="inventoryProcess.manualPallet" enableType="single" containId="true" pageId="editManulPalletPage">
+                <enableExpression><![CDATA[${inventory.status} == "-" && ${wsn.pallet} == '-']]></enableExpression>
+            </tablePopup>
+             -->
+             <!-- 手工拆托 
+            <tablePopup id="splitManualPallet" title="splitManualPallet" process="inventoryProcess.splitManualPallet" enableType="single" containId="true" pageId="editSplitPalletPage">
+                <enableExpression><![CDATA[${inventory.status} == "-" && ${wsn.pallet} != '-']]></enableExpression>
+            </tablePopup>
+            -->
+            <tablePopup id="modify" title="modifyInventory" process="inventoryProcess.modify" enableType="single" containId="true" pageId="modifyInventoryPage">
+                <enableExpression><![CDATA[${inventory.location.lockCount} != 'true']]></enableExpression>
+            </tablePopup>
+            <!--<tablePopup id="printPalletNo" title="printPalletNo" process="inventoryProcess.printPalletNo" enableType="single" containId="true" pageId="editPrintPalletNoByInvPage">
+                <enableExpression><![CDATA[${wsn.pallet} != '-']]></enableExpression>
+            </tablePopup>-->
+            <!-- 库存导入-->
+            <tablePopup id="initInventory" title="initInventory" process="inventoryProcess.initInventory" enableType="none" containId="false" pageId="editInitInventoryPage">
+                <enableExpression/>
+            </tablePopup>
+             
+        </process>
+    </main>
+    <detail/>
+</page>

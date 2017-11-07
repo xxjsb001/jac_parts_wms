@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="maintainPrettifyRuleTablePage" title="maintainPrettifyRuleTablePage" className="com.vtradex.rule.client.page.MaintainPrettifyRuleTablePage">
+    	<buttons>
+    		<button id="prettifyRuleTableProcess.seach" title="search"/>
+			<button id="prettifyRuleTableProcess.new" title="new"/>
+			<button id="prettifyRuleTableProcess.modify" title="modify"/>
+			<button id="prettifyRuleTableProcess.save" title="save"/>
+			<button id="prettifyRuleTableProcess.delete" title="delete"/>
+			<button id="versionProcess.new" title="new"/>
+			<button id="versionProcess.modify" title="modify"/>
+			<button id="versionProcess.delete" title="delete"/>
+			<button id="versionProcess.upLine" title="upLine"/>
+			<button id="versionProcess.unActive" title="unActive"/>
+			<button id="versionProcess.export" title="export"/>
+			<button id="versionProcess.import" title="import"/>
+		</buttons>
+		<hqls>
+			<hql id="getAllGroupRuleTable">
+				<![CDATA[FROM GroupRuleTable grt WHERE 1=1 ORDER BY grt.sortDesc ASC]]>
+			</hql>
+			<hql id="getRuleTableByGroup">
+				<![CDATA[SELECT rt FROM RuleTable rt,GroupRuleTable grt WHERE 1=1 AND rt in elements(grt.ruleTables) AND grt.id = :groupRuleTable ORDER BY rt.sortDesc ASC]]>
+			</hql>
+			<hql id="getVersionByRuleTable">
+				<![CDATA[FROM Version version WHERE 1=1 AND version.ruleTable.id = :ruleTable  ORDER BY version.id DESC  ]]>
+			</hql>
+		</hqls>
+    </customPage>
+</pages>
+

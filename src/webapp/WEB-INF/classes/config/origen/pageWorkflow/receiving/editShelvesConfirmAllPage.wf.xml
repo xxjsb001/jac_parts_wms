@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editShelvesConfirmAllPage">
+    <main>
+        <process id="wmsASNProcess">
+            <formCommit id="confirmAll" title="confirmAll" process="wmsASNProcess.confirmAll" enableType="none" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="workerId" className="long">
+                        <entries/>
+                    </mapping>
+                     <mapping id="asn.id" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="shelvesConfirm" parameter="asn.id,workerId"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+<!--                     <forward name="closeWindow" newEnabled="true" editEnabled="true"/> -->
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

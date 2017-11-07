@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsWarehouseAreaPage">
+    <main>
+        <process id="warehouseAreaProcess">
+            <tablePopup id="new" title="new" process="warehouseAreaProcess.new" enableType="none" containId="false" pageId="editWmsWarehouseAreaPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="warehouseAreaProcess.edit" enableType="single" containId="true" pageId="editWmsWarehouseAreaPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="enable" title="enable" process="warehouseAreaProcess.enable" enableType="multi" download="false" confirmMessage="confirm.enable">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="disable" title="disable" process="warehouseAreaProcess.disable" enableType="multi" download="false" confirmMessage="confirm.disable">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

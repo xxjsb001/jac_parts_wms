@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editParameterPage">
+	<main>
+		<process id="reportProcess">
+                <formCommit id="save"  process="reportProcess.new" title="save" enableType="none" invisible="false">
+                    <mappings>
+                    	<mapping id="file.id" className="long"/>
+                        <mapping id="reportParams" className="com.vtradex.repc.server.model.report.ReportParams"/>
+                    </mappings>
+                    <actions>
+                        <action managerName="reportFileManager" methodName="saveReportParams" parameter="file.id,reportParams"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                        <forward name="resetWindow" newEnabled="true" editEnabled="false"/>
+                    </forwards>
+                </formCommit>
+		</process>
+	</main>
+</page>

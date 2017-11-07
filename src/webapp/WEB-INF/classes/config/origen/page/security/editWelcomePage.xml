@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWelcomePage" title="editWelcomePage" entityClass="com.vtradex.thorn.server.model.welcomepage.WelcomePage" onClose="refreshParent">
+        <inputUIs>
+            <hidden id="welcomePage.id" reserve="false"/>
+            <text id="welcomePage.value" title="welcomePage.value" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+<text id="welcomePage.key" title="welcomePage.key" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+			<list id="welcomePage.refModel" title="welcomePage.refModel" row="2" col="1" span="1" width="120px" readOnly="false" required="false" reserve="false" forceOverride="true" enumType="ModelType" editModel="uneditable">
+                <hql><![CDATA[ SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'ModelType']]></hql>
+            </list>
+			<checkbox id="welcomePage.isThornPage" title="welcomePage.isThornPage" row="2" col="2" defaultValue="false" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false"/>
+            <textArea id="welcomePage.description" title="welcomePage.description" row="3" col="1" span="2" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" rows="3" cols="40"/>
+        </inputUIs>
+    </editPage>
+</pages>

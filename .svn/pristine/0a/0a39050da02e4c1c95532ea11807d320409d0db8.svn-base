@@ -1,0 +1,53 @@
+package com.vtradex.wms.server.telnet.shell.pick;
+
+import java.io.IOException;
+
+import org.apache.commons.lang.StringUtils;
+
+import net.wimpi.telnetd.net.Connection;
+
+import com.vtradex.kangaroo.shell.BreakException;
+import com.vtradex.kangaroo.shell.ContinueException;
+import com.vtradex.kangaroo.shell.Thorn4BaseShell;
+import com.vtradex.wms.server.model.carrier.WmsVehicle;
+import com.vtradex.wms.server.telnet.pick.WmsPickRFManager;
+
+public class WmsBOLShell extends Thorn4BaseShell{
+	
+	public static final String PAGE_ID = "wmsShipRecordShell";
+	private final WmsPickRFManager pickRFManager;
+	
+	public WmsBOLShell(WmsPickRFManager pickRFManager) {
+		this.pickRFManager = pickRFManager;
+	}
+	@Override
+	protected void mainProcess(Connection connection) throws BreakException,
+			ContinueException, IOException, Exception {
+
+		String license = this.getTextField("车牌号");
+		WmsVehicle vehicle = pickRFManager.checkVehicleByLicense(license);
+		if(vehicle == null){
+			this.setStatusMessage("车辆信息未维护");
+		}
+		String container = this.getTextField("器具编码");
+		if(StringUtils.isEmpty(container)){
+			this.setStatusMessage("器具编码不能为空");
+		}
+		if("00".equals(container)){
+			this.reset();
+		}
+		String mes = pickRFManager.checkMoveDocByContainer(container);
+		
+		if(!"".equals(mes)){
+			this.setStatusMessage(mes);
+		}
+		try{
+			pickRFManager.createWmsBol(vehicle, container);
+			this.forward(WmsBOLShell.PAGE_ID,"装车成功，请扫描下一个器具");
+		}catch(Exception e){
+			this.remove("器具编码");
+			this.setStatusMessage(e.getMessage());
+		}
+	}
+
+}

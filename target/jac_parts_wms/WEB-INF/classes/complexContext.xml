@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+        "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!--加载定义的复合组件Bean-->
+	<bean name="complexUniConfig" class="com.vtradex.thorn.server.config.ComplexUniConfig" singleton="true">
+		<property name="resources">
+			<list>
+				<value>classpath*:cdefine.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="defaultTableConfigIntercepter" class="com.vtradex.thorn.server.service.intercepter.pojo.DefaultTableConfigAfterReturnIntercepter"/>
+	<bean id="defaultRowDataIntercepter" class="com.vtradex.thorn.server.service.intercepter.pojo.DefaultRowDataAfterReturnIntercepter"/>	
+</beans>

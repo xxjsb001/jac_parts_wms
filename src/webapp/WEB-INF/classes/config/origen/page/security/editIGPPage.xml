@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editIGPPage" title="editIGPPage" entityClass="com.vtradex.thorn.server.config.globalparam.GlobalParam">
+        <inputUIs>
+            <hidden id="globalParam.id" reserve="false"/>
+            <text id="globalParam.paramId" title="globalParam.paramId" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" editModel="uneditable" trimSpace="true" isPrecision="true"/>
+            <list id="globalParam.referenceModel" title="globalParam.referenceModel" row="1" col="2" span="1" width="120px" readOnly="false" required="false" reserve="false" forceOverride="true" enumType="ModelType" editModel="uneditable">
+                <hql><![CDATA[ SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'ModelType']]></hql>
+            </list>
+            <text id="globalParam.groupName" title="globalParam.groupName" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" editModel="uneditable" trimSpace="true" isPrecision="true"/>
+            <list id="globalParam.type" title="globalParam.type" row="2" col="2" span="1" width="120px" readOnly="false" required="false" reserve="false" forceOverride="true" enumType="GlobalParamType" editModel="uneditable">
+                <hql><![CDATA[ SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'GlobalParamType' order by enumerate.id]]></hql>
+            </list>
+            <text id="globalParam.value" title="globalParam.value" row="3" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+            <text id="globalParam.bean" title="globalParam.bean" row="3" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+            <textArea id="globalParam.description" title="globalParam.description" row="4" col="1" span="2" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" rows="3" cols="30"/>
+        </inputUIs>
+    </editPage>
+</pages>

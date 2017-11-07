@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cdefines>
+	<cdefine type="asnLotInfo">
+		<uis>
+			<date id="productDate" title="lotInfo.productDate" row="10" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" showTime="false" manualEditable="true" defaultCurrentDate="false"/>
+            <remote id="supplier.id" title="lotInfo.supplier" row="12" col="1" span="1" width="120" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="true" editModel="normal" manualEditable="true" displayedTableHead="序号,编码,名称">
+                <hql><![CDATA[ SELECT
+ supplier.id,
+ supplier.code,
+ supplier.name
+ FROM WmsOrganization supplier 
+ WHERE supplier.beSupplier = true
+ AND (supplier.code LIKE :param OR supplier.name LIKE :param)
+ AND supplier.status = 'ENABLED']]></hql>
+            </remote>
+            <list id="extendPropC1" title="lotInfo.extendPropC1" row="13" col="1" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="TypeOfExtendPropC1">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'TypeOfExtendPropC1' order by enumerate.id]]></hql>
+                <eventListeners/>
+            </list>
+            <text id="extendPropC2" title="lotInfo.extendPropC2" row="14" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC3" title="lotInfo.extendPropC3" row="15" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC4" title="lotInfo.extendPropC4" row="16" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC5" title="lotInfo.extendPropC5" row="17" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC6" title="lotInfo.extendPropC6" row="18" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC7" title="lotInfo.extendPropC7" row="19" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC8" title="lotInfo.extendPropC8" row="20" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC9" title="lotInfo.extendPropC9" row="21" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC10" title="lotInfo.extendPropC10" row="22" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC11" title="lotInfo.extendPropC11" row="23" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true"  trimSpace="true"/>
+            <text id="extendPropC12" title="lotInfo.extendPropC12" row="24" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true"  trimSpace="true"/>
+            <text id="extendPropC13" title="lotInfo.extendPropC13" row="25" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC14" title="lotInfo.extendPropC14" row="26" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC15" title="lotInfo.extendPropC15" row="27" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC16" title="lotInfo.extendPropC16" row="28" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC17" title="lotInfo.extendPropC17" row="29" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC18" title="lotInfo.extendPropC18" row="30" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC19" title="lotInfo.extendPropC19" row="31" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC20" title="lotInfo.extendPropC20" row="32" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+		</uis>
+	</cdefine>
+	<cdefine type="inventoryLotInfo">
+		<uis>
+			 <date id="productDate" title="lotInfo.productDate" row="7" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" showTime="false" manualEditable="true" defaultCurrentDate="false"/>
+			 <remote id="soi" title="lotInfo.soi" row="8" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="false" inVisible="true" editModel="normal" manualEditable="true" displayedTableHead="序号,编码">
+                <hql><![CDATA[ SELECT
+ asn.id,
+ asn.code 
+ FROM WmsASN asn 
+ WHERE (asn.company.code LIKE :param OR asn.company.name LIKE :param)
+	]]></hql>
+            </remote>
+            <remote id="supplier.id" title="lotInfo.supplier" row="9" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="false" inVisible="true" editModel="normal" manualEditable="true" displayedTableHead="序号,编码,名称">
+                <hql><![CDATA[ SELECT
+ supplier.id,
+ supplier.code,
+ supplier.name
+ FROM WmsOrganization supplier 
+ WHERE supplier.beSupplier = true
+ AND (supplier.code LIKE :param OR supplier.name LIKE :param)
+ AND supplier.status = 'ENABLED']]></hql>
+            </remote>
+            <text id="extendPropC1" title="lotInfo.extendPropC1" row="10" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC2" title="lotInfo.extendPropC2" row="11" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC3" title="lotInfo.extendPropC3" row="12" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC4" title="lotInfo.extendPropC4" row="13" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC5" title="lotInfo.extendPropC5" row="14" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC6" title="lotInfo.extendPropC6" row="15" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC7" title="lotInfo.extendPropC7" row="16" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC8" title="lotInfo.extendPropC8" row="17" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC9" title="lotInfo.extendPropC9" row="18" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC10" title="lotInfo.extendPropC10" row="19" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC11" title="lotInfo.extendPropC11" row="20" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC12" title="lotInfo.extendPropC12" row="21" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC13" title="lotInfo.extendPropC13" row="22" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC14" title="lotInfo.extendPropC14" row="23" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC15" title="lotInfo.extendPropC15" row="24" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC16" title="lotInfo.extendPropC16" row="25" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC17" title="lotInfo.extendPropC17" row="26" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC18" title="lotInfo.extendPropC18" row="27" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC19" title="lotInfo.extendPropC19" row="28" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC20" title="lotInfo.extendPropC20" row="29" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+		</uis>
+	</cdefine>
+	
+	<cdefine type="shipLotInfo">
+		<uis>
+			<list id="extendPropC1" title="lotInfo.extendPropC1" row="1" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="TypeOfExtendPropC1">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'TypeOfExtendPropC1' order by enumerate.id]]></hql>
+                <eventListeners/>
+            </list>
+            <text id="soi" title="lotInfo.soi" row="2" col="1" span="1" width="120" readOnly="false" required="false" reserve="true" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+			<date id="storageDate" title="lotInfo.storageDate" row="3" col="1" span="1" width="120" readOnly="true" required="false" reserve="false" forceOverride="true" inVisible="true" showTime="false" manualEditable="true" defaultCurrentDate="false"/>
+            <text id="supplier" title="lotInfo.supplier" row="4" col="1" span="1" width="120" readOnly="true" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>			
+            <text id="extendPropC2" title="lotInfo.extendPropC2" row="5" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC3" title="lotInfo.extendPropC3" row="6" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC4" title="lotInfo.extendPropC4" row="7" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC5" title="lotInfo.extendPropC5" row="8" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC6" title="lotInfo.extendPropC6" row="9" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC7" title="lotInfo.extendPropC7" row="10" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC8" title="lotInfo.extendPropC8" row="1" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC9" title="lotInfo.extendPropC9" row="12" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC10" title="lotInfo.extendPropC10" row="13" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC11" title="lotInfo.extendPropC11" row="14" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC12" title="lotInfo.extendPropC12" row="15" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC13" title="lotInfo.extendPropC13" row="16" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC14" title="lotInfo.extendPropC14" row="17" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC15" title="lotInfo.extendPropC15" row="18" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC16" title="lotInfo.extendPropC16" row="19" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC17" title="lotInfo.extendPropC17" row="20" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC18" title="lotInfo.extendPropC18" row="21" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC19" title="lotInfo.extendPropC19" row="22" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC20" title="lotInfo.extendPropC20" row="23" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+		</uis>
+	</cdefine>
+	
+	<cdefine type="processPlanLotInfo">
+		<uis>
+			<date id="storageDate" title="lotInfo.storageDate" row="6" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" showTime="false" manualEditable="true" defaultCurrentDate="false"/>
+            <text id="soi" title="lotInfo.soi" row="7" col="1" span="1" width="120" readOnly="false" required="false" reserve="true" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="supplier" title="lotInfo.supplier" row="8" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC1" title="lotInfo.extendPropC1" row="9" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC2" title="lotInfo.extendPropC2" row="10" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC3" title="lotInfo.extendPropC3" row="11" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC4" title="lotInfo.extendPropC4" row="12" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC5" title="lotInfo.extendPropC5" row="13" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC6" title="lotInfo.extendPropC6" row="14" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC7" title="lotInfo.extendPropC7" row="15" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC8" title="lotInfo.extendPropC8" row="16" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC9" title="lotInfo.extendPropC9" row="17" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC10" title="lotInfo.extendPropC10" row="18" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC11" title="lotInfo.extendPropC11" row="19" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC12" title="lotInfo.extendPropC12" row="20" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" editModel="normal" trimSpace="true"/>
+            <text id="extendPropC13" title="lotInfo.extendPropC13" row="21" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC14" title="lotInfo.extendPropC14" row="22" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC15" title="lotInfo.extendPropC15" row="23" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC16" title="lotInfo.extendPropC16" row="24" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC17" title="lotInfo.extendPropC17" row="25" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC18" title="lotInfo.extendPropC18" row="26" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC19" title="lotInfo.extendPropC19" row="27" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+            <text id="extendPropC20" title="lotInfo.extendPropC20" row="28" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="true" trimSpace="true"/>
+		</uis>
+	</cdefine>
+</cdefines>

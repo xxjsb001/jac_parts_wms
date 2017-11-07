@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWelcomePage">
+	<main>
+		<process id="welcomeProcess">
+				<formCommit id="save" process="welcomeProcess.new" title="save" enableType="none" invisible="false">
+	                <forwards>
+	                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+	                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+	                </forwards>
+            </formCommit>
+		</process>
+	</main>
+</page>

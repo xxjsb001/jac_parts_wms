@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="inventoryCountAdjustPage">
+    <main>
+        <process id="inventoryProcess">
+            <tablePopup id="countAdjust" title="countAdjust" process="inventoryProcess.countAdjust" enableType="single" containId="true" pageId="difQuantityAdjustPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.organization.WmsItem" table="WMS_ITEM">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">WSEQ_ITEM</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+        <many-to-one name="company" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="COMPANY_ID" not-null="true" unique-key="UK_ITEM"/>
+		</many-to-one>
+         <property name="code" type="string">
+            <column name="CODE" not-null="true" length="50" unique-key="UK_ITEM"/>
+        </property>
+        <property name="name" type="string">
+            <column name="NAME" length="100"/>
+        </property>
+         <property name="baseUnit" type="string">
+            <column name="BASE_UNIT" length="20"/>
+        </property>
+        <many-to-one name="lotRule" class="com.vtradex.wms.server.model.organization.WmsLotRule">
+			<column name="RULE_LOT_ID"/>
+		</many-to-one>
+		<many-to-one name="blg" class="com.vtradex.wms.server.model.warehouse.WmsWorker">
+			<column name="BLG_ID"/>
+		</many-to-one>
+		<many-to-one name="bgy" class="com.vtradex.wms.server.model.warehouse.WmsWorker">
+			<column name="BGY_ID"/>
+		</many-to-one>
+		<property name="validPeriod" column="VALID_PERIOD" type="integer"/>
+		<property name="alertLeadingDays" type="integer" column="ALERT_DAY"/>
+		 <property name="class1" type="string">
+            <column name="CLASS1" length="50"/>
+        </property>
+         <property name="class2" type="string">
+            <column name="CLASS2" length="50"/>
+        </property>
+        <property name="class3" type="string">
+            <column name="CLASS3" length="50"/>
+        </property>
+        <property name="class4" type="string">
+            <column name="CLASS4" length="50"/>
+        </property>
+        <property name="class5" type="string">
+            <column name="CLASS5" length="50"/>
+        </property>
+        <property name="barCode" type="string">
+            <column name="BAR_CODE" length="50"/>
+        </property>
+		<property name="status" type="string">
+            <column name="STATUS" length="50"/>
+        </property>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="255"/>
+		</property>
+        <property name="precision" type="integer" column="PRECISION_BU"/>
+        <component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+
+		<set name="packageUnits" lazy="false" inverse="true" cascade="all-delete-orphan" order-by="CONVERT_FIGURE">
+			<key column="ITEM_ID"/>
+			<one-to-many class="com.vtradex.wms.server.model.organization.WmsPackageUnit"/>
+		</set>
+	 </class>
+</hibernate-mapping>

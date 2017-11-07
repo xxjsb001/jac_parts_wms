@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editReceiveConfirmPage">
+    <main/>
+    <detail>
+        <process id="wmsASNProcess">
+            <tablePopup id="receiveAll" title="receiveAll" process="wmsASNProcess.receiveAll" enableType="none" containId="false" pageId="editReceiveConfirmAllPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="multiReceive" title="multiReceive" process="wmsASNProcess.multiReceive" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                  <actions>
+                    <action managerName="wmsASNManager" methodName="multiReceive" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="false" editEnabled="false"/>
+                </forwards>
+            </tableCommit>
+            <tablePopup id="lineReceive" title="lineReceive" process="wmsASNProcess.lineReceive" enableType="single" containId="true" pageId="editReceiveSingleDetailPage">
+                <enableExpression><![CDATA[${asnDetail.dock.code}!='-']]></enableExpression>
+            </tablePopup>
+        </process>
+    </detail>
+</page>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editMoveDocQualityPage" title="editMoveDocQualityPage" entityClass="com.vtradex.wms.server.model.move.WmsMoveDocDetail" width="600" height="200">
+        <workflow/>
+        <initListeners>
+            <initListener id="planQuantityBU" managerName="wmsMoveDocManager" methodName="getQualityPlanQuantityBu" newEnabled="false" editEnabled="true"/>
+		</initListeners>
+        <inputUIs>
+            <hidden id="moveDocDetail.id" title="moveDocDetail.id" reserve="false"/>
+<!--             <hidden id="moveDocDetail.moveDoc.company.id" title="moveDocDetail.moveDoc.company.id" reserve="false"/> -->
+            <remote id="moveDocDetail.item.id" title="pickTicketDetail.item.id" row="1" col="1" readOnly="false" required="true" reserve="false" forceOverride="false" focusUI="true" inVisible="false" editModel="uneditable" multiple="false" manualEditable="true" displayedTableHead="序号,编码,名称" intercepter="shipLotInfoInterceptor">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT
+ item.id, 
+ item.code,
+ item.name
+ FROM WmsItem item 
+ WHERE 1=1
+ AND (item.code LIKE :param 
+ or item.name LIKE :param)
+ AND item.status = 'ENABLED'
+ AND item.company.id = ${pickTicket.company.id}
+ /~item.name: AND item.name LIKE {item.name}~/
+ ]]></hql>
+                <eventListeners>
+                </eventListeners>
+            </remote>
+            <list id="moveDocDetail.inventoryStatus" title="status" row="1" col="2" width="120" defaultValue="" span="2" readOnly="false" required="false" reserve="true" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+            	<visibleExpression/>
+             <hql><![CDATA[SELECT itemState.name,itemState.name
+	 FROM WmsItemState itemState
+	 WHERE itemState.company.id = {moveDoc.company.id} 
+	 ORDER BY itemState.name]]></hql>
+             <eventListeners/>
+         </list>
+         <text id="planQuantityBU" title="moveDocDetail.planQuantityBU" row="1" col="3" defaultValue="0" readOnly="false" required="true" reserve="false" forceOverride="false" focusUI="false" inVisible="false" validator="positiveNumber" trimSpace="true">
+             <visibleExpression/>
+             <hql/>
+             <eventListeners/>
+         </text>
+        </inputUIs>
+    </editPage>
+</pages>

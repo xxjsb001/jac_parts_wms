@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsWorkerDetailPage" title="maintainWmsWorkerDetailPage" entityClass="com.vtradex.wms.server.model.warehouse.WmsWorker" width="800" height="450">
+        <workflow/>
+        <datasource><![CDATA[SELECT workerDetail.id,workerDetail.worker.name,workerDetail.name,workerDetail.station
+        FROM WmsWorker workerDetail 
+        where workerDetail.worker.id = {maintainWmsWorkGroupPage.id}
+]]></datasource>
+        <columns>
+            <column id="workerDetail.id" title="workerDetail.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="workerDetail.worker.name" title="workerDetail.worker.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="workerDetail.name" title="workerDetail.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        	<column id="workerDetail.station" title="workerDetail.worker.station" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

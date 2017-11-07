@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editReportFilePage" title="editReportFilePage" entityClass="com.vtradex.repc.server.model.report.ReportFile" onClose="refreshParent"  width="520" height="250">
+            <inputUIs>
+                <hidden id="file.id" reserve="false"/>
+                <hidden id="temp" reserve="false"/>
+                <text id="file.code" title="ReportFile.file.code" row="1" col="1" width="150" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="file.name" title="ReportFile.file.name" row="1" col="2" width="150" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="file.fileName" title="ReportFile.file.fileName" row="2"  span="2"   width="400" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true">
+					 <visibleExpression><![CDATA[(${file.type}=='REPORT')]]></visibleExpression>
+                </text>
+                <text id="file.classification" title="ReportFile.file.classification" row="3" span="2"  width="400" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <list id="file.type" title="ReportFile.file.type" row="4" span="2" width="400" readOnly="false" required="true" reserve="false" forceOverride="false" enumType="FileType">
+                    <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+ 					enumerate.enumValue  From Enumerate enumerate 
+ 					where enumerate.enumType = 'FileType']]></hql>
+ 					<eventListeners>
+						<eventListener id="temp" index="1" refreshUI="true"/>
+					</eventListeners>
+                </list>
+                <list id="file.grammarType" title="ReportFile.file.grammarType" row="6" span="2" width="400" readOnly="false" required="true" reserve="false" forceOverride="false" enumType="FileGrammarType">
+                    <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+					enumerate.enumValue From Enumerate enumerate 
+ 					where enumerate.enumType = 'FileGrammarType' and enumerate.enumValue='HQL']]></hql>
+ 					 <visibleExpression><![CDATA[(${file.type}=='SQL')]]></visibleExpression>
+                </list>
+          	    <list id="file.style" title="ReportFile.file.style" row="5" span="2" width="400" readOnly="false" required="true" reserve="false" forceOverride="false" enumType="FileStyle">
+                    <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+					 enumerate.enumValue  From Enumerate enumerate 
+ 					where enumerate.enumType = 'FileStyle']]></hql>
+ 					  <visibleExpression><![CDATA[(${file.type}=='REPORT')]]></visibleExpression>
+                </list>
+                <textArea  id="file.statement" title="ReportFile.file.statement" row="7" span="2" width="400" height="100" cols="56" rows="10" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true">
+                <visibleExpression><![CDATA[(${file.type}=='SQL')]]></visibleExpression>
+               	</textArea>
+                <textArea id="file.description" title="ReportFile.file.description" row="10" span="2"  width="400" readOnly="false" required="false" reserve="false" forceOverride="false" inVisible="false" length="100" trimSpace="true" isPrecision="true"/>
+            </inputUIs>
+    </editPage>
+</pages>

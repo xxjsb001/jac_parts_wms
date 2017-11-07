@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.inventory.WmsInventory" table="WMS_INVENTORY" dynamic-update="true">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_inventory</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id> 
+        <discriminator column="DISCRIMINATOR" type="string"/>
+		<version name="version" column="VERSION" type="long"/>
+		
+		<many-to-one name="location" class="com.vtradex.wms.server.model.warehouse.WmsLocation">
+			<column name="LOCATION_ID" not-null="true"/>
+		</many-to-one>
+		<many-to-one name="itemKey" class="com.vtradex.wms.server.model.inventory.WmsItemKey">
+			<column name="ITEM_KEY_ID" not-null="true"/>
+		</many-to-one>
+		<many-to-one name="packageUnit" class="com.vtradex.wms.server.model.organization.WmsPackageUnit">
+			<column name="PACKAGE_UNIT_ID" not-null="true"/>
+		</many-to-one>
+		<property name="quantity" type="double" column="QUANTITY" not-null="true"/>
+		<property name="quantityBU" type="double" column="QUANTITY_BU" not-null="true"/>
+		<property name="putawayQuantityBU" type="double" column="PUTAWAY_QUANTITY_BU" not-null="true"/>
+		<property name="allocatedQuantityBU" type="double" column="ALLOCATED_QUANTITY_BU" not-null="true"/>
+		<property name="status" type="string">
+            <column name="STATUS" length="100" not-null="true"/>
+        </property>
+        <property name="lockLot" column="LOCK_LOT" type="yes_no"/>
+	</class>
+</hibernate-mapping>

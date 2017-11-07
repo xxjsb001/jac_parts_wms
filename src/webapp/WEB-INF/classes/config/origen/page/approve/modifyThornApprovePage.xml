@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="modifyThornApprovePage" title="modifyThornApprovePage" entityClass="com.vtradex.thorn.server.model.approve.ThornApprove">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="thornApprove.id" title="thornApprove.id" reserve="false"/>
+                <text id="thornApprove.process" title="thornApprove.process" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="thornApprove.task" title="thornApprove.task" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="thornApprove.pageId" title="thornApprove.pageId" row="2" col="1" span="2" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.thorn.server.model.approve.ThornApproveDetail">
+            <datasource><![CDATA[SELECT thornApproveDetail.id,thornApproveDetail.name,thornApproveDetail.content  from ThornApproveDetail thornApproveDetail where thornApproveDetail.thornApprove.id = {thornApprove.id}]]></datasource>
+            <columns>
+                <column id="thornApproveDetail.id" title="thornApproveDetail.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="thornApproveDetail.name" title="thornApproveDetail.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="thornApproveDetail.content" title="thornApproveDetail.content" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

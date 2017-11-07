@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+        "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+  Copyright (c) 2001-2005 vTradEx Information Technology Co.,Ltd. All Rights Reserved.
+
+  This software is the confidential and proprietary information of vTradEx
+  Information Technology Co.,Ltd. ("Confidential Information").  You shall not
+  disclose such Confidential Information and shall use it only in
+  accordance with the terms of the license agreement you entered into
+  with vTradEx.
+
+  VTRADEX MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
+  SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+  PURPOSE, OR NON-INFRINGEMENT. VTRADEX SHALL NOT BE LIABLE FOR ANY DAMAGES
+  SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
+  THIS SOFTWARE OR ITS DERIVATIVES.
+-->
+<!-- $Id: configContext.xml,v 1.1.1.1 2015/03/25 02:48:48 yuan.sun Exp $ -->
+
+<beans>
+	<import resource="aopContext.xml" />
+	<import resource="complexContext.xml" />
+	<!--Global Param Beans-->
+	<bean id="currentUserSession" class="com.vtradex.wms.server.service.bean.CurrentUserSession"/>
+	<bean id="warehouseSession" class="com.vtradex.wms.server.service.bean.WmsWarehouseSession" parent="baseParamBean"/>
+	<bean id="warehouseInfoInClient" class="com.vtradex.wms.server.service.bean.WarehouseInfoInClient"/>
+	<bean id="userInfoInClient" class="com.vtradex.wms.server.service.bean.UserInfoInClient"/>
+	
+	<bean id="uniqueKeyLoader"  parent="abstractUniqueKeyLoader">
+		<property name="resources">
+			<list>
+				<value>classpath:config/origen/page/modelConfig.xml</value>
+			</list>
+		</property>
+	</bean>
+	<!--	
+	<bean id="wmsWarehouseSession" class="com.vtradex.wms.server.service.bean.WmsWarehouseSession" parent="baseParamBean"/>
+	 -->
+	 
+	 
+	 <!-- complexui intercepter -->
+	<bean id="lotInfoInterceptor" class="com.vtradex.wms.server.service.bean.LotInfoInterceptorImpl" >				
+		<constructor-arg index="0">
+			<ref bean="wmsItemManager"></ref>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="shipLotInfoInterceptor" class="com.vtradex.wms.server.service.bean.ShipLotInfoSInterceptorImpl" >				
+		<constructor-arg index="0">
+			<ref bean="wmsItemManager"></ref>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="countQuantityInterceptor" class="com.vtradex.wms.server.service.bean.CountQuantityInterceptorImpl" >				
+		<constructor-arg index="0">
+			<ref bean="wmsOrganizationManager"></ref>
+		</constructor-arg>
+	</bean>
+</beans>

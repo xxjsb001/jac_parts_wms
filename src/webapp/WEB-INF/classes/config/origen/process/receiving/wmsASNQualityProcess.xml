@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="wmsASNQualityProcess" control="qualityStauts">
+
+	<state id="NOQUALITY" title="不质检"/>
+
+	<state id="UNQUALITY" title="待质检"/>
+
+	<state id="QUALITYFINISHED" title="质检完成"/>
+
+	<task id="new" title="新建">
+		<to id="wmsASNQualityDecisionAction" type="decision"/>
+	</task>
+
+	<task id="quality" title="质检">
+		<from id="UNQUALITY" type="state"/>
+	</task>
+
+	<task id="qualitySuccess" title="质检通过">
+		<from id="UNQUALITY" type="state"/>
+		<from id="QUALITYFINISHED" type="state"/>
+		<to id="wmsASNQualityConfirmDecistionAction" type="decision"/>
+	</task>
+
+	<task id="qualityFail" title="质检不通过">
+		<from id="UNQUALITY" type="state"/>
+		<from id="QUALITYFINISHED" type="state"/>
+		<to id="wmsASNQualityConfirmDecistionAction" type="decision"/>
+	</task>
+
+	<task id="qualityDamage" title="质损">
+		<from id="UNQUALITY" type="state"/>
+		<from id="QUALITYFINISHED" type="state"/>
+		<to id="wmsASNQualityConfirmDecistionAction" type="decision"/>
+	</task>
+
+	<task id="qualityControl" title="质检登记">
+	</task>
+
+	<decision id="wmsASNQualityDecisionAction" action="wmsASNQualityDecisionAction">
+		<to id="NOQUALITY" value="N" type="state" />
+		<to id="UNQUALITY" value="Y" type="state" />
+	</decision>
+
+	<decision id="wmsASNQualityConfirmDecistionAction" action="wmsASNQualityConfirmDecistionAction">
+		<to id="QUALITYFINISHED" value="Y" type="state" />
+		<to id="UNQUALITY" value="N" type="state" />
+	</decision>
+
+</process>

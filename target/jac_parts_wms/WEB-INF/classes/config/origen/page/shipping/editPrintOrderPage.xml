@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <reportPopupPage id="editPrintOrderPage" title="editPrintOrderPage" reportFile="wmsBOLReport.raq" parameter="parentIds" width="1000" height="450">
+        <inputUIs/>
+    </reportPopupPage>
+</pages>

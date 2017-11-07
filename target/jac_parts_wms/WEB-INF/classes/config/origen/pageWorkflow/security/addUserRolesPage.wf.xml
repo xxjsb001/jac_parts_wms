@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="addUserRolesPage">
+	<main>
+		<process id="userProcess">
+				<tableCommit id="add" process="userProcess.add" title="add" enableType="multi" invisible="false">
+	            <mappings>
+					<mapping id="user.id" className="long"/>
+				</mappings>
+				<actions>
+					<action managerName="userManager" methodName="addRoles" parameter="user.id,obj"/>
+				</actions>
+				<forwards>
+					<forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="false"/>
+				</forwards>
+				</tableCommit>
+		</process>
+	</main>
+</page>

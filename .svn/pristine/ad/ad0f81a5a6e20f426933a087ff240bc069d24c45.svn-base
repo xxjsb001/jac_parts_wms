@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsASNPage">
+    <main>
+        <process id="wmsASNProcess">
+            <tablePopup id="viewASN" title="viewASN" process="wmsASNProcess.view" enableType="single" containId="true" pageId="editWmsASNPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="new" title="new" process="wmsASNProcess.new" enableType="none" containId="false" pageId="editWmsASNPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="importFile" title="importFile" process="wmsASNProcess.importFile" enableType="none" containId="false" pageId="importWmsASNPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="wmsASNProcess.modify" enableType="single" containId="true" pageId="editWmsASNPage">
+                <enableExpression><![CDATA[${asn.source}!='INTERFACE']]></enableExpression>
+            </tablePopup>
+            <tableCommit id="cancel" title="cancel" process="wmsASNProcess.cancel" enableType="multi" download="false" confirmMessage="confirm.cancel">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="activeBySuppier" title="activeBySuppier" process="wmsASNProcess.activeBySuppier" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="activeBySuppier" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="active" title="active" process="wmsASNProcess.active" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="active" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="unActive" title="unActive" process="wmsASNProcess.unActive" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="unActive" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="receive" title="receive" process="wmsASNProcess.receive" enableType="single" containId="true" pageId="editReceiveConfirmPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="cancelReceive" title="cancelReceive" process="wmsASNProcess.cancelReceive" enableType="single" containId="true" pageId="modifyDetailCancelReceivePage">
+                <enableExpression><![CDATA[(${asn.autoAllocateStauts} == 'OPEN' && ${asn.shelvesStauts} == 'UNPUTAWAY')]]></enableExpression>
+            </tablePopup>
+            <tableDirectPrint id="printASN" title="printASN" process="wmsASNProcess.print" enableType="single" multiMapping="false" download="false" closeTransactional="true" raq="jacASNReport.raq">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="printASNReport" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableDirectPrint>
+            <tablePopup id="printTrayTag" title="printTrayTag" process="wmsASNProcess.printTrayTag" enableType="single" containId="true" pageId="printTrayTagPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="viewReceivedRecord" title="viewReceivedRecord" process="wmsASNProcess.viewReceivedRecord" enableType="single" containId="true" pageId="viewWmsReceivedRecord">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="palletSerial" title="palletSerial" process="wmsASNProcess.palletSerial" enableType="single" containId="true" pageId="maintainPalletSerialPage" multiPage="{4}=='已签收不合格品退回单':maintainPalletAutoPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="putawayAutoAllocate" title="putawayAutoAllocate" process="wmsASNProcess.putawayAutoAllocate" enableType="single" containId="true" pageId="modifyPutawayAutoAllocatePage">
+                <enableExpression><![CDATA[(${asn.autoAllocateStauts} == 'PARTALLOCATED' || ${asn.autoAllocateStauts} == 'OPEN')]]></enableExpression>
+            </tablePopup>
+            <tablePopup id="unPutawayAutoAllocate" title="unPutawayAutoAllocate" process="wmsASNProcess.unPutawayAutoAllocate" enableType="single" containId="true" pageId="modifyUnPutawayAutoAllocatePage">
+                <enableExpression><![CDATA[(${asn.autoAllocateStauts} == 'PARTALLOCATED' || ${asn.autoAllocateStauts} == 'ALLOCATED') && ${asn.shelvesStauts} !='FINISHED']]></enableExpression>
+            </tablePopup>
+            <tablePopup id="shelvesConfirm" title="shelvesConfirm" process="wmsASNProcess.shelvesConfirm" enableType="single" containId="true" pageId="modifyShelvesConfirmPage">
+                <enableExpression><![CDATA[(${asn.autoAllocateStauts} == 'PARTALLOCATED' || ${asn.autoAllocateStauts} == 'ALLOCATED') && ${asn.shelvesStauts} !='FINISHED']]></enableExpression>
+            </tablePopup>
+            <tablePopup id="viewShelvesConfirm" title="viewShelvesConfirm" process="wmsASNProcess.shelvesConfirm" enableType="single" containId="true" pageId="viewModifyShelvesConfirmPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainOweProductPage" title="maintainOweProductPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.move.WmsMoveDocDetail">
+        <workflow/>
+        <datasource><![CDATA[SELECT moveDocDetail.id,
+moveDoc.company.neiBuName,
+moveDoc.code,
+moveDoc.billType.name,
+moveDocDetail.pallet,
+moveDocDetail.item.code,
+moveDocDetail.item.name,
+moveDocDetail.packageUnit.unit,
+moveDocDetail.planQuantity,
+moveDocDetail.planQuantityBU,
+moveDocDetail.allocatedQuantityBU,
+moveDocDetail.movedQuantityBU,
+moveDocDetail.inventoryStatus,
+moveDocDetail.shipLotInfo.extendPropC1,
+moveDocDetail.shipLotInfo.soi,
+moveDocDetail.shipLotInfo.supplier,
+moveDocDetail.needTime,
+moveDocDetail.pickWorkerCode,
+moveDocDetail.pickWorker,
+moveDocDetail.productionLine 
+from WmsMoveDocDetail moveDocDetail
+left join moveDocDetail.moveDoc moveDoc
+where 1=1 and moveDoc.isOweProduct='Y' 
+and moveDocDetail.allocatedQuantityBU=0]]></datasource>
+        <columns>
+            <column id="moveDocDetail.id" title="moveDocDetail.id" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="moveDoc.company.neiBuName" title="moveDoc.company.neiBuName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.code" title="moveDoc.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.billType.name" title="moveDoc.billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.pallet" title="moveDocDetail.pallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.item.code" title="moveDocDetail.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.item.name" title="moveDocDetail.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.packageUnit.unit" title="moveDocDetail.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.planQuantity" title="moveDocDetail.planQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDocDetail.planQuantityBU" title="moveDocDetail.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDocDetail.allocatedQuantityBU" title="moveDocDetail.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDocDetail.movedQuantityBU" title="moveDocDetail.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDocDetail.inventoryStatus" title="moveDocDetail.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.shipLotInfo.extendPropC1" title="moveDocDetail.shipLotInfo.extendPropC1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.shipLotInfo.soi" title="moveDocDetail.shipLotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.shipLotInfo.supplier" title="moveDocDetail.shipLotInfo.supplier" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.needTime" title="moveDocDetail.needTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="moveDocDetail.pickWorkerCode" title="moveDocDetail.pickWorkerCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.pickWorker" title="moveDocDetail.pickWorker" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.productionLine" title="moveDocDetail.productionLine" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

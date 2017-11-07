@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyMoveDocQualityPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <formCommit id="save" title="save" process="wmsMoveDocProcess.editDetail" enableType="single" download="false" visibleType="edit">
+                <enableExpression/>
+               <mappings>
+                  <mapping id="moveDoc.id" className="long">
+                      <entries/>
+                  </mapping>
+                  <mapping id="itemStateId" className="long">
+                      <entries/>
+                  </mapping>
+                 <mapping id="planQuantityBU" className="double">
+                      <entries/>
+                 </mapping>
+              </mappings>
+              <actions>
+                  <action managerName="wmsMoveDocManager" methodName="storeMoveDocDetailQuality" parameter="moveDoc.id,obj,itemStateId,planQuantityBU"/>
+              </actions>
+              <forwards>
+                  <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+              </forwards>
+          </formCommit>
+        </process>
+    </main>
+    <detail>
+        <process id="wmsMoveDocProcess">
+            <tableCommit id="deleteTask" title="deleteTask" process="wmsMoveDocProcess.deleteTask" enableType="multi" download="false">
+                <enableExpression></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="deleteTask" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyDetailQualityControlPage">
+    <main/>
+    <detail>
+        <process id="wmsASNQualityProcess">
+        	<tableCommit id="qualityDamage" title="qualityDamage" process="wmsASNQualityProcess.qualityControl" enableType="multi">
+                <enableExpression><![CDATA[${inventory.status}=='待检']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="qualityDamage" parameter="parentObj,obj,tableValues"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="qualitySingleFail" title="qualitySingleFail" process="wmsASNQualityProcess.qualityControl" enableType="multi">
+                <enableExpression><![CDATA[${inventory.status}=='待检']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="qualitySingleFail" parameter="parentObj,obj,tableValues"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="qualityAllFail" title="qualityAllFail" process="wmsASNQualityProcess.qualityControl" enableType="none">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="qualityAllFail" parameter="parentObj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="qualitySuccess" title="qualitySuccess" process="wmsASNQualityProcess.qualityControl" enableType="none">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="qualitySuccess" parameter="parentObj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

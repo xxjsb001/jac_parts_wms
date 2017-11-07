@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainMesMisInventoryPage">
+    <main>
+        <process id="inventoryProcess">
+            <tableCommit id="save" title="save" process="inventoryProcess.mesMisAdjust" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+			    <enableExpression/>
+			    <mappings>
+			    </mappings>
+			    <actions>
+			        <action managerName="wmsInventoryManager" methodName="mesMisAdjust" parameter="obj,tableValues"/>
+			    </actions>
+			    <forwards>
+			        <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+			    </forwards>
+			</tableCommit>
+			<tableCommit id="mesMidInv" title="mesMidInv" process="inventoryProcess.mesMidInv" enableType="none" multiMapping="false" download="false" closeTransactional="true">
+			    <enableExpression/>
+			    <mappings>
+			    </mappings>
+			    <actions>
+			        <action managerName="milldleTableManager" methodName="mesMisPick" parameter=""/>
+			    </actions>
+			    <forwards>
+			        <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+			    </forwards>
+			</tableCommit>
+			<tablePopup id="mesDisInitImport" title="mesDisInitImport" process="inventoryProcess.mesDisInitImport" enableType="none" containId="false" pageId="editMesDisInitImportPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

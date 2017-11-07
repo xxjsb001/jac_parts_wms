@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+        "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="wmsSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+			
+<!-- 				<ref bean="deleteInvalidInventoryTrigger"/>		 -->
+<!-- 				<ref bean="inventoryTheKontComputeCronTrigger"/> -->
+<!-- 				<ref bean="testTrigger" />		 -->
+					<!-- <ref bean="monitorInventoryTrigger"/>
+					<ref bean="dealInterfaceDataTrigger"/>
+					<ref bean="dealInterfacePickDataTrigger"/>
+					<ref bean="dealInterfaceStationItemDataTrigger"/>
+					<ref bean="dealErpItemDataTrigger"/>
+					<ref bean="dealErpSupplierDataTrigger"/> -->
+			</list>
+		</property>
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.threadPool.threadCount">20</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 每天凌晨三点定时删除无效库存记录 -->
+	<bean id="deleteInvalidInventoryJob"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="wmsInventoryManager"/>
+        </property>
+        <property name="targetMethod">
+            <value>deleteInvalidInventory</value>
+        </property>
+    </bean>	
+	<bean id="deleteInvalidInventoryTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref local="deleteInvalidInventoryJob"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 0 5 * * ?</value>
+        </property>
+    </bean>    
+
+    <!-- 定时收发存在途日结 -->
+	<bean id="inventoryTheKontComputeJob"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="theKnotManager"/>
+        </property>
+        <property name="targetMethod">
+            <value>saveStorageDataSys</value>
+        </property>
+    </bean>
+	<bean id="inventoryTheKontComputeCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref local="inventoryTheKontComputeJob"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 0 0 * * ?</value>
+        </property>
+    </bean>
+    
+    <!-- test -->
+	<bean id="testJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="screenLedManager" />
+		<property name="targetMethod" value="hgInventoryOutInit" />
+	</bean>
+	<bean id="testTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="testJob" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="1000" />
+		<property name="repeatCount" value="0" />
+	</bean>
+	<!-- 监测实际库存,与安全库存最对比 -->
+	<bean id="monitorInventoryJob"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="wmsInventoryManager"/>
+        </property>
+        <property name="targetMethod">
+            <value>monitorActualInventory</value>
+        </property>
+    </bean>	
+	<bean id="monitorInventoryTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref local="monitorInventoryJob"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 29 16 * * ?</value>
+        </property>
+    </bean>   
+    <!-- 处理接口中间表数据(MES退料单和SRM送货单) -->
+	<bean id="dealInterfaceDataJob"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="wmsDealInterfaceDataManager"/>
+        </property>
+        <property name="targetMethod">
+            <value>dealMesAndSrmOrder</value>
+        </property>
+    </bean>	
+	<bean id="dealInterfaceDataTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref local="dealInterfaceDataJob"/>
+        </property>
+        <property name="cronExpression">
+            <!-- <value>0 22 11 * * ?</value> -->
+            <value>30 24 08 * * ?</value>
+        </property>
+    </bean>   
+    
+    <!-- 处理接口中间表数据(MES退料单和SRM送货单) -->
+	<bean id="dealInterfacePickDataJob"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="wmsDealInterfaceDataManager"/>
+        </property>
+        <property name="targetMethod">
+            <value>dealPicketTicketData</value>
+        </property>
+    </bean>	
+	<bean id="dealInterfacePickDataTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref local="dealInterfacePickDataJob"/>
+        </property>
+        <property name="cronExpression">
+            <!-- <value>0 22 11 * * ?</value> -->
+            <value>20 41 08 * * ?</value>
+        </property>
+    </bean>   
+    <!-- 处理接口器具物料关系对应表数据 -->
+	<bean id="dealInterfaceStationItemDataJob"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="wmsDealInterfaceDataManager"/>
+        </property>
+        <property name="targetMethod">
+            <value>dealStationAndItemData</value>
+        </property>
+    </bean>	
+	<bean id="dealInterfaceStationItemDataTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref local="dealInterfaceStationItemDataJob"/>
+        </property>
+        <property name="cronExpression">
+            <!-- <value>0 22 11 * * ?</value> -->
+            <value>00 0/1 08 * * ?</value>
+        </property>
+    </bean> 
+    <!-- 处理物料信息中间表数据 -->
+    <bean id="dealErpItemDataJob"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="wmsDealInterfaceDataManager"/>
+        </property>
+        <property name="targetMethod">
+            <value>dealErpItemData</value>
+        </property>
+    </bean>	
+	<bean id="dealErpItemDataTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref local="dealErpItemDataJob"/>
+        </property>
+        <property name="cronExpression">
+            <!-- <value>0 22 11 * * ?</value> -->
+            <value>00 34 17 * * ?</value>
+        </property>
+    </bean>  
+    <!-- 处理供应商中间表数据 -->
+    <bean id="dealErpSupplierDataJob"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="wmsDealInterfaceDataManager"/>
+        </property>
+        <property name="targetMethod">
+            <value>dealErpSupplierData</value>
+        </property>
+    </bean>	
+	<bean id="dealErpSupplierDataTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref local="dealErpSupplierDataJob"/>
+        </property>
+        <property name="cronExpression">
+            <!-- <value>0 22 11 * * ?</value> -->
+            <value>00 34 17 * * ?</value>
+        </property>
+    </bean>  
+</beans>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.billing.WMSInvoiceDetailCategory" table="WMS_INVOICE_DETAIL_CATEGORY">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_WMS_INVOICE_DETAIL</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+		<discriminator column="DISCRIMINATOR" type="string"/>
+		<many-to-one name="warehouse" class="com.vtradex.wms.server.model.warehouse.WmsWarehouse">
+			<column name="WAREHOUSE_ID"/>
+		</many-to-one>
+		<many-to-one name="invoice" class="com.vtradex.wms.server.model.billing.WMSInvoice">
+			<column name="WMS_INVOICE_ID" not-null="true" unique-key="UK_WMS_INVOICE_DETAIL_CATEGORY"/>
+		</many-to-one>
+		 <many-to-one name="smallCategory" class="com.vtradex.wms.server.model.billing.WMSBillingCategory">
+			<column name="WMS_BILLING_SMALL_CATEGORY_ID" not-null="true" unique-key="UK_WMS_INVOICE_DETAIL_CATEGORY" />
+		</many-to-one>
+		<property name="rate" type="double"  column="RATE"/> 
+		<property name="qty_amount" type="double"  column="QTY_AMOUNT"/> 
+		<property name="sumSysAmount" type="double"   column="SUM_SYS_AMOUNT"/>
+		<property name="sumManualAmount" type="double"   column="SUM_MANUAL_AMOUNT"/>
+		<set name="billDetails" table="WMS_INVOICE_DETAIL_CATEGORY" lazy="true">
+			<key column="WMS_INVOICE_DETAIL_CATEGORY_ID"/>
+			<one-to-many class="com.vtradex.wms.server.model.billing.WMSBillDetail"/>
+		</set>
+		<property name="startDate" type="date"  column="START_DATE"/>
+		<property name="endDate" type="date"  column="END_DATE"/> 
+		<property name="memo" type="string" length="255" column="MEMO"/>
+		
+		  
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	 </class>
+</hibernate-mapping>

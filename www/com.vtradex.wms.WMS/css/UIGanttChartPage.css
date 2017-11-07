@@ -1,0 +1,313 @@
+.gantt_container {
+	border:1px solid #99bbe8;
+	padding-top:5px;
+}
+.gantt_orderlistpanel {
+	width:100%;
+	background:#FFFFFF;
+	margin:0px;
+	padding:0px;
+}
+
+.gantt_vplistpanel {
+	width:100%;
+	width:100%;
+	margin:0px;
+	padding:0px;
+}
+
+.orderlist_container {
+	width:100%;
+	height:485px;
+}
+.gantt_subsidiarypanel {
+	height:100%;
+	width:100%;
+	border: 1px solid #e8e8e8;
+}
+.gantt_addbutton {
+	background:url(../images/monitor/button.gif);
+	color:white;
+	text-align:center;
+	width:50px;
+    height:20px;
+    border:none;
+    float:right;
+    padding-bottom:3px;
+}
+.gantt_resetbutton {
+	background:url(../images/monitor/button.gif);
+	color:white;
+	text-align:center;
+	width:50px;
+    height:20px;
+    border:none;
+	margin-left: 45px;   
+    padding-bottom:3px; 
+}
+.gantt_querypanel {
+	width:100%;
+	line-height:26px;
+	margin-top:3px;
+	margin-bottom:8px;
+	vertical-align:middle;
+}
+.gantt_querypanel td {
+	padding-left:4px;
+}
+
+.gantt_queryPanel_text{
+	border:none;
+	border:2px solid #FFFFFF;
+	border-bottom:1px solid #666666;
+	width:140px;
+	line-height:18px;
+	margin-bottom:1px;
+	margin-top:1px;
+}
+.gantt_queryPanel_text_on{
+	color:#0000FF;
+	background:#F1F5FA;
+	border-bottom-width:1px;
+	margin-bottom:2px;
+	width:140px;
+	cursor:text;
+	text-align:left;
+	margin-bottom:1px;
+	margin-top:1px;
+}
+
+.gantt_querypanel .gantt_queryPanel_text {
+	width:140px;
+}
+.gantt_listorderType {
+	width:140px;
+	overflow:hidden;
+}
+.gantt_statpanel {
+	width:100%;
+}
+.gantt_statpanel td {
+	border:1px solid #dce6f3;
+	height:26px;
+	vertical-align:middle;
+}
+.gantt_orderlist_head {
+	height:20px;
+	color:#666666;
+	border:1px solid #cccccc;
+	text-align:center;
+	font-size:12px;
+	font-weight:bold;
+	background-color:#dce6f3;
+	border-bottom:1px solid #d7d7d7;
+}
+
+.gantt_orderlist_head_col1{
+	width:30px;
+	height:20px;
+	text-align:center;
+	font-size:12px;
+	font-weight:bold;
+}
+
+.gantt_orderlist_head_col2{
+	width:100px;
+	height:20px;
+	text-align:center;
+	font-size:12px;
+	font-weight:bold;
+}
+
+.gantt_orderlist_head_col3{
+	width:1442px;
+	height:20px;
+	text-align:center;
+	font-size:12px;
+	font-weight:bold;
+	background:transparent url(../images/ganttchart.png) no-repeat center !important
+}
+
+
+.gantt_ml_container_odd {
+	width:100%;
+	height:30px;
+	margin:0px;
+	padding:0px;
+	background:#ffffff;
+	border:1px solid #d7d7d7;
+	border-right:none;
+	border-top:none;
+	table-layout:fixed;
+	overflow:hidden;
+}
+.gantt_ml_container_even {
+	width:100%;
+	height:30px;
+	margin:0px;
+	padding:0px;
+	border:1px solid #d7d7d7;
+	background:#f3f3f3;
+	border-right:none;
+	border-top:none;
+	table-layout:fixed;
+	overflow:hidden;
+}
+.gantt_ml_container_even td, .gantt_ml_container_odd td {
+	border-right:1px solid #d7d7d7;
+	white-space:normal;
+	word-wrap:break-word;
+	word-break:break-all;
+	overflow:hidden;
+}
+.gantt_ml_nodecontainer{
+	width:auto;
+	height:auto;
+}
+
+.gantt_mn_unselected {
+	width:36px;
+	height:23px;
+}
+.gantt_mn_container {
+	margin-top: 0px;
+	margin-right:0px;
+	clear:none;
+	float:left;
+	height:20px;
+	overflow:hidden;
+}
+
+.gantt_mn_container div{
+	font-family: 'Times New Roman', Times, serif;
+	color: #000000;
+	font-weight:normal;
+	font-size:10px;
+	width:36px;
+	height:20px;
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+.gantt_nodecontainer {
+	width:1450px;
+	float:left;
+	word-break:break-all;
+	word-wrap:break-word;
+	margin: 0px;
+	margin-bottom: 0px;
+	overflow:hidden;
+}
+.gantt_nodecontainer td {
+	border:none;
+}
+/*MyfocusePanel*/
+.gantt_mfp_container {
+}
+.gantt_mfp_popup {
+	/*border:1px #cccccc solid;
+	text-align: left;
+	color: black;
+	background: #f8e3c3;
+	padding:3px;
+	line-height: 14px;*/
+}
+/*MonitorTips*/
+.gantt_mts_tips {
+	border:1px #cccccc solid;
+	text-align: left;
+	color: black;
+	background: url(../images/notice_bg1.jpg) repeat;
+	padding:5px;
+}
+.gantt_mts_tips td {
+	padding:2px;
+}
+.gantt_navi_img{
+	width:15px;
+	height:15px;
+}
+.gantt_navgatebar {
+	width:30px;
+	padding:4px;
+	white-space: nowrap;
+	margin-right: 2px;
+}
+.gantt_navgatebar div {
+	margin: 0px 4px;
+}
+.gantt_navgatebar div {
+	white-space: nowrap;
+}
+.gantt_orderlistfoot {
+	/*width:100%;
+	background:#FFFFCC;
+	height:30px;*/
+}
+
+.headFilling {
+	width:16px;
+}
+
+
+.gannt_nodepanel_Yellow{
+	background:#FFFF00;	
+}
+
+.gannt_nodepanel_Gray{
+	background:#C0C0C0;	
+}
+
+.gannt_nodepanel_Red{
+	background:#FF6600;	
+}
+
+.gannt_nodepanel_Green{
+	background:#00FF00;	
+}
+
+.gannt_nodepanel_White1{
+	background:#FFFFFF;	
+	vertical-align:middle;
+}
+.gannt_nodepanel_White2{
+	
+	background:#f3f3f3;
+	vertical-align:middle;
+}
+
+
+.gannt_nodepanel_White hr{
+	
+}
+
+
+
+
+
+
+
+
+.gannt_navi_img{
+	width:15px;
+	height:15px;
+}
+.gannt_navgatebar {
+	/*
+	width:30px;
+	padding:4px;
+	*/
+	white-space: nowrap;
+	margin-left: 2px;
+}
+
+.gannt_navgatebarPanel {
+	height:20px;
+	color:#666666;
+	border:1px solid #cccccc;
+	text-align:center;
+	font-size:12px;
+	font-weight:bold;
+	background-color:#dce6f3;
+	border-bottom:1px solid #d7d7d7;
+}

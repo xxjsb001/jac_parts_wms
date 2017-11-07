@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="viewWmsWorkDocProcessPage" title="viewWmsWorkDocProcessPage" autoQuery="false" entityClass="com.vtradex.wms.server.model.move.WmsTask" width="900" height="450">
+        <workflow/>
+        <datasource><![CDATA[SELECT taskLog.id,
+taskLog.fromLocationCode,
+taskLog.fromPallet,
+taskLog.fromCarton,
+taskLog.fromSerialNo,
+taskLog.itemKey.item.code,
+taskLog.itemKey.item.name,
+taskLog.packageUnit.unit,
+taskLog.movedQuantity,
+taskLog.movedQuantityBU,
+taskLog.pickBackQuantityBU,
+taskLog.inventoryStatus,
+taskLog.itemKey.lotInfo.soi,
+taskLog.itemKey.lotInfo.supplier.name,
+taskLog.toLocationCode,
+taskLog.toPallet,
+taskLog.toCarton,
+taskLog.worker.name,
+taskLog.updateInfo.createdTime 
+ FROM WmsTaskLog taskLog
+ LEFT JOIN taskLog.worker 
+ LEFT JOIN taskLog.itemKey 
+ LEFT JOIN taskLog.itemKey.lotInfo.supplier
+ WHERE 1 = 1 
+ AND taskLog.task.id in ({parentIds}) 
+ ORDER BY taskLog.id ]]></datasource>
+        <columns>
+            <column id="taskLog.id" title="taskLog.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="taskLog.fromLocationCode" title="taskLog.fromLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.fromPallet" title="taskLog.fromPallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.fromCarton" title="taskLog.fromCarton" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.fromSerialNo" title="taskLog.fromSerialNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.itemKey.item.code" title="taskLog.itemKey.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.itemKey.item.name" title="taskLog.itemKey.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.packageUnit.unit" title="taskLog.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.movedQuantity" title="taskLog.movedQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="taskLog.movedQuantityBU" title="taskLog.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="taskLog.pickBackQuantityBU" title="taskLog.pickBackQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="taskLog.inventoryStatus" title="taskLog.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.itemKey.lotInfo.soi" title="inventory.itemKey.lotInfo.soi" visible="true" sortable="false" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.itemKey.lotInfo.supplier.name" title="inventory.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.toLocationCode" title="taskLog.toLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.toPallet" title="taskLog.toPallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.toCarton" title="taskLog.toCarton" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.worker.name" title="taskLog.worker.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="taskLog.updateInfo.createdTime" title="taskLog.updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+        </columns>
+    </maintainPage>
+</pages>

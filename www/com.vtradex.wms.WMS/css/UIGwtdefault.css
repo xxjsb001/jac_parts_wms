@@ -1,0 +1,285 @@
+.gwt-TabPanel {
+	background-color:white;
+}
+
+.gwt-TabPanelBottom {
+	width:100%;
+	height:100%;
+}
+
+.gwt-TabBar {
+  background-color: white;
+  font-size: normal;
+}
+
+.gwt-TabBar .gwt-TabBarFirst {
+  height: 100%;
+}
+
+.gwt-TabBar .gwt-TabBarRest {
+  padding-right: 3px;
+}
+
+.gwt-TabBar .gwt-TabBarItem {
+  padding: 4px;
+  cursor: pointer;
+  cursor: hand;
+  color:#87B3FF;
+  background-color: #e8eef7;
+  border-bottom: 2px solid white;
+  margin-right: 2px;
+}
+
+.gwt-TabBar .gwt-TabBarItem-selected {
+  font-weight: bold;
+  background-color: #e8eef7;
+  color:blue;
+  border-top: 1px solid #87B3FF;
+  border-left: 1px solid #87B3FF;
+  border-right: 1px solid #87B3FF;
+  border-bottom: 1px solid #E8EEF7;
+  padding: 4px;
+  cursor: default;
+  
+}
+.gwt-DialogBox {
+  border: 0px outset;
+  overflow:auto;
+  /*background:url(../images/popup_bottom_color.gif) repeat;*/
+}
+.popup_title {
+	padding-top: 10px;
+	background: url(../images/popup_titlebar_icon.gif) no-repeat left bottom;
+	text-indent:23px;	
+}
+
+.gwt-DialogBox .Caption {
+  height: 30px;
+  background:transparent url(../images/default/panel/white-top-bottom.gif) repeat-x 0 -1px;  
+  font-weight: bold;
+  cursor: default;
+  text-align:left;
+  width:100%;
+}
+
+.gwt-DialogBox .Bottom {
+  height: 24px;
+  padding: 0px;
+  margin: 0px;
+  font-weight: normal;
+  font-color:red;
+  cursor: default;
+  text-align:left;
+  background: url(../images/popup_bottom_bg.jpg) no-repeat center center;
+  width:100%;
+  white-space:nowrap;
+}
+.gwt-dragpage{
+	border:4px outset;
+}
+/* license page */
+table.wwFormTable {
+    width: 95%;
+    background-color: #CCCCCC;}
+table.wwFormTable tr.input {
+    background-color:white; }
+table.wwFormTable td.input {
+    background-color:white;
+    padding: 1px; }
+table.wwFormTable td.bottom{
+    text-align: right;
+    background-image: url('../images/bottom_bg_40.gif'); }
+table.wwFormTable td.title{
+    font-size:9pt;
+    background-color: #D6E9F1;
+    padding-top: 10px;
+    padding-left: 10px
+}
+
+/*add for richtext*/
+
+.gwt-PushButton-up {
+  background-color: #C3D9FF;
+  padding: 2px;
+  border: 2px solid transparent;
+  border-color: #E8F1FF rgb(157, 174, 205) rgb(157, 174, 205) rgb(232, 241, 255);
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-PushButton-up-hovering {
+  background-color: #C3D9FF;
+  padding: 2px;
+  border: 2px solid transparent;
+  border-color: #E8F1FF rgb(157, 174, 205) rgb(157, 174, 205) rgb(232, 241, 255);
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-PushButton-down {
+  background-color: #C3D9FF;
+  padding: 2px;
+  border: 2px solid transparent;
+  border-color: #9DAECD rgb(232, 241, 255) rgb(232, 241, 255) rgb(157, 174, 205);
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-PushButton-down-hovering {
+  background-color: #C3D9FF;
+  padding: 2px;
+  border: 2px solid transparent;
+  border-color: #9DAECD rgb(232, 241, 255) rgb(232, 241, 255) rgb(157, 174, 205);
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-ToggleButton-up {
+  background-color: #C3D9FF;
+  padding: 2px;
+  border: 2px solid transparent;
+  border-color: #E8F1FF rgb(157, 174, 205) rgb(157, 174, 205) rgb(232, 241, 255);
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-ToggleButton-up-hovering {
+  background-color: #C3D9FF;
+  padding: 2px;
+  border: 2px solid transparent;
+  border-color: #E8F1FF rgb(157, 174, 205) rgb(157, 174, 205) rgb(232, 241, 255);
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-ToggleButton-down {
+  background-color: #C3D9FF;
+  padding: 2px;
+  background-color: #E8F1FF;
+  border: 2px solid transparent;
+  border-color: #9DAECD rgb(232, 241, 255) rgb(232, 241, 255) rgb(157, 174, 205);
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-ToggleButton-down-hovering {
+  background-color: #C3D9FF;
+  padding: 2px;
+  background-color: #E8F1FF;
+  border: 2px solid transparent;
+  border-color: #9DAECD rgb(232, 241, 255) rgb(232, 241, 255) rgb(157, 174, 205);
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-RichTextArea {
+  border: 1px solid black;
+  background-color: white;
+  filter:alpha(opacity=50);
+  color:black;
+}
+
+.gwt-RichTextToolbar {
+  background-color: #C3D9FF;
+  padding: 2px;
+}
+
+.gwt-RichTextToolbar .gwt-PushButton-up {
+  margin-right: 2px;
+  border: 1px solid #C3D9FF;
+}
+
+.gwt-RichTextToolbar .gwt-PushButton-up-hovering {
+  margin-right: 2px;
+  border: 1px solid #C3D9FF;
+  border-color: #E8F1FF rgb(157, 174, 205) rgb(157, 174, 205) rgb(232, 241, 255);
+}
+
+.gwt-RichTextToolbar .gwt-PushButton-down {
+  margin-right: 2px;
+  border: 1px solid #C3D9FF;
+  border-color: #9DAECD rgb(232, 241, 255) rgb(232, 241, 255) rgb(157, 174, 205);
+}
+
+.gwt-RichTextToolbar .gwt-PushButton-down-hovering {
+  margin-right: 2px;
+  border: 1px solid #C3D9FF;
+  border-color: #9DAECD rgb(232, 241, 255) rgb(232, 241, 255) rgb(157, 174, 205);
+}
+
+.gwt-RichTextToolbar .gwt-ToggleButton-up {
+  margin-right: 2px;
+  border: 1px solid #C3D9FF;
+}
+
+.gwt-RichTextToolbar .gwt-ToggleButton-up-hovering {
+  margin-right: 2px;
+  border: 1px solid #C3D9FF;
+  border-color: #E8F1FF rgb(157, 174, 205) rgb(157, 174, 205) rgb(232, 241, 255);
+}
+
+.gwt-RichTextToolbar .gwt-ToggleButton-down {
+  margin-right: 2px;
+  background-color: #E8F1FF;
+  border: 1px solid #C3D9FF;
+  border-color: #9DAECD rgb(232, 241, 255) rgb(232, 241, 255) rgb(157, 174, 205);
+}
+
+.gwt-RichTextToolbar .gwt-ToggleButton-down-hovering {
+  margin-right: 2px;
+  background-color: #E8F1FF;
+  border: 1px solid #C3D9FF;
+  border-color: #9DAECD rgb(232, 241, 255) rgb(232, 241, 255) rgb(157, 174, 205);
+}
+.gwt-MenuBar {
+  background-color: #FFFFFF;
+  border: 1px solid #87B3FF;
+  cursor: pointer;
+  padding: 4px 4px 4px 4px;
+}
+
+.gwt-MenuBar .gwt-MenuItem{
+  background-color: #FFFFFF;
+  padding: 2px 3px 2px 3px;
+  font-size: normal;
+  cursor: pointer;
+  width:100%;
+}
+
+.gwt-MenuBar table {
+	width:100%;
+}
+
+.gwt-MenuBar td{
+  white-space:nowrap;
+  word-wrap:normal;
+}
+
+.gwt-MenuBar hr{
+  width:92px;
+}
+
+.gwt-MenuBar .gwt-MenuItem-selected {
+   background-color:#2233dd;
+  font-weight:bold;
+  font-style:italic;
+  color:white;
+  font-size:14px;
+}
+
+.gwt-Image {
+	background-color:#FFFFFF;
+}
+
+Textarea {
+	font-size: 12px;
+}
+TEXTBOX {
+	font-size: 12px;
+}
+table.labelalign{
+  margin-left:auto;
+  margin-right:0;
+}
+.x-tree-node .x-tree-node-over{background-color:#eee;}
+.x-tree-node .x-tree-selected{background-color:#d9e8fb;}

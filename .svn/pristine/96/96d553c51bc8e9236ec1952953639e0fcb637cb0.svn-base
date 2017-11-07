@@ -1,0 +1,61 @@
+package com.vtradex.wms.server.telnet.shell.pick;
+
+import java.io.IOException;
+
+import net.wimpi.telnetd.net.Connection;
+
+import com.vtradex.kangaroo.shell.BreakException;
+import com.vtradex.kangaroo.shell.ContinueException;
+import com.vtradex.kangaroo.shell.Thorn4BaseShell;
+import com.vtradex.wms.server.model.inventory.WmsInventory;
+import com.vtradex.wms.server.telnet.dto.WmsPickContainerDTO;
+import com.vtradex.wms.server.telnet.pick.WmsPickRFManager;
+
+public class WmsPickContainerShell2 extends Thorn4BaseShell{
+	
+	public static final String PAGE_ID = "wmsPickContainerShell2";
+	
+	private final WmsPickRFManager pickRFManager;
+	
+	public WmsPickContainerShell2(WmsPickRFManager pickRFManager) {
+		this.pickRFManager = pickRFManager;
+	}
+	@Override
+	protected void mainProcess(Connection connection) throws BreakException,
+			ContinueException, IOException, Exception {
+		
+		WmsPickContainerDTO dto = (WmsPickContainerDTO) this.getParentContext().get("CURRENT_DTO");
+		
+		this.output("拣货库位", dto.getPickLocCode());
+		this.output("物料编码", dto.getItemCode());
+		this.output("物料名称", dto.getItemName());
+		this.output("供应商编码", dto.getSupplier());
+		this.output("待拣数量", dto.getUnMoveQuantityBU().toString());
+		Double pickQuantity = this.getNumberField("拣选数量");
+		Double qty = dto.getUnMoveQuantityBU();
+//		if(!dto.getLocationCode().equals(dto.getPickLocCode())){
+//			WmsInventory inv =pickRFManager.getInventoryQtyByLocation(dto.getPickLocCode(),dto.getItemCode(),dto.getSupplier());
+//			if(inv == null){
+//				this.context.put("CURRENT_DTO", dto);
+//				this.forward(WmsPickContainerShell.PAGE_ID,"库位未找到库存，请重新输入");
+//			}
+//			qty = inv.getAvailableQuantityBU();
+//			dto.setInventoryId(inv.getId());
+//		}
+		if(pickQuantity > qty){
+			this.setStatusMessage("拣选数量不能大于待拣数量");
+		}
+		dto.setPickQuantity(pickQuantity);
+		if(pickQuantity < dto.getUnMoveQuantityBU()){
+			this.context.put("CURRENT_DTO", dto);
+			dto.setUnMoveQuantityBU(dto.getUnMoveQuantityBU()-pickQuantity);
+			pickRFManager.checkIsFinished(dto);
+			this.forward(WmsPickContainerShell3.PAGE_ID);
+		}else{
+			pickRFManager.checkIsFinished(dto);
+			pickRFManager.confimPickByContainer(dto,false);
+			
+			this.forward(WmsPickContainerCodeShell.PAGE_ID);
+		}
+	}
+}

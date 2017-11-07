@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="createWmsWaveDocPage" title="createWmsWaveDocPage">
+        <workflow/>
+        <initListeners>
+            <initListener id="waveDoc.type" managerName="wmsWaveDocManager" methodName="getRuleConfigWave" newEnabled="true" editEnabled="true"/>
+        </initListeners>
+        <inputUIs>
+            <hidden id="waveDoc.id" title="waveDoc.id"/>
+            <list id="waveDoc.type" title="waveDoc.type" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT e.enumValue,e.enumValue FROM Enumerate e WHERE 1=0]]></hql>
+                <eventListeners/>
+            </list>
+        </inputUIs>
+    </editPage>
+</pages>

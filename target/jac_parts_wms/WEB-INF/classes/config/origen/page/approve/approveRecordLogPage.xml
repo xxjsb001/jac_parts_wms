@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="approveRecordLogPage" title="approveRecordLogPage" autoQuery="false" entityClass="com.vtradex.thorn.server.model.approve.ThornApproveProcessLog" width="850" height="500" onClose="refreshParent">
+        <workflow/>
+        <datasource><![CDATA[SELECT approveProcessLog.id,
+approveProcessLog.operator,
+approveProcessLog.type,
+approveProcessLog.operatorTime,
+approveProcessLog.comment,
+approveProcessLog.approveUser 
+ FROM ThornApproveProcessLog approveProcessLog WHERE approveProcessLog.thornApproveProcess.id = {parentId} ORDER BY approveProcessLog.id DESC]]></datasource>
+        <columns>
+            <column id="approveProcessLog.id" title="approveProcessLog.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="approveProcessLog.operator" title="approveProcessLog.operator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="approveProcessLog.type" title="approveProcessLog.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="ThornApproveProcessType"/>
+            <column id="approveProcessLog.operatorTime" title="approveProcessLog.operatorTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="approveProcessLog.comment" title="approveProcessLog.comment" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="approveProcessLog.approveUser" title="approveProcessLog.approveUser" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

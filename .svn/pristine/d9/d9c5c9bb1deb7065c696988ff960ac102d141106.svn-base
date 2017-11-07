@@ -1,0 +1,48 @@
+package com.vtradex.wms.server.telnet.pick;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import com.vtradex.thorn.server.exception.BusinessException;
+import com.vtradex.wms.server.telnet.dto.WmsPickTaskDTO;
+import com.vtradex.wms.server.telnet.manager.WmsCommonRFManager;
+
+@Transactional
+public interface WmsPickRFManager extends WmsCommonRFManager{
+	/**
+	 * 通过作业单号获取拣选任务
+	 * @param workDocCode
+	 * @return
+	 */
+	@Transactional
+	WmsPickTaskDTO findPickTaskById(Long workDocId);
+	/**
+	 * 校验作业单号是否合法
+	 * @param workDocCode
+	 */
+	@Transactional
+	Long checkWorkDocCode(String workDocCode);
+	/**
+	 * 拣选确认
+	 * @param pickTaskDTO
+	 * @param locationCode
+	 * @param quantity
+	 */
+	@Transactional
+	void confirmPick(WmsPickTaskDTO pickTaskDTO , String locationCode , Double quantity);
+	
+	@Transactional
+	void markExceptionWmsLocation(Long locationId) throws BusinessException;
+	
+	/**
+	 * 重新分配库位
+	 */
+	@Transactional
+	void resetAllocate(WmsPickTaskDTO pickTaskDTO);
+	/**拣货扫码*/
+	@Transactional
+	String pickConfirmAll(String pickNo);
+	
+	/**发运登记*/
+	@Transactional
+	String shipRecord(String pickNo,String vehicleNo);
+}

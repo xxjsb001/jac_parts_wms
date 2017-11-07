@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+        "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+  Copyright (c) 2001-2005 vTradEx Information Technology Co.,Ltd. All Rights Reserved.
+
+  This software is the confidential and proprietary information of vTradEx
+  Information Technology Co.,Ltd. ("Confidential Information").  You shall not
+  disclose such Confidential Information and shall use it only in
+  accordance with the terms of the license agreement you entered into
+  with vTradEx.
+
+  VTRADEX MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
+  SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+  PURPOSE, OR NON-INFRINGEMENT. VTRADEX SHALL NOT BE LIABLE FOR ANY DAMAGES
+  SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
+  THIS SOFTWARE OR ITS DERIVATIVES.
+-->
+<!-- $Id: serviceContext.xml,v 1.21 2016/09/23 09:22:44 yongcheng.min Exp $ -->
+<beans>
+	<import resource="rfServiceContext.xml" />
+	<bean id="wmsGlobalParamUtils" class="com.vtradex.wms.server.service.GlobalParamUtils"/>
+    <bean id="wmsCommonDao" class="com.vtradex.wms.server.service.sequence.pojo.HibernateWmsCommonDao" parent="commonDao"/>
+    <bean id="maintainWmsBookingPage" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.vtradex.wms.server.service.receiving.pojo.DefaultWmsBookingManager"
+				parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="valueListAdapter"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>		
+	<bean id="wmsRuleManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.rule.pojo.DefaultWmsRuleManager" parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="ruleManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="ruleTableLoader"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<bean id="jdbcTemplate"
+        class="org.springframework.jdbc.core.JdbcTemplate" abstract="false"
+        lazy-init="false" autowire="default" dependency-check="default">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+	<bean id="wmsNoTransStateManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.rule.pojo.DefaultWmsNoTransactionalManager" parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="wmsASNManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsTransStateManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.base.pojo.DefaultWmsTransStateManager" parent="baseManager">
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsBOLStateLogManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.shipping.pojo.DefaultWmsBOLStateLogManager" parent="baseManager">
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsUserManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.security.pojo.DefaultWmsUserManager" parent="baseManager">
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="userPasswordManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.security.pojo.DefaultUserPasswordManager" parent="baseManager">
+				<constructor-arg>
+					<ref bean="userManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsWarehouseManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.security.pojo.DefaultWmsWarehouseManager" parent="baseManager">
+				<constructor-arg>
+					<ref bean="userManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<bean id="wmsWarehouseAreaManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.base.pojo.DefaultWmsWarehouseAreaManager" parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<bean id="wmsLocationManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.base.pojo.DefaultWmsLocationManager" parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<bean id="wmsOrganizationManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.base.pojo.DefaultWmsOrganizationManager" parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<bean id="wmsItemManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.base.pojo.DefaultWmsItemManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+		
+	<bean id="WmsInventoryExtendManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.inventory.pojo.DefaultWmsInventoryExtendManager" parent="baseManager">
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="wmsASNManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.receiving.pojo.DefaultWmsASNManager" parent="baseManager" >		
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsASNDetailManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="wmsMoveDocManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="4">
+					<ref bean="wmsInventoryManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="5">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="6">
+					<ref bean="wmsTaskManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="7">
+					<ref bean="WmsInventoryExtendManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="8">
+					<ref bean="wmsDealInterfaceDataManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<bean id="wmsASNDetailManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.receiving.pojo.DefaultWmsASNDetailManager" parent="baseManager" >				
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>								
+				<constructor-arg index="1">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>	
+				<constructor-arg index="2">
+					<ref bean="wmsItemManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="wmsInventoryManager"></ref>
+				</constructor-arg>	
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="wmsPickTicketManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.shipping.pojo.DefaultWmsPickTicketManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsInventoryManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="4">
+					<ref bean="wmsWorkDocManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="5">
+					<ref bean="wmsTransactionalManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="6">
+					<ref bean="wmsMoveDocManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="7">
+					<ref bean="wmsBillTypeManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsTaskManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.task.pojo.DefaultWmsTaskManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>				
+			</bean>
+		</property>
+	</bean>
+	
+	<!--WmsInventoryManager-->
+	<bean id="wmsInventoryManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.inventory.pojo.DefaultWmsInventoryManager" parent="baseManager" >	
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>		
+				<constructor-arg index="2">
+					<ref bean="wmsLocationManager"></ref>
+				</constructor-arg>		
+				<constructor-arg index="3">
+					<ref bean="WmsInventoryExtendManager"></ref>
+				</constructor-arg>		
+				<constructor-arg index="4">
+					<ref bean="wmsItemManager"></ref>
+				</constructor-arg>		
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsMoveDocManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.receiving.pojo.DefaultWmsMoveDocManager" parent="baseManager" >			
+				<constructor-arg index="0">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsTransactionalManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="wmsBillTypeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="4">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="5">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="6">
+					<ref bean="wmsInventoryManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="7">
+					<ref bean="wmsTaskManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="8">
+					<ref bean="ruleTableLoader"></ref>
+				</constructor-arg>
+			</bean>
+			
+		</property>
+	</bean>
+	
+	<bean id="wmsWorkDocManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.workDoc.pojo.DefaultWmsWorkDocManager" parent="baseManager" >				
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="wmsTransactionalManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="4">
+					<ref bean="wmsInventoryManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="5">
+					<ref bean="WmsInventoryExtendManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsBussinessCodeManager" class="com.vtradex.wms.server.service.sequence.pojo.DefaultWmsBussinessCodeManager" >				
+		<constructor-arg index="0">
+			<ref bean="sequenceGenerater"/>
+		</constructor-arg>
+				<constructor-arg index="1">
+			<ref bean="wmsRuleManager"/>
+		</constructor-arg>		
+	</bean>
+	<!--盘点计划管理-->
+	<bean id="wmsCountPlanManager" parent="abstractTransactionProxy">				
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.count.pojo.DefaultWmsCountPlanManager" parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="workflowManager"/>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsInventoryManager"/>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsBussinessCodeManager"/>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="WmsInventoryExtendManager"/>
+				</constructor-arg>
+				<constructor-arg index="4">
+					<ref bean="wmsWarehouseManager"/>
+				</constructor-arg>
+				<constructor-arg index="5">
+					<ref bean="wmsCommonDao"/>
+				</constructor-arg>
+				<constructor-arg index="6">
+					<ref bean="wmsItemManager"/>
+				</constructor-arg>
+				<constructor-arg index="7">
+					<ref bean="wmsRuleManager"/>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+			
+	<bean id="wmsTransactionalManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.rule.pojo.DefaultWmsTransactionalManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="workflowManager"/>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsInventoryManager"/>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsTaskManager"/>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="wmsRuleManager"/>
+				</constructor-arg>	
+				<constructor-arg index="4">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>						
+				<constructor-arg index="5">
+					<ref bean="wmsLocationManager"></ref>
+				</constructor-arg>						
+				<constructor-arg index="6">
+					<ref bean="valueListAdapter"></ref>
+				</constructor-arg>						
+				<constructor-arg index="7">
+					<ref bean="WmsInventoryExtendManager"></ref>
+				</constructor-arg>						
+			</bean>
+		</property>
+	</bean>
+	<!-- 消息接口 -->
+	<bean id="wmsMessageManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.message.pojo.DefaultWmsMessageManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+						<ref bean="wmsBussinessCodeManager" ></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsInventoryManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="4">
+					<ref bean="wmsTransactionalManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="5">
+					<ref bean="wmsTaskManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="6">
+					<ref bean="wmsWorkDocManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="7">
+					<ref bean="wmsMoveDocManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsWaveDocManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.shipping.pojo.DefaultWmsWaveDocManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsInventoryManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="4">
+					<ref bean="wmsTaskManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="5">
+					<ref bean="wmsTransactionalManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="6">
+					<ref bean="wmsWorkDocManager"></ref>
+				</constructor-arg>	
+				<constructor-arg index="7">
+					<ref bean="wmsMessageManager"></ref>
+				</constructor-arg>	
+				<constructor-arg index="8">
+					<ref bean="wmsPickTicketManager"></ref>
+				</constructor-arg>							
+			</bean>
+		</property>
+	</bean>	
+	
+	<bean id="wmsProcessManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.process.pojo.DefaultWmsProcessManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsInventoryManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="4">
+					<ref bean="wmsWorkDocManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="5">
+					<ref bean="wmsTransactionalManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="6">
+					<ref bean="wmsTaskManager"></ref>
+				</constructor-arg>				
+				<constructor-arg index="7">
+					<ref bean="wmsItemManager"></ref>
+				</constructor-arg>				
+				<constructor-arg index="8">
+					<ref bean="WmsInventoryExtendManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="9">
+					<ref bean="wmsBillTypeManager"></ref>
+				</constructor-arg>				
+			</bean>
+		</property>
+	</bean>	
+	<bean id="wmsItemStateManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.base.pojo.DefaultWmsItemStateManager" parent="baseManager"/>
+		</property>
+	</bean>
+	
+	<bean id="wmsMasterBOLManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.shipping.pojo.DefaultWmsMasterBOLManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>	
+				<constructor-arg index="2">
+					<ref bean="wmsWorkDocManager"></ref>
+				</constructor-arg>			
+			</bean>
+		</property>
+	</bean>	
+	
+	<bean id="wmsMoveDocReplenishmentManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.replenish.pojo.DefaultWmsMoveDocReplenishmentManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsInventoryManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="3">
+					<ref bean="wmsRuleManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="4">
+					<ref bean="wmsWorkDocManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="5">
+					<ref bean="wmsTransactionalManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="6">
+					<ref bean="wmsBillTypeManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsBillTypeManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.base.pojo.DefaultWmsBillTypeManager" parent="baseManager" >
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsMoveDoc2ClientManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.receiving.pojo.DefaultWmsMoveDoc2ClientManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="wmsMoveDocManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsPackagingTableManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.shipping.pojo.DefaultWmsPackagingTableManager" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 库存可视化 -->
+	<bean id="wmsInventoryViewManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.security.pojo.DefaultWmsInventoryViewManager" parent="baseManager">
+				<constructor-arg>
+					<ref bean="userManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 中间表 -->
+	<bean id="milldleTableManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.middle.pojo.DefaultmilldleTableManager" parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="milldleSessionManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsPickTicketManager"></ref>
+				</constructor-arg>
+				<property name="jdbcTemplate">
+		          	<ref bean="jdbcTemplate" />
+		       	</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="milldleSessionManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.middle.pojo.DefaultmilldleSessionManager" parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="wmsBussinessCodeManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="1">
+					<ref bean="wmsWorkDocManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="2">
+					<ref bean="wmsPickTicketManager"></ref>
+				</constructor-arg>
+				<constructor-arg index="3">
+		          <ref bean="wmsMoveDocManager"></ref>
+		        </constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<bean id="theKnotManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.inventory.TheKnotManagerImp" parent="baseManager">
+			</bean>
+		</property>
+	</bean>
+	<bean id="wmsBillingManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.billing.pojo.DefaultWmsBillingManager" parent="baseManager">
+			</bean>
+		</property>
+	</bean>
+	<bean id="wmsBillingExecuteManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.billing.pojo.DefaultWmsBillingExecute" parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="wmsBillingManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="screenLedManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.screen.pojo.ScreenLedManagerImp" parent="baseManager">
+				<constructor-arg index="0">
+					<ref bean="wmsInventoryManager"></ref>
+				</constructor-arg>
+				<property name="jdbcTemplate">
+		          	<ref bean="jdbcTemplate" />
+		       	</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsMailManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.mail.pojo.DefaultWmsMailManager" parent="baseManager">
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="wmsNoTransactionalOne" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.notransactional.pojo.DefaultWmsNoTransactionalOne" parent="baseManager" >
+				<constructor-arg index="0">
+					<ref bean="workflowManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>	
+	<bean id="wmsDealInterfaceDataManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.interfaces.pojo.DefaultWmsDealInterfaceDataManager" parent="baseManager" >
+				<property name="dataSource">
+          			 <ref bean="asnDataSource"/>
+       			</property>
+       			<property name="codeManager">
+           			<ref bean="wmsBussinessCodeManager"/>
+       			</property>
+       			<property name="workflowManager">
+           			<ref bean="workflowManager"/>
+       			</property>
+			</bean>
+		</property>
+	</bean>	
+</beans>

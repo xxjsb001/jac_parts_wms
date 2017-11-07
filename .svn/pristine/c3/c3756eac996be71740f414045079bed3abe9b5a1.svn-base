@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainThornJobPage" title="maintainThornJobPage" autoQuery="false" entityClass="com.vtradex.thorn.server.model.organization.ThornJob">
+        <workflow/>
+        <datasource><![CDATA[SELECT thornJob.id,
+thornJob.name,
+thornJob.organName,
+thornJob.jobUserName 
+ from ThornJob thornJob where 1=1 ]]></datasource>
+        <columns>
+            <column id="thornJob.id" title="thornJob.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="thornJob.name" title="thornJob.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="thornJob.organName" title="thornJob.organName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="thornJob.jobUserName" title="thornJob.jobUserName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

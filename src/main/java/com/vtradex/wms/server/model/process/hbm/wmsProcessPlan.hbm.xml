@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.process.WmsProcessPlan" table="WMS_PROCESSPLAN">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_processPlan</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id> 
+        <discriminator column="DISCRIMINATOR" type="string"/>
+        
+        <many-to-one name="warehouse" class="com.vtradex.wms.server.model.warehouse.WmsWarehouse">
+			<column name="WAREHOUSE_ID" not-null="true" unique-key="UK_WMS_PROCESSPLAN"/>
+		</many-to-one>
+		<many-to-one name="company" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="COMPANY_ID" not-null="true" unique-key="UK_WMS_PROCESSPLAN"/>
+		</many-to-one>
+        
+        <property name="code" column="CODE" type="string" length="50" unique-key="UK_WMS_PROCESSPLAN"/>
+        <property name="name" column="NAME" type="string" length="100"/>
+        
+        <many-to-one name="item" class="com.vtradex.wms.server.model.organization.WmsItem">
+			<column name="ITEM_ID" not-null="true"/>
+		</many-to-one>
+        <property name="inventoryStatus" column="INVENTORY_STATUS" type="string" length="100"/>
+        
+        <property name="quantity" type="double" column="QUANTITY" not-null="true"/>
+        <property name="price" type="double" column="PRICE" not-null="true"/>
+
+		<property name="description" column="DESCRIPTION" type="string" length="255"/>
+		<property name="status" column="STATUS" type="string" not-null="true" length="50" />
+        
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+      
+		<set name="details" inverse="true" lazy="true" cascade="all-delete-orphan">
+			<key column="PROCESS_PLAN_ID"/>
+			<one-to-many class="com.vtradex.wms.server.model.process.WmsProcessPlanDetail"/>
+		</set>
+	</class>
+</hibernate-mapping>

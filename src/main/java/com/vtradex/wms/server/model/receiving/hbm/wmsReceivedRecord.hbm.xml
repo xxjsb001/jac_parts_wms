@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.receiving.WmsReceivedRecord" table="WMS_RECEIVED_RECORD">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_receivedRecord</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+		
+		<many-to-one name="asn" class="com.vtradex.wms.server.model.receiving.WmsASN">
+			<column name="ASN_ID" not-null="true"/>
+		</many-to-one>
+		
+		<many-to-one name="asnDetail" class="com.vtradex.wms.server.model.receiving.WmsASNDetail">
+			<column name="ASN_DETAIL_ID" not-null="true"/>
+		</many-to-one>
+
+		<many-to-one name="itemKey" class="com.vtradex.wms.server.model.inventory.WmsItemKey">
+			<column name="ITEM_KEY_ID" not-null="true"/>
+		</many-to-one>
+		<property name="inventoryStatus" type="string" column="INVENTORY_STATUS" length="100"/>
+		
+		<property name="locationId" type="long" column="LOCATION_ID" not-null="true"/>
+		<property name="pallet" column="PALLET" type="string" length="50"/>
+		<property name="carton" column="CARTON" type="string" length="50"/>
+		<property name="serialNo" column="SERIAL_NO" type="string" length="50"/>
+
+		<many-to-one name="packageUnit" class="com.vtradex.wms.server.model.organization.WmsPackageUnit">
+			<column name="PACKAGE_UNIT_ID" not-null="true"/>
+		</many-to-one>
+		
+		<property name="receivedQuantityBU" type="double" column="RECEIVED_QUANTITY_BU" not-null="true"/>		
+		<property name="receivedQuantity" type="double" column="RECEIVED_QUANTITY" not-null="true"/>		
+        <property name="movedQuantity" type="double" column="MOVED_QUANTITY" not-null="true"/>
+		<many-to-one name="worker" class="com.vtradex.wms.server.model.warehouse.WmsWorker">
+			<column name="WORKER_ID"/>
+		</many-to-one>
+		
+	    <property name="beVerified" type="yes_no" column="IS_VERIFIED"/>			
+		<property name="inventoryId" type="long" column="INVENTORY_ID"/>
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	</class>
+</hibernate-mapping>

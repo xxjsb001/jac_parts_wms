@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editVersionPage" title="editVersionPage" pageLocale="false" entityClass="com.vtradex.rule.server.model.rule.Version" width="420" height="220">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="version.id" title="version.id" pageLocale="false"/>
+            <text id="version.name" title="version.name" pageLocale="false" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false"  trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <remote id="version.ruleTable.id" title="version.ruleTable.id" pageLocale="false" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,名称,描述">
+                <visibleExpression/>
+                <hql><![CDATA[select ruleTable.id,ruleTable.name,ruleTable.description FROM RuleTable ruleTable WHERE 1=1 AND ruleTable.name like :param]]></hql>
+                <eventListeners/>
+            </remote>
+            <date id="version.startDate" title="version.startDate" pageLocale="false" row="2" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <date id="version.endDate" title="version.endDate" pageLocale="false" row="2" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <text id="version.description" title="version.description" pageLocale="false" row="3" col="1" span="2" width="300" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

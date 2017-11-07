@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsWorkDocConfirmAll">
+    <main>
+        <process id="workDocProcess">
+            <formCommit id="confirmAll" title="confirmAll" process="workDocProcess.confirmAll" enableType="none" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="workerId" className="long">
+                        <entries/>
+                    </mapping>
+                     <mapping id="workDoc.id" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="confirmAll" parameter="workDoc.id,workerId"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

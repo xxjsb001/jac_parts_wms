@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsProcessPlanPage">
+    <main>
+        <process id="wmsProcessPlanProcess">
+            <tablePopup id="view" title="view" process="wmsProcessPlanProcess.view" enableType="single" containId="true" pageId="viewWmsProcessPlanPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="new" title="new" process="wmsProcessPlanProcess.new" enableType="none" containId="false" pageId="editWmsProcessPlanPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="wmsProcessPlanProcess.edit" enableType="single" containId="true" pageId="editWmsProcessPlanPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="active" title="active" process="wmsProcessPlanProcess.active" enableType="multi">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="disable" title="disable" process="wmsProcessPlanProcess.disable" enableType="multi">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="enable" title="maintainWmsProcessPlanPage.enable" process="wmsProcessPlanProcess.enable" enableType="multi">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="delete" title="delete" process="wmsProcessPlanProcess.delete" enableType="multi" download="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsProcessManager" methodName="deleteProcessPlan" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

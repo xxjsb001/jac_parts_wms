@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editInvokeMethodPage" title="editInvokeMethodPage" pageLocale="false" entityClass="com.vtradex.thorn.server.model.message.Task" width="550" height="300">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="task.id" title="task.id" pageLocale="false" reserve="false"/>
+            <list id="task.type" title="task.type" row="1" col="2" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="WmsInterfaceBusinessMethod">
+                <visibleExpression/>
+                <hql><![CDATA[select
+enum.enumValue,
+enum.enumValue
+from Enumerate enum
+where enum.enumType='WmsInterfaceBusinessMethod']]></hql>
+                <eventListeners/>
+            </list>
+            <textArea id="task.subscriber" title="task.subscriber" pageLocale="false" row="2" col="1" span="2" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" rows="3" cols="38">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+        </inputUIs>
+    </editPage>
+</pages>

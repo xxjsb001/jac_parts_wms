@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editThornOrganizationPage" title="editThornOrganizationPage" entityClass="com.vtradex.thorn.server.model.organization.ThornOrganization" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="thornOrganization.id" title="thornOrganization.id"/>
+            <text id="thornOrganization.name" title="thornOrganization.name" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <remote id="thornOrganization.parent.id" title="thornOrganization.parent.id" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,名称,所属组织">
+                <visibleExpression/>
+                <hql><![CDATA[select thornOrganization.id,thornOrganization.name,thornOrganization.parentName from ThornOrganization thornOrganization where 1=1 and thornOrganization.name like :param ]]></hql>
+                <eventListeners/>
+            </remote>
+        </inputUIs>
+    </editPage>
+</pages>

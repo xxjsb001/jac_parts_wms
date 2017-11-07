@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process id="userProcess" control="status">
+    <state id="ACTIVE" title="生效" />
+    <state id="UNACTIVE" title="失效" />
+    
+   	<task id="new" title="新建">
+   		<to id="ACTIVE" type="state" />
+	</task>
+	<task id="modify" title="修改" />
+	<task id="delete" title="删除" />
+	<task id="add" title="添加" />
+	
+	<task id="active" title="生效">
+		<from id="UNACTIVE" type="state" />
+		<to id="ACTIVE" type="state" />
+	</task>
+	
+	<task id="unActive" title="失效">
+		<from id="ACTIVE" type="state" />
+		<to id="UNACTIVE" type="state" />
+	</task>
+	
+</process>

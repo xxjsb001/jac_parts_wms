@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsBOLPage">
+    <main>
+        <process id="wmsMoveDocShipProcess">
+            <tablePopup id="view" title="view" process="wmsMoveDocProcess.view" enableType="single" containId="true" pageId="viewWmsBOLPage">
+                <enableExpression/>
+            </tablePopup>
+            <!-- 
+            <tablePopup id="viewBoxDetail" title="viewBoxDetail" process="wmsMoveDocProcess.view" enableType="single" containId="true" pageId="viewWmsBoxDetailPage">
+                <enableExpression/>
+            </tablePopup>
+             -->
+             <!-- 
+            <tablePopup id="reservation" title="reservation" process="wmsMoveDocShipProcess.reservation" enableType="single" containId="true" pageId="editWmsMoveDocReservationPage">
+                <enableExpression/>
+            </tablePopup>
+             -->
+            <tablePopup id="shipRecord" title="shipRecord" process="wmsMoveDocShipProcess.shipRecord" enableType="single" containId="true" pageId="editShipRecordPage">
+                <enableExpression/>
+            </tablePopup>
+            <!-- GWT NEW-->
+            <tablePopup id="scanBol" title="scanBol" process="wmsMoveDocShipProcess.scanBol" enableType="none" containId="false" pageId="editWmsScanBolPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="ship" title="ship" process="wmsMoveDocShipProcess.ship" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainWmsBOLPage.ship">
+                <enableExpression><![CDATA[${moveDoc.movedQuantityBU} >0  && ${moveDoc.movedQuantityBU} > ${moveDoc.shippedQuantityBU}]]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="pickShipAll" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="transRecord" title="transRecord" process="wmsMoveDocShipProcess.transRecord" enableType="single" containId="true" pageId="editTransRecordPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="viewBOLStateLogs" title="viewBOLStateLogs" process="wmsMoveDocShipProcess.viewBOLStateLogs" enableType="single" containId="true" pageId="viewBOLStateLogsPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="print" title="printBOL" process="wmsPickTicketBaseProcess.print" enableType="single" containId="true" pageId="printPickReportPage">
+                <enableExpression><![CDATA[${moveDoc.status} == 'FINISHED' && ${moveDoc.shipStatus} == 'UNSHIP']]></enableExpression>
+            </tablePopup>
+            <tablePopup id="printReview" title="printReviewBOL" process="wmsPickTicketBaseProcess.print" enableType="multi" containId="true" managerName="wmsMasterBOLManager" methodName="beRequirePopupPage" pageId="printPickReportReviewPage">
+                <enableExpression><![CDATA[${moveDoc.status} == 'FINISHED' && ${moveDoc.shipStatus} == 'SHIPPED']]></enableExpression>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainMyReportPage" title="maintainMyReportPage" autoQuery="true" entityClass="com.vtradex.repc.server.model.report.ReportFavorite">
+        <datasource type="hql"><![CDATA[select 
+        	rf.id,
+        	rf.reportFile.code,
+        	rf.reportFile.name,
+        	rf.reportFile.classification,
+        	rf.reportFile.type,
+        	rf.reportFile.style,
+        	rf.lineNO
+       	    from ReportFavorite rf
+       	    where 1=1 and rf.user=#{SESSION_USERS}
+       	    /~rf.reportFile.code: AND rf.reportFile.code like {rf.reportFile.code}~/
+       	    /~rf.reportFile.name: AND rf.reportFile.name like {rf.reportFile.name}~/
+       	    /~rf.reportFile.classification: AND rf.reportFile.classification like {rf.reportFile.classification}~/
+       	    /~rf.reportFile.type: AND rf.reportFile.type like {rf.reportFile.type}~/
+       	    /~rf.reportFile.style: AND rf.reportFile.style like {rf.reportFile.style}~/
+       	    order by rf.lineNO
+        ]]></datasource>
+        <columns>
+        	<column id="rf.id" title="rf.id" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="rf.reportFile.code" title="rf.reportFile.code" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="rf.reportFile.name" title="rf.reportFile.name" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="rf.reportFile.classification" title="rf.reportFile.classification" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="rf.reportFile.type" title="rf.reportFile.type" visible="true" horizonAlign="center" verticalAlign="middle" format="enumFormat" formatParam="FileType"/>
+            <column id="rf.reportFile.style" title="rf.reportFile.style" visible="true" horizonAlign="center" verticalAlign="middle" format="enumFormat" formatParam="FileStyle"/>
+            <column id="rf.lineNO" title="rf.wlineNO" visible="true" horizonAlign="center" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

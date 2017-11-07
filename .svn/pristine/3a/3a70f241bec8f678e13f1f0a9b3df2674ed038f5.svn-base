@@ -1,0 +1,73 @@
+package com.vtradex.wms.server.service.middle;
+
+public interface MiddleTableName {
+	/*****@JAC_FDJ_136,@JAC_FDJ_92  fdjmiddle/fdjmiddle******/
+	/**物料中间表*/
+	String MIDDLEMATERIAL = "MIDDLE_MATERIAL@JAC_FDJ_136";//MIDDLE_MATERIAL_WMS
+	/**供应商中间表*/
+	String MIDDLESUPPLIER = "MIDDLE_SUPPLIER@JAC_FDJ_136";//MIDDLE_SUPPLIER_WMS
+	/**发货单明细中间表*/
+	String MIDDLEDELIVERYDOCDETAIL = "MIDDLE_DELIVERY_DOC_DETAIL@JAC_FDJ_136";//MIDDLE_DELIVERY_DOC_DETAIL_WMS
+	/**物料供应商关系中间表*/
+	String MIDDLESUPPLIERSOFMATERIALS = "MIDDLE_SUPPLIERS_OF_MATERIALS@JAC_FDJ_136";//MIDDLE_SUPPLIERS_OF_MATERIALS_WMS
+	/**质检中间表 WMS插入*/
+	String MIDDLEQUALITYTESTING = "MIDDLE_QUALITY_TESTING@JAC_FDJ_136";//MIDDLE_QUALITY_TESTING_WMS
+	/**WMS读取ERP中间表信息往ASN传数据*/
+	String srm_erp_v_Poasn106 = "srm_erp.v_Poasn106@srm_dcs";//srm_erp.v_Poasn106@srm_dcs,v_Poasn106
+	/**LFCS 视图：fdj_bms_fee_data_view*/
+	String FDJ_BMS_FEE_DATA_VIEW = "FDJ_BMS_FEE_DATA_VIEW";
+	/**LFCS 費用明細表：BMS_FEE_DATA*/
+	String BMS_FEE_DATA="FDJLFCS.BMS_FEE_DATA";
+	/**MES要货报缺库存中间表*/
+	String MIDDLE_MES_ORDER = "ITDEP_MIDDLE_MES_ORDER@JAC_FDJ_136";//0-读取,1-已读取,9-锁定,8-期初导入更新
+	/**----------------------------新港----------------------------------**/
+	/**MES退料单*/
+	String W_ASN_TL = "W_ASN_TL";//W_ASN_TL@JAC_FDJ_136
+	/**SRM送货单*/
+	String W_ASN_SRM = "W_ASN_SRM";//@JAC_FDJ_136
+	/**临采件入库*/
+	String W_ASN_ERP = "W_ASN_ERP";
+	/**入库数据传ERP*/
+	String W_RECEIVE_ERP = "W_RECEIVE_ERP";
+	/**MES计划件料单*/
+	String W_ORDER_JH = "W_ORDER_JH";
+	/**MES时序件料单*/
+	String W_ORDER_SPS = "W_ORDER_SPS";
+	/**MES看板件料单*/
+	String W_ORDER_KB = "W_ORDER_KB";
+	/**临采件调整出库发货单*/
+	String W_ORDER_ERP = "W_ORDER_ERP";
+	/**器具对应关系表*/
+	String W_APPLIANCE_ITEM_MES = "W_APPLIANCE_ITEM_MES";
+	/**物料基础信息表*/
+	String W_ITEM_ERP = "W_ITEM_ERP";
+	/**供应商物料对应关系表*/
+	String W_SUPPLY_ITEM_ERP = "W_SUPPLY_ITEM_ERP";
+	/**供应商基础信息表*/
+	String W_SUPPLY_ERP = "W_SUPPLY_ERP";
+	/**质检结果表*/
+	String W_RESULT_QIS = "W_RESULT_QIS";
+	/**时序件器具明细表*/
+	String W_SPS_APPLIANCE = "W_SPS_APPLIANCE";
+	/**MES库存实收*/
+	String W_RECEIVE_MES = "W_RECEIVE_MES";
+	/**送检计划表 WMS插入*/
+	String W_QUALITY_TESTING_QIS = "W_QUALITY_TESTING_QIS";//现在送检中间表是这个,上面的不用@JAC_FDJ_136
+	/**出库数据传ERP*/
+	String W_DELIVER_ERP = "W_DELIVER_ERP";
+	/**出库数据传MES*/
+	String W_DELIVER_MES = "W_DELIVER_MES";
+	/**器具信息传MES*/
+	String W_APPLIANCE_MES = "W_APPLIANCE_MES";
+	/**质检基础信息*/
+	String W_QISPLAN = "W_QISPLAN";
+	/**质检状态映射表,维护表*/
+	String MIDDLE_QUALITY_STATUS = "MIDDLE_QUALITY_STATUS";//MIDDLE_QUALITY_STATUS_WMS
+	/**接口消息表,EDI读取*/
+	String M_MESSAGE = "M_MESSAGE";
+	
+	/**供应商物料关系表A,WMS的表*/
+	String MIDDLESUPPLYITEMERPA = "MIDDLE_SUPPLYITEMERP_A";
+	/**供应商物料关系表B,WMS的表*/
+	String MIDDLESUPPLYITEMERPB = "MIDDLE_SUPPLYITEMERP_B";
+}

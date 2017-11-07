@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="importBlgAndItemPage" title="importBlgAndItemPage">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <file id="downloadPath" title="downloadPath" row="1" col="1" defaultValue="&amp;lt;a href='importTemplate/importBlgItem.xls'&amp;gt; &amp;lt;font&amp;gt;&amp;lt;b&amp;gt;下载导入模板xls&amp;lt;/b&amp;gt;&amp;lt;/font&amp;gt; &amp;lt;/a&amp;gt;" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showImage="false" fileSize="22577152">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </file>
+            <file id="importFile" title="importFile" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showImage="false" fileSize="22577152">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </file>
+        </inputUIs>
+    </editPage>
+</pages>

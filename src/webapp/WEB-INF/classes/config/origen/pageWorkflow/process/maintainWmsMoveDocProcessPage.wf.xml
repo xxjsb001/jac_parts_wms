@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsMoveDocProcessPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <tablePopup id="view" title="view" process="wmsMoveDocProcess.view" enableType="single" containId="true" pageId="viewWmsMoveDocProcessPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="new" title="new" process="wmsMoveDocProcess.new" enableType="none" containId="false" pageId="editWmsMoveDocProcessPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="wmsMoveDocProcess.modify" enableType="single" containId="true" pageId="editWmsMoveDocProcessPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="wmsMoveDocProcess.delete" enableType="multi" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsProcessManager" methodName="deleteProcessDoc" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tableCommit id="autoAllocate" title="autoAllocate" process="wmsMoveDocProcess.autoAllocate" enableType="multi" closeTransactional="true">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="manulAllocate" title="manulAllocate" process="wmsMoveDocProcess.manualAllocate" enableType="single" containId="true" pageId="manualPickingAllocatePage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="cancelAllocate" title="unallocate" process="wmsMoveDocProcess.cancelAllocate" enableType="single" containId="true" pageId="modifyWmsMoveDocCancelAllocatePickTicketPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="active" title="active" process="wmsMoveDocProcess.active" enableType="multi" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="unActive" title="unActive" process="wmsMoveDocProcess.unActive" enableType="multi" multiMapping="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+        <process id="wmsProcessRecordProcess">
+	         <tablePopup id="processRecord" title="processRecord" process="wmsProcessRecordProcess.processRecord" enableType="single" containId="true" pageId="editWmsMoveDocProcessRecordPage">
+	             <enableExpression><![CDATA[${moveDoc.status} == 'FINISHED']]></enableExpression>
+	         </tablePopup>
+       	</process>
+    </main>
+    <detail/>
+</page>

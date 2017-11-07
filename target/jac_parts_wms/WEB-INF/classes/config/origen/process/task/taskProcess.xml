@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="taskProcess" control="status">
+
+	<state id="OPEN" title="打开"/>
+
+	<state id="CANCEL" title="取消"/>
+
+	<state id="WORKING" title="作业中"/>
+
+	<state id="DISPATCHED" title="加入作业单"/>
+
+	<state id="FINISHED" title="完成"/>
+
+	<task id="new" title="创建">
+		<to id="OPEN" type="state"/>
+	</task>
+
+	<task id="dispatch" title="加入作业单">
+		<from id="OPEN" type="state"/>
+		<to id="DISPATCHED" type="state"/>
+	</task>
+
+	<task id="undispatch" title="退出作业单">
+		<from id="DISPATCHED" type="state"/>
+		<to id="OPEN" type="state"/>
+	</task>
+
+	<task id="cancel" title="取消">
+		<from id="OPEN" type="state"/>
+		<from id="DISPATCHED" type="state"/>
+		<to id="CANCEL" type="state"/>
+	</task>
+
+	<task id="confirm" title="作业确认">
+		<from id="WORKING" type="state"/>
+		<from id="DISPATCHED" type="state"/>
+		<from id="FINISHED" type="state"/>
+		<to id="fishedDecision" type="decision"/>
+	</task>
+
+	<task id="viewWorkDocProcess" title="查看作业详情">
+	</task>
+
+	<task id="singleConfirm" title="单一确认">
+		<from id="DISPATCHED" type="state"/>
+		<from id="WORKING" type="state"/>
+	</task>
+
+	<task id="pickBack" title="退拣">
+		<from id="FINISHED" type="state"/>
+		<from id="WORKING" type="state"/>
+		<to id="fishedDecision" type="decision"/>
+	</task>
+
+	<decision id="fishedDecision" action="wmsTaskProcessAction">
+		<to id="FINISHED" value="FINISHED" type="state" />
+		<to id="WORKING" value="WORKING" type="state" />
+		<to id="DISPATCHED" value="DISPATCHED" type="state" />
+	</decision>
+
+</process>

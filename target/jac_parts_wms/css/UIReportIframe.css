@@ -1,0 +1,24 @@
+.gwt-Frame {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-top: 1px solid #cccccc;
+	border-right: 1px solid #eeeeee;
+	border-bottom: 1px solid #eeeeee;
+	border-left: 1px solid #cccccc;
+	width: 98%;
+	height: 450px;
+	frameBorder: no;
+	scrolling: yes;
+	overflow:auto;
+}
+.frame-Popup{
+	margin-top: 3px;
+	margin-bottom: 3px;
+	border-top: 1px solid #cccccc;
+	border-right: 1px solid #eeeeee;
+	border-bottom: 1px solid #eeeeee;
+	border-left: 1px solid #cccccc;
+	width: 98%;
+	frameBorder: no;
+	scrolling: yes;
+}

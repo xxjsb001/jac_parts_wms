@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="editWmsScanConfirmPackagingTablePage" title="editWmsScanConfirmPackagingTablePage" onClose="refreshParent" className="com.vtradex.wms.client.packagingtable.EditWmsScanConfirmPackagingTablePage" width="240" height="120">
+		<buttons>
+		</buttons>
+	</customPage>
+</pages>

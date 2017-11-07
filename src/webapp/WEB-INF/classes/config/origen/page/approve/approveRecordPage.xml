@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="approveRecordPage" title="approveRecordPage" autoQuery="false" entityClass="com.vtradex.thorn.server.model.approve.ThornApproveProcess">
+        <workflow/>
+        <datasource><![CDATA[SELECT approvePro.id,
+approvePro.applyUser.name,
+approvePro.applyTime,
+approvePro.approveStatus,
+approvePro.approveType,
+approvePro.title,
+approvePro.decription,
+approvePro.lastApproveUser,
+approvePro.lastComment,
+approvePro.remainingSteps,
+approvePro.rejectCount,
+approvePro.jobSteps 
+ FROM ThornApproveProcess  approvePro WHERE 1=1 
+ AND (approvePro.id in (select distinct approveProcessLog.thornApproveProcess.id  from ThornApproveProcessLog approveProcessLog WHERE approveProcessLog.operatorId = #{SESSION_USERS}) 
+  OR approvePro.approvalJob.id in (select thornJobUser.thornJob.id from ThornJobUser thornJobUser WHERE thornJobUser.user.id = #{SESSION_USERS}) 
+  OR approvePro.approvalJob.id in (select taa.grantorJobUser.thornJob.id FROM ThornAuthorizeApprove taa WHERE taa.jobUser.user.id = #{SESSION_USERS})
+ )
+ ORDER BY approvePro.id DESC]]></datasource>
+        <columns>
+            <column id="approvePro.id" title="approvePro.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="approvePro.applyUser.name" title="approvePro.applyUser.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="approvePro.applyTime" title="approvePro.applyTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="approvePro.approveStatus" title="approvePro.approveStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="ThornApproveProcessStatus"/>
+            <column id="approvePro.approveType" title="approvePro.approveType" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="approvePro.title" title="approvePro.title" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="approvePro.decription" title="approvePro.decription" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="approvePro.lastApproveUser" title="approvePro.lastApproveUser" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="approvePro.lastComment" title="approvePro.lastComment" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="approvePro.remainingSteps" title="approvePro.remainingSteps" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="approvePro.rejectCount" title="approvePro.rejectCount" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+            <column id="approvePro.jobSteps" title="approvePro.jobSteps" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="invokeReportPermissionPage">
+    <main>
+        <process id="roleProcess">
+            <tableCommit id="add" title="add" pageLocale="false" process="roleProcess.add" enableType="multi">
+                <enableExpression/>
+                <actions>
+                    <action managerName="fileRoleManager" methodName="addReportRoleRelation" parameter="obj,maintainRolePage.obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </main>
+    <detail>
+        <process/>
+    </detail>
+</page>

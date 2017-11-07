@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editFindWorkerByMovePage" title="editFindWorkerByMovePage" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+        	<hidden id="moveDoc.id" title="moveDoc.id" reserve="false"/>
+            <remote id="workerId" title="workerId" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT worker.id,
+ worker.code,
+ worker.name
+ FROM WmsWorker worker
+ WHERE worker.code LIKE :param
+ AND worker.status='ENABLED'
+ AND worker.warehouse=#{SESSION_WAREHOUSE}]]></hql>
+                <eventListeners/>
+            </remote>
+        </inputUIs>
+    </editPage>
+</pages>

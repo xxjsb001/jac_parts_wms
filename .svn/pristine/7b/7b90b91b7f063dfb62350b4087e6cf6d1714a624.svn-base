@@ -1,0 +1,11 @@
+package com.vtradex.wms.server.model.interfaces;
+
+public interface HeadType {
+
+	/**ASN*/
+	public static String ASN = "ASN";
+	
+	
+	/**看板发货单*/
+	public static String PICK_KB = "PICK_KB";
+}

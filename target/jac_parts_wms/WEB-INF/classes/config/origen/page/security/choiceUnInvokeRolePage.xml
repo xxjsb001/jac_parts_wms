@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="choiceUnInvokeRolePage" title="choiceUnInvokeRolePage">
+        <inputUIs>
+            <multiRemote id="platForms" title="platForm" row="0" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" inVisible="false" manualEditable="true">
+                <hql><![CDATA[select p.id,p.code,p.name from PlatForm p 
+where p.code like :param
+ and p.id not in (
+ select up.platForm.id from RolePlatForm up
+ where up.role.id = ${role.id}
+)]]></hql>
+            </multiRemote>
+        </inputUIs>
+        <buttons>
+            <commit id="saveInvoke" title="invoke" enableType="multi" invisible="false">
+                <mappings>
+                    <mapping id="platForms" className="list"/>
+                    <mapping id="role.id" className="long"/>
+                </mappings>
+                <actions>
+                    <action managerName="platFormManager" methodName="invokePlatFormsToRole" parameter="platForms,role.id"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </commit>
+        </buttons>
+    </editPage>
+</pages>

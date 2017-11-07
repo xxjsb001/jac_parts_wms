@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="editBOPage" title="editBOPage" entityClass="com.vtradex.thorn.server.model.imports.ImportableBusinessObject" onClose="refreshParent">
+        <modify>
+            <inputUIs>
+                <hidden id="ibo.id" reserve="false"/>
+                <text id="ibo.code" title="editBOPage.ibo.code" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="ibo.name" title="editBOPage.ibo.name" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="ibo.className" title="editBOPage.ibo.className" row="2" col="1" span="2" width="300" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="true"/>
+            </inputUIs>
+        </modify>
+        <detail autoQuery="false">
+            <datasource><![CDATA[ SELECT p2cm.id, p2cm.propertyName, p2cm.propertyLocaleName,
+ p2cm.colSN, p2cm.allowNull,p2cm.value,
+ p2cm.propertyDefaultValue 
+ FROM Property2ColMapping p2cm
+ where 1=1 
+ /~ibo.id: AND p2cm.bo.id = {ibo.id} ~/
+ ORDER BY p2cm.colSN ASC]]></datasource>
+            <columns>
+                <column id="p2cm.id" title="editBOPage.p2cm.id" visible="false" horizonAlign="center" verticalAlign="middle"/>
+                <column id="p2cm.propertyName" title="editBOPage.p2cm.propertyName" visible="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="p2cm.propertyLocaleName" title="editBOPage.p2cm.propertyLocaleName" visible="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="p2cm.colSN" title="editBOPage.p2cm.colSN" visible="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="p2cm.allowNull" title="editBOPage.p2cm.allowNull" visible="true" horizonAlign="center" verticalAlign="middle" format="booleanFormat" formatParam="Boolean"/>
+                <column id="p2cm.value" title="editBOPage.p2cm.value" visible="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="p2cm.propertyDefaultValue" title="editBOPage.p2cm.propertyDefaultValue" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainMyReportPage">
+	<main>
+		<process id="reportProcess">
+			<tableCommit id="reportProcess.delete" title="delete" enableType="multi" invisible="true">
+                <actions>
+                    <action managerName="myReportManager" methodName="removeReportFavorite" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tablePopup id="reportProcess.view" title="view" enableType="single" invisible="true" containId="false" multiPage="1==1:{2}" pageId="maintainUnInvokeReportFilePage" maintain="true"/>
+            <tableCommit id="reportProcess.up" title="up" enableType="single" invisible="true">
+                <actions>
+                    <action managerName="myReportManager" methodName="moveUpReportFavorite" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tableCommit id="reportProcess.down" title="down" enableType="single" invisible="true">
+                <actions>
+                    <action managerName="myReportManager" methodName="moveDownReportFavorite" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+		</process>
+	</main>
+</page>

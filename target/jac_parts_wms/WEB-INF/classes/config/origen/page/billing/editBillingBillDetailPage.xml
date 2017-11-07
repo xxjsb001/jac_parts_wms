@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editBillingBillDetailPage" title="editBillingBillDetailPage" entityClass="com.vtradex.wms.server.model.billing.WMSBillDetail" width="640" height="320">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="billDetail.id" title="billDetail.id" reserve="false"/>
+            <remote id="billDetail.supplier.id" title="billDetail.supplier.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT 
+ company.id,
+ company.code,
+ company.name
+ FROM WmsOrganization   company 
+ WHERE company.beSupplier = true
+and company.beVirtual =false
+AND company.status = 'ENABLED'  
+AND (company.code  LIKE :param OR  company.name LIKE :param)
+]]></hql>
+                <eventListeners/>
+            </remote>
+            <list id="billDetail.billingSmallCategory" title="billDetail.billingSmallCategory" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT
+ billType.name,
+ billType.name
+ FROM WMSBillingCategory billType
+ WHERE 1=1  
+AND billType.status = 'ENABLED'  
+AND billType.type='SMALL_CATEGORY']]></hql>
+                <eventListeners/>
+            </list>
+            <list id="billDetail.billingModel" title="billDetail.billingModel" row="1" col="3" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="WMSBillingModel">
+                <visibleExpression/>
+                <hql><![CDATA[
+ select 
+ enum.enumValue,
+ enum.enumValue
+ from Enumerate enum
+ where enum.enumType='WMSBillingModel'
+ order by enum.id ASC
+]]></hql>
+                <eventListeners/>
+            </list>
+            <date id="billDetail.happenDate" title="billDetail.happenDate" row="2" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <text id="billDetail.materialCode" title="billDetail.materialCode" row="2" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <numberText id="billDetail.amount" title="billDetail.amount" row="2" col="3" span="1" defaultValue="0" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <numberText id="billDetail.qty_Amount" title="billDetail.qty_Amount" row="3" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <numberText id="billDetail.rate" title="billDetail.rate" row="3" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <numberText id="billDetail.fixedPrice" title="billDetail.fixedPrice" row="3" col="3" defaultValue="0" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <text id="billDetail.memo" title="billDetail.memo" row="4" col="1" span="3" width="590" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

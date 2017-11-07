@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="popupMaintainTaskPage" title="popupMaintainTaskPage" entityClass="com.vtradex.wms.server.model.move.WmsTask" autoQuery="false" width="800" height="400">
+        <workflow/>
+        <datasource><![CDATA[SELECT task.id,
+task.originalBillCode,
+task.type,
+task.fromLocationCode,
+task.toLocationCode,
+task.itemKey.item.code,
+task.itemKey.item.name,
+task.packageUnit.unit,
+task.planQuantity,
+task.planQuantityBU,
+task.movedQuantityBU,
+task.status,
+task.itemKey.lotInfo.soi,
+task.itemKey.lotInfo.supplier.name 
+ FROM WmsTask task 
+ LEFT JOIN task.itemKey.lotInfo.supplier
+ WHERE 1=1
+ AND task.status='OPEN'
+ AND task.type={workDoc.type}]]></datasource>
+        <columns>
+            <column id="task.id" title="task.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="task.originalBillCode" title="task.originalBillCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="task.type" title="task.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsTaskType"/>
+            <column id="task.fromLocationCode" title="task.fromLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="task.toLocationCode" title="task.toLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="task.itemKey.item.code" title="task.itemKey.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="task.itemKey.item.name" title="task.itemKey.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="task.packageUnit.unit" title="task.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="task.planQuantity" title="task.planQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="task.planQuantityBU" title="task.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="task.movedQuantityBU" title="task.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="task.status" title="task.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"  dataType="enum" format="enumFormat" formatParam="WmsTaskStatus"/>
+		    <column id="task.itemKey.lotInfo.soi" title="task.itemKey.lotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+		    <column id="task.itemKey.lotInfo.supplier.name" title="task.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+
+        </columns>
+    </maintainPage>
+</pages>

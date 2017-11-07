@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editGroupRuleTablePage">
+    <main>
+        <process id="groupRuleTableProcess">
+            <formCommit id="save" title="save" pageLocale="false" process="groupRuleTableProcess.new" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="saveModify" title="saveModify" pageLocale="false" process="groupRuleTableProcess.modify" enableType="none" download="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail>
+        <process id="groupRuleTableProcess">
+            <tablePopup id="add" title="add" process="groupRuleTableProcess.new" containId="false" pageId="maintainAddRuleTablePage">
+                <enableExpression><![CDATA[${groupRuleTable.id} != '']]></enableExpression>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="groupRuleTableProcess.delete" enableType="multi" download="false" confirmMessage="confirm.delete">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="groupRuleTableManager" methodName="removeRuleTable" parameter="parentObj,obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

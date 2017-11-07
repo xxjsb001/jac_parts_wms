@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="ruleImportPage">
+    <main>
+        <process id="ruleProcess">
+            <formCommit id="import" title="import" pageLocale="false" process="ruleProcess.import" enableType="none" download="false" visibleType="none" closeTransactional="true">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="importFile" className="file">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="ruleFileManager" methodName="importRule" parameter="importFile"/>
+                </actions>
+                <forwards>
+                	<forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                	<forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

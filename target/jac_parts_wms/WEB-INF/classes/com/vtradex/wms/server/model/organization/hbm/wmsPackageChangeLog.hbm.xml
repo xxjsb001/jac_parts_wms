@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.organization.WmsPackageChangeLog" table="WMS_PACKAGE_CHANGE_LOG">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_packageChangeLog</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+        <many-to-one name="item" class="com.vtradex.wms.server.model.organization.WmsItem">
+			<column name="ITEM_ID"  />
+		</many-to-one>
+		<many-to-one name="packageUnit" class="com.vtradex.wms.server.model.organization.WmsPackageUnit">
+			<column name="PACKAGEUNIT_ID"  />
+		</many-to-one>
+		
+		<property name="oldConvertFigure" type="integer" column="OLD_CONVERT_FIGURE" not-null="true"/>		
+		<property name="newConvertFigure" type="integer" column="NEW_CONVERT_FIGURE" not-null="true"/>
+        <property name="oldPrecision" type="integer" column="OLD_PRECISION" not-null="true"/>       
+        <property name="newPrecision" type="integer" column="NEW_PRECISION" not-null="true"/>
+        
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	 </class>
+</hibernate-mapping>

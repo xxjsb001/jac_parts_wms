@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsMoveDocQualityPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <tablePopup id="view" title="view" process="wmsMoveDocProcess.view" enableType="single" containId="true" pageId="editCreateMoveDocPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="new" title="new" process="wmsMoveDocProcess.new" enableType="none" containId="false" pageId="editCreateMoveDocQualityPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="wmsMoveDocProcess.modify" enableType="single" containId="true" pageId="editCreateMoveDocQualityPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="wmsMoveDocProcess.delete" enableType="multi" download="false">
+                <enableExpression><![CDATA[${moveDoc.transStatus} == 'OPEN']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="deleteMoveDocPlan" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tableCommit id="sendQuality" title="sendQuality" process="wmsMoveDocProcess.sendQuality" enableType="multi" download="false">
+                <enableExpression><![CDATA[(${moveDoc.transStatus} == 'OPEN' && ${moveDoc.processQuantityBU} <= 0 && ${moveDoc.status} == 'OPEN' && ${moveDoc.billType.name} == '送检质检单' && ${moveDoc.printWorker} != null)]]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="sendQuality" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tablePopup id="cancelAllTask" title="wmsMoveDocProcess.cancelAllTask" process="wmsMoveDocProcess.cancelAllTask" enableType="single" containId="true" pageId="editCancelAllTaskPage">
+                <enableExpression><![CDATA[(${moveDoc.transStatus} == 'WORKING' && ${moveDoc.status} == 'OPEN' && ${moveDoc.billType.name} == '送检质检单' && ${moveDoc.processQuantityBU} <= 0)]]></enableExpression>
+            </tablePopup>
+            <tablePopup id="manualAllocate" title="manualAllocate" process="wmsMoveDocProcess.manualAllocate" enableType="single" containId="true" pageId="modifyWmsMoveDocQualityPage">
+                <enableExpression><![CDATA[(${moveDoc.planQuantityBU} == ${moveDoc.processQuantityBU})]]></enableExpression>
+            </tablePopup>
+            <tableCommit id="cancelAllocateNode" title="cancelAllocateNode" process="wmsMoveDocProcess.cancelAllocateNode" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="cancelAllocateNode" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="singleConfirm" title="singleConfirm" process="wmsMoveDocProcess.singleConfirm" enableType="multi" download="false" closeTransactional="true">
+                <enableExpression><![CDATA[(${moveDoc.status} == 'ALLOCATED' || ${moveDoc.status} == 'PARTALLOCATED' || ${moveDoc.status} == 'WORKING')]]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsNoTransactionalOne" methodName="activeConfirm" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="unActive" title="unActive" process="wmsMoveDocProcess.unActive" enableType="multi" multiMapping="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="unActivePickByJac" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="viewWmsTaskLog" title="viewWmsTaskLog" process="wmsMoveDocProcess.viewWmsTaskLog" enableType="single" containId="true" pageId="viewWmsTaskFromMoveDoc">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="split2" title="split2" process="wmsMoveDocProcess.split2" enableType="single" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression><![CDATA[(${moveDoc.processQuantityBU}>0 && ${moveDoc.status}=='OPEN')]]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="wmsMoveDocQualitysplit" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableDirectPrint id="printQuality" title="printQuality" process="wmsMoveDocProcess.printQuality" enableType="single" multiMapping="false" download="false" closeTransactional="true" raq="jacSendQualityReport.raq">
+                <enableExpression><![CDATA[
+                	${moveDoc.transStatus}=='OPEN'
+					]]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="printSendQualityReport" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableDirectPrint>
+            <tablePopup id="printQualityView" title="printQualityView" process="wmsMoveDocProcess.printQualityView" enableType="single" containId="true" pageId="printReportViewPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

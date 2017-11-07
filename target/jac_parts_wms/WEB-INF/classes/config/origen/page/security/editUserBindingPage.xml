@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="editUserBindingPage" title="editUserBindingPage" entityClass="com.vtradex.thorn.server.model.security.Group" onClose="refreshParent">
+        <modify>
+            <inputUIs>
+                <hidden id="group.id" reserve="false"/>
+                <text id="group.code" title="group.code" row="1" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="group.name" title="group.name" row="1" col="2" span="1" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+            </inputUIs>
+        </modify>
+        <detail autoQuery="false" entityClass="com.vtradex.thorn.server.model.security.User" >
+            <datasource><![CDATA[select user.id, user.loginName,user.name from User user , Group g
+ where user in elements(g.users)
+ /~group.id:AND g.id = {group.id} ~/]]></datasource>
+            <columns>
+                <column id="user.id" title="ID" visible="false" horizonAlign="center" verticalAlign="middle"/>
+                <column id="user.loginName" title="user.loginName" visible="true"/>
+                <column id="user.name" title="user.name" visible="true"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

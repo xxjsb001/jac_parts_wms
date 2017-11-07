@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsCountPlanPage" title="editWmsCountPlanPage" entityClass="com.vtradex.wms.server.model.count.WmsCountPlan" width="300" height="400" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="countPlan.id" title="countPlan.id" reserve="false"/>
+            <hidden id="countPlantype" title="countPlan.type" reserve="false"/>
+            <list id="countPlan.type" title="countPlan.type" row="1" col="1" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="WmsCountType">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT t.enumValue,t.enumValue
+ FROM Enumerate t 
+ WHERE t.enumType = 'WmsCountType' 
+ AND t.enumValue IN ('ALL','ITEM','LOCATION','SUPPLY')
+ ORDER BY t.id]]></hql>
+                <eventListeners>
+                    <eventListener id="countPlantype" index="1" refreshUI="true"/>
+                </eventListeners>
+            </list>
+            <remote id="countPlan.company.id" title="countPlan.company.id" row="3" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称" intercepter="countQuantityInterceptor">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT
+company.id,
+company.code,
+company.name
+ FROM WmsOrganization company
+ WHERE 1=1 
+and company.beCompany=true
+and company.beVirtual =false
+and 
+company.status='ENABLED'
+and (company.code like :param
+or company.name like :param)]]></hql>
+                <eventListeners>
+                    <eventListener id="cycleDate" index="4" refreshUI="false"/>
+                    <eventListener id="locationCount" index="5" refreshUI="false"/>
+                    <eventListener id="finished" index="6" refreshUI="false"/>
+                    <eventListener id="processing" index="7" refreshUI="false"/>
+                </eventListeners>
+            </remote>
+            <remote id="countPlan.supplier.id" title="asnDetail.lotInfo.supplier.name" row="4" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                    <visibleExpression><![CDATA[(${countPlantype}=='SUPPLY')]]></visibleExpression>
+                    <hql><![CDATA[ SELECT 
+ company.id,
+ company.code,
+ company.name
+ FROM WmsOrganization   company 
+ WHERE company.beSupplier = true
+and company.beVirtual =false
+AND company.status = 'ENABLED' 
+AND (company.code  LIKE :param OR  company.name LIKE :param) ]]></hql>
+                    <eventListeners>
+                    </eventListeners>
+                </remote>
+            <remote id="countPlan.item.id" title="countPlan.item.id" row="5" col="1" defaultValue="false" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression><![CDATA[(${countPlantype}=='ITEM')]]></visibleExpression>
+                <hql><![CDATA[SELECT 
+ item.id,
+ item.code,
+ item.name
+ FROM WmsItem item
+ WHERE 1=1
+ AND (item.code like :param or item.name like :param)
+ AND item.status = 'ENABLED' 
+ AND item.company.id = ${countPlan.company.id}]]></hql>
+                <eventListeners/>
+            </remote>
+            <text id="cycleDate" title="cycleDate" row="6" col="1" defaultValue="0" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[(${countPlantype}=='LOCATION_CYCLE')]]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="locationCount" title="locationCount" row="7" col="1" defaultValue="0" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[(${countPlantype}=='LOCATION_CYCLE')]]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="finished" title="finishedCount" row="8" col="1" defaultValue="0" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[(${countPlantype}=='LOCATION_CYCLE')]]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="processing" title="processingCount" row="9" col="1" defaultValue="0" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[(${countPlantype}=='LOCATION_CYCLE')]]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="countPlan.locationCount" title="countPlan.locationCount" row="10" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" validator="positiveInteger" trimSpace="true">
+                <visibleExpression><![CDATA[(${countPlantype}=='LOCATION_CYCLE')]]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <numberText id="countPlan.touchTimes" title="countPlan.touchTimes" row="12" col="1" defaultValue="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" returnType="Integer">
+                <visibleExpression><![CDATA[(${countPlan.type} == 'LOCATION_MOVED')]]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <list id="countPlan.lockType" title="countPlan.lockType" row="14" col="1" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="WmsCountLockType">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT t.enumValue,t.enumValue
+ FROM Enumerate t 
+ WHERE t.enumType = 'WmsCountLockType' ORDER BY t.enumValue DESC]]></hql>
+                <eventListeners/>
+            </list>
+        </inputUIs>
+    </editPage>
+</pages>

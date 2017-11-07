@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainThornOrganizationPage" title="maintainThornOrganizationPage" autoQuery="false" entityClass="com.vtradex.thorn.server.model.organization.ThornOrganization">
+        <workflow/>
+        <datasource><![CDATA[SELECT thornOrganization.id,
+thornOrganization.name,
+thornOrganization.parentName 
+ from ThornOrganization thornOrganization where 1=1]]></datasource>
+        <columns>
+            <column id="thornOrganization.id" title="thornOrganization.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="thornOrganization.name" title="thornOrganization.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="thornOrganization.parentName" title="thornOrganization.parentName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

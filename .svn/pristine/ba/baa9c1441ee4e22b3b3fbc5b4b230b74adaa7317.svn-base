@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC 
+        "-//SPRING//DTD BEAN//EN" 
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+  Copyright (c) 2001-2005 vTradEx Information Technology Co.,Ltd. All Rights Reserved.
+
+  This software is the confidential and proprietary information of vTradEx
+  Information Technology Co.,Ltd. ("Confidential Information").  You shall not
+  disclose such Confidential Information and shall use it only in
+  accordance with the terms of the license agreement you entered into
+  with vTradEx.
+
+  VTRADEX MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
+  SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+  PURPOSE, OR NON-INFRINGEMENT. VTRADEX SHALL NOT BE LIABLE FOR ANY DAMAGES
+  SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
+  THIS SOFTWARE OR ITS DERIVATIVES.
+-->
+
+<beans>
+	<bean id="newLoginShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.NewLoginShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="userManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="switchWorkZoneShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.SwitchWorkZoneShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsWarehouseRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsASNListShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.receiving.WmsASNListShell" singleton="false">
+    </bean>
+    
+    <bean id="wmsASNDetailShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.receiving.WmsASNDetailShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsBaseModeRFManager"/>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <ref bean="wmsReceivingRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsCountPlanRecordShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.count.WmsCountPlanRecordShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsCountTaskRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsMovePlanShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsMovePlanShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsMoveShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsMoveShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsMovePlanTableShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsMovePlanTableShell" singleton="false">
+    </bean>
+    
+    <bean id="wmsASNPutawayShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsASNPutawayShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsASNPutawayByPalletShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsASNPutawayByPalletShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsItemPutawayShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsItemPutawayShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
+	
+    <bean id="wmsItemPutawayGoShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsItemPutawayGoShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsWorkDocTableShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsWorkDocTableShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsPickTaskShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickTaskShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsPalletPutawayShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsPalletPutawayShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsPalletPutawayGoShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsPalletPutawayGoShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsShippingByBoxNoShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.shipping.WmsShippingByBoxNoShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsShippingRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsMovePlanTiredShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsMovePlanTiredShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsMoveByPalletShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsMoveByPalletShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsMoveTiredShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsMoveTiredShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <!-- FDJ -->
+    <bean id="wmsASNCodeShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.receiving.WmsASNCodeShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsReceivingRFManager"/>
+        </constructor-arg>
+    </bean>
+     <bean id="wmsASNCodeConfirmShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.receiving.WmsASNCodeConfirmShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsReceivingRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsPalletSerialShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.receiving.WmsPalletSerialShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsReceivingRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsASNputawayAutoAllocateShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsASNputawayAutoAllocateShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsShelvesConfirmShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsShelvesConfirmShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsShelvesConfirmTagShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsShelvesConfirmTagShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsPickConfirmAllShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickConfirmAllShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsShipRecordShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsShipRecordShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsUnMovePlanTableShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsUnMovePlanTableShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsUnMovePlanDetailShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsUnMovePlanDetailShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsMoveByCodeShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsMoveByCodeShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReceiveByEmptyBoxShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.receiving.WmsReceiveByEmptyBoxShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsReceivingRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsShippingByEmptyBoxShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsShippingByEmptyBoxShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReplenishmentMoveOrderShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentMoveOrderShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReplenishmentMoveOrderDoShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentMoveOrderDoShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReplenishmentMovePicShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentMovePicShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReplenishmentMovePicDoShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentMovePicDoShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReplenishmentMoveMoveShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentMoveMoveShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReplenishmentMoveMoveDoShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentMoveMoveDoShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsInventoryViewShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsInventoryViewShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsInventoryViewSeeShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsInventoryViewSeeShell" singleton="false">
+    </bean>
+    <bean id="wmsMovePalletShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsMovePalletShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsQickMoveShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.quickMove.WmsQickMoveShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsQickMoveDoShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.quickMove.WmsQickMoveDoShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsPickMoveDocShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickMoveDocShell" singleton="false">
+    </bean>
+    <bean id="wmsPickMoveDocDetailShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickMoveDocDetailShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsPickPartShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickPartShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsPickBackMoveDocShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickBackMoveDocShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+     <bean id="wmsPickBackItemsShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickBackItemsShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsPickBackTasksShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickBackTasksShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsPickBackLocationShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickBackLocationShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsPickBackPickingShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickBackPickingShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsBOLShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsBOLShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReplenishmentOrderShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentOrderShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReplenishmentPickShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentPickShell" singleton="false">
+    </bean>
+    <bean id="wmsReplenishmentPickLocShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentPickLocShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReplenishmentPickInventoryShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentPickInventoryShell" singleton="false">
+    </bean>
+    <bean id="wmsReplenishmentPickDetailShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentPickDetailShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsReplenishmentPutawayShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentPutawayShell" singleton="false">
+    </bean>
+    <bean id="wmsReplenishmentPutawayDoShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.replenishment.WmsReplenishmentPutawayDoShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsMoveRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsAsnDetailReceiveShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.receiving.WmsAsnDetailReceiveShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsReceivingRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsPickContainerCodeShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsPickContainerCodeShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsRfMoveDocDetailShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsRfMoveDocDetailShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+ </beans>

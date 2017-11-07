@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="wmsBookingProcess" control="status">
+
+	<task id="newPlan" title="整单收货预约">
+	</task>
+
+	<task id="dealPlan" title="收货预约管理">
+	</task>
+
+	<task id="editPlan" title="修改预约">
+	</task>
+
+	<task id="arriveRegister" title="到库登记">
+	</task>
+
+	<task id="newMasterPlan" title="发货预约">
+	</task>
+
+	<task id="dealMasterPlan" title="发货预约管理">
+	</task>
+
+	<task id="inputASN" title="补录ASN">
+	</task>
+
+	<task id="delete" title="删除">
+	</task>
+
+	<task id="newNoCodePlan" title="无单收货预约">
+	</task>
+
+	<task id="detailReceiveBooking" title="明细收货预约">
+	</task>
+
+	<task id="newDetailBooking" title="创建预约单">
+	</task>
+
+	<task id="addDetailBooking" title="加入预约单">
+	</task>
+
+	<task id="deleteDetailBooking" title="删除预约单">
+	</task>
+
+	<task id="viewBookingDetail" title="查看预约详情">
+	</task>
+
+</process>

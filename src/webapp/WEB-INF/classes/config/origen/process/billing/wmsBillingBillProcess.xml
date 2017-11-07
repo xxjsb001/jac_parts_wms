@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="wmsBillingBillProcess" control="status">
+
+	<state id="UNCHECKED" title="未审核"/>
+
+	<state id="CHECKED" title="已审核"/>
+
+	<task id="new" title="新建">
+		<to id="UNCHECKED" type="state"/>
+	</task>
+
+	<task id="edit" title="修改">
+		<from id="UNCHECKED" type="state"/>
+	</task>
+
+	<task id="check" title="审核">
+		<from id="UNCHECKED" type="state"/>
+		<to id="CHECKED" type="state"/>
+	</task>
+
+	<task id="unchecked" title="取消审核">
+		<from id="CHECKED" type="state"/>
+		<to id="UNCHECKED" type="state"/>
+	</task>
+
+	<task id="delete" title="删除">
+		<from id="UNCHECKED" type="state"/>
+		<to id="NONE" type="none"/>
+	</task>
+
+	<task id="sysBilling" title="同步费用账单金额">
+	</task>
+
+</process>

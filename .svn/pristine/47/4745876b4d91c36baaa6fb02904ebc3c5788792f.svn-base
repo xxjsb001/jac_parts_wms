@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsASNBakPage">
+    <main>
+        <process id="wmsASNProcess">
+            <tablePopup id="printASNBak" title="printASNBak" process="wmsASNProcess.printASNBak" enableType="single" containId="true" pageId="printAsnReportPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="test" title="test" process="wmsASNProcess.printASNBak" enableType="single" containId="true" pageId="printTestPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

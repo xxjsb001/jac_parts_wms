@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.shipping.WmsPickContainer" table="WMS_PICK_CONTAINER">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_wmsPickContainer</param>
+                <param name="parameters">START WITH 1</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+        <property name="pickId" column="pick_Id" type="long"/>
+		<property name="pickCode" column="pick_code" type="string" length="100"/>
+		<property name="requireArriveDate" column="require_arrive_date" type="string" length="100"/>
+		<property name="billType" column="bill_type" type="string" length="100"/>
+		<property name="productionLine" column="production_line" type="string" length="100"/>
+		<property name="blgName" column="blg_name" type="string" length="100"/>
+		<property name="boxTag" column="box_tag" type="string" length="100"/>
+		<property name="boxType" column="box_type" type="string" length="100"/>
+		<property name="typeName" column="type_name" type="string" length="100"/>
+		<property name="supCode" column="sup_code" type="string" length="100"/>
+		<property name="supName" column="sup_name" type="string" length="100"/>
+		<property name="itemCode" column="item_code" type="string" length="100"/>
+		<property name="itemName" column="item_name" type="string" length="100"/>
+		<property name="fromLocCode" column="from_loc_code" type="string" length="100"/>
+		<property name="station" column="station" type="string" length="100"/>
+		<property name="dockNo" column="doc" type="string" length="100"/>
+		
+		<property name="seq" column="seq" type="double"/>
+		<property name="endseq" column="end_seq" type="double"/>
+		<property name="quantity" column="QUANTITY" type="double"/>
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	</class>
+</hibernate-mapping>

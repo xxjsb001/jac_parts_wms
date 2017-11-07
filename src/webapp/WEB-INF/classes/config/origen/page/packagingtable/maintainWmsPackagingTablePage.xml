@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="maintainWmsPackagingTablePage" title="maintainWmsPackagingTablePage" autoQuery="false" className="com.vtradex.wms.client.packagingtable.MaintainWmsPackagingTablePage">
+		<buttons>
+		</buttons>
+	</customPage>
+</pages>

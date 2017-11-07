@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="importReportFilePage">
+	<main>
+		<process id="reportProcess">
+                <formCommit id="import"  process="reportProcess.import" title="import" enableType="none" invisible="false">
+                    <mappings>
+                    	<mapping id="importFile" className="file"/>
+                    </mappings>
+                    <actions>
+                        <action managerName="reportFileManager" methodName="importReportFile" parameter="importFile"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                        <forward name="closeWindow" newEnabled="true" editEnabled="false"/>
+                    </forwards>
+                </formCommit>
+		</process>
+	</main>
+</page>

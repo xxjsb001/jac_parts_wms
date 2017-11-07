@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <reportPopupPage id="printTrayTagPage" title="printTrayTag" reportFile="wmsPalletSerial.raq" parameter="ids=?" width="900" height="450">
+        <inputUIs>
+        </inputUIs>
+    </reportPopupPage>
+</pages>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainCompanyBillTypePage">
+    <main>
+        <process id="companyAndBillTypeProcess">
+            <tablePopup id="new" title="new" process="companyAndBillTypeProcess.new" enableType="none" containId="false" pageId="editCompanyAndTypePage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="companyAndBillTypeProcess.edit" enableType="single" containId="true" pageId="editCompanyAndTypePage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="companyAndBillTypeProcess.delete" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

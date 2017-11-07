@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="addReportPermissionPage" title="addReportPermissionPage" autoQuery="true"  entityClass="com.vtradex.repc.server.model.report.ReportRole" width="800" height="500">
+        <datasource type="hql"><![CDATA[ select
+        reportRole.id,reportRole.reportFile.code,reportRole.reportFile.name ,reportRole.reportFile.fileName 
+        from ReportRole reportRole where 1=1 AND reportRole.role.id in ({parentIds}) ]]></datasource>
+        <columns>
+            <column id="reportRole.id" value="reportRole.id" title="reportRole.id" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="reportRole.reportFile.code" value="reportRole.reportFile.code" title="reportRole.reportFile.code" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="reportRole.reportFile.name" value="reportRole.reportFile.name" title="reportRole.reportFile.name" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="reportRole.reportFile.fileName" value="reportRole.reportFile.fileName" title="reportRole.reportFile.fileName" visible="true" horizonAlign="center" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="importRuleTablePage">
+    <main>
+        <process id="versionProcess">
+            <formCommit id="import" title="import" pageLocale="false" process="versionProcess.import" enableType="none" download="false" visibleType="none" closeTransactional="true">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="importFile" className="file">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="ruleTableManager" methodName="importRuleTable" parameter="importFile,parentObj"/>
+                </actions>
+                <forwards>
+                	<forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,141 @@
+package com.vtradex.wms.server.model.warehouse;
+
+import com.vtradex.thorn.server.annotation.UniqueKey;
+import com.vtradex.thorn.server.model.Entity;
+import com.vtradex.wms.server.model.base.BaseStatus;
+
+/**
+ * 箱型
+ *
+ * @category Entity 
+ * @author <a href="brofe.pan@gmail.com">潘宁波</a>
+ * @version $Revision: 1.1.1.1 $Date: 2015/03/25 02:48:51 $
+ */
+public class WmsBoxType extends Entity {
+	
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 编号
+	 */
+	@UniqueKey
+	private String code;
+	
+	/**
+	 * 长
+	 */
+	private Double length = 0D;
+	
+	/**
+	 * 宽
+	 */
+	private Double width = 0D;
+ 	
+	/**
+	 * 高
+	 */
+	private Double hight = 0D;
+	
+	/**
+	 * 体积
+	 */
+	private Double volume = 0D;
+	
+	/**
+	 * 重量
+	 * */
+	private Double weight = 0D;
+
+	/**
+	 * 描述
+	 */
+	private String remark;
+	
+	/**
+	 * 状态-生效、失效
+	 * 
+	 * {@link BaseStatus}
+	 */
+	private String status;
+	
+	/**
+	 * {@WmsContainerType}
+	 * 类型
+	 */
+	private String type;
+	
+	public WmsBoxType() {
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public Double getLength() {
+		return length;
+	}
+
+	public void setLength(Double length) {
+		this.length = length;
+	}
+
+	public Double getWidth() {
+		return width;
+	}
+
+	public void setWidth(Double width) {
+		this.width = width;
+	}
+
+	public Double getHight() {
+		return hight;
+	}
+
+	public void setHight(Double hight) {
+		this.hight = hight;
+	}
+
+	public Double getVolume() {
+		return volume;
+	}
+
+	public void setVolume(Double volume) {
+		this.volume = volume;
+	}
+	
+	public Double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainBOPage" title="maintainBOPage" autoQuery="true" entityClass="com.vtradex.thorn.server.model.imports.ImportableBusinessObject" >
+        <datasource type="hql"><![CDATA[ SELECT ibo.id, ibo.code, ibo.name, ibo.className
+ FROM ImportableBusinessObject ibo
+ WHERE 1=1
+ /~ibo.code: AND ibo.code like {ibo.code} ~/
+ /~ibo.name: AND ibo.name like {ibo.name} ~/
+ /~ibo.className: AND ibo.className like {ibo.className} ~/]]></datasource>
+        <columns>
+            <column id="ibo.id" title="maintainBOPage.ibo.id" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="ibo.code" title="maintainBOPage.ibo.code" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="ibo.name" title="maintainBOPage.ibo.name" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="ibo.className" title="maintainBOPage.ibo.className" visible="true" horizonAlign="left" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="popupMaintainTaskPage">
+    <main>
+        <process id="workDocProcess">
+            <tableCommit id="addTask" title="addTask" process="workDocProcess.addTask" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings>
+                	<mapping id="workDoc.id" className="long">
+                		<entries/>
+                	</mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="addTaskForWorkDoc" parameter="workDoc.id, obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editExceptionLogPage" title="editExceptionLogPage" pageLocale="false" entityClass="com.vtradex.thorn.server.model.exception.ExceptionLog" width="800" height="750">
+        <inputUIs>
+            <hidden id="el.id" pageLocale="false" reserve="false"/>
+            <date id="el.operDate" title="el.operDate" pageLocale="false" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="true" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <text id="el.operUserName" title="el.operUserName" pageLocale="false" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="el.operPageName" title="el.operPageName" pageLocale="false" row="1" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="el.operComponentId" title="el.operComponentId" pageLocale="false" row="1" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <textArea id="el.operExceptionMess" title="el.operExceptionMess" pageLocale="false" row="4" col="1" span="4" width="720" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" rows="8" cols="56">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+            <textArea id="el.operException" title="el.operException" pageLocale="false" row="5" col="1" span="4" width="720" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" rows="8" cols="56">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+        </inputUIs>
+    </editPage>
+</pages>

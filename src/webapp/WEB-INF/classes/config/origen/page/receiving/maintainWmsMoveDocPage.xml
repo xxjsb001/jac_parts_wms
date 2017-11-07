@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsMoveDocPage" title="maintainWmsMoveDocPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc">
+        <workflow/>
+        <datasource><![CDATA[SELECT moveDoc.id,
+moveDoc.code,
+moveDoc.billType.name,
+moveDoc.updateInfo.createdTime,
+moveDoc.status,
+moveDoc.planQuantityBU,
+moveDoc.allocatedQuantityBU,
+moveDoc.movedQuantityBU,
+moveDoc.originalBillCode,
+moveDoc.updateInfo.creator,
+moveDoc.updateInfo.updateTime 
+ FROM WmsMoveDoc moveDoc 
+ LEFT JOIN moveDoc.billType
+ WHERE 1=1
+ AND moveDoc.type='MV_PUTAWAY'
+ AND moveDoc.warehouse = #{SESSION_WAREHOUSE}
+ ORDER BY moveDoc.updateInfo.createdTime desc
+ ]]></datasource>
+        <columns>
+            <column id="moveDoc.id" title="moveDoc.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="moveDoc.code" title="moveDoc.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.billType.name" title="moveDoc.billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.updateInfo.createdTime" title="moveDoc.createTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="moveDoc.status" title="moveDoc.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocStatus"/>
+            <column id="moveDoc.planQuantityBU" title="moveDoc.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDoc.allocatedQuantityBU" title="moveDoc.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDoc.movedQuantityBU" title="moveDoc.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDoc.originalBillCode" title="moveDoc.originalBillCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.updateInfo.creator" title="moveDoc.operatorName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.updateTime" title="moveDoc.updateTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+        </columns>
+    </maintainPage>
+</pages>

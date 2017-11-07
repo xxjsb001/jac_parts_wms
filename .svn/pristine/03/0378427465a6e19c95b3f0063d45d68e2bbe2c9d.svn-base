@@ -1,0 +1,645 @@
+package com.vtradex.wms.server.telnet.pick.pojo;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.vtradex.thorn.server.exception.BusinessException;
+import com.vtradex.thorn.server.model.Entity;
+import com.vtradex.thorn.server.model.EntityFactory;
+import com.vtradex.thorn.server.service.WorkflowManager;
+import com.vtradex.thorn.server.util.BeanUtils;
+import com.vtradex.wms.server.model.base.BaseStatus;
+import com.vtradex.wms.server.model.base.ShipLotInfo;
+import com.vtradex.wms.server.model.inventory.WmsInventory;
+import com.vtradex.wms.server.model.inventory.WmsInventoryLogType;
+import com.vtradex.wms.server.model.inventory.WmsItemKey;
+import com.vtradex.wms.server.model.move.WmsMoveDoc;
+import com.vtradex.wms.server.model.move.WmsMoveDocDetail;
+import com.vtradex.wms.server.model.move.WmsMoveDocShipStatus;
+import com.vtradex.wms.server.model.move.WmsMoveDocStatus;
+import com.vtradex.wms.server.model.move.WmsMoveDocType;
+import com.vtradex.wms.server.model.move.WmsTask;
+import com.vtradex.wms.server.model.move.WmsTaskStatus;
+import com.vtradex.wms.server.model.move.WmsWorkDoc;
+import com.vtradex.wms.server.model.organization.WmsBillType;
+import com.vtradex.wms.server.model.organization.WmsItem;
+import com.vtradex.wms.server.model.organization.WmsOrganization;
+import com.vtradex.wms.server.model.organization.WmsPackageUnit;
+import com.vtradex.wms.server.model.shipping.WmsBOL;
+import com.vtradex.wms.server.model.shipping.WmsBOLDetail;
+import com.vtradex.wms.server.model.shipping.WmsBOLStatus;
+import com.vtradex.wms.server.model.shipping.WmsMoveDocAndStation;
+import com.vtradex.wms.server.model.shipping.WmsPickTicket;
+import com.vtradex.wms.server.model.shipping.WmsPickTicketDetail;
+import com.vtradex.wms.server.model.shipping.WmsTaskAndStation;
+import com.vtradex.wms.server.model.warehouse.WmsBoxType;
+import com.vtradex.wms.server.model.warehouse.WmsLocation;
+import com.vtradex.wms.server.model.warehouse.WmsWarehouse;
+import com.vtradex.wms.server.model.warehouse.WmsWorker;
+import com.vtradex.wms.server.service.inventory.WmsInventoryManager;
+import com.vtradex.wms.server.service.receiving.WmsMoveDocManager;
+import com.vtradex.wms.server.service.rule.WmsRuleManager;
+import com.vtradex.wms.server.service.sequence.WmsBussinessCodeManager;
+import com.vtradex.wms.server.service.task.WmsTaskManager;
+import com.vtradex.wms.server.service.workDoc.WmsWorkDocManager;
+import com.vtradex.wms.server.telnet.dto.WmsBOLDTO;
+import com.vtradex.wms.server.telnet.dto.WmsPickContainerDTO;
+import com.vtradex.wms.server.telnet.dto.WmsPickTaskDTO;
+import com.vtradex.wms.server.telnet.manager.pojo.DefaultLimitQueryBaseManager;
+import com.vtradex.wms.server.telnet.pick.WmsPickRFManager;
+import com.vtradex.wms.server.model.carrier.WmsVehicle;
+import com.vtradex.wms.server.utils.LotInfoUtil;
+import com.vtradex.wms.server.utils.MyUtils;
+import com.vtradex.wms.server.utils.PackageUtils;
+import com.vtradex.wms.server.utils.StringHelper;
+import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
+import com.vtradex.wms.server.web.filter.WmsWorkerHolder;
+
+public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
+		implements WmsPickRFManager {
+	
+	private final WmsWorkDocManager workDocManager;
+	private final WorkflowManager workflowManager;
+	private final WmsRuleManager wmsRuleManager;
+	private final WmsInventoryManager wmsInventoryManager;
+	private WmsBussinessCodeManager codeManager;
+	
+	public DefaultWmsPickRFManager(WmsWorkDocManager workDocManager , WorkflowManager workflowManager, 
+			WmsRuleManager wmsRuleManager,WmsInventoryManager wmsInventoryManager,WmsBussinessCodeManager codeManager) {
+		this.workDocManager = workDocManager;
+		this.workflowManager = workflowManager;
+		this.wmsRuleManager = wmsRuleManager;
+		this.wmsInventoryManager = wmsInventoryManager;
+		this.codeManager = codeManager;
+	}
+
+	public WmsPickTaskDTO findPickTaskById(Long workDocId) {
+		WmsWorkDoc workDoc = commonDao.load(WmsWorkDoc.class, workDocId);
+		workDoc.setWorker(WmsWorkerHolder.getWmsWorker());
+		commonDao.store(workDoc);
+		String hql = "SELECT new com.vtradex.wms.server.telnet.dto.WmsPickTaskDTO(task.moveDocDetail.moveDoc.id,task.moveDocDetail.moveDoc.code," +
+			"task.workDoc.id,task.workDoc.code,task.id,task.fromLocationId,task.fromLocationCode,task.toLocationId," +
+			"task.toLocationCode,task.itemKey.item.code,task.itemKey.item.name,task.itemKey.item.barCode,task.planQuantityBU-task.movedQuantityBU)" +
+			" FROM WmsTask task , WmsLocation loc" +
+			" WHERE task.fromLocationId = loc.id AND task.workDoc.id=:workDocId" +
+			" AND task.status in (:statuss)" +
+			" ORDER BY loc.routeNo ASC , task.itemKey.item.code ASC";
+		return (WmsPickTaskDTO)this.findByHqlLimitQuery(hql, new String[]{"workDocId" , "statuss"}, new Object[]{workDocId , Arrays.asList(new String[]{WmsTaskStatus.DISPATCHED ,WmsTaskStatus.WORKING})}, 1);
+	}
+
+	public Long checkWorkDocCode(String workDocCode) {
+		WmsWorkDoc workDoc = this.findWorkDocByCode(workDocCode);
+		if(workDoc == null) {
+			throw new BusinessException("不存在该作业单");
+		}
+//		if(!workDoc.getWorkArea().getId().equals(WmsWorkAreaHolder.getWmsWorkArea().getId())) {
+//			throw new BusinessException("作业单不属于当前作业区");
+//		}
+		if(workDoc.getWorker() != null && !workDoc.getWorker().getId().equals(WmsWorkerHolder.getWmsWorker().getId())) {
+			throw new BusinessException("作业单已被其他作业人员申请");
+		}
+		return workDoc.getId();
+	}
+
+	private WmsWorkDoc findWorkDocByCode(String code){
+		return (WmsWorkDoc)commonDao.findByQueryUniqueResult("FROM WmsWorkDoc wd WHERE wd.code=:code AND wd.warehouse.id=:wId"
+				, new String[]{"code","wId"}, new Object[]{code , WmsWarehouseHolder.getWmsWarehouse().getId()});
+	}
+
+	public void confirmPick(WmsPickTaskDTO pickTaskDTO, String locationCode,
+			Double quantity) {
+		WmsLocation srcLocation = queryWmsLocationByCode(locationCode);
+		WmsTask task = commonDao.load(WmsTask.class, pickTaskDTO.getTaskId());
+		workDocManager.singleWorkConfirm(task, pickTaskDTO.getToLocationId(), srcLocation.getId(), quantity, WmsWorkerHolder.getWmsWorker().getId());
+		workflowManager.doWorkflow(task, "taskProcess.confirm");
+	}
+	
+	public void markExceptionWmsLocation(Long locationId) throws BusinessException {
+		try {
+			WmsLocation loc = commonDao.load(WmsLocation.class, locationId);
+			loc.setExceptionFlag(Boolean.TRUE);
+		} catch (BusinessException be) {
+			throw new BusinessException("标识异常库位失败，请重试");
+		}
+	}
+
+	public void resetAllocate(WmsPickTaskDTO pickTaskDTO) {
+		
+		WmsMoveDoc moveDoc = commonDao.load(WmsMoveDoc.class, pickTaskDTO.getMoveDocId());
+		WmsTask task = commonDao.load(WmsTask.class, pickTaskDTO.getTaskId());
+		WmsMoveDocDetail moveDocDetail = commonDao.load(WmsMoveDocDetail.class, task.getMoveDocDetail().getId());
+		
+		WmsPickTicket pickTicket = commonDao.load(WmsPickTicket.class, moveDoc.getPickTicket().getId());
+		WmsBillType billType = commonDao.load(WmsBillType.class, pickTicket.getBillType().getId());
+		String billTypeName = billType.getName();
+		
+		WmsOrganization company = commonDao.load(WmsOrganization.class, moveDoc.getCompany().getId());
+		WmsWarehouse warehouse = commonDao.load(WmsWarehouse.class, moveDoc.getWarehouse().getId());				
+		String companyName = company.getName();
+		if(company.isBeVirtual()){
+			companyName = warehouse.getName();
+		}
+		String warehouseName = warehouse.getName();
+		Long warehouseId = warehouse.getId();
+		
+		Map<String, Object> problem = new HashMap<String, Object>();
+		problem.put("仓库ID", warehouseId);
+		problem.put("货主", companyName);
+		problem.put("单据类型", billTypeName);
+		problem.put("货主", companyName);
+		WmsItem item = commonDao.load(WmsItem.class, task.getItemKey().getItem().getId());
+		WmsPackageUnit packageUnit = commonDao.load(WmsPackageUnit.class, task.getPackageUnit().getId());
+		problem.put("拣货分类", item.getClass2());
+		problem.put("包装级别", packageUnit.getLevel());
+		problem.put("源拣货库位序号", task.getFromLocationId());
+		problem.put("货品ID", item.getId());
+		problem.put("货品编码", item.getCode());
+		problem.put("待拣选数量", task.getUnmovedQuantityBU());
+		problem.put("库存状态", task.getInventoryStatus());
+		problem.put("数量", task.getUnmovedQuantityBU());
+		if (pickTicket.getCustomer() != null) {
+			WmsOrganization customer = commonDao.load(WmsOrganization.class, pickTicket.getCustomer().getId());
+			problem.put("收货人", pickTicket.getCustomer() == null ? "" : customer.getName());
+		} else {
+			problem.put("收货人", "");
+		}
+		
+		ShipLotInfo shipLotInfo = moveDocDetail.getShipLotInfo();
+		if (shipLotInfo == null) {
+			shipLotInfo = new ShipLotInfo();
+		}
+		LotInfoUtil.generateShipLotInfo(problem, shipLotInfo, Boolean.TRUE);
+		
+		Map<String, Object> result = wmsRuleManager.execute(warehouseName, companyName, "拣货分配规则", problem);
+		
+		//作业任务取消分配
+		Double unallocateQty = task.getUnmovedQuantityBU();
+		WmsInventory fromInv = commonDao.load(WmsInventory.class,
+				task.getSrcInventoryId());
+		fromInv.unallocatePickup(unallocateQty);
+		WmsPickTicketDetail pickTicketDetail = load(
+				WmsPickTicketDetail.class, moveDocDetail.getRelatedId());
+		if (pickTicketDetail != null) {
+			pickTicketDetail.unallocate(unallocateQty);
+		}
+		
+		task.unallocatePick(unallocateQty);
+		if(task.getStatus().equals(WmsTaskStatus.WORKING) && task.getMovedQuantityBU()>0) {
+			workflowManager.doWorkflow(task, "taskProcess.confirm");
+		}
+		
+		double tempQuantity = 0D;
+		//作业任务重新分配
+		int size = ((List<Map<String, Object>>) result.get("返回列表")).size();
+		for (int i = 0; i < size; i++) {
+			Map<String, Object> wmsTaskInfos = ((List<Map<String, Object>>) result.get("返回列表")).get(i);
+			double quantity = Double.valueOf(wmsTaskInfos.get(
+					"分配数量").toString());
+			if (quantity == 0) {
+				continue;
+			}
+			Long srcInventoryId = Long.valueOf(wmsTaskInfos.get("库存ID").toString());
+			WmsInventory srcInv = commonDao.load(WmsInventory.class,srcInventoryId);
+			
+			if (moveDocDetail.getPlanQuantityBU() > tempQuantity) {
+				if (i == 0 && task.getMovedQuantityBU() == 0) {
+					pickupAllocate(task, srcInv,quantity,moveDocDetail,false);
+				} else {
+					pickupAllocate(task, srcInv,quantity,moveDocDetail,true);
+				}
+				pickTicketDetail.allocate(quantity);
+				commonDao.store(pickTicketDetail);
+
+				tempQuantity+=quantity;
+			} else {
+				break;
+			}
+		}
+	}
+	
+	private void pickupAllocate(WmsTask task, WmsInventory srcInv, double quantityBU, 
+			WmsMoveDocDetail detail, boolean isNew) {
+		
+		srcInv.allocatePickup(quantityBU);
+		commonDao.store(srcInv);
+		
+		detail.setInventoryId(srcInv.getId());
+		detail.setFromLocationId(srcInv.getLocation().getId());
+		detail.setFromLocationCode(srcInv.getLocation().getCode());
+		detail.allocate(quantityBU);
+		commonDao.store(detail);
+		
+		if(isNew) {
+			WmsTask newTask = EntityFactory.getEntity(WmsTask.class);
+			BeanUtils.copyEntity(newTask, task);
+			newTask.setId(null);
+			newTask.setPlanQuantityBU(quantityBU);
+			newTask.setPlanQuantity(PackageUtils.convertPackQuantity(quantityBU,task.getPackageUnit()));
+			newTask.setMovedQuantityBU(0D);
+			newTask.setStatus(WmsTaskStatus.DISPATCHED);
+			newTask.setFromLocationId(srcInv.getLocation().getId());
+			newTask.setFromLocationCode(srcInv.getLocation().getCode());
+			newTask.setSrcInventoryId(srcInv.getId());
+			detail.getTasks().add(newTask);
+			newTask.getWorkDoc().addTask(newTask);
+			commonDao.store(newTask);
+		} else {
+			task.addPlanQuantityBU(quantityBU);
+			task.setFromLocationId(srcInv.getLocation().getId());
+			task.setFromLocationCode(srcInv.getLocation().getCode());
+			task.setSrcInventoryId(srcInv.getId());
+			task.getWorkDoc().addTask(task);
+			commonDao.store(task);
+		}
+		
+	}
+	public String pickConfirmAll(String pickNo){
+		WmsPickTicket pic = checkPicIsNull(pickNo);
+		if(pic==null){
+			return "pic is null";
+		}
+		List<WmsMoveDoc> mm = checkMoveIsNull(pic.getId());//,WmsMoveDocStatus.ACTIVE,WmsMoveDocStatus.WORKING
+		if(mm==null){
+			return "move is null";
+		}
+		Boolean anyExits = true;
+		for(WmsMoveDoc m : mm){
+			if(m.getStatus().equals(WmsMoveDocStatus.ACTIVE) 
+					|| m.getStatus().equals(WmsMoveDocStatus.WORKING)){
+				workDocManager.pickConfirmAll(m);
+				workflowManager.doWorkflow(m, "wmsMoveDocProcess.confirm");
+				anyExits = false;
+			}
+		}
+		if(anyExits){
+			String mesg = "未知的拣货单状态错误";
+			for(WmsMoveDoc m : mm){
+				if(m.getStatus().equals(WmsMoveDocStatus.OPEN) 
+						|| m.getStatus().equals(WmsMoveDocStatus.PARTALLOCATED)){
+					mesg = "失败!拣货单未整单分配";
+				}else if(m.getStatus().equals(WmsMoveDocStatus.ALLOCATED)){
+					mesg = "失败!拣货单未生效";
+				}else if(m.getStatus().equals(WmsMoveDocStatus.FINISHED)){
+					mesg = "失败!已拣货扫码,重复扫码";
+				}else if(m.getStatus().equals(WmsMoveDocStatus.CANCELED)){
+					mesg = "失败!拣货单已取消";
+				}
+				return mesg;
+			}
+		}
+		return MyUtils.SUCCESS;
+	}
+	private WmsPickTicket checkPicIsNull(String pickNo){
+		WmsPickTicket pic = (WmsPickTicket) commonDao.findByQueryUniqueResult("FROM WmsPickTicket p"
+				+ " WHERE (p.code =:code OR p.relatedBill1 =:code) ", 
+				new String[]{"code"}, new Object[]{pickNo});
+		if(pic==null){
+			return null;//"pic is null";
+		}
+		return pic;
+	}
+	@SuppressWarnings("unchecked")
+	private List<WmsMoveDoc> checkMoveIsNull(Long pickTicketId){//,String status1,String status2
+		List<WmsMoveDoc> mm = commonDao.findByQuery("FROM WmsMoveDoc m"
+				 +" WHERE m.pickTicket.id =:pickTicketId",
+//				 +" AND (m.status =:status1 OR m.status =:status2)", 
+				new String[]{"pickTicketId"},//,"status1","status2"
+				new Object[]{pickTicketId});//,status1,status2
+		if(mm==null || mm.size()<=0){
+			return null;
+		}
+		return mm;
+	}
+	public String shipRecord(String pickNo,String vehicleNo){
+		WmsPickTicket pic = checkPicIsNull(pickNo);
+		if(pic==null){
+			return "pic is null";
+		}
+		List<WmsMoveDoc> mm = checkMoveIsNull(pic.getId());//,WmsMoveDocStatus.FINISHED,WmsMoveDocStatus.WORKING
+		if(mm==null){
+			return "move is null";
+		}
+		for(WmsMoveDoc m : mm){
+			if(!m.getShipStatus().equals(WmsMoveDocShipStatus.UNSHIP)
+					&& !m.getStatus().equals(WmsMoveDocStatus.FINISHED)
+					&& !m.getStatus().equals(WmsMoveDocStatus.WORKING)){
+//				return "move is ship";
+				continue;
+			}
+			m.setVehicleNo(vehicleNo);
+			commonDao.store(m);
+			workDocManager.shipRecord(m);
+		}
+		return pickNo;
+		
+	}
+	
+	public WmsPickContainerDTO findPickContainer(WmsWorker blg){
+		String taskHql = " FROM WmsTask task WHERE task.status !=:status AND task.moveDocDetail.id =:moveDocDetailId AND task.planQuantityBU > 0 ";
+		String hql = " FROM WmsMoveDocAndStation mds WHERE mds.isFinished =:isFinished AND mds.moveDocDetail.moveDoc.blg.id =:blgId AND mds.quantity > mds.pickQuantity AND mds.moveDocDetail.moveDoc.status IN(:status) ORDER BY mds.id ASC ";
+		WmsMoveDocAndStation mds = (WmsMoveDocAndStation) this.findByHqlLimitQuery(hql, new String[]{"isFinished","blgId","status"}, 
+				new Object[]{Boolean.FALSE,blg.getId(),Arrays.asList(WmsMoveDocStatus.ACTIVE,WmsMoveDocStatus.WORKING)},1);
+		if(mds == null){
+			return null;
+		}
+		WmsTask task = (WmsTask) this.findByHqlLimitQuery(taskHql, new String[]{"status","moveDocDetailId"}, new Object[]{WmsTaskStatus.FINISHED,mds.getMoveDocDetail().getId()}, 1);
+		WmsPickContainerDTO dto = new WmsPickContainerDTO();
+		dto.setTaskId(task.getId());
+		dto.setMoveDocAndStationId(mds.getId());
+		dto.setItemId(mds.getItem().getId());
+		dto.setItemCode(mds.getItem().getCode());
+		dto.setItemName(mds.getItem().getName());
+		dto.setType(mds.getType());
+		dto.setLocationCode(task.getFromLocationCode());
+		dto.setSupplier(mds.getMoveDocDetail().getShipLotInfo().getSupplier());
+		if(task.getUnmovedQuantityBU() >= mds.getQuantity()-mds.getPickQuantity()){
+			dto.setPlanQuantityBU(mds.getQuantity()-mds.getPickQuantity());
+			dto.setUnMoveQuantityBU(mds.getQuantity()-mds.getPickQuantity());
+		}else{
+			dto.setPlanQuantityBU(task.getUnmovedQuantityBU());
+			dto.setUnMoveQuantityBU(task.getUnmovedQuantityBU());
+		}
+		return dto;
+	}
+	
+	public void confimPickByContainer(WmsPickContainerDTO dto,Boolean isFinished){
+		WmsTask task = commonDao.load(WmsTask.class, dto.getTaskId());
+		WmsMoveDoc moveDoc = commonDao.load(WmsMoveDoc.class, task.getMoveDocDetail().getMoveDoc().getId());
+		WmsWorker worker = WmsWorkerHolder.getWmsWorker();
+		String hql = " FROM WmsTaskAndStation wts WHERE wts.station.id =:stationId AND wts.isConfirm =:isConfirm ORDER BY wts.id ASC";
+		List<WmsTaskAndStation> stations = commonDao.findByQuery(hql, new String[]{"stationId","isConfirm"}, new Object[]{dto.getMoveDocAndStationId(),Boolean.FALSE});
+		Double qty = 0D;
+		for(WmsTaskAndStation wts : stations){
+			workDocManager.singleConfirm(wts.getTask(), moveDoc.getId(), wts.getPickQuantityBu(), wts.getInventoryId(), worker.getId());
+			qty += wts.getPickQuantityBu();
+			wts.setIsConfirm(Boolean.TRUE);
+			commonDao.store(wts);
+		}
+//		workDocManager.singleConfirm(task, moveDoc.getId(), dto.getPickQuantity(), null, worker.getId());
+		WmsMoveDocAndStation mds = commonDao.load(WmsMoveDocAndStation.class, dto.getMoveDocAndStationId());
+		mds.setContainer(dto.getContainer());
+		mds.setPickQuantity(mds.getPickQuantity()+qty);
+		if(mds.getQuantity().equals(mds.getPickQuantity())){
+			mds.setIsFinished(Boolean.TRUE);
+		}
+		if(isFinished){
+			mds.setIsFinished(Boolean.TRUE);
+		}
+		commonDao.store(mds);
+		if(task.getUnmovedQuantityBU() > 0){//库存短缺  原库位取消拣货分配占用量并标记异常库位
+			// 原库位取消拣货分配
+			WmsInventory srcInv = commonDao.load(WmsInventory.class, task.getSrcInventoryId());
+			/*srcInv.unallocatePickup(task.getUnmovedQuantityBU());
+			//目标库位取消上架分配
+			WmsInventory discInv =commonDao.load(WmsInventory.class, task.getDescInventoryId());
+			discInv.unallocatePutaway(task.getUnmovedQuantityBU());*/
+			//标记异常库位记录库存日志--库位异常暂不标记
+//			WmsLocation loc = commonDao.load(WmsLocation.class, task.getFromLocationId());
+//			loc.setExceptionFlag(Boolean.TRUE);
+//			commonDao.store(loc);
+			wmsInventoryManager.addInventoryLog(WmsInventoryLogType.INVENTORY_EXCEPTION, 0, 
+					moveDoc.getCode(), moveDoc.getBillType(), srcInv.getLocation(), srcInv.getItemKey(), 0D,   
+					srcInv.getPackageUnit(),srcInv.getStatus(),"拣货异常");
+		}
+	}
+	
+	public WmsInventory getInventoryQtyByLocation(String location,String itemCode,String supplier){
+		String hql = "FROM WmsInventory inv WHERE inv.location.code =:locationCode AND inv.itemKey.item.code =:itemCode AND inv.itemKey.lotInfo.supplier.code =:supplier AND inv.quantityBU -inv.allocatedQuantityBU >0 ";
+		WmsInventory inv = (WmsInventory) this.findByHqlLimitQuery(hql, new String[]{"locationCode","itemCode","supplier"}, new Object[]{location,itemCode,supplier}, 1);
+		return inv;
+	}
+	
+	public Boolean checkIsFinished(WmsPickContainerDTO dto){//开始用来判断载具是否拣选完成，已改不做判断了--jianxiang.hang--170706
+		WmsTask task = commonDao.load(WmsTask.class, dto.getTaskId());
+		WmsMoveDocAndStation mds = commonDao.load(WmsMoveDocAndStation.class, dto.getMoveDocAndStationId());
+//		String hql = " FROM WmsTaskAndStation wts WHERE wts.station.id =:stationId AND wts.container IS NOT NULL ";
+//		List<WmsTaskAndStation> wtss = commonDao.findByQuery(hql, new String[]{"stationId"}, new Object[]{mds.getId()});
+		
+		WmsTaskAndStation wts = EntityFactory.getEntity(WmsTaskAndStation.class);
+		wts.setTask(task);
+		wts.setStation(mds);
+		wts.setInventoryId(dto.getInventoryId());
+		wts.setPickQuantityBu(dto.getPickQuantity());
+		wts.setContainer(dto.getContainer());
+		commonDao.store(wts);
+		String hql = " SELECT SUM(wts.pickQuantityBu) FROM WmsTaskAndStation wts WHERE wts.station.id =:stationId AND wts.isConfirm =:isConfirm ";
+		Double qty = (Double) commonDao.findByQueryUniqueResult(hql, new String[]{"stationId","isConfirm"}, new Object[]{mds.getId(),Boolean.FALSE});
+		if(mds.getQuantity()-mds.getPickQuantity()>qty){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public Boolean checkContainer(String container){
+		String hql = "FROM WmsBoxType bt WHERE bt.code =:code AND bt.status =:status";
+		WmsBoxType bt = (WmsBoxType) commonDao.findByQueryUniqueResult(hql, new String[]{"code","status"}, new Object[]{container,BaseStatus.ENABLED});
+		if(bt ==null ){
+			return Boolean.FALSE;
+		}else{
+			return Boolean.TRUE;
+		}
+	}
+	
+	public WmsPickContainerDTO getWmsTaskByMoveDocId(Long moveDocId,String container){
+		String hql = "SELECT task FROM WmsTask task,WmsLocation loc WHERE task.fromLocationId =loc.id AND task.moveDocDetail.moveDoc.id =:moveDocId " +
+				" AND task.status in(:status) AND task.exceptionFlag =:exceptionFlag ORDER BY loc.routeNo ASC ";
+		WmsTask task = (WmsTask) this.findByHqlLimitQuery(hql, new String[]{"moveDocId","status","exceptionFlag"}, new Object[]{moveDocId,Arrays.asList(WmsTaskStatus.DISPATCHED,WmsTaskStatus.WORKING),Boolean.FALSE}, 1);
+		if(task == null || task.getUnmovedQuantityBU() == 0){
+			return null;
+		}
+		hql = "FROM WmsBoxType bt WHERE bt.code =:code AND bt.status =:status";
+		WmsBoxType bt = (WmsBoxType) commonDao.findByQueryUniqueResult(hql, new String[]{"code","status"}, new Object[]{container,BaseStatus.ENABLED});
+		
+		WmsItem item = commonDao.load(WmsItem.class, task.getItemKey().getItem().getId());
+		WmsPickContainerDTO dto = new WmsPickContainerDTO();
+		dto.setTaskId(task.getId());
+		dto.setMoveDocAndStationId(null);
+		dto.setItemId(item.getId());
+		dto.setItemCode(item.getCode());
+		dto.setItemName(item.getName());
+		dto.setType(bt.getType());
+		dto.setContainer(container);
+		dto.setLocationCode(task.getFromLocationCode());
+		dto.setSupplier(task.getMoveDocDetail().getShipLotInfo().getSupplier());
+		dto.setPlanQuantityBU(task.getUnmovedQuantityBU());
+		dto.setUnMoveQuantityBU(task.getUnmovedQuantityBU());
+		return dto;
+	}
+	
+	public void confimPickByPart(WmsPickContainerDTO dto){
+		WmsTask task = commonDao.load(WmsTask.class, dto.getTaskId());
+		WmsItem item = commonDao.load(WmsItem.class, task.getItemKey().getItem().getId());
+		WmsMoveDoc moveDoc = commonDao.load(WmsMoveDoc.class, task.getMoveDocDetail().getMoveDoc().getId());
+		WmsWorker worker = WmsWorkerHolder.getWmsWorker();
+		workDocManager.singleConfirm(task, moveDoc.getId(),dto.getPickQuantity(), dto.getInventoryId(), worker.getId());
+		String hql = " FROM WmsMoveDocAndStation mds WHERE mds.moveDocDetail.id =:detailId AND mds.type =:type AND mds.quantity > mds.pickQuantity ";
+		WmsMoveDocAndStation mds = (WmsMoveDocAndStation) commonDao.findByQueryUniqueResult(hql, new String[]{"detailId","type"}, 
+				new Object[]{task.getMoveDocDetail().getId(),dto.getType()});
+		if(mds == null){
+			mds = EntityFactory.getEntity(WmsMoveDocAndStation.class);
+			mds.setIsFinished(Boolean.FALSE);
+			mds.setItem(item);
+			mds.setMoveDocDetail(task.getMoveDocDetail());
+			mds.setQuantity(dto.getPickQuantity());
+			mds.setLoadage(dto.getPickQuantity().intValue());
+			mds.setType(dto.getType());
+			mds.setContainer(dto.getContainer());
+			mds.setIsFinished(Boolean.TRUE);
+			mds.setPickQuantity(dto.getPickQuantity());
+			mds.setIsPartPick(Boolean.TRUE);
+			mds.setBoxTag(codeManager.generateCodeByRule(WmsWarehouseHolder.getWmsWarehouse(), moveDoc.getCompany().getName(), "RF", dto.getContainer()));
+		}else{
+			mds.setPickQuantity(mds.getPickQuantity()+dto.getPickQuantity());
+		}
+		commonDao.store(mds);
+//		hql = " FROM WmsTaskAndStation wts WHERE wts.station.id =:stationId AND wts.task.id =:taskId AND wts.isConfirm =:isConfirm AND wts.inventoryId =:inventoryId ";
+//		WmsTaskAndStation wts = (WmsTaskAndStation) commonDao.findByQueryUniqueResult(hql, new String[]{"stationId","taskId","isConfirm","inventoryId"}, new Object[]{mds.getId(),task.getId(),Boolean.FALSE,dto.getInventoryId()});
+		WmsTaskAndStation wts = EntityFactory.getEntity(WmsTaskAndStation.class);
+		wts.setTask(task);
+		wts.setStation(mds);
+		wts.setInventoryId(dto.getInventoryId());
+		wts.setPickQuantityBu(dto.getPickQuantity());
+		wts.setIsConfirm(Boolean.TRUE);
+		commonDao.store(wts);
+	}
+	
+	public void markTaskException(Long taskId){
+		WmsTask task = commonDao.load(WmsTask.class, taskId);
+		task.setExceptionFlag(Boolean.TRUE);
+		commonDao.store(task);
+	}
+	public String checkContainerByBoxType(String container,String type){
+		String hql = "FROM WmsBoxType bt WHERE bt.code =:code AND bt.status =:status AND bt.type =:type ";
+		WmsBoxType bt = (WmsBoxType) commonDao.findByQueryUniqueResult(hql, new String[]{"code","status","type"}, new Object[]{container,BaseStatus.ENABLED,type});
+		hql = "FROM WmsMoveDocAndStation mds WHERE mds.container =:container AND mds.moveDocDetail.moveDoc.shipStatus =:shipStatus ";
+		List<WmsMoveDocAndStation> mds = commonDao.findByQuery(hql, new String[]{"container","shipStatus"}, new Object[]{container,WmsMoveDocShipStatus.UNSHIP});
+		if(bt == null){
+			return "箱型未维护信息或器具型号不对";
+		}else if(!mds.isEmpty()){
+			return "器具已有拣货信息，请更换器具";
+		}else{
+			return "";
+		}
+	}
+	public WmsVehicle checkVehicleByLicense(String license){
+		String hql = "FROM WmsVehicle v WHERE v.license =:license and v.status =:status";
+		WmsVehicle vehicle = (WmsVehicle) commonDao.findByQueryUniqueResult(hql, new String[]{"license","status"}, new Object[]{license,BaseStatus.ENABLED});
+		return vehicle;
+	}
+	
+	public WmsBOLDTO checkMoveDocByContainer(String container,WmsBOLDTO dto){
+		String hql = "FROM WmsMoveDocAndStation mds WHERE mds.container =:container AND mds.moveDocDetail.moveDoc.status =:status AND mds.moveDocDetail.moveDoc.shipStatus =:shipStatus ";
+		List<WmsMoveDocAndStation> mds = commonDao.findByQuery(hql, new String[]{"container","status","shipStatus"}, new Object[]{container,WmsMoveDocStatus.FINISHED,WmsMoveDocShipStatus.UNSHIP});
+		dto.setMessage("");
+		if(mds.isEmpty()){
+			dto.setMessage("器具没有拣货信息或拣货单未完成");
+		}else{
+			hql = "FROM WmsBoxType bt WHERE bt.code =:code AND bt.status =:status ";
+			WmsBoxType bt = (WmsBoxType) commonDao.findByQueryUniqueResult(hql, new String[]{"code","status"}, new Object[]{container,BaseStatus.ENABLED});
+			if(bt.getIsBol()){
+				dto.setMessage("器具已经加入装车单");
+			}else{
+				WmsMoveDoc doc = commonDao.load(WmsMoveDoc.class, mds.get(0).getMoveDocDetail().getMoveDoc().getId());
+				if(dto.getPickCode() == null){
+					dto.setPickCode(doc.getOriginalBillCode());
+				}else if(!doc.getOriginalBillCode().equals(dto.getPickCode())){
+					dto.setMessage("不是发货单："+dto.getPickCode()+"的料");
+				}
+			}
+		}
+		return dto;
+	}
+	
+	public void createWmsBol(WmsBOLDTO dto){
+		String license = dto.getLicense();
+		WmsVehicle vehicle = checkVehicleByLicense(license);
+		Set<String> containers = dto.getContainers();
+		Iterator<String> it = containers.iterator();
+		Map<String,String> subMap = new HashMap<String, String>();
+		while(it.hasNext()){
+			String container = it.next();
+			String hql = "FROM WmsMoveDocAndStation mds WHERE mds.container =:container AND mds.moveDocDetail.moveDoc.status =:status AND mds.moveDocDetail.moveDoc.shipStatus =:shipStatus ";
+			List<WmsMoveDocAndStation> mds = commonDao.findByQuery(hql, new String[]{"container","status","shipStatus"}, new Object[]{container,WmsMoveDocStatus.FINISHED,WmsMoveDocShipStatus.UNSHIP});
+			WmsMoveDoc doc = commonDao.load(WmsMoveDoc.class, mds.get(0).getMoveDocDetail().getMoveDoc().getId());
+			hql = "FROM WmsBOL bol WHERE bol.vehicle.id =:vehicleId AND bol.status =:status AND bol.pickCode =:pickCode ";
+			WmsBOL bol = (WmsBOL) commonDao.findByQueryUniqueResult(hql, new String[]{"vehicleId","status","pickCode"}, new Object[]{vehicle.getId(),WmsBOLStatus.UNSHIP,dto.getPickCode()});
+			if(bol == null){
+				bol = EntityFactory.getEntity(WmsBOL.class);
+				bol.setWarehouse(WmsWarehouseHolder.getWmsWarehouse());
+				bol.setCode(codeManager.generateCodeByRule(bol.getWarehouse(), 
+						bol.getWarehouse().getName(), "装车单", ""));
+				bol.setVehicle(vehicle);
+				bol.setWmsDriver(vehicle.getMasterDriver());
+				bol.setBillTypeName(doc.getOriginalBillType().getName());
+				bol.setPickCode(dto.getPickCode());
+				workflowManager.doWorkflow(bol, "masterBOLProcess.new");
+			}
+			//加入装车单明细
+			for(WmsMoveDocAndStation wmds : mds){
+				hql = "FROM WmsTaskAndStation ts WHERE ts.station.id = :stationId AND ts.isJoinBOL =:isJoinBOL ";
+				List<WmsTaskAndStation> wtss = commonDao.findByQuery(hql, new String[]{"stationId","isJoinBOL"}, new Object[]{wmds.getId(),Boolean.FALSE});
+				int lineNo = 0;
+				for(WmsTaskAndStation wts : wtss){
+					WmsTask task = commonDao.load(WmsTask.class, wts.getTask().getId());
+					WmsItemKey itemKey = commonDao.load(WmsItemKey.class, task.getItemKey().getId());
+					WmsPickTicket pick = commonDao.load(WmsPickTicket.class, doc.getPickTicket().getId());
+					WmsPickTicketDetail pickDetail = commonDao.load(WmsPickTicketDetail.class, task.getMoveDocDetail().getRelatedId());
+					hql = "FROM WmsBOLDetail bd WHERE bd.bol.id =:bolId AND bd.task.id =:taskId AND bd.container =:container ";
+					WmsBOLDetail bolDetail = (WmsBOLDetail) commonDao.findByQueryUniqueResult(hql, new String[]{"bolId","taskId","container"}, new Object[]{bol.getId(),task.getId(),wts.getContainer()});
+					if(bolDetail != null){
+						bolDetail.setQuantity(bolDetail.getQuantity() + wts.getPickQuantityBu());
+	                    bolDetail.setQuantityBU(bolDetail.getQuantityBU() + wts.getPickQuantityBu());
+					}else{
+	                    //生成装车单明细
+	                    bolDetail = EntityFactory.getEntity(WmsBOLDetail.class);
+	                    hql = "SELECT max(detail.lineNo) FROM WmsBOLDetail detail WHERE detail.bol.id =:bolId ";
+	                    Integer detailLineNo = (Integer) commonDao.findByQueryUniqueResult(hql, "bolId", bol.getId());
+	                    WmsPackageUnit packageUnit = task.getPackageUnit();
+	                    if(itemKey!=null){
+	                        bolDetail.setItemKey(itemKey);
+	                    }
+	                    bolDetail.setLineNo(detailLineNo ==null ? 1 : detailLineNo+1);
+	                    bolDetail.setPackageUnit(packageUnit);
+	                    bolDetail.setPallet(BaseStatus.NULLVALUE);
+	                    bolDetail.setQuantity(wts.getPickQuantityBu());
+	                    bolDetail.setQuantityBU(wts.getPickQuantityBu());
+	                    bolDetail.setTask(task);
+	                    bolDetail.setSlr(doc.getBlg().getCode());
+	                    bolDetail.setTfd(pick.getReceiveDoc());
+	                    bolDetail.setProductionLine(pickDetail.getProductionLine());
+	                    bolDetail.setRequireArriveDate(pick.getRequireArriveDate());
+	                    bolDetail.setContainer(wts.getContainer());
+	                    commonDao.store(bolDetail);
+	                    bolDetail = commonDao.load(WmsBOLDetail.class, bolDetail.getId());
+	                    String subCode = "";
+	                    String key = pickDetail.getProductionLine()==null ? "-" : pickDetail.getProductionLine();
+	                    if(subMap.containsKey(key)){
+	                    	subCode = subMap.get(key);
+	                    }else{
+	                    	lineNo++;
+	                    	subCode = bolDetail.getId()+StringHelper.addCharBeforeStr(lineNo+"", 3, "0");
+	                    	subMap.put(key, subCode);
+	                    }
+	                    bolDetail.setSubCode(subCode);
+	                    bolDetail.setBol(bol);
+					}
+					hql = "FROM WmsBoxType bt WHERE bt.code =:code ";
+					WmsBoxType bt = (WmsBoxType) commonDao.findByQueryUniqueResult(hql, new String[]{"code"}, new Object[]{wts.getContainer()});
+					bt.setIsBol(Boolean.TRUE);
+					commonDao.store(bt);
+					wts.setIsJoinBOL(Boolean.TRUE);
+	                commonDao.store(wts);
+					bol.addDetail(bolDetail);
+		            this.commonDao.store(bolDetail);
+		            bol.refreshQuantity();
+		            commonDao.store(bol);
+				}
+			}
+		}
+	}
+}

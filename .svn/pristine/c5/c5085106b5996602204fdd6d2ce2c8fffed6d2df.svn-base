@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.organization.WmsBlgItem" table="WMS_BLG_ITEM">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">WSEQ_BLG_ITEM</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+      
+		<many-to-one name="blg" class="com.vtradex.wms.server.model.warehouse.WmsWorker">
+			<column name="BLG_ID" unique-key="UK_WMS_BLG_ITEM"/>
+		</many-to-one>
+		<many-to-one name="item" class="com.vtradex.wms.server.model.organization.WmsItem">
+			<column name="ITEM_ID" unique-key="UK_WMS_BLG_ITEM"/>
+		</many-to-one>
+        <many-to-one name="billType" class="com.vtradex.wms.server.model.organization.WmsBillType">
+			<column name="BILL_TYPE_ID" unique-key="UK_WMS_BLG_ITEM"/>
+		</many-to-one>
+		<!-- 
+ 		<many-to-one name="supplier" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="SUPPLIER_ID" />
+		</many-to-one>	
+		 -->
+		<property name="remark" type="string" length="255" column="REMARK"/>
+		<property name="status" type="string" length="255" column="STATUS"/>
+	 </class>
+</hibernate-mapping>

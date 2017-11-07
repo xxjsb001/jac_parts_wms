@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.vtradex.wms.server.model.carrier.WmsDriver" table="WMS_DRIVER">
+		<id name="id" column="ID" type="long">
+			<generator class="native">
+				<param name="sequence">seq_WmsDriver</param>
+				<param name="parameters">START WITH 1000</param>
+			</generator>
+		</id>
+		
+		<property name="address" type="string">
+			<column name="ADDRESS" length="50"></column>
+		</property> 
+		<property name="card" type="string">
+			<column name="CARD" not-null="true" length="20"></column>
+		</property> 
+		<property name="cardType" type="string">
+			<column name="CARDTYPE" length="20" not-null="true"></column>
+		</property>
+		<property name="code" type="string">
+			<column name="CODE" length="30" unique-key="UK_TMS_DRIVER"></column>
+		</property> 
+		
+		<property name="description" type="string" column="DESCRIPTION" length="255"/>
+		<property name="homeTel" type="string" column="HOMETEL" length="13"/>
+		<property name="idCard" type="string">
+			<column name="IDCARD" not-null="true" length="18"></column>
+		</property> 
+		<property name="licenseDate" type="date">
+			<column name="LICENSEDATE"></column>
+		</property> 
+		
+		<property name="mobileTel" type="string" column="MOBILETEL"/>
+		<property name="name" type="string">
+			<column name="NAME" not-null="true" length="50"></column>
+		</property> 
+		<property name="proveName" type="string" column="PROVENAME"/>
+		<property name="proveTel" type="string" column="PROVETEL"/>
+		
+		
+		<property name="sex" type="string" column="SEX" not-null="true"/>
+		<property name="status" type="string" column="STATUS"/>
+		
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID" />
+			<property name="creator" type="string" length="50" column="CREATOR" />
+			<property name="createdTime" type="timestamp" column="CREATED_TIME" />
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID" />
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR" />
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME" />
+		</component>
+		
+	</class>
+</hibernate-mapping>

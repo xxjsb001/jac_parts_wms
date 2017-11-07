@@ -1,0 +1,36 @@
+
+.menu_base{
+	background-image: url(../images/menu/base.gif) !important;
+}
+
+.menu_order{
+	background-image: url(../images/menu/order.gif) !important;
+}
+
+.menu_approve{
+	background-image: url(../images/menu/approve.gif) !important;
+}
+
+.menu_expection{
+	background-image: url(../images/menu/default.gif) !important;
+}
+
+.menu_rule{
+	background-image: url(../images/menu/rule.gif) !important;
+}
+
+.menu_balance{
+	background-image: url(../images/menu/balance.gif) !important;
+}
+
+.menu_report{
+	background-image: url(../images/menu/report.gif) !important;
+}
+
+.menu_interface{
+	background-image: url(../images/menu/interface.gif) !important;
+}
+
+.menu_security{
+	background-image: url(../images/menu/system.gif) !important;
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process id="BOProcess" control="status">
+    
+   	<task id="new" title="新建" />
+	<task id="modify" title="修改" />
+	<task id="delete" title="删除" />
+	<task id="import" title="导入" />
+</process>

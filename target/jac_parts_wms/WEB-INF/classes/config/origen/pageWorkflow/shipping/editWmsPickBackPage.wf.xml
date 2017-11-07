@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsPickBackPage">
+    <main/>
+    <detail>
+        <process id="wmsMoveDocProcess">
+            <tableCommit id="pickBack" title="pickBack" process="wmsMoveDocProcess.pickBack" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsPickTicketManager" methodName="pickBack" parameter="obj,tableValues"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

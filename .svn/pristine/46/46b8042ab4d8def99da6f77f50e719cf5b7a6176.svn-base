@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editSubmitSupportPage">
+    <main/>
+    <detail>
+        <process id="wmsASNProcess">
+            <tableCommit id="submitSupport" title="submitSupport" process="wmsASNProcess.submitSupport" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="CheckMt" parameter="obj,tableValues"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

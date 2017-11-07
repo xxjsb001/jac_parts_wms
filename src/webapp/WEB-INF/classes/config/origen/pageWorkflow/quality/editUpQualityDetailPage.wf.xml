@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editUpQualityDetailPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <formCommit id="save" title="save" process="wmsMoveDocProcess.editDetail" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                 <mappings>
+                  <mapping id="moveDoc.id" className="long">
+                      <entries/>
+                  </mapping>
+                  <mapping id="itemStateId" className="long">
+                      <entries/>
+                  </mapping>
+              </mappings>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="upQualityDetail" parameter="moveDoc.id,parentObj,itemStateId"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

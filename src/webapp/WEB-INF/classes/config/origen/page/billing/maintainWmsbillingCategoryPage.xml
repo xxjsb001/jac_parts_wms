@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsbillingCategoryPage" title="maintainWmsbillingCategoryPage" autoQuery="false" entityClass="com.vtradex.wms.server.model.billing.WMSBillingCategory">
+        <workflow/>
+        <datasource><![CDATA[SELECT category.id,
+parentCategory.name,
+category.type,
+category.code,
+category.name,
+category.isCost,
+category.status,
+category.memo 
+ from WMSBillingCategory category
+left join category.parentCategory parentCategory  
+order by category.status desc , parentCategory.id desc,category.type,category.id ]]></datasource>
+        <columns>
+            <column id="category.id" title="category.id" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="category.parentCategory.name" title="category.parentCategory.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="category.type" title="category.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WMSBillingCategoryType"/>
+            <column id="category.code" title="category.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="category.name" title="category.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="category.isCost" title="category.isCost" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
+            <column id="category.status" title="category.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>
+            <column id="category.memo" title="category.memo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

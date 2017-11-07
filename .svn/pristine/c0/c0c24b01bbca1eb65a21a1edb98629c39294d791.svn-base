@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="addWmsASNDetailPage">
+    <main>
+        <process id="wmsASNProcess">
+            <formCommit id="addDetail" title="addDetail" process="wmsASNProcess.addDetail" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="asn.id" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="expectedQuantityBU" className="double">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="addDetail" parameter="asn.id,obj,expectedQuantityBU"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="modifyDetail" title="modifyDetail" process="wmsASNProcess.modifyDetail" enableType="none" download="false" visibleType="edit">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="asn.id" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="expectedQuantityBU" className="double">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="addDetail" parameter="asn.id,obj,expectedQuantityBU"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

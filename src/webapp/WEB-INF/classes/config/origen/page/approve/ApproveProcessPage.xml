@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="ApproveProcessPage" title="ApproveProcessPage" className="com.vtradex.thorn.client.ui.page.ApproveProcessPage">
+    	<buttons>
+			<button id="ruleProcess.import" title="import"/>
+		</buttons>
+    </customPage>
+</pages>
+

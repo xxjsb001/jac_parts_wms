@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="modifyWMSInvoiceDetailPage" title="modifyWMSInvoiceDetailPage" entityClass="com.vtradex.wms.server.model.billing.WMSInvoice" onClose="refreshParent" width="840" height="640">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="invoice.id" title="invoice.id" reserve="false"/>
+                <remote id="invoice.supplier.id" title="invoice.supplier.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT 
+ company.id,
+ company.code,
+ company.name
+ FROM WmsOrganization   company 
+ WHERE company.beSupplier = true
+and company.beVirtual =false
+AND company.status = 'ENABLED'  
+AND (company.code  LIKE :param OR  company.name LIKE :param)
+]]></hql>
+                    <eventListeners/>
+                </remote>
+                <remote id="invoice.contact.id" title="invoice.contact.id" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,代码,起始日期,截止日期">
+                    <visibleExpression/>
+                    <hql><![CDATA[select 
+wc.id,
+wc.code,
+wc.startDate,
+wc.endDate,
+wc.payType,
+wc.taxPoints
+from WMSContact wc
+where (wc.code like :param 
+or wc.startDate like :param
+or wc.endDate like :param) 
+and wc.status='ENABLED' and wc.supplier.id=${invoice.supplier.id} 
+ and 
+wc.warehouse.id=#{SESSION_WAREHOUSE} order by wc.id]]></hql>
+                    <eventListeners>
+                        <eventListener id="invoice.payType" index="5" refreshUI="false"/>
+                        <eventListener id="invoice.taxingPoint" index="6" refreshUI="false"/>
+                    </eventListeners>
+                </remote>
+                <list id="invoice.accountingSubject.id" title="invoice.accountingSubject.id" row="1" col="3" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql><![CDATA[select 
+wc.id,
+wc.name
+
+from WMSBillingCategory
+wc where wc.type='ACCOUNTING_SUBJECT'
+
+order by wc.id]]></hql>
+                    <eventListeners/>
+                </list>
+                <list id="invoice.payType" title="invoice.payType" row="1" col="4" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="WMSInvoicePayType">
+                    <visibleExpression/>
+                    <hql><![CDATA[ select 
+ enum.enumValue,
+ enum.enumValue
+ from Enumerate enum
+ where enum.enumType='WMSInvoicePayType' 
+ order by enum.id ASC
+]]></hql>
+                    <eventListeners/>
+                </list>
+                <date id="invoice.invoiceDate" title="invoice.invoiceDate" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <date id="invoice.startDate" title="invoice.startDate" row="2" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <date id="invoice.endDate" title="invoice.endDate" row="2" col="3" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <text id="invoice.billScope" title="invoice.billScope" row="2" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <numberText id="invoice.sumSysAmount" title="invoice.sumSysAmount" row="3" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </numberText>
+                <numberText id="invoice.sumManualAmount" title="invoice.sumManualAmount" row="3" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </numberText>
+                <numberText id="invoice.tax" title="invoice.tax" row="3" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </numberText>
+                <numberText id="invoice.paidTax" title="invoice.paidTax" row="3" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </numberText>
+                <numberText id="invoice.paidAmount" title="invoice.paidAmount" row="4" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </numberText>
+                <text id="invoice.makeupPerson" title="invoice.makeupPerson" row="4" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="invoice.code" title="invoice.code" row="4" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <numberText id="invoice.taxingPoint" title="invoice.taxingPoint" row="4" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </numberText>
+                <text id="invoice.memo" title="invoice.memo" row="5" col="1" span="4" width="730" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="true" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.billing.WMSInvoiceDetailCategory" autoQuery="true">
+            <datasource><![CDATA[SELECT detailCategory.id,smallCategory.name,smallCategory.code,detailCategory.startDate,detailCategory.endDate,detailCategory.memo  from WMSInvoiceDetailCategory detailCategory
+left join detailCategory.smallCategory smallCategory 
+left join detailCategory.invoice invoice 
+where invoice.id = {invoice.id} 
+order by detailCategory.id ]]></datasource>
+            <columns>
+                <column id="detailCategory.id" title="detailCategory.id" visible="false" sortable="false" horizonAlign="center" verticalAlign="middle"/>
+                <column id="smallCategory.name" title="smallCategory.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="smallCategory.code" title="smallCategory.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="detailCategory.startDate" title="detailCategory.startDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+                <column id="detailCategory.endDate" title="detailCategory.endDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+                <column id="detailCategory.memo" title="detailCategory.memo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

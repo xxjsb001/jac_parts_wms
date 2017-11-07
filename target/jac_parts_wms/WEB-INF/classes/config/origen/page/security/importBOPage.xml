@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="importBOPage" title="importBOPage"  width="690" height="250">
+        <inputUIs>
+            <list id="importInfo.boId" title="importBOPage.importInfo.boId" pageLocale="false" row="1" col="1" span="1" width="250" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                <visibleExpression/>
+                <hql><![CDATA[Select ibo.id,ibo.name from ImportableBusinessObject ibo]]></hql>
+                <eventListeners/>
+            </list>
+            <checkbox id="importInfo.hasTableHead" title="importBOPage.importInfo.hasTableHead" pageLocale="false" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <file id="importInfo.csvFile" title="importBOPage.importInfo.csvFile" pageLocale="false" row="1" col="3" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showImage="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </file>
+        </inputUIs>
+    </editPage>
+</pages>

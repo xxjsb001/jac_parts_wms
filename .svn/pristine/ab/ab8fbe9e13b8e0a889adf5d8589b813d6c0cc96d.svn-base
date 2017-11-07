@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editReportFilePage">
+	<main>
+		<process id="reportProcess">
+			<formCommit id="save" process="reportProcess.new" title="save" enableType="none" invisible="false">
+                <mappings>
+                        <mapping id="file" className="com.vtradex.repc.server.model.report.ReportFile"/>
+                    </mappings>
+                    <actions>
+                        <action managerName="reportFileManager" methodName="saveReportFile" parameter="file"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                    </forwards>
+            </formCommit>
+		</process>
+	</main>
+</page>

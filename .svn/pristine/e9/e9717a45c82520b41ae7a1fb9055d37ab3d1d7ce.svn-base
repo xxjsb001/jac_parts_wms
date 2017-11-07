@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsWaveDocDetailPage">
+    <main/>
+    <detail>
+        <process id="wmsWaveDocProcess">
+            <tableCommit id="addPickTicket" title="addPickTicket" process="wmsWaveDocProcess.addPickTicket" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression><![CDATA[${waveDoc.status}=='OPEN']]></enableExpression>
+                <mappings>
+                    <mapping id="waveDoc.id" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsWaveDocManager" methodName="addWaveDocDetail" parameter="waveDoc.id,obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

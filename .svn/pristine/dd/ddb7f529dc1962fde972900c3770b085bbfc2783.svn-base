@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.move.WmsMoveDoc" table="WMS_MOVE_DOC">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_moveDoc</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+		<version name="version" column="VERSION" type="long"/>
+		
+		<property name="code" type="string" column="CODE" length="50" unique-key="UK_WMS_MOVEDOC"/>
+		<many-to-one name="warehouse" class="com.vtradex.wms.server.model.warehouse.WmsWarehouse">
+			<column name="WAREHOUSE_ID" not-null="true" unique-key="UK_WMS_MOVEDOC"/>
+		</many-to-one>
+		<many-to-one name="company" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="COMPANY_ID" not-null="true" unique-key="UK_WMS_MOVEDOC"/>
+		</many-to-one>
+		<many-to-one name="billType" class="com.vtradex.wms.server.model.organization.WmsBillType">
+			<column name="BILL_TYPE_ID" not-null="true" unique-key="UK_WMS_MOVEDOC"/>
+		</many-to-one>
+		
+		<many-to-one name="pickTicket" class="com.vtradex.wms.server.model.shipping.WmsPickTicket">
+			<column name="PICKTICKET_ID"/>
+		</many-to-one>
+		<many-to-one name="asn" class="com.vtradex.wms.server.model.receiving.WmsASN">
+			<column name="ASN_ID"/>
+		</many-to-one>
+		<many-to-one name="waveDoc" class="com.vtradex.wms.server.model.shipping.WmsWaveDoc">
+			<column name="WAVE_DOC_ID"/>
+		</many-to-one>
+		<many-to-one name="item" class="com.vtradex.wms.server.model.organization.WmsItem">
+			<column name="ITEM_ID"/>
+		</many-to-one>
+		
+		<component name="lotInfo" class="com.vtradex.wms.server.model.base.LotInfo">
+			<property name="storageDate" type="date" column="STORAGE_DATE"/>
+			<property name="receivedDate" type="date" column="RECEIVED_DATE"/>
+			<property name="productDate" type="date" column="PRODUCT_DATE"/>
+			<property name="expireDate" type="date" column="EXPIRE_DATE"/>
+		    <property name="warnDate" type="date" column="WARN_DATE"/>
+	       	<property name="soi" type="string" column="SOI" length="50"/>
+	       	<many-to-one name="supplier" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+				<column name="SUPPLIER_ID"/>
+		    </many-to-one>
+			<property name="extendPropC1" type="string" column="EXTEND_PROPC1" length="50"/>
+        	<property name="extendPropC2" type="string" column="EXTEND_PROPC2" length="50"/>
+			<property name="extendPropC3" type="string" column="EXTEND_PROPC3" length="50"/>
+			<property name="extendPropC4" type="string" column="EXTEND_PROPC4" length="50"/>
+			<property name="extendPropC5" type="string" column="EXTEND_PROPC5" length="50"/>
+			<property name="extendPropC6" type="string" column="EXTEND_PROPC6" length="50"/>
+			<property name="extendPropC7" type="string" column="EXTEND_PROPC7" length="50"/>
+			<property name="extendPropC8" type="string" column="EXTEND_PROPC8" length="50"/>
+			<property name="extendPropC9" type="string" column="EXTEND_PROPC9" length="50"/>							
+			<property name="extendPropC10" type="string" column="EXTEND_PROPC10" length="50"/>
+	       	<property name="extendPropC11" type="string" column="EXTEND_PROPC11" length="50"/>
+        	<property name="extendPropC12" type="string" column="EXTEND_PROPC12" length="50"/>
+			<property name="extendPropC13" type="string" column="EXTEND_PROPC13" length="50"/>
+			<property name="extendPropC14" type="string" column="EXTEND_PROPC14" length="50"/>
+			<property name="extendPropC15" type="string" column="EXTEND_PROPC15" length="50"/>
+			<property name="extendPropC16" type="string" column="EXTEND_PROPC16" length="50"/>
+			<property name="extendPropC17" type="string" column="EXTEND_PROPC17" length="50"/>
+			<property name="extendPropC18" type="string" column="EXTEND_PROPC18" length="50"/>
+			<property name="extendPropC19" type="string" column="EXTEND_PROPC19" length="50"/>
+			<property name="extendPropC20" type="string" column="EXTEND_PROPC20" length="50"/>
+        </component>
+        
+		<many-to-one name="processPlan" class="com.vtradex.wms.server.model.process.WmsProcessPlan">
+			<column name="PROCESS_PLAN_ID"/>
+		</many-to-one>
+		<many-to-one name="masterBOL" class="com.vtradex.wms.server.model.shipping.WmsMasterBOL">
+			<column name="MASTER_BOL_ID"/>
+		</many-to-one>
+		
+		<property name="type" type="string" column="TYPE" length="50"/>
+		<property name="status" type="string" column="STATUS" length="50"/>
+		<property name="shipStatus" type="string" column="SHIP_STATUS" length="50"/>
+		<property name="transStatus" type="string" column="TRANS_STATUS" length="50"/>
+		
+		<many-to-one name="originalBillType" class="com.vtradex.wms.server.model.organization.WmsBillType">
+			<column name="BILL_ORIGINAL_TYPE_ID"/>
+		</many-to-one>
+		<property name="originalBillCode" type="string" column="ORIGINAL_BILL_CODE" length="50"/>
+		<property name="relatedBill1" type="string" column="RELATED_BILL1" length="50"/>
+		<property name="relatedBill2" type="string" column="RELATED_BILL2" length="50"/>
+		<property name="relatedBill3" type="string" column="RELATED_BILL3" length="50"/>
+		
+		<property name="planQuantityBU" type="double" column="PLAN_QUANTITY_BU" not-null="true"/>
+		<property name="allocatedQuantityBU" type="double" column="ALLOCATED_QUANTITY_BU" not-null="true"/>
+		<property name="movedQuantityBU" type="double" column="MOVED_QUANTITY_BU" not-null="true"/>
+		<property name="shippedQuantityBU" type="double" column="SHIPPED_QUANTITY_BU" not-null="true"/>
+		<property name="processQuantityBU" type="double" column="PROCESS_QUANTITY_BU"/>
+		<property name="packagingQuantityBU" type="double" column="PACKAGING_QUANTITY_BU"/>
+		<property name="payment" column="PAYMENT" type="double"/>
+		<property name="intendShipDate" type="timestamp" column="INTEND_SHIP_DATE"/>
+		<property name="shipTime" type="timestamp" column="SHIP_TIME"/>
+		<many-to-one name="carrier" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="CARRIER_ID" />
+		</many-to-one>
+		<property name="driver" type="string" length="50" column="DRIVER"/>
+		<property name="vehicleNo" type="string" length="50" column="VEHICLE_NO"/>
+		<property name="beWave" column="BE_WAVE" type="yes_no"/>
+		<property name="beCrossDock" column="BE_CROSS_DOCK" type="yes_no"/>
+		<many-to-one name="shipLocation" class="com.vtradex.wms.server.model.warehouse.WmsLocation">
+			<column name="SHIP_LOCATION_ID" not-null="false"/>
+		</many-to-one>
+		
+		<many-to-one name="dock" class="com.vtradex.wms.server.model.warehouse.WmsDock">
+            <column name="DOCK_ID" not-null="false"/>
+        </many-to-one>		
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+		
+		<set name="details" table="WMS_MOVE_DOC_DETAIL" inverse="true" lazy="true" cascade="all-delete-orphan">
+			<key column="MOVE_DOC_ID"/>
+			<one-to-many class="com.vtradex.wms.server.model.move.WmsMoveDocDetail"/>
+		</set>
+		<set name="boxDetails" table="WMS_BOX_DETAIL" inverse="true" lazy="true" cascade="all-delete-orphan">
+			<key column="MOVE_DOC_ID"/>
+			<one-to-many class="com.vtradex.wms.server.model.move.WmsBoxDetail"/>
+		</set>
+		<set name="stateLogs" table="WMS_BOL_STATE_LOG" inverse="true" lazy="true" cascade="all-delete-orphan">
+			<key column="MOVE_DOC_ID"/>
+			<one-to-many class="com.vtradex.wms.server.model.shipping.WmsBOLStateLog"/>
+		</set>
+		<property name="movePlanTitle" type="string" column="MOVE_PLAN_TITLE" length="50"/>
+
+		<property name="reserveBeginTime" type="timestamp" column="RESERVE_BEGIN_TIME"/>
+		<property name="reserveFinishTime" type="timestamp" column="RESERVE_FINISH_TIME"/>
+		<many-to-one name="worker" class="com.vtradex.wms.server.model.warehouse.WmsWorker">
+			<column name="WORKER_ID"/>
+		</many-to-one>
+		<many-to-one name="blg" class="com.vtradex.wms.server.model.warehouse.WmsWorker">
+			<column name="BLG_ID"/>
+		</many-to-one>
+		<property name="lineNo" type="integer" column="LINE_NO"/>
+		<property name="classType" type="string" column="CLASS_TYPE" length="100" />
+		<property name="beVirtualMove" type="boolean" column="BE_VIRTUAL_MOVE" />
+		<property name="processStatus" type="string" column="PROCESS_STATUS" length="50"/>
+		<property name="beScanBol" column="BE_SCAN_BOL" type="yes_no"/>
+		<property name="scanBolTime" column="SCANBOLTIME" type="timestamp"/>
+		<property name="isOweProduct" type="yes_no" column="IS_OWE_PRODUCT" />
+		
+		<property name="printQualityReportDate" type="timestamp" column="PRINT_QUALITYREPORT_DATE"/>
+	    <property name="printWorker" type="string" column="PRINT_WORKER" length="50"/>
+	    <property name="station" type="string" length="100" column="STATION"/>
+	    <property name="isPrint" type="yes_no" column="IS_PRINT"/>
+	    <property name="printDate" type="timestamp" column="PRINT_DATE"/>
+	</class>
+</hibernate-mapping>

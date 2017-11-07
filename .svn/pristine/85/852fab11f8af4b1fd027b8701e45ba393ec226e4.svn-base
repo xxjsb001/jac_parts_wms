@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editSinglePutawayAutoPage" title="editSinglePutawayAutoPage" entityClass="com.vtradex.wms.server.model.receiving.JacPalletSerial" width="250" height="340" onClose="refreshParent">
+        <workflow/>
+        <initListeners>
+<!--             <initListener id="asnDetail.lotInfo" managerName="wmsItemManager" methodName="getLotRuleTackersByPageMap" editEnabled="true"/> -->
+        </initListeners>
+        <inputUIs>
+            <hidden id="jps.id" title="jps.id" reserve="false"/>
+            <text id="jps.asnDetail.item.code" title="receivedRecord.itemKey.item.code" row="1" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="jps.asnDetail.item.name" title="receivedRecord.itemKey.item.name" row="2" col="1" span="2" width="300" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true" rows="3">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="jps.palletNo" title="jps.palletNo" row="3" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <remote id="locationId" title="task.change.toLocation" row="10" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,代码">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT
+loc.id,loc.code
+FROM WmsLocation loc
+WHERE loc.code LIKE :param 
+AND loc.warehouse = #{SESSION_WAREHOUSE}
+AND loc.status = 'ENABLED'
+AND loc.lockCount = false 
+AND loc.type = 'STORAGE' ]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="workerId" title="workerId" row="12" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="false" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[select
+ worker.id, 
+ worker.code,  
+ worker.name
+ from WmsWorker worker 
+ where worker.code like :param
+ and worker.status='ENABLED'
+ and worker.warehouse = #{SESSION_WAREHOUSE} 
+ ]]></hql>
+                <eventListeners/>
+            </remote>
+            <textArea id="boxType.remark" title="boxType.remark" pageLocale="false" row="13" col="1" span="2" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" rows="3" cols="38" 
+            defaultValue="[更选上架库位]不选默认分配系统推荐库位,如果选择就按照新库位分配">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+        </inputUIs>
+    </editPage>
+</pages>

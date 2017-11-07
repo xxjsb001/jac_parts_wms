@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainRuleExceptionLogPage">
+    <main>
+        <process id="ruleExceptionProcess">
+            <tablePopup id="view" title="view" pageLocale="false" process="exceptionProcess.view" enableType="single" containId="true" pageId="editRuleExceptionLogPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail>
+        <process/>
+    </detail>
+</page>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editCreateReplenishmentJacPage" title="editCreateReplenishmentJacPage" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc" width="470" height="170" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="moveDoc.id" title="moveDoc.id" reserve="false"/>
+            <remote id="billType.company.id" title="billType.company.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[select company.id, company.code, company.name from WmsOrganization company
+where company.beCompany = true 
+and  company.beVirtual =false
+and company.status='ENABLED'
+and (company.code like :param or company.name like
+:param) 
+]]></hql>
+                <eventListeners/>
+            </remote>
+        </inputUIs>
+    </editPage>
+</pages>

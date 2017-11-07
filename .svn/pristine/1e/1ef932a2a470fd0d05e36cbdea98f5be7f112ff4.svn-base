@@ -1,0 +1,127 @@
+package com.vtradex.wms.server.telnet.dto;
+
+public class WmsPickContainerDTO {
+	
+	//作业任务ID
+	private Long taskId;
+	//容器ID
+	private Long moveDocAndStationId;
+	//器具型号
+	private String type;
+	//器具编码
+	private String container;
+	//货品ID
+	private Long itemId;
+	//货品编码
+	private String itemCode;
+	//货品名称
+	private String itemName;
+	//移出库位编码
+	private String locationCode;
+	//拣货库位编码
+	private String pickLocCode;
+	//供应商
+	private String supplier;
+	//待拣选数量
+	private Double planQuantityBU = 0D;
+	//未拣选数量
+	private Double unMoveQuantityBU = 0D;
+	//拣选数量
+	private Double pickQuantity = 0D;
+	//库存ID
+	private Long inventoryId = 0L;
+	/**生产线*/
+	private String productionLine;
+	
+	public String getProductionLine() {
+		return productionLine;
+	}
+	public void setProductionLine(String productionLine) {
+		this.productionLine = productionLine;
+	}
+	public String getContainer() {
+		return container;
+	}
+	public void setContainer(String container) {
+		this.container = container;
+	}
+	public Long getInventoryId() {
+		return inventoryId;
+	}
+	public void setInventoryId(Long inventoryId) {
+		this.inventoryId = inventoryId;
+	}
+	public String getPickLocCode() {
+		return pickLocCode;
+	}
+	public void setPickLocCode(String pickLocCode) {
+		this.pickLocCode = pickLocCode;
+	}
+	public Double getPickQuantity() {
+		return pickQuantity;
+	}
+	public void setPickQuantity(Double pickQuantity) {
+		this.pickQuantity = pickQuantity;
+	}
+	public Long getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(Long taskId) {
+		this.taskId = taskId;
+	}
+	public Long getMoveDocAndStationId() {
+		return moveDocAndStationId;
+	}
+	public void setMoveDocAndStationId(Long moveDocAndStationId) {
+		this.moveDocAndStationId = moveDocAndStationId;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public Long getItemId() {
+		return itemId;
+	}
+	public void setItemId(Long itemId) {
+		this.itemId = itemId;
+	}
+	public String getItemCode() {
+		return itemCode;
+	}
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	public String getLocationCode() {
+		return locationCode;
+	}
+	public void setLocationCode(String locationCode) {
+		this.locationCode = locationCode;
+	}
+	public String getSupplier() {
+		return supplier;
+	}
+	public void setSupplier(String supplier) {
+		this.supplier = supplier;
+	}
+	public Double getPlanQuantityBU() {
+		return planQuantityBU;
+	}
+	public void setPlanQuantityBU(Double planQuantityBU) {
+		this.planQuantityBU = planQuantityBU;
+	}
+	public Double getUnMoveQuantityBU() {
+		return unMoveQuantityBU;
+	}
+	public void setUnMoveQuantityBU(Double unMoveQuantityBU) {
+		this.unMoveQuantityBU = unMoveQuantityBU;
+	}
+	
+}

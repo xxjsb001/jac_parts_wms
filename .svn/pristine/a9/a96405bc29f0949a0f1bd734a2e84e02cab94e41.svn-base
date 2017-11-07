@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.organization.WmsEnumType" table="WMS_ENUM_TYPE">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_wmsEnumType</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+
+		<property name="enumType" type="string">
+			<column name="ENUM_TYPE" length="50" />
+		</property>		
+		<property name="enumValue" type="string">
+			<column name="ENUM_VALUE" length="50"/>
+		</property>		
+	</class>
+</hibernate-mapping>

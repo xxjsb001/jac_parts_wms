@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="addThornJobUserPage">
+    <main>
+        <process id="thornJobProcess">
+            <tableCommit id="addJobUser" title="addJobUser" process="thornJobProcess.addJobUser" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="thornOrganizationJobManager" methodName="addThornJobUser" parameter="maintainThornJobPage.obj,obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

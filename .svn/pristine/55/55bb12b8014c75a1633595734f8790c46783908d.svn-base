@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWarehouseAndUserPage">
+    <main>
+        <process id="warehouseAndUserProcess">
+            <tablePopup id="new" title="new" process="warehouseAndUserProcess.new" enableType="none" containId="false" pageId="editWarehouseAndUserPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="warehouseAndUserProcess.edit" enableType="single" containId="true" pageId="editWarehouseAndUserPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

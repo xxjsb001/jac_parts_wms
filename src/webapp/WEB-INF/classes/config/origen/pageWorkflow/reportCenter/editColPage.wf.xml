@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editColPage">
+	<main>
+		<process id="reportProcess">
+                <formCommit id="save" process="reportProcess.new" title="save" enableType="none" invisible="false">
+                   <mappings>
+                    	   <mapping id="file.id" className="long"/>
+                        <mapping id="col" className="com.vtradex.repc.server.model.report.ReportColumn"/>
+                    </mappings>
+                    <actions>
+                        <action managerName="reportFileManager" methodName="saveReportColumn" parameter="file.id,col"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                        <forward name="resetWindow" newEnabled="true" editEnabled="false"/>
+                    </forwards>
+                </formCommit>
+		</process>
+	</main>
+</page>

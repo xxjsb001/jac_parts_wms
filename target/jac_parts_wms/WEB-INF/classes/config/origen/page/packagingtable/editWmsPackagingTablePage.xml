@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="editWmsPackagingTablePage" title="editWmsPackagingTablePage" className="com.vtradex.wms.client.packagingtable.EditWmsPackagingTablePage" width="270" height="100">
+		<buttons>
+		</buttons>
+	</customPage>
+</pages>

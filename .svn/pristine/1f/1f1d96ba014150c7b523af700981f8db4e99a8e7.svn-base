@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editChangeCountWorkerPage" title="editChangeCountWorkerPage" entityClass="com.vtradex.wms.server.model.count.WmsCountDetail" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="countDetail.id" title="countDetail.id"/>
+            <text id="countDetail.locationCode" title="countDetail.locationCode" row="1" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="countDetail.worker.name" title="countDetail.worker.name" row="2" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <remote id="assignWorker" title="assignWorker" row="3" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,工号,姓名">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT worker.id,worker.code,worker.name FROM WmsWorker worker WHERE 1 =1 AND (worker.code like :param OR worker.name like :param) AND   worker.status='ENABLED'
+ AND worker.warehouse =# {SESSION_WAREHOUSE}]]></hql>
+                <eventListeners/>
+            </remote>
+        </inputUIs>
+    </editPage>
+</pages>

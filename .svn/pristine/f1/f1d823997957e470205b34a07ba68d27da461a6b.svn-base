@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="popupmaintainMoveDocQualityPage" title="popupmaintainMoveDocQualityPage" autoQuery="false" entityClass="com.vtradex.wms.server.model.inventory.WmsInventoryExtend" width="1000" height="450" onClose="refreshParent">
+        <workflow/>
+        <datasource><![CDATA[SELECT wsn.id,
+inventory.location.code,
+wsn.pallet,
+inventory.itemKey.item.code,
+inventory.itemKey.item.name,
+(inventory.quantityBU-inventory.allocatedQuantityBU) AS avaliableQtyBU,
+(wsn.quantityBU-wsn.allocatedQuantityBU) as allocatedQuantityBU,
+0 AS moveQtyBU,
+inventory.packageUnit.unit,
+inventory.status,
+inventory.itemKey.lotInfo.extendPropC1,
+inventory.itemKey.lot,
+inventory.itemKey.lotInfo.soi,
+inventory.itemKey.lotInfo.storageDate,
+inventory.itemKey.lotInfo.productDate,
+inventory.itemKey.lotInfo.expireDate,
+inventory.itemKey.lotInfo.warnDate,
+inventory.itemKey.lotInfo.supplier.code,
+inventory.itemKey.lotInfo.supplier.neiBuName 
+ FROM WmsInventoryExtend wsn
+ LEFT JOIN wsn.inventory inventory 	
+ LEFT JOIN inventory.itemKey.lotInfo.supplier
+ WHERE 1=1 
+ AND inventory.location.warehouse = #{SESSION_WAREHOUSE}
+ AND inventory.location.type IN ('STORAGE')
+ AND ((inventory.quantityBU-inventory.allocatedQuantityBU)>0)
+ AND (inventory.location.lockCount = false)
+ AND inventory.status IN ('待检')
+ AND wsn.quantityBU > 0
+ AND inventory.itemKey.item.company.id = {moveDoc.company.id}
+ ORDER BY inventory.location.code]]></datasource>
+        <columns>
+            <column id="wsn.id" title="wsn.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="inventory.location.code" title="inventory.location.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="wsn.pallet" title="wsn.pallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="inventory.itemKey.item.code" title="inventory.itemKey.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="inventory.itemKey.item.name" title="inventory.itemKey.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="avaliableQtyBU" title="avaliableQtyBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="allocatedQuantityBU" title="allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveQtyBU" title="moveQtyBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" inputUI="text"/>
+            <column id="inventory.packageUnit.unit" title="inventory.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="inventory.status" title="inventory.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.itemKey.lotInfo.extendPropC1" title="lotInfo.extendPropC1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="TypeOfExtendPropC1"/>
+            <column id="inventory.itemKey.lot" title="inventory.itemKey.lot" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="inventory.itemKey.lotInfo.soi" title="inventory.itemKey.lotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.itemKey.lotInfo.storageDate" title="inventory.itemKey.lotInfo.storageDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="inventory.itemKey.lotInfo.productDate" title="inventory.itemKey.lotInfo.produceDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="inventory.itemKey.lotInfo.expireDate" title="inventory.itemKey.lotInfo.expireDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="inventory.itemKey.lotInfo.warnDate" title="inventory.itemKey.lotInfo.warnDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="inventory.itemKey.lotInfo.supplier.code" title="inventory.itemKey.lotInfo.supplier.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.itemKey.lotInfo.supplier.neiBuName" title="inventory.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

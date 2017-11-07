@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainGroupRuleTablePage" title="maintainGroupRuleTablePage" pageLocale="false" autoQuery="true" entityClass="com.vtradex.rule.server.model.rule.GroupRuleTable">
+        <workflow/>
+        <datasource><![CDATA[SELECT groupRuleTable.id,
+groupRuleTable.name,
+groupRuleTable.sortDesc,
+groupRuleTable.imageDesc,
+groupRuleTable.description 
+ FROM GroupRuleTable groupRuleTable WHERE 1=1 order by groupRuleTable.sortDesc]]></datasource>
+        <columns>
+            <column id="groupRuleTable.id" title="groupRuleTable.id" pageLocale="false" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="groupRuleTable.name" title="groupRuleTable.name" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="groupRuleTable.sortDesc" title="groupRuleTable.sortDesc" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+            <column id="groupRuleTable.imageDesc" title="groupRuleTable.imageDesc" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="ruleTable.description" title="ruleTable.description" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

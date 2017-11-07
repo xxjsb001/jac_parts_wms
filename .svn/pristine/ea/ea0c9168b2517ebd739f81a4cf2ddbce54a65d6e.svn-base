@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="editWmsPickBackTaskPage" title="editWmsPickBackPage" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc" onClose="refreshParent" width="850" height="450">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="moveDoc.id" title="moveDoc.id" reserve="false"/>
+                <text id="moveDoc.code" title="moveDoc.code" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.warehouse.name" title="moveDoc.warehouse.name" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.company.name" title="moveDoc.company.name" row="1" col="3" readOnly="true" required="false" reserve="false" forceOverride="false" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.updateInfo.createdTime" title="moveDoc.updateInfo.createdTime" row="1" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.billType.name" title="moveDoc.billType.name" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.originalBillCode" title="moveDoc.originalBillCode" row="2" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.movedQuantityBU" title="moveDoc.movedQuantityBU" row="2" col="3" readOnly="true" required="false" reserve="false" forceOverride="false" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.planQuantityBU" title="moveDoc.planQuantityBU" row="2" col="4" readOnly="true" required="false" reserve="false" forceOverride="false" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.move.WmsTask" autoQuery="true">
+            <datasource><![CDATA[SELECT 
+ task.id,
+ task.itemKey.item.code,
+ task.itemKey.item.name,
+ task.fromLocationCode,
+ task.toLocationCode,
+ task.inventoryStatus,
+ task.itemKey.lotInfo.extendPropC1,
+ task.planQuantityBU,
+ task.movedQuantityBU - task.tiredMovedQuantityBU as pickBackQty,
+ task.movedQuantityBU,
+ moveDoc.status,moveDoc.shipStatus
+ FROM WmsTask task
+ LEFT JOIN task.moveDocDetail.moveDoc moveDoc
+ WHERE 1=1
+ /~moveDoc.id: AND task.moveDocDetail.moveDoc.id = {moveDoc.id} ~/
+ ORDER BY task.id ASC
+ ]]></datasource>
+            <columns>
+                <column id="task.id" title="task.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+                <column id="task.itemKey.item.code" title="asnDetail.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="task.itemKey.item.name" title="asnDetail.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="task.fromLocationCode" title="task.fromLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="task.toLocationCode" title="task.toLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="task.inventoryStatus" title="task.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="task.itemKey.lotInfo.extendPropC1" title="lotInfo.extendPropC1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="TypeOfExtendPropC1"/>
+                <column id="task.planQuantityBU" title="asnDetail.expectedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+                <column id="pickBackQty" title="pickBackQty" visible="true" sortable="false" horizonAlign="center" verticalAlign="middle" dataType="double" color="red" inputUI="text" inputUIValidator="nonNegativeNumberRequired"/>
+                <column id="task.movedQuantityBU" title="asnDetail.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+                <column id="moveDoc.status" title="moveDoc.status" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDoc.shipStatus" title="moveDoc.shipStatus" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

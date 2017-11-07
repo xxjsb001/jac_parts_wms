@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="thornApproveProcess" control="status">
+
+	<task id="new" title="新建">
+	</task>
+
+	<task id="modify" title="修改">
+	</task>
+
+	<task id="delete" title="删除">
+		<to id="NONE" type="none"/>
+	</task>
+
+	<task id="viewLog" title="查看日志">
+	</task>
+
+</process>

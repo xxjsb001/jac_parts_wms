@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainMiddlePage">
+    <main>
+        <process id="middleProcess">
+            <tableCommit id="middlesupplier" title="middlesupplier" process="middleProcess.middlesupplier" enableType="none" download="false" closeTransactional="true" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="milldleTableManager" methodName="sysMiddleSupplier"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="middlematerial" title="middlematerial" process="middleProcess.middlematerial" enableType="none" download="false" closeTransactional="true" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="milldleTableManager" methodName="sysMiddleMaterial"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="middledeliverydoc" title="middledeliverydoc" process="middleProcess.middledeliverydoc" enableType="none" download="false" closeTransactional="true" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="milldleTableManager" methodName="sysMiddleDeliverydoc"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <!-- MES签收 注释
+            <tableCommit id="middlePickShip" title="middlePickShip" process="middleProcess.middlePickShip" enableType="none" download="false" closeTransactional="true" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="milldleTableManager" methodName="sysPickShip"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+             -->
+            <tablePopup id="middlequalitytesting" title="middlequalitytesting" process="middleProcess.middlequalitytesting" enableType="none" containId="false" pageId="editMiddlequalitytestingPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="middlequalityread" title="middlequalityread" process="middleProcess.middlequalityread" enableType="none" download="false" closeTransactional="true" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="milldleTableManager" methodName="readMidQuality"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="billDetailRead" title="billDetailRead" process="middleProcess.billDetailRead" enableType="none" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainMiddlePage.billDetailRead">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="milldleTableManager" methodName="readLFCSBillDetail"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+        
+        <process id="middleProcess">
+            <tableCommit id="sysASNSrm" title="sysASNSrm" process="middleProcess.middlesupplier" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="milldleTableManager" methodName="sysASNSrm" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="updateHashCode" title="updateHashCode" process="middleProcess.middledeliverydoc" enableType="none" download="false" closeTransactional="true" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="milldleTableManager" methodName="updateHashCode"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+        <process id="middleProcess">
+            <tableCommit id="hgInventoryOutInit" title="hgInventoryOutInit" process="middleProcess.middlesupplier" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="screenLedManager" methodName="hgInventoryOutInit" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="unHgInventoryOutInit" title="unHgInventoryOutInit" process="middleProcess.middlematerial" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="screenLedManager" methodName="unHgInventoryOutInit" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="sysInventoryMiss" title="sysInventoryMiss" process="middleProcess.middledeliverydoc" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="screenLedManager" methodName="sysInventoryMiss" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="screenAsnPre" title="screenAsnPre" process="middleProcess.middlePickShip" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="screenLedManager" methodName="screenAsnPre" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="screenPickBlOut" title="screenPickBlOut" process="middleProcess.middlequalitytesting" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="screenLedManager" methodName="screenPickBlOut" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="screenPickShipOut" title="screenPickShipOut" process="middleProcess.middlequalityread" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="screenLedManager" methodName="screenPickShipOut" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+         <process id="middleProcess">
+         	<tableCommit id="screenPickAB" title="screenPickAB" process="middleProcess.middlesupplier" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="screenLedManager" methodName="screenPickAB" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="screenAsnMiss" title="screenAsnMiss" process="middleProcess.middlematerial" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="screenLedManager" methodName="screenAsnMiss" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="sendFileByEmail" title="sendFileByEmail" process="middleProcess.sendFileByEmail" closeTransactional="true" enableType="none" download="false" confirmMessage="confirmAdd">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMailManager" methodName="sendFileByEmail" parameter=""/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+         </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editCreateMoveDocQualityPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <formCommit id="save" title="save" process="wmsMoveDocProcess.new" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="storeMoveDocQuality" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="modify" title="modify" process="wmsMoveDocProcess.modify" enableType="single" download="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </formCommit>
+        </process>
+    </main>
+    <detail>
+        <process id="wmsMoveDocProcess">
+        <!-- 
+            <tablePopup id="addDetail" title="addDetail" process="wmsMoveDocProcess.addDetail" enableType="none" containId="false" pageId="popupmaintainMoveDocPage">
+                <enableExpression><![CDATA[(${moveDoc.id}!='' && ${moveDoc.billType.beSameASN}=='false')]]></enableExpression>
+            </tablePopup>
+             -->
+            <tablePopup id="addDetailQuality" title="addDetail" process="wmsMoveDocProcess.addDetail" enableType="none" containId="false" pageId="popupmaintainMoveDocQualityPage">
+                <enableExpression><![CDATA[(${moveDoc.id}!='' && ${moveDoc.billType.beSameASN}=='true')]]></enableExpression>
+            </tablePopup>
+            <tablePopup id="editDetail" title="editQualityDetail" process="wmsMoveDocProcess.editDetail" enableType="single" containId="true" pageId="modifyMoveDocQualityPage">
+                <enableExpression><![CDATA[(${moveDoc.transStatus} == 'WORKING' || ${moveDoc.transStatus} == 'FINISHED')]]></enableExpression>
+            </tablePopup>
+            <tablePopup id="upQualityDetail" title="upQualityDetail" process="wmsMoveDocProcess.editDetail" enableType="multi" containId="true" pageId="editUpQualityDetailPage">
+                <enableExpression><![CDATA[(${moveDoc.id}!='' && ${moveDocDetail.processQuantityBU}==0) && (${moveDoc.transStatus} == 'WORKING' || ${moveDoc.transStatus} == 'FINISHED')]]></enableExpression>
+            </tablePopup>
+            <tableCommit id="deleteDetail" title="deleteDetail" process="wmsMoveDocProcess.deleteDetail" enableType="multi" download="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="deleteMoveDocDetails" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

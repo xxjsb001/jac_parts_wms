@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="inventoryCountReComputePage">
+    <main>
+        <process id="inventoryProcess">
+            <formCommit id="inventoryCountReCompute" title="inventoryCountReCompute" process="inventoryProcess.inventoryCountReCompute" enableType="none" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="computeDate" className="date">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsInventoryManager" methodName="inventoryCountAutoCompute" parameter="computeDate"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

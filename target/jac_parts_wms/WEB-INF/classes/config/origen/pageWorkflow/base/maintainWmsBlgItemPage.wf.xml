@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsBlgItemPage">
+    <main>
+        <process id="wmsPickWorkersProcess">
+            <tablePopup id="new" title="new" process="wmsPickWorkersProcess.new" enableType="none" containId="false" pageId="editBlgItemPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="wmsPickWorkersProcess.edit" enableType="single" containId="true" pageId="editBlgItemPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="unActive" title="unActive" process="wmsPickWorkersProcess.unActive" enableType="single" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="active" title="active" process="wmsPickWorkersProcess.active" enableType="single" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="delete" title="delete" process="wmsPickWorkersProcess.delete" enableType="single" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+	        <tablePopup id="import" title="import" process="wmsPickWorkersProcess.import" enableType="none" containId="false" pageId="importBlgAndItemPage">
+	                <enableExpression/>
+	        </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

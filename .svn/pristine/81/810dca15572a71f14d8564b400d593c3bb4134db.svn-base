@@ -1,0 +1,68 @@
+package com.vtradex.wms.server.telnet.shell.pick;
+
+import java.io.IOException;
+
+import org.apache.commons.lang.StringUtils;
+
+import net.wimpi.telnetd.net.Connection;
+
+import com.vtradex.kangaroo.shell.BreakException;
+import com.vtradex.kangaroo.shell.ContinueException;
+import com.vtradex.kangaroo.shell.Thorn4BaseShell;
+import com.vtradex.wms.server.model.carrier.WmsVehicle;
+import com.vtradex.wms.server.telnet.dto.WmsBOLDTO;
+import com.vtradex.wms.server.telnet.pick.WmsPickRFManager;
+import com.vtradex.wms.server.telnet.shell.ShellExceptions;
+import com.vtradex.wms.server.utils.MyUtils;
+
+public class WmsBOLShell extends Thorn4BaseShell{
+	public static final String CURRENT_DTO = "CURRENT_DTO";
+	public static final String PAGE_ID = "wmsBOLShell";
+	private final WmsPickRFManager pickRFManager;
+	
+	public WmsBOLShell(WmsPickRFManager pickRFManager) {
+		this.pickRFManager = pickRFManager;
+	}
+	@Override
+	protected void mainProcess(Connection connection) throws BreakException,
+			ContinueException, IOException, Exception {
+
+		WmsBOLDTO dto = (WmsBOLDTO) this.getParentContext().get(CURRENT_DTO);
+		if(dto == null){
+			dto = new WmsBOLDTO();
+		}
+		String license = null;
+		if(dto.getLicense() == null){
+			license = this.getTextField("车牌号");
+			WmsVehicle vehicle = pickRFManager.checkVehicleByLicense(license);
+			if(vehicle == null){
+				this.setStatusMessage(ShellExceptions.VEHICLE_NULL);
+			}
+			dto.setLicense(license);
+		}else{
+			license = dto.getLicense();
+			this.output("车牌号", dto.getLicense());
+		}
+		String container = this.getTextField("器具编码(00装车结束)");
+		if(StringUtils.isEmpty(container) || "-".equals(container)){
+			this.setStatusMessage(ShellExceptions.CONTAINER_CODE_IS_NULL);
+		}
+		if(MyUtils.OVER.equals(container)){
+			try{
+				pickRFManager.createWmsBol(dto);
+			}catch(Exception e){
+				this.remove("器具编码(00装车结束)");
+				this.setStatusMessage(e.getMessage());
+			}
+			this.put(CURRENT_DTO, null);
+			this.forward(WmsBOLShell.PAGE_ID,ShellExceptions.NEXT_VEHICLE);
+		}
+		dto = pickRFManager.checkMoveDocByContainer(container,dto);
+		if(!StringUtils.isEmpty(dto.getMessage())){
+			this.setStatusMessage(dto.getMessage());
+		}
+		dto.getContainers().add(container);
+		this.put(CURRENT_DTO, dto);
+		this.forward(WmsBOLShell.PAGE_ID,"成功,扫描下一个器具");
+	}
+}

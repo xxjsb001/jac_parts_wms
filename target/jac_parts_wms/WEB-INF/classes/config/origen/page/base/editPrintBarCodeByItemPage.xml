@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editPrintBarCodeByItemPage" title="editPrintBarCodeByItemPage" entityClass="com.vtradex.wms.server.model.organization.WmsItem" width="230" height="250">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="item.id" title="item.id"/>
+            <numberText id="printNumber" title="printNumber" defaultValue="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" validator="nonNegativeNumber" returnType="Integer">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+        </inputUIs>
+    </editPage>
+</pages>

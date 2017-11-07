@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="maintainRulePage" title="maintainRulePage" className="com.vtradex.rule.client.page.MaintainConfigRulePage">
+    	<buttons>
+			<button id="ruleProcess.import" title="import"/>
+			<button id="ruleProcess.export" title="export">
+				<actions>
+    				<action managerName="ruleExportAction" methodName="export" />
+    			</actions>
+			</button>
+
+			<button id="ruleProcess.newDirectory" title="newDirectory"/>
+			<button id="ruleProcess.newDataSourceItem" title="newDataSourceItem"/>
+			<button id="ruleProcess.newFeeRuleItem" title="newFeeRuleItem"/>
+			<button id="ruleProcess.directorySave" title="save"/>
+			<button id="ruleProcess.dataSourceSave" title="save"/>
+			<button id="ruleProcess.feeRuleSave" title="save"/>
+			<button id="ruleProcess.deleteDataSource" title="deleteDataSource"/>
+			<button id="ruleProcess.deleteFeeRule" title="deleteFeeRule"/>
+			<button id="ruleProcess.deleteDirectory" title="deleteDirectory"/>
+			
+			
+			<button id="ruleProcess.onLine" title="onLine"/>
+			<button id="ruleProcess.downLine" title="downLine"/>
+		</buttons>
+		<hqls>
+			<hql id="loadDirecotoryRoot">
+				<![CDATA[FROM Directory d WHERE d.root = true ]]>
+			</hql>
+			<hql id="loadDataSourceByDirectoryId">
+				<![CDATA[FROM DataSource ds WHERE 1=1 AND ds.directory.id = :directoryId  ]]>
+			</hql>
+			<hql id="loadRuleByDirectoryId">
+				<![CDATA[FROM Rule r WHERE 1=1 AND r.directory.id = :directoryId  ]]>
+			</hql>
+		</hqls>
+    </customPage>
+</pages>
+

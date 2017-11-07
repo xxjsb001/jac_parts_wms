@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editThornApproveDetailPage" title="editThornApproveDetailPage" entityClass="com.vtradex.thorn.server.model.approve.ThornApproveDetail">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="thornApproveDetail.id" title="thornApproveDetail.id"/>
+            <text id="thornApproveDetail.name" title="thornApproveDetail.name" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="thornApproveDetail.content" title="thornApproveDetail.content" row="2" col="1" span="1" width="240px" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

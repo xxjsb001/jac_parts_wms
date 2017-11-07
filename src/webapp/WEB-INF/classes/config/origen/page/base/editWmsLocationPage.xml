@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsLocationPage" title="editWmsLocationPage" entityClass="com.vtradex.wms.server.model.warehouse.WmsLocation" width="400" height="230" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="location.id" title="location.id" reserve="false"/>
+            <list id="location.warehouseArea.id" title="location.warehouseArea.id" row="1" col="1" span="1" width="118" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT warehouseArea.id,
+warehouseArea.name
+FROM WmsWarehouseArea warehouseArea WHERE warehouseArea.status='ENABLED' 
+AND warehouseArea.warehouse = #{SESSION_WAREHOUSE}]]></hql>
+                <eventListeners/>
+            </list>
+            <list id="location.type" title="location.type" row="1" col="2" span="1" width="118" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="WmsLocationType">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'WmsLocationType' AND enumerate.enumValue NOT IN ('SPLIT')
+ order by enumerate.id]]></hql>
+                <eventListeners>
+                    <eventListener id="location.pickBackLoc.id" refreshUI="true"/>
+                </eventListeners>
+            </list>
+            <text id="location.code" title="location.code" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <remote id="location.pickBackLoc.id" title="location.pickBackLoc.id" row="2" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="false" focusUI="false" inVisible="true" multiple="false" manualEditable="true" displayColumn="2" enumColumnType="4=WmsLocationType" percentSignPosition="both" displayedTableHead="序号,编码">
+                <visibleExpression><![CDATA[function x(){
+   					if(${location.type}=='SHIP'){
+						 return true;
+					}else{
+						 return false;
+					}
+				};x();]]></visibleExpression>
+                <hql><![CDATA[SELECT loc.id, loc.code,  loc.type FROM WmsLocation loc
+ WHERE loc.code like :param
+ AND loc.warehouse = #{SESSION_WAREHOUSE}
+ AND loc.type = 'STORAGE'
+ ORDER BY loc.code]]></hql>
+                <eventListeners/>
+            </remote>
+            <separator id="s1" title="s1" row="3"/>
+            <text id="location.zone" title="location.zone" row="5" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" validator="number" trimSpace="true">
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="location.line" title="location.line" row="5" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" validator="number" trimSpace="true">
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="location.column" title="location.column" row="6" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" validator="numberRequired" trimSpace="true">
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="location.layer" title="location.layer" row="6" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" validator="number" trimSpace="true">
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="location.routeNo" title="location.routeNo" row="7" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" validator="number" trimSpace="true">
+                <visibleExpression><![CDATA[${location.type}=='STORAGE']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

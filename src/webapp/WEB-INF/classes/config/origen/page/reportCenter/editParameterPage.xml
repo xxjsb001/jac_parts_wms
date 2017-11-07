@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editParameterPage" title="editParameterPage" pageLocale="false" entityClass="com.vtradex.repc.server.model.report.ReportParams" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="reportParams.id" pageLocale="false" reserve="false"/>
+            <text id="reportParams.name" title="reportParams.name" pageLocale="false" row="1" col="2" width="300" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="reportParams.disname" title="reportParams.disname" pageLocale="false" row="2" col="1" width="300" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <list id="reportParams.type" title="reportParams.type" pageLocale="false" row="3" col="1" width="300" readOnly="false" required="true" reserve="false" forceOverride="true">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+ 					enumerate.enumValue From Enumerate enumerate 
+ 					where 1=1 and enumerate.enumType='HQL']]></hql>
+                <eventListeners/>
+            </list>
+            <list id="reportParams.inputControl" title="reportParams.inputControl" pageLocale="false" row="4" col="1" width="300" readOnly="false" required="true" reserve="false" forceOverride="false" enumType="Control">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+ 					enumerate.enumValue  From Enumerate enumerate 
+ 					where enumerate.enumType = 'Control' 
+					ORDER BY enumerate.enumValue desc]]></hql>
+                <eventListeners>
+                	<eventListener id="reportParams.displayedTableHead" index="0" refreshUI="true" />
+                </eventListeners>
+            </list>
+            <list id="reportParams.grammarType" title="reportParams.grammar_type" pageLocale="false" row="5" col="1" width="300" readOnly="false" required="true" reserve="false" forceOverride="false">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+					 enumerate.enumValue From Enumerate enumerate 
+ 					where enumerate.enumType = 'FileGrammarType' and enumerate.enumValue='HQL']]></hql>
+                <eventListeners/>
+            </list>
+            <textArea id="reportParams.statement" title="reportParams.statement" pageLocale="false" row="6" col="1" span="2" width="300" readOnly="false" required="false" reserve="false" forceOverride="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+            <numberText id="reportParams.row" title="reportParams.row" pageLocale="false" row="7" col="1" span="1" width="300" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" returnType="Integer">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <numberText id="reportParams.col" title="reportParams.col" pageLocale="false" row="8" col="1" span="1" width="300" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" returnType="Integer">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <text id="reportParams.enumType" title="reportParams.enumType" pageLocale="false" row="9" col="1" width="300" readOnly="false" required="false" reserve="false" forceOverride="false" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="reportParams.defaultValue" title="reportParams.defaultValue" pageLocale="false" row="10" col="1" width="300" readOnly="false" required="false" reserve="false" forceOverride="false" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="reportParams.displayedTableHead" title="reportParams.displayedTableHead" pageLocale="false"  row="11" col="1" width="300" readOnly="false" required="true" reserve="true" forceOverride="false" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression>
+                	<![CDATA[${reportParams.inputControl} == 'remote' ]]>
+                </visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <checkbox id="reportParams.required" title="reportParams.required" pageLocale="false" row="12" col="1" defaultValue="false" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+            </checkbox>
+			<checkbox id="reportParams.visible" title="reportParams.visible" pageLocale="false" row="13" col="1" defaultValue="true" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+            </checkbox>
+            <checkbox id="reportParams.showTime" title="reportParams.showTime" pageLocale="false" row="14" col="1" defaultValue="false" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression>
+                    	<![CDATA[${reportParams.inputControl} == 'date' || ${reportParams.inputControl} == 'dateRanger' ]]>
+                    </visibleExpression>
+                    <hql/>
+                    <eventListeners/>
+            </checkbox>
+        </inputUIs>
+    </editPage>
+</pages>

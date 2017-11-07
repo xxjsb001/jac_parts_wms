@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<crossDependence workflow="wmsASNPutawayProcess" depandenceflow="wmsASNProcess">
+<task id="createMoveDoc" title="创建上架单">
+		<dependence id="RECEIVING"/>
+		<dependence id="RECEIVED"/>
+</task>
+<task id="cancelMoveDoc" title="取消上架单">
+		<dependence id="RECEIVING"/>
+		<dependence id="RECEIVED"/>
+</task>
+
+</crossDependence>

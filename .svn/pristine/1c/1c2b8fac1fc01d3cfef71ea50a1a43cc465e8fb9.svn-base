@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsPickedRecordPage" title="maintainWmsPickedRecordPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.move.WmsTask">
+        <workflow/>
+        <datasource><![CDATA[SELECT task.id,
+ company.name,
+ billType.name,
+ pickTicket.code,
+ pickTicket.orderDate,
+ moveDoc.status,
+ task.fromLocationCode,
+ task.pallet,
+ task.toLocationCode,
+ item.code,
+ item.name,
+ packageUnit.unit,
+ task.planQuantityBU,
+ task.movedQuantityBU,
+ task.inventoryStatus,
+ itemKey.lotInfo.storageDate,
+ itemKey.lotInfo.productDate,
+ itemKey.lotInfo.expireDate,
+ itemKey.lotInfo.warnDate,
+  itemKey.lotInfo.soi,
+ supplier.name,
+ supplier.code,
+ pickTicket.requireArriveDate,
+ task.updateInfo.createdTime,
+ task.updateInfo.creator   
+ FROM WmsTask task 
+ LEFT JOIN task.moveDocDetail.moveDoc moveDoc 
+ LEFT JOIN moveDoc.pickTicket pickTicket 
+ LEFT JOIN moveDoc.company company 
+ LEFT JOIN moveDoc.pickTicket.billType billType 
+ LEFT JOIN task.itemKey itemKey 
+ LEFT JOIN itemKey.item item 
+ LEFT JOIN task.packageUnit packageUnit 
+ LEFT JOIN itemKey.lotInfo.supplier supplier 
+ WHERE 1=1 AND task.type in ('MV_PICKTICKET_PICKING')
+ AND moveDoc.warehouse = #{SESSION_WAREHOUSE}
+ ORDER BY task.id DESC
+ ]]></datasource>
+        <columns>
+            <column id="task.id" title="task.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="company.name" title="company.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="billType.name" title="billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="pickTicket.code" title="pickTicket.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="pickTicket.orderDate" title="pickTicket.orderDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="moveDoc.status" title="moveDoc.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocStatus"/>
+
+            <column id="task.fromLocationCode" title="task.fromLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="task.pallet" title="task.pallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="task.toLocationCode" title="task.toLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+
+            <column id="item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="item.name" title="item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="packageUnit.unit" title="packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="task.planQuantityBU" title="task.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="task.movedQuantityBU" title="task.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+
+            <column id="task.inventoryStatus" title="task.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="itemKey.lotInfo.storageDate" title="inventory.itemKey.lotInfo.storageDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="itemKey.lotInfo.productDate" title="inventory.itemKey.lotInfo.productDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="itemKey.lotInfo.expireDate" title="inventory.itemKey.lotInfo.expireDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="itemKey.lotInfo.warnDate" title="inventory.itemKey.lotInfo.warnDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="itemKey.lotInfo.soi" title="receivedRecord.itemKey.lotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="supplier.name" title="receivedRecord.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="supplier.code" title="supplier.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>               
+            <column id="pickTicket.requireArriveDate" title="pickTicket.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>               
+  			
+            <column id="task.updateInfo.createdTime" title="updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="task.updateInfo.creator" title="updateInfo.creator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

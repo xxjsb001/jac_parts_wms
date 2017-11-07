@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editSaveStorageData">
+    <main>
+        <process id="inventoryProcess">
+            <formCommit id="saveStorageData" title="saveStorageData" process="inventoryProcess.saveStorageData" enableType="none" multiMapping="false" download="false" closeTransactional="true" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                	<mapping id="storageDate" className="date">
+                        <entries/>
+                    </mapping>
+                    <mapping id="description" className="string">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="theKnotManager" methodName="saveStorageData" parameter="storageDate,description"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

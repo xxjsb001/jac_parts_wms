@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editPalletAutoPage" title="editPalletAutoPage" width="300" height="340" onClose="refreshParent">
+        <workflow/>
+        <initListeners>
+			<initListener id="pallet" managerName="wmsASNManager" methodName="getPalletSerialAuto" newEnabled="true" editEnabled="true"/>
+		</initListeners>
+        <inputUIs>
+            <hidden id="asnDetail.id" title="asnDetail.id" reserve="false"/>
+            <text id="pallet" title="asnDetail.pallet" row="1" col="1" span="1" width="260" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

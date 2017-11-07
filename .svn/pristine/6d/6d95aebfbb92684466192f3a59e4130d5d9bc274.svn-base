@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="versionProcess" control="status">
+
+	<state id="ON_LINE" title="上线"/>
+
+	<state id="MODIFY" title="修改"/>
+
+	<state id="UNACTIVE" title="失效"/>
+
+	<task id="new" title="新建">
+		<to id="MODIFY" type="state"/>
+	</task>
+
+	<task id="modify" title="修改">
+		<to id="MODIFY" type="state"/>
+	</task>
+
+	<task id="delete" title="删除">
+		<from id="UNACTIVE" type="state"/>
+		<to id="NONE" type="none"/>
+	</task>
+
+	<task id="editRuleTableDetail" title="规则表明细维护">
+	</task>
+
+	<task id="upLine" title="上线">
+		<from id="MODIFY" type="state"/>
+		<from id="UNACTIVE" type="state"/>
+		<to id="ON_LINE" type="state"/>
+	</task>
+
+	<task id="unActive" title="失效">
+		<from id="ON_LINE" type="state"/>
+		<from id="MODIFY" type="state"/>
+		<to id="UNACTIVE" type="state"/>
+	</task>
+
+	<task id="export" title="导出">
+	</task>
+
+	<task id="import" title="导入">
+		<to id="MODIFY" type="state"/>
+	</task>
+
+</process>

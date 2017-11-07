@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainRuleExceptionLogPage" title="maintainRuleExceptionLogPage" pageLocale="false" autoQuery="true">
+        <workflow/>
+        <datasource type="hql"><![CDATA[SELECT ruleExceptionLog.id,
+        ruleExceptionLog.type,
+        ruleExceptionLog.groupNo,
+        ruleExceptionLog.rule,
+        ruleExceptionLog.subRule,
+        ruleExceptionLog.process,
+        ruleExceptionLog.strExtend1,
+        ruleExceptionLog.operDate
+         from RuleExceptionLog ruleExceptionLog
+ where 1=1 
+ order by ruleExceptionLog.id desc]]></datasource>
+        <columns>
+            <column id="ruleExceptionLog.id" title="ruleExceptionLog.id" pageLocale="false" visible="false" horizonAlign="left" verticalAlign="middle" dataType="integer"/>
+            <column id="ruleExceptionLog.type" title="ruleExceptionLog.type" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="ruleExceptionLog.groupNo" title="ruleExceptionLog.groupNo" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="ruleExceptionLog.rule" title="ruleExceptionLog.rule" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="ruleExceptionLog.subRule" title="ruleExceptionLog.subRule" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="ruleExceptionLog.process" title="ruleExceptionLog.process" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="ruleExceptionLog.strExtend1" title="ruleExceptionLog.strExtend1" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="ruleExceptionLog.operDate" title="ruleExceptionLog.operDate" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle" dataType="date" format="dateFormat" formatParam="y-m-d h:m"/>
+        </columns>
+    </maintainPage>
+</pages>

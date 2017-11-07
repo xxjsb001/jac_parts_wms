@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsWorkerDetailPage">
+    <main>
+        <process id="workerProcess">
+            <formCommit id="new" title="new" process="workerProcess.addUser" enableType="none" multiMapping="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                	<mapping id="workGroup.id" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="worker.id" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="worker.station" className="string">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsOrganizationManager" methodName="addWorkUser" parameter="workGroup.id,worker.id,worker.station"/>
+                </actions>
+                <forwards>
+                	<forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

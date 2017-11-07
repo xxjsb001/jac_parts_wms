@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="viewWmsWaveDocDetailPage" title="viewWmsWaveDocDetailPage" entityClass="com.vtradex.wms.server.model.shipping.WmsWaveDoc" width="820" height="600">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="waveDoc.id" title="waveDoc.id" reserve="false"/>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.shipping.WmsWaveDocDetail">
+        <datasource><![CDATA[SELECT waveDocDetail.id,
+waveDocDetail.pickTicketCode,
+waveDocDetail.item.code,
+waveDocDetail.item.name,
+waveDocDetail.packageUnit.unit,
+waveDocDetail.allocatedQuantityBU,
+waveDocDetail.expectedQuantity,
+waveDocDetail.expectedQuantityBU,
+waveDocDetail.pickedQuantityBU,
+waveDocDetail.splitedQuantityBU 
+ FROM WmsWaveDocDetail waveDocDetail
+ WHERE 1=1
+ AND waveDocDetail.waveDoc.id = {waveDoc.id}]]></datasource>
+        <columns>
+            <column id="waveDocDetail.id" title="waveDocDetail.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="waveDocDetail.pickTicketCode" title="waveDocDetail.pickTicketCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="waveDocDetail.item.code" title="waveDocDetail.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="waveDocDetail.item.name" title="waveDocDetail.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="waveDocDetail.packageUnit.unit" title="packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="waveDocDetail.allocatedQuantityBU" title="waveDocDetail.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="waveDocDetail.expectedQuantity" title="waveDocDetail.expectedQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="waveDocDetail.expectedQuantityBU" title="waveDocDetail.expectedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="waveDocDetail.pickedQuantityBU" title="waveDocDetail.pickedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="waveDocDetail.splitedQuantityBU" title="waveDocDetail.splitedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+        </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

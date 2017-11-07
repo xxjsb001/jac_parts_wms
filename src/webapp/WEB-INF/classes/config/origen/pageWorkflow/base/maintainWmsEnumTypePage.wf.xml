@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsEnumTypePage">
+    <main>
+        <process id="wmsEnumTypeProcess">
+            <tablePopup id="new" title="new" process="wmsEnumTypeProcess.new" enableType="none" containId="false" pageId="editWmsEnumTypePage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="wmsEnumTypeProcess.edit" enableType="single" containId="true" pageId="editWmsEnumTypePage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="wmsEnumTypeProcess.delete" enableType="none" multiMapping="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

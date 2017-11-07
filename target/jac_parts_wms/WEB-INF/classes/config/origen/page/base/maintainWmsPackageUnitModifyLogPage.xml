@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsPackageUnitModifyLogPage" title="maintainWmsPackageUnitModifyLogPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.organization.WmsPackageChangeLog" width="800" height="300">
+        <workflow/>
+        <datasource><![CDATA[SELECT packageChangeLog.id,
+item.name,
+packageUnit.unit,
+packageChangeLog.oldConvertFigure,
+packageChangeLog.newConvertFigure,
+packageChangeLog.oldPrecision,
+packageChangeLog.newPrecision,
+packageChangeLog.updateInfo.lastOperator,
+packageChangeLog.updateInfo.updateTime 
+ FROM WmsPackageChangeLog packageChangeLog 
+ LEFT JOIN packageChangeLog.item item
+ LEFT JOIN packageChangeLog.packageUnit packageUnit
+ WHERE 1=1
+ ORDER BY packageChangeLog.id]]></datasource>
+        <columns>
+            <column id="packageChangeLog.id" title="packageUnit.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="item.name" title="item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="packageUnit.unit" title="packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="packageChangeLog.oldConvertFigure" title="packageChangeLog.oldConvertFigure" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="packageChangeLog.newConvertFigure" title="packageChangeLog.newConvertFigure" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="packageChangeLog.oldPrecision" title="packageChangeLog.oldPrecision" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="packageChangeLog.newPrecision" title="packageChangeLog.newPrecision" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="packageChangeLog.updateInfo.lastOperator" title="packageChangeLog.operatorName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="packageChangeLog.updateInfo.updateTime" title="packageChangeLog.updateTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+        </columns>
+    </maintainPage>
+</pages>

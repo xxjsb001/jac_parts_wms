@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsWaveDocPage">
+    <main/>
+    <detail>
+        <process id="wmsWaveDocProcess">
+            <tablePopup id="addPickTicket" title="addPickTicket" process="wmsWaveDocProcess.addPickTicket" enableType="none" containId="false" pageId="editWmsWaveDocDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="removePickTicket" title="removePickTicket" process="wmsWaveDocProcess.removePickTicket" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsWaveDocManager" methodName="removeWaveDocDetail" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

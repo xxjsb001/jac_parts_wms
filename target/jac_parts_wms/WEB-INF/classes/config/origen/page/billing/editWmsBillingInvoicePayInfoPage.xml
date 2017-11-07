@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsBillingInvoicePayInfoPage" title="editWmsBillingInvoicePayInfoPage" entityClass="com.vtradex.wms.server.model.billing.WMSInvoice" width="560" height="320" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="invoice.id" title="invoice.id" reserve="false"/>
+            <text id="invoice.code" title="invoice.code" row="1" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <numberText id="invoice.sumManualAmount" title="invoice.sumManualAmount" row="1" col="2" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <numberText id="invoice.tax" title="invoice.tax" row="1" col="3" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <numberText id="invoice.paidAmount" title="invoice.paidAmount" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <numberText id="invoice.paidTax" title="invoice.paidTax" row="2" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+        </inputUIs>
+    </editPage>
+</pages>

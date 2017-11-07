@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <reportPopupPage id="countRecordReportPage" title="countRecordReportPage" reportFile="wmsCountRecord.raq" parameter="countPlan.id,isBlindCheck" width="800" height="500">
+        <inputUIs>
+            <list id="isBlindCheck" title="isBlindCheck" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="CheckInventoryType">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT enumerate.enumValue, enumerate.enumValue 
+ FROM Enumerate enumerate 
+ WHERE enumerate.enumType = 'CheckInventoryType']]></hql>
+                <eventListeners/>
+            </list>
+        </inputUIs>
+    </reportPopupPage>
+</pages>

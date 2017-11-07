@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="roleMenuPermissionPage" title="roleMenuPermissionPage" width="685" height="555" className="com.vtradex.thorn.client.ui.page.PermissionPage" onClose="refreshParent">
+    	<buttons>
+			<button id="permissionPage.save" title="permissionPage.save"/>
+		</buttons>
+    </customPage>
+</pages>

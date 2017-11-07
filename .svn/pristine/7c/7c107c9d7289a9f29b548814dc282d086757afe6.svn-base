@@ -1,0 +1,6 @@
+package com.vtradex.wms.server.utils;
+
+public interface WmsTables {
+	/**拣货明细与器具关系*/
+	String WMS_MOVEDOC_AND_STATION = "WMS_MOVEDOC_AND_STATION";//WmsMoveDocAndStation
+}

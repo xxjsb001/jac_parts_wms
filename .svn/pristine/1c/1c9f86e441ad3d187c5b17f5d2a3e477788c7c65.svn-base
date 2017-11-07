@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<messages>
+    <message id="organizationProcess.new">
+        <subscriber action="wmsMessageManager.subscriberCreateBillType" asyn="false" taskType=""/>
+        <subscriber action="wmsMessageManager.subscriberCreateItemStateByOrganization" asyn="false" taskType=""/>
+    </message>
+    <message id="warehouseProcess.new">
+        <subscriber action="wmsMessageManager.subScriberWmsLocationForArea" asyn="false" taskType=""/>
+        <subscriber action="wmsMessageManager.subscriberCreateWmsOrganization" asyn="false" taskType=""/>
+    </message>
+    <message id="warehouseProcess.edit">
+        <subscriber action="wmsMessageManager.subscriberEditWmsOrganization" asyn="false" taskType=""/>
+    </message>
+    
+    <message id="itemProcess.new">
+        <subscriber action="wmsMessageManager.subscriberCreatePackageUnit" asyn="false" taskType=""/>
+    </message>
+    <message id="wmsDockProcess.new">
+        <subscriber action="wmsMessageManager.subScriberWmsLocationForDock" asyn="false" taskType=""/>
+    </message>
+    <message id="wmsDockProcess.edit">
+        <subscriber action="wmsMessageManager.subScriberWmsLocationForDock" asyn="false" taskType=""/>
+    </message>
+    <message id="wmsPickTicketAllocateProcess.autoAllocate">
+        <subscriber action="wmsMessageManager.subscriberPickAllocate" asyn="false" taskType=""/>
+    </message>
+    <message id="wmsPickTicketToWorkDocProcess.release">
+        <subscriber action="wmsMessageManager.subscriberCreateWorkDocByWmsPickTicket" asyn="false" taskType=""/>
+    </message>
+    <message id="wmsWaveDocAllocateProcess.autoAllocate">
+        <subscriber action="wmsMessageManager.subscriberWaveAllocate" asyn="false" taskType=""/>
+    </message>
+    <message id="wmsWaveDocToWorkDocProcess.release">
+        <subscriber action="wmsMessageManager.subscriberCreateWorkDocByWmsWaveDoc" asyn="false" taskType=""/>
+    </message>
+    <message id="wmsMoveDocProcess.active">
+<!--         <subscriber action="wmsMessageManager.subscriberCreateWorkDocByWmsMoveDoc" asyn="false" taskType=""/> -->
+    </message>
+    <message id="wmsMoveDocProcess.unActive">
+<!--         <subscriber action="wmsMessageManager.subscriberCancelWorkDocByWmsMoveDoc" asyn="false" taskType=""/> -->
+    </message>
+    <message id="wmsMoveDocShipProcess.ship">
+<!--         <subscriber action="wmsMessageManager.subscriberShip" asyn="false" taskType=""/> -->
+<!--         <subscriber action="wmsMessageManager.subscriberCreateloadedCharges" asyn="false" taskType=""/> -->
+<!--         <subscriber action="wmsMessageManager.subscriberShipLog" asyn="false" taskType="记录发运日志"/> -->
+    </message>
+    <message id="masterBOLProcess.ship">
+        <!-- <subscriber action="wmsMessageManager.subscriberMasterBOLShip" asyn="false" taskType=""/> -->
+    </message>
+	<message id="wmsMoveDocProcess.new">
+		<subscriber action="wmsMessageManager.subscriberToMoveDocLog" asyn="false" taskType="记录下单日志"/>
+	</message>
+	<message id="wmsMoveDocProcess.confirm">
+		<subscriber action="wmsMessageManager.subscriberPickLog" asyn="false" taskType="记录拣选日志"/>
+	</message>
+<!--     <message id="wmsPickTicketBaseProcess.active"> -->
+<!-- 		<subscriber action="wmsMessageManager.subscriberPickTicketApportion" asyn="false" taskType="发货单自动分派"/> -->
+<!--         <subscriber action="wmsMessageManager.subscriberCreateWmsMoveDoc" asyn="false" taskType="创建发货拣货单"/> -->
+<!--     </message> -->
+    <message id="wmsWaveDocProcess.active">
+        <subscriber action="wmsMessageManager.subscriberCreateWmsMoveDoc" asyn="false" taskType="创建发货拣货单"/>
+    </message>
+    <message id="wmsMoveDocProcess.autoAllocate">
+        <subscriber action="wmsMessageManager.subscriberAutoAllocateWmsMoveDoc" asyn="false" taskType="移位单自动分配"/>
+    </message>
+    <message id="wmsMoveDocProcess.cancelAllocate">
+        <subscriber action="wmsMessageManager.subscriberCancelAllocateWmsMoveDoc" asyn="false" taskType="移位单取消分配"/>
+    </message>
+    <message id="wmsASNProcess.close">
+        <subscriber action="wmsASNManager.finishReceive" asyn="false" taskType="关闭收货单"/>
+    </message>
+    
+    <message id="wmsReceivedRecord.charges">
+        <subscriber action="wmsMessageManager.subscriberReceivedRecordCharges" asyn="true" taskType="收货费用"/>
+    </message>
+    <message id="wmsTaskLog.charges">
+        <subscriber action="wmsMessageManager.subscriberTaskLogCharges" asyn="true" taskType="作业费用"/>
+    </message>
+    
+    <message id="wmsBoxDetail.charges">
+        <subscriber action="wmsMessageManager.subscriberBoxDetailCharges" asyn="true" taskType="包装费用"/>
+    </message>
+</messages>

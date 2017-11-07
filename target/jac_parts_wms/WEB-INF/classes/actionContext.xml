@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+        "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+  Copyright (c) 2001-2005 vTradEx Information Technology Co.,Ltd. All Rights Reserved.
+
+  This software is the confidential and proprietary information of vTradEx
+  Information Technology Co.,Ltd. ("Confidential Information").  You shall not
+  disclose such Confidential Information and shall use it only in
+  accordance with the terms of the license agreement you entered into
+  with vTradEx.
+
+  VTRADEX MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
+  SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+  PURPOSE, OR NON-INFRINGEMENT. VTRADEX SHALL NOT BE LIABLE FOR ANY DAMAGES
+  SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
+  THIS SOFTWARE OR ITS DERIVATIVES.
+-->
+<!-- $Id: actionContext.xml,v 1.1.1.1 2015/03/25 02:48:48 yuan.sun Exp $ -->
+
+<beans>	
+	<bean id="wmsTaskProcessAction"	class="com.vtradex.wms.server.action.WmsTaskProcessAction"/>
+	<bean id="wmsWorkDocProcessAction" class="com.vtradex.wms.server.action.WmsWorkDocProcessAction">
+		<constructor-arg index="0">
+			<ref bean="commonDao"></ref>
+		</constructor-arg>
+	</bean>
+
+	<bean id="pickTicketWorkingDecisionAction" class="com.vtradex.wms.server.action.PickTicketWorkingDecisionAction"/>
+	<bean id="pickticketDetailAllocateDecision" class="com.vtradex.wms.server.action.PickticketDetailAllocateDecision"/>
+	<bean id="pickTicketShipDecisionAction" class="com.vtradex.wms.server.action.PickTicketShipDecisionAction">
+		<constructor-arg index="0">
+			<ref bean="commonDao"></ref>
+		</constructor-arg>
+	</bean>
+	<bean id="pickTicketBaseShipAction" class="com.vtradex.wms.server.action.PickTicketBaseShipDecision"/>
+	
+	<bean id="waveDocWorkingDecisionAction" class="com.vtradex.wms.server.action.WaveDocWorkingDecisionAction"/>
+	<bean id="waveDocAllocateDecisionAction" class="com.vtradex.wms.server.action.WaveDocAllocateDecisionAction" />
+	<bean id="waveDocDetailAllocateDecision" class="com.vtradex.wms.server.action.WaveDocDetailAllocateDecision" />
+	<bean id="waveDocPickDecisionAction" class="com.vtradex.wms.server.action.WaveDocPickDecisionAction"/>
+	<bean id="wmsWaveDocSeprateDecisionAction" class="com.vtradex.wms.server.action.WmsWaveDocSeprateDecisionAction">
+		<constructor-arg index="0">
+			<ref bean="commonDao"></ref>
+		</constructor-arg>
+	</bean>
+
+	<bean id="wmsMoveDocDetailAction" class="com.vtradex.wms.server.action.WmsMoveDocDetailAction" />
+	<bean id="wmsMoveDocProcessAction" class="com.vtradex.wms.server.action.WmsMoveDocProcessAction" />
+	<bean id="wmsReceiveDecisionAction" class="com.vtradex.wms.server.action.receiving.WmsReceiveDecisionAction" />
+	<bean id="wmsCloseASNDecisionAction" class="com.vtradex.wms.server.action.receiving.WmsCloseASNDecisionAction" />
+
+	<bean id="wmsConfirmDecisionAction" class="com.vtradex.wms.server.action.receiving.WmsConfirmDecisionAction" />
+	<bean id="wmsLotRuleUsedDecision" class="com.vtradex.wms.server.action.WmsLotRuleUsedDecision" >
+		<constructor-arg index="0">
+			<ref bean="wmsItemManager"></ref>
+		</constructor-arg>
+	</bean>
+	<bean id="wmsMoveDocIsFinishAction" class="com.vtradex.wms.server.action.WmsMoveDocIsFinishAction" />
+	<bean id="closeTaskDecisionAction" class="com.vtradex.wms.server.action.CloseTaskDecisionAction" />
+	<bean id="waveDocPickConfirmDecisionAction" class="com.vtradex.wms.server.action.WaveDocPickConfirmDecisionAction" />	
+	<bean id="waveDocUnSeprateAllDecisionAction" class="com.vtradex.wms.server.action.WaveDocUnSeprateAllDecisionAction" />
+
+	<bean id="processDocAllocateDecisionAction" class="com.vtradex.wms.server.action.ProcessDocAllocateDecisionAction" />
+	<bean id="processDocDetailAllocateDecisionAction" class="com.vtradex.wms.server.action.ProcessDocDetailAllocateDecisionAction" />
+	<bean id="processDocPickDecisionAction" class="com.vtradex.wms.server.action.ProcessDocPickDecisionAction" />
+	<bean id="processDocRecordDecisionAction" class="com.vtradex.wms.server.action.ProcessDocRecordDecisionAction" />
+	
+	<!--ASN上架状态判断-->
+	<bean id="wmsASNMoveStatusDecisionAction" class="com.vtradex.wms.server.action.move.WmsASNMoveStatusDecisionAction">
+		<constructor-arg index="0">
+			<ref bean="commonDao"></ref>
+		</constructor-arg>
+	</bean>
+	<!--  发货移位单退拣数量判断	-->
+	<bean id="movedocPickBackAction" class="com.vtradex.wms.server.action.move.WmsMoveDocPickBackAction"></bean>
+	<!--  波次单移位判断	-->
+	<bean id="waveDocConfirmDecisionAction" class="com.vtradex.wms.server.action.WaveDocConfirmDecisionAction">
+		<constructor-arg index="0">
+			<ref bean="commonDao"></ref>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="wmsASNQualityDecisionAction" class="com.vtradex.wms.server.action.receiving.WmsASNQualityDecisionAction">
+		<constructor-arg index="0">
+			<ref bean="wmsASNManager"></ref>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="wmsASNQualityConfirmDecistionAction" class="com.vtradex.wms.server.action.receiving.WmsASNQualityConfirmDecistionAction">
+		<constructor-arg index="0">
+			<ref bean="wmsASNManager"></ref>
+		</constructor-arg>
+	</bean>
+	<bean id="wmsProcessRecordDecistionAction" class="com.vtradex.wms.server.action.WmsProcessRecordDecistionAction"/>
+</beans>

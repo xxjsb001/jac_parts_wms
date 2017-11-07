@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editRuleTablePage" title="editRuleTablePage" pageLocale="false" entityClass="com.vtradex.rule.server.model.rule.RuleTable" width="220" height="140">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="ruleTable.id" title="ruleTable.id" pageLocale="false" reserve="false"/>
+            <text id="ruleTable.name" title="ruleTable.name" pageLocale="false" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <checkbox id="ruleTable.multiple" title="ruleTable.multiple" row="3" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <text id="ruleTable.sortDesc" title="ruleTable.sortDesc" pageLocale="false" row="4" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false"  trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="ruleTable.description" title="ruleTable.description" pageLocale="false" row="5" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

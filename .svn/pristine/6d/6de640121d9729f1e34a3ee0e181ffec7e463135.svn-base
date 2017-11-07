@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="editinputParameterPage" title="editinputParameterPage" entityClass="com.vtradex.repc.server.model.report.ReportFile" width="580" height="350">
+        <modify>
+            <inputUIs>
+               <hidden id="file.id" reserve="false"/>
+                <text id="file.name" title="ReportFile.file.name" row="1" col="1" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="file.code" title="ReportFile.file.code" row="1" col="2" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                  <list id="file.type" title="ReportFile.file.type" row="1" col="3" width="120" readOnly="true" required="false" reserve="false" forceOverride="false" enumType="FileType">
+                    <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+ 					enumerate.enumValue,null,null  From Enumerate enumerate 
+ 					where enumerate.enumType = 'FileType']]></hql>
+ 					
+                </list>
+                 <text id="file.fileName" title="ReportFile.file.fileName" row="2" col="1" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true">
+                 
+                 </text>
+                <text id="file.classification" title="ReportFile.file.classification" row="2" col="2" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                    
+                 <list id="file.grammarType" title="ReportFile.file.grammarType" row="2" col="3" width="120" readOnly="true" required="false" reserve="false" forceOverride="false" enumType="FileGrammarType">
+                    <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+					 enumerate.enumValue From Enumerate enumerate 
+ 					where enumerate.enumType = 'FileGrammarType']]></hql>
+ 					
+                </list>
+                
+                <text id="file.statement" title="ReportFile.file.statement" row="3" col="1" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true">
+                </text>
+          	   <list id="file.style" title="ReportFile.file.style" row="3" col="2" width="120" readOnly="true" required="false" reserve="false" forceOverride="false" enumType="FileStyle">
+                    <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+					 enumerate.enumValue  From Enumerate enumerate 
+ 					where enumerate.enumType = 'FileStyle']]></hql>
+ 					
+                </list>
+            </inputUIs>
+        </modify>
+        <detail autoQuery="false" entityClass="com.vtradex.repc.server.model.report.ReportParams" >
+            <datasource><![CDATA[select reportParams.id, 
+ reportParams.name,
+ reportParams.disname,
+ reportParams.type, 
+ reportParams.inputControl,
+ reportParams.defaultValue,
+ reportParams.enumType,
+ reportParams.statement,
+ reportParams.grammarType
+ from ReportParams reportParams
+ where 1=1 and reportParams.reportFile.id  = {file.id} 
+ ]]></datasource>
+            <columns>
+                <column id="reportParams.id" title="ID" visible="false"/>
+                <column id="reportParams.name" title="reportParams.name" visible="true" horizonAlign="left"/>
+				<column id="reportParams.disname" title="reportParams.disname" visible="true" horizonAlign="left"/>
+                <column id="reportParams.type" title="reportParams.type" visible="true" horizonAlign="left"/>
+                <column id="reportParams.inputControl" title="reportParams.inputControl" visible="true" horizonAlign="left" format="enumFormat" formatParam="Control"/>
+                <column id="reportParams.defaultValue" title="reportParams.defaultValue" visible="true" horizonAlign="left"/>
+                <column id="reportParams.enumType" title="reportParams.enumType" visible="true" horizonAlign="left"/>
+				<column id="reportParams.statement" title="reportParams.statement" visible="false" horizonAlign="left"/>
+				<column id="reportParams.grammarType" title="reportParams.grammarType" visible="false" horizonAlign="left"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

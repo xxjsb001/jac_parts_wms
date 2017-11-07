@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.organization.WmsOrganization" table="WMS_ORGANIZATION">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_organization</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+        <property name="code" type="string">
+            <column name="CODE" not-null="true" length="50" unique-key="UK_ORGANIZATION"/>
+        </property>
+        <property name="name" type="string">
+            <column name="NAME" length="100"/>
+        </property>
+        <component name="contact" class="com.vtradex.wms.server.model.base.Contact">
+            <property name="country" type="string">
+                <column name="C_COUNTRY" length="100"/>
+            </property>
+             <property name="province" type="string">
+                <column name="C_PROVINCE" length="100"/>
+            </property>
+            <property name="city" type="string">
+                <column name="C_CITY" length="50"/>
+            </property>
+            <property name="address" type="string">
+                <column name="C_ADDRESS" length="255"/>
+            </property>
+            <property name="postCode" type="string">
+                <column name="C_POSTCODE" length="10"/>
+            </property>
+            <property name="contactName" type="string">
+                <column name="C_CONTACT_NAME" length="50"/>
+            </property>
+            <property name="mobile" type="string">
+                <column name="C_MOBILE" length="100"/>
+            </property>
+            <property name="telephone" type="string">
+                <column name="C_TELEPHONE" length="50"/>
+            </property>
+            <property name="fax" type="string">
+                <column name="C_FAX" length="50"/>
+            </property>
+            <property name="email" type="string">
+                <column name="C_EMAIL" length="100"/>
+            </property>
+			
+			 <property name="taxCode" type="string">
+                <column name="C_TAX_CODE" length="255"/>
+            </property>
+			 <property name="bankAccountNum" type="string">
+                <column name="C_BANK_ACCOUNT_NUM" length="255"/>
+            </property>
+        </component>
+		
+		<property name="beCarrier" column="IS_CARRIER" type="yes_no" not-null="true"/>
+		<property name="beCustomer" column="IS_CUSTOMER" type="yes_no" not-null="true"/>
+		<property name="beSupplier" column="IS_SUPPLIER" type="yes_no" not-null="true"/>
+		<property name="beCompany" column="IS_COMPANY" type="yes_no" not-null="true"/>
+		<property name="beVirtual" column="IS_VIRTUAL" type="yes_no" not-null="true"/>
+		<many-to-one name="lotRule" class="com.vtradex.wms.server.model.organization.WmsLotRule">
+			<column name="RULE_LOT_ID"/>
+		</many-to-one>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="255"/>
+		</property>
+		<property name="status" type="string">
+            <column name="STATUS" length="50"/>
+        </property>
+        <property name="neiBuName" type="string">
+            <column name="NEIBU_NAME" length="100"/>
+        </property>
+        
+        <property name="shortName" type="string" column="SHORT_NAME" length="100"/>
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	</class>
+</hibernate-mapping>

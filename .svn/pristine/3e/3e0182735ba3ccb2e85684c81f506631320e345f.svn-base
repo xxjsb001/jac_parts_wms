@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="inventoryCountAdjustPage" title="inventoryCountAdjustPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.inventory.WmsInventoryExtend">
+        <workflow/>
+        <datasource><![CDATA[SELECT wsn.id,
+wsn.locationCode,
+inventory.location.type,
+wsn.pallet,
+wsn.carton,
+wsn.serialNo,
+inventory.itemKey.item.company.name,
+inventory.itemKey.item.code,
+inventory.itemKey.item.name,
+inventory.itemKey.lot,
+inventory.status,
+inventory.packageUnit.unit,
+wsn.quantityBU,
+inventory.itemKey.lotInfo.soi,
+inventory.itemKey.lotInfo.storageDate,
+inventory.itemKey.lotInfo.productDate,
+inventory.itemKey.lotInfo.expireDate,
+inventory.itemKey.lotInfo.warnDate,
+inventory.itemKey.lotInfo.supplier.name,
+inventory.itemKey.lotInfo.extendPropC1,
+inventory.itemKey.lotInfo.extendPropC2,
+inventory.itemKey.lotInfo.extendPropC3,
+inventory.itemKey.lotInfo.extendPropC4,
+inventory.itemKey.lotInfo.extendPropC5,
+inventory.itemKey.item.id,
+inventory.packageUnit.id 
+ FROM WmsInventoryExtend wsn 
+ LEFT JOIN wsn.inventory inventory
+ LEFT JOIN inventory.location location
+ LEFT JOIN inventory.packageUnit packageUnit
+ LEFT JOIN inventory.itemKey itemKey
+ LEFT JOIN itemKey.item item
+ LEFT JOIN itemKey.item.company company 
+ LEFT JOIN inventory.itemKey.lotInfo.supplier
+ WHERE 1=1
+ AND inventory.location.warehouse = #{SESSION_WAREHOUSE}
+ AND inventory.location.type = 'COUNT'
+ ORDER BY inventory.location.code]]></datasource>
+        <columns>
+            <column id="wsn.id" title="wsn.id" visible="false" sortable="false" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="wsn.locationCode" title="wsn.locationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.location.type" title="inventory.location.type" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsLocationType"/>
+            <column id="wsn.pallet" title="wsn.pallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wsn.carton" title="wsn.carton" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wsn.serialNo" title="wsn.serialNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.itemKey.item.company.name" title="company.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.itemKey.item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.itemKey.item.name" title="item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.itemKey.lot" title="inventory.itemKey.lot" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.status" title="inventory.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.packageUnit.unit" title="inventory.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wsn.quantityBU" title="wsn.quantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="inventory.itemKey.lotInfo.soi" title="inventory.itemKey.lotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.itemKey.lotInfo.storageDate" title="wsn.storageDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="inventory.itemKey.lotInfo.productDate" title="wsn.productDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="inventory.itemKey.lotInfo.expireDate" title="wsn.expireDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="inventory.itemKey.lotInfo.warnDate" title="wsn.warnDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="inventory.itemKey.lotInfo.supplier.name" title="inventory.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="inventory.itemKey.lotInfo.extendPropC1" title="lotInfo.extendPropC1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="inventory.itemKey.lotInfo.extendPropC2" title="lotInfo.extendPropC2" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="inventory.itemKey.lotInfo.extendPropC3" title="lotInfo.extendPropC3" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="inventory.itemKey.lotInfo.extendPropC4" title="lotInfo.extendPropC4" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="inventory.itemKey.lotInfo.extendPropC5" title="lotInfo.extendPropC5" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventory.itemKey.item.id" title="inventory.itemKey.item.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="inventory.packageUnit.id" title="inventory.packageUnit.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+        </columns>
+    </maintainPage>
+</pages>

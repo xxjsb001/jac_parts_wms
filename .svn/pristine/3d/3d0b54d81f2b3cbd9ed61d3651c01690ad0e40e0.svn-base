@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editBlgItemPage" title="editBlgItemPage" entityClass="com.vtradex.wms.server.model.organization.WmsBlgItem" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="wbi.id" title="wbi.id" reserve="false"/>
+            <remote id="wbi.supplier.id" title="wbi.supplier.neiBuName" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT 
+ company.id,
+ company.code,
+ company.neiBuName
+ FROM WmsOrganization   company 
+ WHERE company.beSupplier = true
+and company.beVirtual =false
+AND company.status = 'ENABLED'  
+AND (company.code = #{SESSION_ORGANIZATION_CODE} OR #{SESSION_ORGANIZATION_CODE} = 'all') 
+AND (company.code  LIKE :param OR  company.name LIKE :param) ]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="wbi.blg.id" title="wbi.blg.id" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="false" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT worker.id,worker.code,worker.name FROM WmsWorker worker WHERE 1=1 AND (worker.code LIKE :param OR worker.name LIKE :param) AND worker.warehouse =#{SESSION_WAREHOUSE}]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="wbi.item.id" title="wbi.item.id" row="2" col="1" defaultValue="false" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT 
+ item.id,
+ item.code,
+ item.name
+ FROM WmsItem item,WmsWarehouseAndCompany wwa 
+ WHERE 1=1
+ AND wwa.company.id=item.company.id
+ AND wwa.warehouse.id = #{SESSION_WAREHOUSE}
+ AND (item.code like :param or item.name like :param)
+ AND item.status = 'ENABLED']]></hql>
+                <eventListeners/>
+            </remote>
+            <list id="wbi.billType.id" title="wbi.billType.name" row="2" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT
+ billType.id,
+ billType.name
+ FROM WmsBillType billType,WmsWarehouseAndCompany wwb 
+ WHERE 1=1 
+ AND wwb.warehouse.id = #{SESSION_WAREHOUSE} 
+ AND billType.type='SHIP'
+ AND wwb.company.id=billType.company.id 
+ AND billType.status = 'ENABLED']]></hql>
+                    <eventListeners/>
+            </list>
+            <text id="wbi.remark" title="wbi.remark" row="3" col="1" span="2" width="360" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

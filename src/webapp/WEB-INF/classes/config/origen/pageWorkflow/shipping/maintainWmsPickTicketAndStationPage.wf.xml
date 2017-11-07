@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsPickTicketAndStationPage">
+    <main>
+        <process id="masterBOLProcess">
+            <tablePopup id="viewPrintTag" title="viewPrintTag" process="masterBOLProcess.viewPrintTag" enableType="single" containId="true" pageId="editPrintTagPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

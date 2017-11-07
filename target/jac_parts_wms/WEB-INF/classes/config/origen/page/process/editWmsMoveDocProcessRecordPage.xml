@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsMoveDocProcessRecordPage" title="editWmsMoveDocProcessRecordPage" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc" width="230" height="200">
+        <workflow/>
+        <inputUIs>
+            <hidden id="processDoc.id" title="processDoc.id" reserve="false"/>
+	        <text id="processDoc.processQuantityBU" title="processDoc.processQuantity" row="1" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true">
+	             <visibleExpression/>
+	             <hql/>
+	             <eventListeners/>
+	         </text>
+	         <text id="processDoc.addProcessQuantityBU" title="processDoc.addProcessQuantityBU" row="3" defaultValue="0" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" validator="positiveNumber" trimSpace="true">
+	             <visibleExpression/>
+	             <hql/>
+	             <eventListeners/>
+	         </text>
+        </inputUIs>
+    </editPage>
+</pages>

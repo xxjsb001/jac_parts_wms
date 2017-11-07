@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="modifyPutawayAutoAllocatePage" title="modifyPutawayAutoAllocatePage" entityClass="com.vtradex.wms.server.model.receiving.WmsASN" onClose="refreshParent" width="880" height="500">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="asn.id" title="asn.id" reserve="false"/>
+                <hidden id="asn.status" title="asn.status" reserve="false"/>
+                <text id="asn.code" title="asn.code" row="1" col="1" span="1" readOnly="true" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <remote id="asn.company.id" title="asn.company.id" row="1" col="2" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[SELECT 
+company.id,
+company.code,
+company.name
+FROM WmsOrganization company
+WHERE company.beCompany = true
+AND company.status = 'ENABLED'
+AND (company.code LIKE :param OR company.name LIKE :param)]]></hql>
+                    <eventListeners/>
+                </remote>
+                <remote id="asn.billType.id" title="asn.billType.id" row="1" col="3" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[SELECT
+billType.id,
+billType.code,
+billType.name
+FROM WmsBillType billType
+WHERE 1=1
+AND (billType.code LIKE :param OR billType.name LIKE :param)
+AND billType.status = 'ENABLED']]></hql>
+                    <eventListeners/>
+                </remote>
+                <remote id="asn.supplier.id" title="asnDetail.lotInfo.supplier.name" row="1" col="4" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT 
+ company.id,
+ company.code,
+ company.name
+ FROM WmsOrganization   company 
+ WHERE company.beSupplier = true
+and company.beVirtual =false
+AND company.status = 'ENABLED' 
+AND (company.code  LIKE :param OR  company.name LIKE :param) ]]></hql>
+                    <eventListeners>
+                    </eventListeners>
+                </remote>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.receiving.JacPalletSerial">
+            <datasource><![CDATA[SELECT jps.id,jps.toLocationId,
+ jps.palletNo,
+ jps.asnDetail.item.code,
+ jps.asnDetail.item.name,
+ jps.expectedQuantityBU,
+ jps.toLocationCode,
+ jps.bePutawayAuto
+ FROM JacPalletSerial jps 
+ WHERE 1=1
+ AND jps.bePutawayAuto = 'N'
+ AND jps.expectedQuantityBU > 0
+  /~asn.id: AND jps.asnDetail.asn.id={asn.id}~/
+  ORDER BY jps.palletNo]]></datasource>
+            <columns>
+                <column id="jps.id" title="jps.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+                <column id="jps.toLocationId" title="jps.toLocationId" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+	            <column id="jps.palletNo" title="jps.palletNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	            <column id="jps.asnDetail.item.code" title="asnDetail.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	            <column id="jps.asnDetail.item.name" title="asnDetail.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	            <column id="jps.expectedQuantityBU" title="jps.expectedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" color="red" inputUI="text" inputUIValidator="numberRequired"/>
+            	<column id="jps.toLocationCode" title="task.toLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            	<column id="jps.bePutawayAuto" title="jps.bePutawayAuto" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

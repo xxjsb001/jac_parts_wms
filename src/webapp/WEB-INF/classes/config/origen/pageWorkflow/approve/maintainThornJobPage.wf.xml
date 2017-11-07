@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainThornJobPage">
+    <main>
+        <process id="thornJobProcess">
+            <tablePopup id="new" title="new" process="thornJobProcess.new" enableType="none" containId="false" pageId="editThornJobPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="thornJobProcess.modify" enableType="single" containId="true" pageId="editThornJobPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="thornJobProcess.delete" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="maintainJobUser" title="maintainJobUser" process="thornJobProcess.addJobUser" enableType="single" containId="false" pageId="maintainThornJobUserPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

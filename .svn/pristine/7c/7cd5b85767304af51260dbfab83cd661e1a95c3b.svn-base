@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="editRoleUsersPage" title="editRoleUsersPage" entityClass="com.vtradex.thorn.server.model.security.Role">
+        <modify>
+            <inputUIs>
+                <hidden id="role.id" reserve="true"/>
+            </inputUIs>
+        </modify>
+        <detail autoQuery="false" entityClass="com.vtradex.thorn.server.model.security.User">
+            <datasource><![CDATA[select user.id ,user.loginName,user.name from Role role, User user
+ where 1=1
+ and user in elements(role.users)
+ and role.id = {role.id}]]></datasource>
+            <columns>
+                <column id="user.id" title="user.id" visible="false" horizonAlign="center" verticalAlign="middle"/>
+                <column id="user.loginName" title="user.loginName" visible="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="user.name" title="user.name" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsBillingCategoryPage" title="editWmsBillingCategoryPage" entityClass="com.vtradex.wms.server.model.billing.WMSBillingCategory" width="640" height="480">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="category.id" title="category.id" reserve="false"/>
+            <list id="category.parentCategory.id" title="category.parentCategory.id" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT
+ billType.id,
+ billType.name
+ FROM WMSBillingCategory billType
+ WHERE 1=1  
+AND billType.status = 'ENABLED' 
+AND billType.id != ${category.id}
+AND billType.type !='SMALL_CATEGORY']]></hql>
+                <eventListeners/>
+            </list>
+            <text id="category.code" title="category.code" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="category.name" title="category.name" row="1" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <list id="category.type" title="category.type" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="WMSBillingCategoryType">
+                <visibleExpression/>
+                <hql><![CDATA[
+ select 
+ enum.enumValue,
+ enum.enumValue
+ from Enumerate enum
+ where enum.enumType='WMSBillingCategoryType'
+ order by enum.id ASC]]></hql>
+                <eventListeners/>
+            </list>
+            <booleanList id="category.isCost" title="category.isCost" row="2" col="2" defaultValue="0" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </booleanList>
+            <text id="category.memo" title="category.memo" row="3" col="1" span="3" width="480" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="showReportFileStatementPage" title="showReportFileStatementPage" entityClass="com.vtradex.repc.server.model.report.ReportFile" onClose="refreshParent">
+         <inputUIs>
+              <hidden id="file.id" reserve="false"/>
+              <textArea  id="file.statement" title="ReportFile.file.statement" row="1" span="3" width="500" height="500" rows="10" cols="56" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true">
+              </textArea>
+         </inputUIs>
+    </editPage>
+</pages>

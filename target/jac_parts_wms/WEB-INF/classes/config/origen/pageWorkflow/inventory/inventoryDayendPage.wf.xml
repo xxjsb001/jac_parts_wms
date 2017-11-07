@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="inventoryDayendPage">
+    <main>
+        <process id="storageDailyProcess">
+            <formCommit id="inventorydayend" title="inventorydayend" process="inventoryProcess.inventorydayend" enableType="none" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="beginDate" className="date">
+                        <entries/>
+                    </mapping>
+                    <mapping id="endDate" className="date">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsInventoryManager" methodName="inventorydayend" parameter="beginDate,endDate"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainLotRulePage">
+    <main>
+        <process id="lotRuleProcess">
+            <tablePopup id="new" title="new" process="lotRuleProcess.new" enableType="none" containId="false" pageId="editWmsLotRulePage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="lotRuleProcess.edit" enableType="single" containId="true" pageId="editWmsLotRulePage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="disable" title="disable" process="lotRuleProcess.disable" enableType="multi" download="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="enable" title="enable" process="lotRuleProcess.enable" enableType="multi" download="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

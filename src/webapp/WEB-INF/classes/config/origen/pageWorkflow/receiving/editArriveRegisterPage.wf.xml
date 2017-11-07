@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editArriveRegisterPage">
+    <main>
+        <process id="wmsBookingProcess">
+            <formCommit id="save" title="save" process="wmsBookingProcess.arriveRegister" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="maintainWmsBookingPage" methodName="arriveRegister" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

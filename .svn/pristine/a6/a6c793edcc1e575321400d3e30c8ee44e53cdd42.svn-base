@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainGroupPage" title="maintainGroupPage" autoQuery="true" entityClass="com.vtradex.thorn.server.model.security.Group" >
+        <datasource type="hql"><![CDATA[select g.id, g.code, g.name
+ from Group g 
+ where 1=1]]></datasource>
+        <columns>
+            <column id="g.id" title="ID" visible="false"/>
+            <column id="g.code" title="group.code" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="g.name" title="group.name" visible="true" horizonAlign="left" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

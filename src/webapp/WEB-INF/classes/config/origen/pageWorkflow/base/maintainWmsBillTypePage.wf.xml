@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsBillTypePage">
+    <main>
+        <process id="billTypeProcess">
+            <tablePopup id="new" title="new" process="billTypeProcess.new" enableType="none" containId="false" pageId="editWmsBillTypePage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="billTypeProcess.edit" enableType="single" containId="true" pageId="editWmsBillTypePage">
+                <enableExpression><![CDATA[${billType.beInner}=='false']]></enableExpression>
+            </tablePopup>
+            <tableCommit id="disable" title="disable" process="billTypeProcess.disable" enableType="multi" download="false" confirmMessage="confirm.disable">
+                <enableExpression><![CDATA[${billType.beInner}=='false']]></enableExpression>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="enable" title="enable" process="billTypeProcess.enable" enableType="multi" download="false" confirmMessage="confirm.enable">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

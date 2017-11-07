@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyWmsUserSupplierPage">
+    <main>
+        <process id="wmsUserSupplierProcess">
+            <formCommit id="save" title="save" process="wmsUserSupplierProcess.new" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="edit" title="edit" process="wmsUserSupplierProcess.edit" enableType="none" download="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail>
+        <process id="wmsUserSupplierProcess">
+            <tablePopup id="addDetail" title="addDetail" process="wmsUserSupplierProcess.addDetail" enableType="none" containId="false" pageId="addWmsUserSupplierPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="wmsUserSupplierProcess.delete" enableType="multi" download="false" confirmMessage="confirm.removeDetails">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsOrganizationManager" methodName="removeUserSupplier" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

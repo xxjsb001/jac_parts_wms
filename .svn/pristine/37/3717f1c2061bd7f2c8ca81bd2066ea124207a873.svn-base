@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainThornJobUserPage" title="maintainThornJobUserPage" autoQuery="false" entityClass="com.vtradex.thorn.server.model.organization.ThornJobUser" width="800" height="500" onClose="refreshParent">
+        <workflow/>
+        <datasource><![CDATA[SELECT thornJobUser.id,
+thornJobUser.user.name 
+ from ThornJobUser thornJobUser where 1=1 and thornJobUser.thornJob.id in ({parentIds}) ]]></datasource>
+        <columns>
+            <column id="thornJobUser.id" title="thornJobUser.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="thornJobUser.user.name" title="thornJobUser.user.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

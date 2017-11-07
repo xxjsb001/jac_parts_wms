@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+	<!--com.vtradex.wms.client.ui.page.ManualPickingAllocatePage-->
+	<!--com.vtradex.wms.client.ui.page.allocate.page.ManualPickingAllocatePage-->
+    <customPage id="manualPickingAllocatePage" title="manualPickingAllocatePage" onClose="refreshParent" className="com.vtradex.wms.client.ui.page.allocate.page.ManualPickingAllocatePage" width="950" height="600">
+		<buttons>
+			<button id="manualAllocateProcess.findAvailableInventories" title="pickTicketDetailsPanel.rightMenu.getAvailableInventories"/>
+			<button id="manualAllocateProcess.singleCancelAllocate" title="allocatedDetailsPanel.rightMenu.singleCancelAllocate"/>
+			<button id="manualAllocateProcess.manualAllocate" title="pickAvailablePanel.rightMenu.manualAllocate"/>
+			<button id="manualAllocateProcess.search" title="manualPickingAllocatePage.rightMenu.search"/>
+		</buttons>
+	</customPage>
+</pages>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsPickWorkerPage" title="editWmsPickWorkerPage" entityClass="com.vtradex.wms.server.model.base.WmsPickWorker" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="wmsWorker.id" title="wmsWorker.id" reserve="false"/>
+            <remote id="wmsWorker.pickWorker.id" title="wmsWorker.pickWorker.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT worker.id,worker.code,worker.name FROM WmsWorker worker WHERE 1=1 AND (worker.code LIKE :param OR worker.name LIKE :param) AND worker.warehouse =#{SESSION_WAREHOUSE}]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="wmsWorker.worker.id" title="wmsWorker.worker.id" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="false" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT worker.id,worker.code,worker.name FROM WmsWorker worker WHERE 1=1 AND (worker.code LIKE :param OR worker.name LIKE :param) AND worker.warehouse =#{SESSION_WAREHOUSE}]]></hql>
+                <eventListeners/>
+            </remote>
+        </inputUIs>
+    </editPage>
+</pages>

@@ -1,0 +1,2 @@
+pdf417=0,com.vtradex.wms.server.utils.PDF417Code
+qrcode=0,com.vtradex.wms.server.utils.QRCode

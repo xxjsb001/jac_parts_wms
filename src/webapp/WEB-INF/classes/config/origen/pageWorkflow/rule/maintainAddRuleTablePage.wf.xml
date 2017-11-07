@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainAddRuleTablePage">
+    <main>
+        <process id="groupRuleTableProcess">
+            <tableCommit id="add" title="add" pageLocale="false" process="groupRuleTableProcess.new" enableType="multi" download="false">
+                <enableExpression/>
+                <actions>
+                    <action managerName="groupRuleTableManager" methodName="addRuleTable" parameter="maintainGroupRuleTablePage.obj,obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

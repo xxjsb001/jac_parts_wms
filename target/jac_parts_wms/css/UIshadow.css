@@ -1,0 +1,59 @@
+.shadow{
+display:block;
+filter:dropshadow(OffX=1, OffY=1, Color=#F0F0F0, Positive=true);
+text-align:center;
+margin:auto;
+font-family:"宋体";
+}
+.shadow_s{
+width:35px;
+}
+.shadow_l{
+width:100px;
+}
+
+.menushadow{
+width:90px;
+display:block;
+padding-top:13px;
+cursor:pointer;
+font-size:12px;
+padding-left:10px;
+}
+
+.tabshadow{
+text-indent:4px;
+filter:dropshadow(OffX=1, OffY=1, Color=#F0F0F0, Positive=true);
+}
+
+.adminlogshadow{
+font-family:"宋体";
+display:block;
+width:125px;
+color:#333333;
+filter:dropshadow(OffX=1, OffY=1, Color=#F0F0F0, Positive=true);
+}
+
+.popshadow{
+display:block;
+width:200px;
+filter:dropshadow(OffX=1, OffY=1, Color=#F0F0F0, Positive=true);
+}
+
+.thshadow{
+display:block;
+width:90px;
+filter:dropshadow(OffX=1, OffY=1, Color=#FFFFFF, Positive=true); 
+}
+.loginpage_shadow{
+display:block;
+width:300px;
+line-height:20px;
+filter:dropshadow(OffX=1, OffY=1, Color=#F0F0F0, Positive=true);
+}
+.title_shadow{
+display:block;
+width:300px;
+line-height:20px;
+filter:dropshadow(OffX=1, OffY=1, Color=#F0F0F0, Positive=true);
+}

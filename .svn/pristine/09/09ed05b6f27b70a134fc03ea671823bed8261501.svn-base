@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editP2CMPage">
+	<main>
+		<process id="BOProcess">
+				<formCommit id="save" process="BOProcess.new" title="save" >
+	                <mappings>
+                    <mapping id="ibo.id" className="long"/>
+                    <mapping id="p2cm" className="com.vtradex.thorn.server.model.imports.Property2ColMapping"/>
+                </mappings>
+                <actions>
+                    <action managerName="businessObjectManager" methodName="addMapping" parameter="ibo.id, p2cm"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="false"/>
+                </forwards>
+				</formCommit>
+		</process>
+	</main>
+</page>

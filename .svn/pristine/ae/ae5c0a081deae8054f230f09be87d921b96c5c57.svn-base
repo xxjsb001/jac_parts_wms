@@ -1,0 +1,145 @@
+package com.vtradex.wms.server.model.interfaces;
+
+import java.util.Date;
+
+import com.vtradex.thorn.server.model.VersionalEntity;
+
+/**
+ * 存储对应的ASN中间表的数据
+ * @author fs
+ *
+ */
+public class MiddleAsnSrmDetail extends VersionalEntity{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7629912821760034331L;
+
+	private String asnNO;//送货单号
+	private String poNo;//订单号
+	private Long itemId;//货品编码
+	private Long supplyId;//供应商编码
+	private Long companyId;//货主
+	private Long packageId;//包装单位
+	private Double sendQty;//数量
+	private Date reDate;//生产日期
+	private Long ordTypeId;//单据类型 
+	private Boolean isMt;//是否码托
+	private Integer trayQty;//托盘总个数
+	private String itemName;
+	private String supplyName;
+	
+	private WHead head;
+	
+	
+	
+	public WHead getHead() {
+		return head;
+	}
+	public void setHead(WHead head) {
+		this.head = head;
+	}
+	public String getAsnNO() {
+		return asnNO;
+	}
+	public void setAsnNO(String asnNO) {
+		this.asnNO = asnNO;
+	}
+	public String getPoNo() {
+		return poNo;
+	}
+	public void setPoNo(String poNo) {
+		this.poNo = poNo;
+	}
+	public Double getSendQty() {
+		return sendQty;
+	}
+	public void setSendQty(Double sendQty) {
+		this.sendQty = sendQty;
+	}
+	public Date getReDate() {
+		return reDate;
+	}
+	public void setReDate(Date reDate) {
+		this.reDate = reDate;
+	}
+	public Boolean getIsMt() {
+		return isMt;
+	}
+	public void setIsMt(Boolean isMt) {
+		this.isMt = isMt;
+	}
+	public Integer getTrayQty() {
+		return trayQty;
+	}
+	public void setTrayQty(Integer trayQty) {
+		this.trayQty = trayQty;
+	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	public String getSupplyName() {
+		return supplyName;
+	}
+	public void setSupplyName(String supplyName) {
+		this.supplyName = supplyName;
+	}
+	
+	public Long getItemId() {
+		return itemId;
+	}
+	public void setItemId(Long itemId) {
+		this.itemId = itemId;
+	}
+	public Long getSupplyId() {
+		return supplyId;
+	}
+	public void setSupplyId(Long supplyId) {
+		this.supplyId = supplyId;
+	}
+	public Long getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+	public Long getPackageId() {
+		return packageId;
+	}
+	public void setPackageId(Long packageId) {
+		this.packageId = packageId;
+	}
+	public Long getOrdTypeId() {
+		return ordTypeId;
+	}
+	public void setOrdTypeId(Long ordTypeId) {
+		this.ordTypeId = ordTypeId;
+	}
+	public MiddleAsnSrmDetail(){}
+	public MiddleAsnSrmDetail(String asnNO, String poNo, Long itemId,
+			Long supplyId, Long companyId, Long packageId, Double sendQty,
+			Date reDate, Long ordTypeId, Boolean isMt, Integer trayQty,
+			WHead head) {
+		super();
+		this.asnNO = asnNO;
+		this.poNo = poNo;
+		this.itemId = itemId;
+		this.supplyId = supplyId;
+		this.companyId = companyId;
+		this.packageId = packageId;
+		this.sendQty = sendQty;
+		this.reDate = reDate;
+		this.ordTypeId = ordTypeId;
+		this.isMt = isMt;
+		this.trayQty = trayQty;
+		this.head = head;
+	}
+	
+	
+	
+	
+}

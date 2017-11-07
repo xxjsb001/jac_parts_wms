@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="inventoryProcess" control="status">
+
+	<task id="lockByStatus" title="锁定">
+	</task>
+
+	<task id="unlockByStatus" title="解锁">
+	</task>
+
+	<task id="changePackage" title="包装转换">
+	</task>
+
+	<task id="move" title="手工移位">
+	</task>
+
+	<task id="splitManualPallet" title="手工拆托">
+	</task>
+
+	<task id="manualPallet" title="手工码托">
+	</task>
+
+	<task id="countAdjust" title="盈亏调整">
+	</task>
+
+	<task id="inventoryCountReCompute" title="库存积数重算">
+	</task>
+
+	<task id="initdayend" title="日结初始化">
+	</task>
+
+	<task id="inventorydayend" title="库存日结">
+	</task>
+
+	<task id="modify" title="库存调整">
+	</task>
+
+	<task id="viewTask" title="查看分配情况">
+	</task>
+
+	<task id="addToMoveDocByItem" title="货品移位">
+	</task>
+
+	<task id="viewSerialNo" title="查看序列号">
+	</task>
+
+	<task id="initInventory" title="初始化库存">
+	</task>
+
+	<task id="commitInventoryExcel" title="提交库存信息">
+	</task>
+
+	<task id="printPalletNo" title="打印托盘号">
+	</task>
+
+	<task id="addInventory" title="新增库存">
+	</task>
+
+	<task id="autoPallet" title="自动分配托盘号">
+	</task>
+
+	<task id="addToMoveDocByPallet" title="整托移位">
+	</task>
+
+	<task id="addToMoveDocByCarton" title="整箱移位">
+	</task>
+
+	<task id="inventoryQuality" title="库内质检">
+	</task>
+
+	<task id="inventoryMiss" title="报缺库存查询">
+	</task>
+
+	<task id="saveStorageData" title="库存日结">
+	</task>
+
+	<task id="mesMisAdjust" title="MES报缺调整">
+	</task>
+
+	<task id="mesMidInv" title="mes报缺库存">
+	</task>
+
+	<task id="mesDisInitImport" title="MES报缺导入期初">
+	</task>
+
+</process>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="scanSubBolPage" title="scanSubBolPage" pageLocale="false" entityClass="com.vtradex.wms.server.model.shipping.WmsBOLDetail" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="bolDetail.id" title="bolDetail.id" pageLocale="false" reserve="false"/>
+            <textArea id="bol.subCode" title="bol.subCode" pageLocale="false" row="2" col="1" span="2" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" rows="3" cols="38">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+        </inputUIs>
+    </editPage>
+</pages>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="choseLocationPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <formCommit id="manualAllocate" title="manualAllocate" process="wmsMoveDocProcess.allocate" enableType="none" download="false" visibleType="none">
+                <enableExpression/>
+                <mappings>				
+                    <mapping id="toLocationId" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="planQuantityBU" className="double">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="manualAllocate" parameter="obj,toLocationId,planQuantityBU"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

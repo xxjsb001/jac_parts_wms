@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editUsersPage">
+    <main>
+        <process id="userProcess">
+            <formCommit id="save" title="save" process="userProcess.new">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="user" className="com.vtradex.thorn.server.model.security.User">
+                        <entries/>
+                    </mapping>
+                    <mapping id="user.locale" className="locale">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="userManager" methodName="saveUser" parameter="user,user.locale"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail>
+        <process id="userProcess">
+            <tablePopup id="addGroup" title="addGroup" process="userProcess.add" containId="false" pageId="maintainAddUserGroupPage">
+                <enableExpression><![CDATA[${user.id} != '']]></enableExpression>
+            </tablePopup>
+            <tableCommit id="userProcess.delete" title="deleteGroup" process="userProcess.delete" enableType="multi" download="false" confirmMessage="confirm.delete">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="userManager" methodName="moveUserGroups" parameter="parentObj,obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

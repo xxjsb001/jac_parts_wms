@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editBatchPickTicketPage">
+    <main>
+        <process id="wmsPickTicketBaseProcess">
+            <formCommit id="batchPickTicket" title="batchPickTicket.new" process="wmsPickTicketBaseProcess.new" enableType="none" download="false" closeTransactional="true">
+                <enableExpression/>
+                <mappings>
+					<mapping id="company.id" className="long">
+                        <entries/>
+                    </mapping>   
+                    <mapping id="company.billType.id" className="long">
+                        <entries/>
+                    </mapping>    
+                    <mapping id="num" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="skuKindNum" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="skuNum" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="skuLevel" className="string">
+                        <entries/>
+                    </mapping>
+                    <mapping id="skuClass1" className="string">
+                        <entries/>
+                    </mapping>
+                    <mapping id="skuClass2" className="string">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsPickTicketManager" methodName="batchPickTicket" parameter="company.id,company.billType.id,num,skuKindNum,skuNum,skuLevel,skuClass1,skuClass2"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+	        </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

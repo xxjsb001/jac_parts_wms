@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyShelvesConfirmPage">
+    <main/>
+    <detail>
+        <process id="wmsASNProcess">
+            <tablePopup id="confirmAll" title="confirmAll" process="wmsASNProcess.confirmAll" enableType="none" containId="false" pageId="editShelvesConfirmAllPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="singleConfirm" title="singleConfirm" process="wmsASNProcess.singleConfirm" enableType="single" containId="true" pageId="taskConfirmByPalletNoPage">
+                <enableExpression><![CDATA[${task.status} == 'OPEN']]></enableExpression>
+            </tablePopup>
+        </process>
+        
+    </detail>
+</page>

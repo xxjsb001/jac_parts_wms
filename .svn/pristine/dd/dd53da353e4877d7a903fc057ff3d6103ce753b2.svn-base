@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsPickTicketAndAppliancePage" title="maintainWmsPickTicketAndAppliancePage" autoQuery="false" entityClass="com.vtradex.wms.server.model.shipping.WmsPickTicketAndAppliance">
+        <workflow/>
+        <datasource><![CDATA[SELECT apl.id,
+        apl.sheetNo,
+        apl.no,
+        apl.planTime,
+        apl.supplierNo,
+        apl.supplierName,
+        apl.packageNo,
+        apl.packageName,
+        apl.packageNum,
+        apl.partNo,
+        apl.partName,
+        apl.deliveryQty,
+        apl.qty,
+        apl.seq,
+        apl.endseq,
+        apl.isSps,
+        apl.lineNo,
+        apl.dockNo,
+        apl.curPag,
+        apl.totalPage,
+        apl.ulocNo,
+        apl.remark        
+        FROM WmsPickTicketAndAppliance apl
+ WHERE 1=1 
+ ORDER BY apl.id desc]]></datasource>
+        <columns>
+            <column id="apl.id" title="ID" visible="false" sortable="true"/>
+            <column id="apl.sheetNo" title="apl.sheetNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.no" title="apl.no" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.planTime" title="apl.planTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime" format="dateFormat" formatParam="y-m-d h:m:s"/>
+	        <column id="apl.supplierNo" title="apl.supplierNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.supplierName" title="apl.supplierName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.packageNo" title="apl.packageNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.packageName" title="apl.packageName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.packageNum" title="apl.packageNum" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+	        <column id="apl.partNo" title="apl.partNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.partName" title="apl.partName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.deliveryQty" title="apl.deliveryQty" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+	        <column id="apl.qty" title="apl.qty" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+	        <column id="apl.seq" title="apl.seq" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+	       	<column id="apl.endseq" title="apl.endseq" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+	        <column id="apl.isSps" title="apl.isSps" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
+	        <column id="apl.lineNo" title="apl.lineNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.dockNo" title="apl.dockNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.curPag" title="apl.curPag" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+	        <column id="apl.totalPage" title="apl.totalPage" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+	        <column id="apl.ulocNo" title="apl.ulocNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        <column id="apl.remark" title="apl.remark" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+         </columns>
+    </maintainPage>
+</pages>

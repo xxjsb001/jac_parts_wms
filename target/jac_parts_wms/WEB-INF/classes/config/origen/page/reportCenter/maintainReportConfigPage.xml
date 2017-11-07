@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainReportConfigPage" title="maintainReportConfigPage" autoQuery="true"  entityClass="com.vtradex.repc.server.model.report.ReportFile">
+        <search>  
+            <inputUIs>
+                <text id="file.code" title="ReportFile.file.code" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="false"/>
+                <text id="file.name" title="ReportFile.file.name" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="false"/>
+				<text id="file.classification" title="ReportFile.file.classification" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="false"/>
+                <list id="file.type" title="ReportFile.file.type" row="2" col="2" width="120px" readOnly="false" required="false" reserve="false" forceOverride="false" enumType="FileType">
+                	<hql><![CDATA[SELECT 
+								  enumerate.enumValue,
+								  enumerate.enumValue From Enumerate enumerate 
+							 	 where enumerate.enumType = 'FileType'
+                	 ]]></hql>
+                </list>
+                 <list id="file.style" title="ReportFile.file.style" row="3" col="1" width="120px" readOnly="false" required="false" reserve="false" forceOverride="false" enumType="FileStyle">
+                	<hql><![CDATA[SELECT 
+								  enumerate.enumValue,
+								  enumerate.enumValue From Enumerate enumerate 
+							 	 where enumerate.enumType = 'FileStyle'
+                	 ]]></hql>
+                </list>
+            </inputUIs>
+        </search>
+        <datasource type="hql"><![CDATA[ SELECT file.id, file.code, file.name, file.classification,
+        file.style, file.type, file.grammarType, file.fileName,
+        file.status,file.description 
+ FROM ReportFile file
+ WHERE 1=1
+ /~file.code: AND file.code like {file.code} ~/
+ /~file.name: AND file.name like {file.name} ~/
+ /~file.classification: AND file.classification like {file.classification}~/
+ /~file.type: AND file.type = {file.type}~/
+ /~file.style: AND file.style = {file.style}~/
+]]></datasource>
+        <columns>
+            <column id="file.id" title="maintainBOPage.ibo.id" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.code" title="ReportFile.file.code" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.name" title="ReportFile.file.name" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="file.classification" title="ReportFile.file.classification" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.style" title="ReportFile.file.style" visible="true" horizonAlign="center" verticalAlign="middle" format="enumFormat" formatParam="FileStyle"  />
+            <column id="file.type" title="ReportFile.file.type" visible="true" horizonAlign="center" verticalAlign="middle"  format="enumFormat" formatParam="FileType" />
+            <column id="file.grammarType" title="ReportFile.file.grammarType" visible="true" horizonAlign="center" verticalAlign="middle"  format="enumFormat" formatParam="FileGrammarType"/>
+            <column id="file.fileName" title="ReportFile.file.fileName" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="file.status" title="ReportFile.file.status" visible="true" horizonAlign="center" verticalAlign="middle" format="enumFormat" formatParam="BaseStatus" />
+            <column id="file.description" title="ReportFile.file.description" visible="true" horizonAlign="left" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

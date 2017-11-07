@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainStorageHeadPage" title="maintainStorageHeadPage" autoQuery="false" entityClass="com.vtradex.wms.server.model.inventory.WmsTheKont">
+        <workflow/>
+        <datasource><![CDATA[SELECT mis.id,
+mis.supCode,
+mis.supName,
+mis.type,
+mis.storageDate,
+mis.itemCode,
+mis.itemName,
+mis.quantity,
+mis.beforeQuantity,
+mis.beforeOnWayQuantity,
+mis.inventoryStatus,
+mis.extendPropc1,
+mis.description,
+mis.note,
+mis.orderDate,
+mis.updateInfo.createdTime,
+mis.hashCode,
+mis.note1
+ FROM WmsTheKont mis 
+ WHERE 1=1
+ AND mis.warehouse = #{SESSION_WAREHOUSE} 
+ ORDER BY mis.orderDate,mis.supCode,mis.itemCode,mis.id]]></datasource>
+        <columns>
+            <column id="mis.id" title="mis.id" visible="false" sortable="false" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="mis.supCode" title="mis.supCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="mis.supName" title="mis.supName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="mis.type" title="mis.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="mis.storageDate" title="mis.storageDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date" format="dateFormat" formatParam="y-m-d"/>
+            <column id="mis.itemCode" title="mis.itemCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="mis.itemName" title="mis.itemName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="mis.quantity" title="mis.quantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="mis.beforeQuantity" title="mis.beforeQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="mis.beforeOnWayQuantity" title="mis.beforeOnWayQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="mis.inventoryStatus" title="mis.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="mis.extendPropc1" title="mis.extendPropc1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="mis.description" title="mis.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="mis.note" title="mis.note" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="mis.orderDate" title="mis.orderDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date" format="dateFormat" formatParam="y-m-d"/>
+			<column id="mis.updateInfo.createdTime" title="mis.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+			<column id="mis.hashCode" title="hashcode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+			<column id="mis.note1" title="mis.note1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+		</columns>
+    </maintainPage>
+</pages>

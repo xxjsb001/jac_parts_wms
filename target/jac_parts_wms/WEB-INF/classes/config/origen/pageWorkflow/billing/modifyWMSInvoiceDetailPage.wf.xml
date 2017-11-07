@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyWMSInvoiceDetailPage">
+    <main>
+        <process id="wmsBillingInvoiceProcess">
+            <formCommit id="new" title="new" process="wmsBillingInvoiceProcess.new" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="new">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsBillingManager" methodName="saveWMSInvoice" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="edit" title="edit" process="wmsBillingInvoiceProcess.edit" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsBillingManager" methodName="saveWMSInvoice" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="addBillDetail" title="addBillDetail" process="wmsBillingInvoiceProcess.addBillDetail" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsBillingManager" methodName="addBillDetails" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formPopup id="viewBillingDetail" title="viewBillingDetail" process="wmsBillingInvoiceProcess.viewBillingDetail" enableType="none" containId="false" pageId="viewMaintainWMSBillingBillManagePage" visibleType="edit">
+                <enableExpression/>
+            </formPopup>
+        </process>
+    </main>
+    <detail>
+        <process id="wmsBillingInvoiceProcess">
+            <tablePopup id="newDetail" title="newDetail" process="wmsBillingInvoiceProcess.newDetail" enableType="none" containId="false" pageId="editWMSInvoiceDetailCategoryPage">
+                <enableExpression><![CDATA[${invoice.id}!='-']]></enableExpression>
+            </tablePopup>
+            <tablePopup id="editDetail" title="editDetail" process="wmsBillingInvoiceProcess.editDetail" enableType="single" containId="true" pageId="editWMSInvoiceDetailCategoryPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="deleteDetail" title="deleteDetail" process="wmsBillingInvoiceProcess.deleteDetail" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.modifyWMSInvoiceDetailPage.deleteDetail">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsBillingManager" methodName="deleteWmsInvoiceDetailCategroy" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

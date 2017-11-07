@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="masterBOLProcess" control="status">
+
+	<state id="UNSHIP" title="待发运"/>
+
+	<state id="SHIPPED" title="发运"/>
+
+	<task id="new" title="新建">
+		<to id="UNSHIP" type="state"/>
+	</task>
+
+	<task id="edit" title="修改">
+		<from id="UNSHIP" type="state"/>
+	</task>
+
+	<task id="delete" title="删除">
+		<from id="UNSHIP" type="state"/>
+		<to id="NONE" type="none"/>
+	</task>
+
+	<task id="ship" title="发运">
+		<from id="UNSHIP" type="state"/>
+		<to id="SHIPPED" type="state"/>
+	</task>
+
+	<task id="joinMasterBOL" title="加入装车单">
+	</task>
+
+	<task id="adjustLineNo" title="调整行号">
+	</task>
+
+	<task id="removeBOL" title="移除装车单">
+	</task>
+
+	<task id="view" title="查看">
+	</task>
+
+	<task id="printOnlyZCD" title="打印配送单">
+	</task>
+
+	<task id="printTag" title="打印器具单">
+	</task>
+
+	<task id="viewPrintOrderJh" title="预览打印计划件配送单">
+	</task>
+
+	<task id="viewPrintOrderSps" title="预览打印时序件配送单">
+	</task>
+
+	<task id="viewPrintOrder" title="预览打印配送单">
+	</task>
+
+</process>

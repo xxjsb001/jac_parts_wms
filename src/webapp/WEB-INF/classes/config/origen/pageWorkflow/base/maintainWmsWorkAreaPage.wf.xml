@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsWorkAreaPage">
+    <main>
+        <process id="wmsWorkAreaProcess">
+            <tablePopup id="new" title="new" process="wmsWorkAreaProcess.new" enableType="none" containId="false" pageId="editWmsWorkAreaPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="wmsWorkAreaProcess.edit" enableType="single" containId="true" pageId="editWmsWorkAreaPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="enable" title="enable" process="wmsWorkAreaProcess.enable" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainPage.enable">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="disable" title="disable" process="wmsWorkAreaProcess.disable" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainPage.disable">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

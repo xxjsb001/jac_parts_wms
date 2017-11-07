@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editConfirmAllQualityPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <formCommit id="save" title="save" process="wmsMoveDocProcess.confirmAll" enableType="none" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression><![CDATA[${moveDoc.status} == 'ACTIVE']]></enableExpression>
+                <mappings>
+                    <mapping id="qualityStatus" className="string">
+                        <entries/>
+                    </mapping>
+                    <mapping id="status" className="string">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="pickConfirmAll" parameter="obj,qualityStatus,status"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

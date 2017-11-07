@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="addReportPermissionPage">
+	<main>
+		<process id="roleProcess">
+				<tablePopup id="add" title="add" pageLocale="false" process="roleProcess.add" containId="false" pageId="invokeReportPermissionPage" />
+				<tableCommit id="remove" process="roleProcess.delete"  title="remove" enableType="multi" invisible="false">
+				<actions>
+                    <action managerName="fileRoleManager" methodName="releaseRelationCustomerToComp" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+				</tableCommit>
+		</process>
+	</main>
+</page>

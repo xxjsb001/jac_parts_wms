@@ -1,0 +1,11 @@
+脚本执行顺序：
+1、enumerate-init.sql
+2、global_params-init.sql
+3、roles.sql
+4、groups.sql
+5、group_role.sql
+6、users.sql
+7、group_user.sql
+8、role_user.sql
+9、wms_warehouse.sql
+10、permissions.sql

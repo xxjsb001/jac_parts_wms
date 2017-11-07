@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsMoveDocPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <tablePopup id="view" title="viewMoveDoc" process="wmsMoveDocProcess.view" enableType="single" containId="true" pageId="modifyMoveDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="autoAllocate" title="autoAllocate" process="wmsMoveDocProcess.autoAllocate" enableType="multi" download="false" closeTransactional="true">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="manualAllocate" title="manualAllocate" process="wmsMoveDocProcess.manualAllocate" enableType="single" containId="true" pageId="modifyWmsMoveDocHandPage">
+                <enableExpression/>
+            </tablePopup>
+            <!-- <tableCommit id="cancelAllocate" title="unallocate" process="wmsMoveDocProcess.cancelAllocate" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit> -->
+            <tablePopup id="cancelAllocate" title="unallocate" process="wmsMoveDocProcess.cancelAllocate" enableType="single" containId="true" pageId="modifyWmsMoveDocCancelAllocatePage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="active" title="active" process="wmsMoveDocProcess.active" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="unActive" title="unActive" process="wmsMoveDocProcess.unActive" enableType="multi" multiMapping="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="printPallet" title="printPallet" process="wmsMoveDocProcess.printPallet" enableType="single" containId="false" pageId="printPalletPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="viewWmsTaskLog" title="viewWmsTaskLog" process="wmsMoveDocProcess.viewWmsTaskLog" enableType="single" containId="true" pageId="viewWmsTaskLogFromMoveDoc">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="wmsMoveDocProcess.delete" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="cancelMoveDoc" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

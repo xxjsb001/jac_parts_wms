@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editPurchaseInvoiceDetailPage" title="editPurchaseInvoiceDetailPage" entityClass="com.vtradex.wms.server.model.billing.WMSPurchaseInvoiceDetail" width="450" height="320" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="purchaseDetail.id" title="purchaseDetail.id" reserve="false"/>
+            <remote id="purchaseDetail.supplier.id" title="purchaseDetail.supplier.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT 
+ company.id,
+ company.code,
+ company.name
+ FROM WmsOrganization   company 
+ WHERE company.beSupplier = true
+and company.beVirtual =false
+AND company.status = 'ENABLED'  
+AND (company.code  LIKE :param OR  company.name LIKE :param)
+]]></hql>
+                <eventListeners/>
+            </remote>
+            <date id="purchaseDetail.invoiceDate" title="purchaseDetail.invoiceDate" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <text id="purchaseDetail.code" title="purchaseDetail.code" row="2" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <numberText id="purchaseDetail.amount" title="purchaseDetail.amount" row="2" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+            <text id="purchaseDetail.memo" title="purchaseDetail.memo" row="3" col="1" span="2" width="320" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

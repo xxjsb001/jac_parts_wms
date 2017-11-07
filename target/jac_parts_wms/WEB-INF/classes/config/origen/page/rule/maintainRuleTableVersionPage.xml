@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainRuleTableVersionPage" title="maintainRuleTableVersionPage" autoQuery="true" entityClass="com.vtradex.rule.server.model.rule.Version">
+        <workflow/>
+        <datasource><![CDATA[SELECT version.id,
+version.name,
+version.ruleTable.name,
+version.startDate,
+version.endDate,
+version.status,
+version.description 
+ FROM com.vtradex.rule.server.model.rule.Version version 
+ WHERE 1=1 
+ AND (version.bind1 = #{SESSION_WAREHOUSE_NAME} OR version.bind1 = 'NULL')
+ ORDER BY version.ruleTable.name
+  ]]></datasource>
+        <columns>
+            <column id="version.id" title="version.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="version.name" title="version.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="version.ruleTable.name" title="version.ruleTable.name" width="250" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="version.startDate" title="version.startDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="version.endDate" title="version.endDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="version.status" title="version.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="RuleTableVersionStatus"/>
+            <column id="version.description" title="version.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

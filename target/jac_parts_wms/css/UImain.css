@@ -1,0 +1,111 @@
+.tab-icon {
+	background-image: url(../images/silk/plugin.gif ) !important;
+}
+
+.tree_bg .x-panel-body{background-color:#fff;background:transparent url(../images/main/tree_bg.jpg) !important}
+
+.editorGrid-cell-input{background:transparent url(../images/default/grid/cellInput.gif) no-repeat 0 0;}
+/*
+.gwt-DialogBox {
+  sborder: 1px solid #AAAAAA;
+  border: 1px;
+  background-color: #AAAAAA;
+  overflow:auto;
+}
+
+.gwt-DialogBox .Caption {
+  background-color: #C3D9FF;
+  padding: 0px;
+  margin: 0px;
+  font-weight: bold;
+  cursor: default;
+}
+*/
+/*
+.base-tree-icon {
+	background-image: url(../images/icon/top_menu_1.gif ) !important;
+}
+.receiving-tree-icon {
+	background-image: url(../images/icon/top_menu_2.gif ) !important;
+}
+.inventory-tree-icon {
+	background-image: url(../images/icon/top_menu_3.gif ) !important;
+}
+.count-tree-icon {
+	background-image: url(../images/icon/top_menu_4.gif ) !important;
+}
+.shipping-tree-icon {
+	background-image: url(../images/icon/top_menu_5.gif ) !important;
+}
+.report-tree-icon {
+	background-image: url(../images/icon/top_menu_6.gif ) !important;
+}
+.security-tree-icon {
+	background-image: url(../images/icon/top_menu_7.gif ) !important;
+}
+*/
+.root-tree-icon {
+	background-image: url( ../images/silk/chart_organisation.gif ) !important;
+}
+.first-tree-icon {
+	background-image: url( ../images/silk/report.gif ) !important;
+}
+.gwt-DialogBox {
+  border: 0px outset;
+  overflow:auto;
+  z-index:10;
+}
+.datepickerPopup{
+	z-index:12500;
+}
+.thorn-popupbg{
+	z-index:10;
+	overflow:auto;
+}
+.popup_title {
+	padding-top: 8px;
+	background: url(../images/popup_titlebar_icon.gif) no-repeat left bottom;
+	text-indent:23px;	
+}
+.query_panel{
+	background-color:white;
+	border-left:1px solid #99bbe8;
+	border-right:1px solid #99bbe8;
+	border-bottom:1px solid #99bbe8;
+}
+.gwt-DialogBox .Caption {
+  padding-top:10px;
+  padding-right:5px;
+  height: 30px;
+  border:1px solid #99bbe8;
+  line-height:15px;
+  font:bold 12px tahoma,arial,verdana,sans-serif;
+  cursor: default;
+  text-align:left;
+  width:100%;
+}
+.gwt-DialogBox .Bottom {
+  height: 24px;
+  padding: 0px;
+  margin: 0px;
+  font-weight: normal;
+  font-color:red;
+  cursor: default;
+  text-align:left;
+  background: url(../images/popup_bottom_bg.jpg) no-repeat center center;
+  width:100%;
+  white-space:nowrap;
+}
+
+.mymenu-tree-leaf {
+	background-image: url( ../images/default/tree/leaf.gif ) !important;
+}
+
+.mymenu-tree-leaf-export {
+	background-image: url( ../images/silk/page_white_excel.gif ) !important;
+}
+
+.custom-message-box {
+	z-index: 10;
+}
+

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWMSBillingContactManagePage" title="maintainWMSBillingContactManagePage" autoQuery="false" entityClass="com.vtradex.wms.server.model.billing.WMSContact">
+        <workflow/>
+        <datasource><![CDATA[SELECT wmsContact.id,
+wmsContact.code,
+supplier.code,
+supplier.name,
+wmsContact.startDate,
+wmsContact.endDate,
+wmsContact.payType,
+wmsContact.taxPoints,
+wmsContact.status,
+wmsContact.memo 
+ from WMSContact wmsContact 
+left join wmsContact.warehouse warehouse
+left join wmsContact.supplier supplier 
+where warehouse=#{SESSION_WAREHOUSE} 
+order by supplier.code ]]></datasource>
+        <columns>
+            <column id="wmsContact.id" title="wmsContact.id" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="wmsContact.code" title="wmsContact.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="supplier.code" title="supplier.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="supplier.name" title="supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wmsContact.startDate" title="wmsContact.startDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="wmsContact.endDate" title="wmsContact.endDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="wmsContact.payType" title="wmsContact.payType" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WMSInvoicePayType"/>
+            <column id="wmsContact.taxPoints" title="wmsContact.taxPoints" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="wmsContact.status" title="wmsContact.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>
+            <column id="wmsContact.memo" title="wmsContact.memo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="manualAllocateProcess" control="manualAllocate">
+
+	<task id="findAvailableInventories" title="获取可用库存">
+	</task>
+
+	<task id="manualAllocate" title="手工分配">
+	</task>
+
+	<task id="singleCancelAllocate" title="单一取消">
+	</task>
+
+	<task id="search" title="查找">
+	</task>
+
+</process>

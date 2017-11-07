@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule load="true">
+
+<!-- 
+	<app host="192.168.1.93"  path="F:/project/vTradEx/e2wms4.3" match ="false">
+    	<table name="小区街道表">
+	    	<bind1>
+				<value>上海</value>
+				<value>北京</value>
+			</bind1>
+	    	<bind2>
+	    		<value>国美</value>
+	    	</bind2>
+	   		<bind3></bind3>
+	    	<bind4></bind4>
+	    	<bind5></bind5>
+		</table>
+		<table name="上架策略表">
+	    	<bind1>
+				<value>上海1</value>
+			</bind1>
+	    	<bind2>
+	    		<value>国美1</value>
+	    	</bind2>
+	   		<bind3></bind3>
+	    	<bind4></bind4>
+	    	<bind5></bind5>
+		</table>
+		
+		<table name="拣货策略表">
+		</table>
+   </app>
+   <app host="app1"  path="F:/project/vTradEx/e2wms4.3"  match="false">
+   		<table name="小区街道表">
+        	<bind1>
+				<value>天津</value>
+			</bind1>
+		</table>
+   </app>
+ -->
+</rule>

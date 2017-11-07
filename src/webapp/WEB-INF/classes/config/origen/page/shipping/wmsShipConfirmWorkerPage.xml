@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="wmsShipConfirmWorkerPage" title="wmsShipConfirmWorkerPage" entityClass="com.vtradex.wms.server.model.shipping.WmsMasterBOL" width="700" height="500" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="pickTicket.id" title="masterBOL.id" reserve="false"/>
+            <remote id="workerId" title="workerId" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[select w.id, w.code, w.name from WmsWorker w
+ where w.code like :param and w.disabled=false
+ and w.warehouse.id = #{SESSION_WAREHOUSE_ID}]]></hql>
+                <eventListeners/>
+            </remote>
+        </inputUIs>
+    </editPage>
+</pages>

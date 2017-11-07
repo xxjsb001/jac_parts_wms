@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editShipRecordPage">
+    <main>
+        <process id="wmsMoveDocShipProcess">
+            <formCommit id="shipRecord" title="shipRecord" process="wmsMoveDocShipProcess.shipRecord" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="shipRecord" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

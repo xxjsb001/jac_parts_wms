@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyWorkConfirmPage">
+    <main/>
+    <detail>
+        <process id="workDocProcess">
+            <tablePopup id="confirmAll" title="confirmAll" process="workDocProcess.viewWorkDoc" enableType="none" containId="false" pageId="editWmsWorkDocConfirmAll">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+        <process id="taskProcess">
+            <tablePopup id="singleConfirm" title="singleConfirm" process="taskProcess.confirm" enableType="single" containId="true" pageId="editSingleWorkConfirmPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </detail>
+</page>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsWarehouseAreaPage" title="maintainWmsWarehouseAreaPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.warehouse.WmsWarehouseArea">
+        <workflow/>
+        <datasource><![CDATA[SELECT warehouseArea.id,
+warehouseArea.code,
+warehouseArea.name,
+warehouseArea.status,
+warehouseArea.highTemperature,
+warehouseArea.lowTemperature,
+warehouseArea.description 
+ FROM WmsWarehouseArea warehouseArea
+ WHERE 1=1
+ AND warehouseArea.warehouse = #{SESSION_WAREHOUSE}
+ ORDER BY warehouseArea.code
+]]></datasource>
+        <columns>
+            <column id="warehouseArea.id" title="warehouseArea.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="warehouseArea.code" title="warehouseArea.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="warehouseArea.name" title="warehouseArea.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="warehouseArea.status" title="warehouseArea.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>
+            <column id="warehouseArea.highTemperature" title="warehouseArea.highTemperature" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="warehouseArea.lowTemperature" title="warehouseArea.lowTemperature" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="warehouseArea.description" title="warehouseArea.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

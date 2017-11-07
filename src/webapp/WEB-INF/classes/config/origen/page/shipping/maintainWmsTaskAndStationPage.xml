@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsTaskAndStationPage" title="maintainWmsTaskAndStationPage" autoQuery="false" entityClass="com.vtradex.wms.server.model.shipping.WmsTaskAndStation">
+        <workflow/>
+        <datasource><![CDATA[SELECT wts.id,
+moveDoc.code,
+moveDoc.relatedBill1,
+moveDoc.originalBillType.name,
+station.boxTag,
+wts.container,
+moveDocDetail.item.code,
+moveDocDetail.item.name,
+wts.pickQuantityBu,
+station.isFinished,
+wts.isJoinBOL,
+wts.shipStatus
+ from WmsTaskAndStation wts
+ left join wts.station station  
+left join station.moveDocDetail moveDocDetail
+left join moveDocDetail.moveDoc moveDoc
+where 1=1 order by wts.id desc]]></datasource>
+        <columns>
+            <column id="wts.id" title="wts.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.code" title="moveDoc.code" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.relatedBill1" title="pickTicket.relatedBill1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.originalBillType.name" title="moveDoc.originalBillType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="station.boxTag" title="was.boxTag" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wts.container" title="wts.container" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.item.name" title="item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        	<column id="wts.pickQuantityBu" title="was.pickQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" width="65"/>
+        	<column id="station.isFinished" title="was.isFinished" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" width="65"/>
+        	<column id="wts.isJoinBOL" title="boxType.isBol" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" width="75"/>
+        	<column id="wts.shipStatus" title="was.shipStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocShipStatus"/>
+        </columns>
+    </maintainPage>
+</pages>

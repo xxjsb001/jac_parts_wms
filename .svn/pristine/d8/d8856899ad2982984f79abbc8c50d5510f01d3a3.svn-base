@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<reportConfig>
+	<!-- 配置加载快逸属性文件 -->
+	<config>
+		<name>logConfig</name>
+		<value>/WEB-INF/report/runqianReportLog.properties</value>
+	</config>
+	<!-- 配置加载快逸授权文件 -->
+	<config>
+		<name>license</name>
+		<value>/WEB-INF/report/quieeWindowServer.lic</value>
+	</config>
+	<!-- 配置加载快逸加载JSP文件的路径 -->
+	<config>
+		<name>reportFileHome</name>
+		<value>/reportFiles</value>
+	</config>
+	
+	<!-- 配置快逸加载数据时候的datasource -->
+	<jdbc-ds-configs>
+		<jdbc-ds-config>
+			<name>partswms</name>
+			<db-type>javax.sql.DataSource</db-type>
+<!-- 				<connection-url>jdbc:oracle:thin:@localhost:1521:orcl</connection-url> -->
+<!--  				<connection-url>jdbc:oracle:thin:@192.168.10.92:1521:jqwldb</connection-url>  -->
+				<connection-url>jdbc:oracle:thin:@192.168.10.218:1521:jqwldb</connection-url>
+			<driver-class>oracle.jdbc.OracleDriver</driver-class>
+ 			<user-name>jacpartswms</user-name> 
+ 			<password>xxjsb</password> 
+			<db-charset>utf-8</db-charset>
+			<client-charset>utf-8</client-charset>
+			<extend-properties></extend-properties>
+		</jdbc-ds-config>
+	</jdbc-ds-configs>
+	<!-- 
+	<jdbc-ds-configs>
+		<jdbc-ds-config>
+			<name>e2wms</name>
+			<db-type>javax.sql.DataSource</db-type>
+			<connection-url>jdbc:mysql://localhost:3306/jacpartswms?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8</connection-url>
+			<driver-class>com.mysql.jdbc.Driver</driver-class>
+			<user-name>root</user-name>
+			<password></password>
+			<db-charset>utf-8</db-charset>
+			<client-charset>utf-8</client-charset>
+			<extend-properties></extend-properties>
+		</jdbc-ds-config>
+	</jdbc-ds-configs>
+	 -->
+	<!-- 配置加载快逸的字符集 -->
+	<config>
+		<name>jspCharset</name>
+		<value>GBK</value>
+	</config>
+	<config>
+		<name>alwaysReloadDefine</name>
+		<value>yes</value>
+	</config>
+	<config>
+		<name>cachedParamsTimeout</name>
+		<value>120</value>
+	</config>
+	<config>
+		<name>cachedReportDir</name>
+		<value>D:\work\report\cached</value>
+	</config>
+	<config>
+		<name>cachedIdPrefix</name>
+		<value>A</value>
+	</config>
+	<config>
+		<name>cachedReportTimeout</name>
+		<value>120</value>
+	</config>
+	<config>
+		<name>maxCellNum</name>
+		<value>100000</value>
+	</config>
+	<config>
+		<name>maxConcurrentForReport</name>
+		<value></value>
+	</config>
+	<config>
+		<name>maxWaitForReport</name>
+		<value>10</value>
+	</config>
+	<config>
+		<name>maxWaitTimeForReport</name>
+		<value>30</value>
+	</config>
+	<config>
+		<name>appUrlPrefix</name>
+		<value></value>
+	</config>
+	<config>
+		<name>errorPage</name>
+		<value>/myError.jsp</value>
+	</config>
+</reportConfig>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editColPage" title="editColPage" entityClass="com.vtradex.repc.server.model.report.ReportColumn" onClose="refreshParent">
+            <inputUIs>
+                <hidden id="col.id" reserve="false"/>
+				<text id="col.code" title="reportColumn.code" row="1" col="1" width="300" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="col.name" title="reportColumn.name" row="2" col="1" width="300" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="col.formatter" title="reportColumn.formatter" row="3"  col="1" width="300" readOnly="false" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="col.formatterParams" title="reportColumn.formatterParams" row="4" col="1" width="300" readOnly="false" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+            </inputUIs>
+    </editPage>
+</pages>

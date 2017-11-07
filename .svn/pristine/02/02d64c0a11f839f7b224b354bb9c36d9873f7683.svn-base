@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsASNPage">
+    <main>
+        <process id="wmsASNProcess">
+            <formCommit id="save" title="save" process="wmsASNProcess.new" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="storeASN" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="modify" title="modify" process="wmsASNProcess.modify" enableType="none" download="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="storeASN" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail>
+        <process id="wmsASNProcess">
+            <tablePopup id="addDetail" title="addDetail" process="wmsASNProcess.addDetail" enableType="none" containId="false" pageId="addWmsASNDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modifyDetail" title="modifyDetail" process="wmsASNProcess.modifyDetail" enableType="single" containId="true" pageId="addWmsASNDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="removeDetails" title="removeDetails" process="wmsASNProcess.removeDetails" enableType="multi" download="false" confirmMessage="confirm.removeDetails">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="removeDetails" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

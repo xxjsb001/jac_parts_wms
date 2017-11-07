@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainInventoryCountPage" title="maintainInventoryCountPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.inventory.WmsInventoryCount">
+        <workflow/>
+        <datasource><![CDATA[SELECT inventoryCount.id,
+inventoryCount.recordDate,
+inventoryCount.company.name,
+inventoryCount.item.code,
+inventoryCount.item.name,
+inventoryCount.quantityBU,
+inventoryCount.weight,
+inventoryCount.volume,
+inventoryCount.palletQuantity 
+ FROM WmsInventoryCount inventoryCount
+ LEFT JOIN inventoryCount.item
+ LEFT JOIN inventoryCount.company
+ WHERE 1=1
+ AND inventoryCount.warehouse.id=#{SESSION_WAREHOUSE}
+ ORDER BY inventoryCount.id]]></datasource>
+        <columns>
+            <column id="inventoryCount.id" title="inventoryCount.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="inventoryCount.recordDate" title="inventoryCount.recordDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="inventoryCount.company.name" title="inventoryCount.company.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryCount.item.code" title="inventoryCount.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryCount.item.name" title="inventoryCount.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryCount.quantityBU" title="inventoryCount.quantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="inventoryCount.weight" title="inventoryCount.weight" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="inventoryCount.volume" title="inventoryCount.volume" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="inventoryCount.palletQuantity" title="inventoryCount.palletQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+        </columns>
+    </maintainPage>
+</pages>

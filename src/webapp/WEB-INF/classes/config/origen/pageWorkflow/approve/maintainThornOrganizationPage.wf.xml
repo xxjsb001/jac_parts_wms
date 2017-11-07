@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainThornOrganizationPage">
+    <main>
+        <process id="thornOrganizationProcess">
+            <tablePopup id="new" title="new" process="thornOrganizationProcess.new" enableType="none" containId="false" pageId="editThornOrganizationPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="thornOrganizationProcess.modify" enableType="single" containId="true" pageId="editThornOrganizationPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="thornOrganizationProcess.delete" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

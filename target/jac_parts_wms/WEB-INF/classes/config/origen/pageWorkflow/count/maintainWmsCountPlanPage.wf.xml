@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsCountPlanPage">
+    <main>
+        <process id="countPlanProcess">
+            <tablePopup id="view" title="view" process="countPlanProcess.view" enableType="single" containId="true" pageId="modifyWmsCountDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="new" title="new" process="countPlanProcess.new" enableType="none" containId="false" pageId="editWmsCountPlanPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="countPlanProcess.edit" enableType="single" containId="true" pageId="modifyWmsCountDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="cancel" title="cancel" process="countPlanProcess.cancel" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="active" title="active" process="countPlanProcess.active" enableType="multi" download="false" closeTransactional="false" confirmMessage="confirm.active">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsCountPlanManager" methodName="active" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="unactive" title="unactive" process="countPlanProcess.unactive" enableType="multi" download="false" closeTransactional="false" confirmMessage="confirm.unactive">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsCountPlanManager" methodName="unActive" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="changeWorker" title="changeWorker" process="countPlanProcess.changeWorker" enableType="single" containId="true" pageId="editChangeWorkerPage">
+                <enableExpression><![CDATA[${countPlan.status} == 'ACTIVE' || ${countPlan.status} == 'COUNTING']]></enableExpression>
+            </tablePopup>
+            <tablePopup id="print" title="print" process="countPlanProcess.print" enableType="single" containId="true" pageId="countRecordReportPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="countUpdate" title="countUpdate" process="countPlanProcess.countUpdate" enableType="single" containId="true" pageId="maintainWmsCountRecordPage">
+                <enableExpression><![CDATA[${countPlan.status} == 'ACTIVE' || ${countPlan.status} == 'COUNTING']]></enableExpression>
+            </tablePopup>
+            <tableCommit id="cancelCount" title="cancelCount" process="countPlanProcess.cancelCount" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainWmsCountPlanPage.cancelCount">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsCountPlanManager" methodName="deleteCountPlan" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="close" title="close" process="countPlanProcess.close" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.close">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsCountPlanManager" methodName="close" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

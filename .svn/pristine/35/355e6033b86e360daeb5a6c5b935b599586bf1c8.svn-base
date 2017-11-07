@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="viewModifyMasterBOLPage" title="modifyMasterBOLPage" entityClass="com.vtradex.wms.server.model.shipping.WmsBOL" onClose="refreshParent" width="1200" height="600">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="bol.id" title="bol.id" reserve="false"/>
+                <text id="bol.code" title="bol.code" row="1" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="false" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <remote id="bol.carrier.id" title="bol.carrier.id" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" nextFocus="masterBOL.vehicleNo" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[SELECT company.id, company.code, company.name from WmsOrganization company
+ WHERE 1 = 1
+ AND (company.code LIKE :param OR company.name LIKE :param)
+ AND company.status = 'ENABLED'
+ AND company.beCarrier = true
+ ]]></hql>
+                    <eventListeners/>
+                </remote>
+                <remote id="bol.vehicle.id" title="bol.vehicle.id" row="1" col="3" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,车牌号">
+                    <visibleExpression/>
+                    <hql><![CDATA[select vehicle.id,                    
+                    vehicle.license,vehicle.masterDriver.id
+                     FROM WmsVehicle vehicle where 1=1 AND vehicle.license like :param AND vehicle.status='ENABLED']]></hql>
+                    <eventListeners>
+                    	<eventListener id="bol.wmsDriver.id" index="3" refreshUI="true"/>
+                    </eventListeners>
+                </remote>
+                <remote id="bol.wmsDriver.id" title="bol.wmsDriver.id" row="1" col="4" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[select driver.id,driver.code,driver.name FROM WmsDriver driver where 1=1 AND (driver.code like :param or driver.name like :param) AND driver.status='AVAILABLE']]></hql>
+                    <eventListeners/>
+                </remote>
+				<list id="bol.billTypeName" title="bol.billType.id" row="1" col="5" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" editModel="uneditable">
+                    <visibleExpression/>
+                    <hql><![CDATA[SELECT
+ enumerate.enumValue,
+ enumerate.enumValue
+ FROM Enumerate enumerate 
+ WHERE enumerate.enumType='WmsBillTypeName'
+ ORDER BY enumerate.id ASC                    
+                    ]]></hql>
+                    <eventListeners/>
+                </list>
+                <text id="bol.description" title="bol.description" row="2" col="1" span="4" width="760" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.shipping.WmsBOLDetail" autoQuery="false" displayRowCount="220">
+            <datasource><![CDATA[SELECT bolDetail.id,moveDoc.code,bolDetail.itemKey.item.code,bolDetail.itemKey.item.name,bolDetail.quantityBU,bolDetail.slr,bolDetail.tfd,bolDetail.subCode 
+             FROM WmsBOLDetail bolDetail 
+ LEFT JOIN bolDetail.task.moveDocDetail.moveDoc moveDoc
+ LEFT JOIN bolDetail.task.moveDocDetail.moveDoc.pickTicket pickTicket 
+ WHERE 1=1 
+ /~bol.id: AND bolDetail.bol.id = {bol.id}~/
+ ORDER BY bolDetail.id]]></datasource>
+            <columns>
+                <column id="bolDetail.id" title="bolDetail.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDoc.code" title="moveDoc.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="bolDetail.item.code" title="bolDetail.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="bolDetail.item.name" title="bolDetail.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="bolDetail.quantityBU" title="bolDetail.quantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+                <column id="bolDetail.slr" title="bolDetail.slr" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="bolDetail.tfd" title="bolDetail.tfd" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="bolDetail.subCode" title="bolDetail.subCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

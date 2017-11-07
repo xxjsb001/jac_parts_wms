@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+        "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+  Copyright (c) 2001-2005 vTradEx Information Technology Co.,Ltd. All Rights Reserved.
+
+  This software is the confidential and proprietary information of vTradEx
+  Information Technology Co.,Ltd. ("Confidential Information").  You shall not
+  disclose such Confidential Information and shall use it only in
+  accordance with the terms of the license agreement you entered into
+  with vTradEx.
+
+  VTRADEX MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
+  SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+  PURPOSE, OR NON-INFRINGEMENT. VTRADEX SHALL NOT BE LIABLE FOR ANY DAMAGES
+  SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
+  THIS SOFTWARE OR ITS DERIVATIVES.
+-->
+<!-- $Id: telnet-beanRefContext.xml,v 1.2 2015/06/23 09:41:06 yongcheng.min Exp $ -->
+
+<beans>
+    <bean id="com.vtradex.telnet"
+          class="org.springframework.context.support.ClassPathXmlApplicationContext">
+        <constructor-arg index="0">
+            <list>
+	            <value>classpath:dataSourceContext.xml</value>
+	            <value>classpath*:daoContext.xml</value>
+	            <value>classpath*:serviceContext.xml</value>
+				<value>classpath*:sequenceContext.xml</value>
+	            <value>classpath*:actionContext.xml</value>
+	            <value>classpath*:validateContext.xml</value>
+				<value>classpath*:tableContext.xml</value>
+	            <value>classpath*:formatContext.xml</value>
+				<value>classpath*:configContext.xml</value>
+				<value>classpath*:valueListContext.xml</value>
+				<value>classpath*:serverList.xml</value>
+				<value>classpath*:dbList.xml</value>
+<!-- 	            <value>classpath*:securityContext.xml</value> -->
+<!-- 	            <value>classpath*:telnetOverrideContext.xml</value> -->
+<!-- 				<value>classpath*:shellContext.xml</value> -->
+<!-- 				<value>classpath:com/vtradex/kangaroo/kangarooContext.xml</value> -->
+            </list>
+        </constructor-arg>
+    </bean>
+</beans>

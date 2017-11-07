@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsWorkerDetailPage">
+    <main>
+        <process id="workerProcess">
+            <tablePopup id="addUser" title="add" process="workerProcess.addUser" enableType="none" containId="false" pageId="editWmsWorkerDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="removeUser" title="removeUser" process="workerProcess.removeUser" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsOrganizationManager" methodName="removeWorkUser" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>            
+        </process>
+    </main>
+    <detail/>
+</page>

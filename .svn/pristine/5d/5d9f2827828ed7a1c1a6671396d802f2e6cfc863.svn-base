@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainReportConfigPage">
+	<main>
+		<process id="reportProcess">
+			<tablePopup id="new" process="reportProcess.new" title="new" enableType="none" invisible="true" containId="false" pageId="editReportFilePage"/>
+            <tablePopup id="modify" process="reportProcess.modify" title="modify" enableType="single" invisible="true" containId="true" pageId="editReportFilePage">
+			</tablePopup>
+            <tableCommit id="delete" process="reportProcess.delete" title="delete" enableType="multi" invisible="true">
+                <actions>
+                    <action managerName="reportFileManager" methodName="deleteReportFile" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+              <tablePopup id="paramInput" process="reportProcess.paramInput" title="ReportFile.file.inputParameter" enableType="single" invisible="true" containId="true" pageId="editinputParameterPage" >
+              	<enableExpression><![CDATA[${file.type}=='REPORT']]></enableExpression>
+              </tablePopup>
+			  <tablePopup id="colInput" process="reportProcess.colInput" title="ReportFile.file.inputCol" enableType="single" invisible="true" containId="true" pageId="editinputColPage">
+                  <enableExpression><![CDATA[${file.type}=='SQL']]></enableExpression>
+              </tablePopup>
+              <tableCommit id="unActive" process="reportProcess.unActive" title="unActive" enableType="multi" invisible="true" confirmMessage="maintainProduceCompany.inAction.confirmMessage">
+                <actions>
+                    <action managerName="reportFileManager" methodName="inActionOrganization" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tableCommit id="active" process="reportProcess.active" title="active" enableType="multi" invisible="true" >
+                <actions>
+                    <action managerName="reportFileManager" methodName="resumptionOrganization" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tablePopup id="import" process="reportProcess.import" title="import" enableType="none" invisible="true" containId="false" pageId="importReportFilePage">
+			</tablePopup>
+			<tableCommit id="export" process="reportProcess.export" title="export" enableType="none" invisible="true" download="true">
+                <actions>
+                    <action managerName="exportReportFileAction" methodName="exportReportFile" />
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+			<tablePopup id="view" process="reportProcess.view" title="ReportFile.showStatement" enableType="single" invisible="true" containId="true" pageId="showReportFileStatementPage">
+				<enableExpression><![CDATA[(${file.type}=='SQL')]]></enableExpression>
+			</tablePopup>
+		</process>
+	</main>
+</page>

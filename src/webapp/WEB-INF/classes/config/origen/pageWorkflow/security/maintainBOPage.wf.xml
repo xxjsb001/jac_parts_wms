@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainBOPage">
+	<main>
+		<process id="BOProcess">
+				<tablePopup id="new"  process="BOProcess.new" title="new"
+					enableType="none" containId="false" pageId="editBOPage" />
+				<tablePopup id="modify"  process="BOProcess.modify"  title="modify" enableType="single" containId="true" pageId="editBOPage" />
+				
+				<tableCommit id="BOProcess.delete" title="delete"
+					enableType="multi" confirmMessage="confirm.delete">
+                <actions>
+                    <action managerName="businessObjectManager" methodName="deleteAll" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+				</tableCommit>
+		</process>
+	</main>
+</page>

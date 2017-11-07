@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="importReportFilePage" title="importReportFilePage" pageLocale="false" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <file id="importFile" title="importFile" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" showImage="false" storeDir="TEMP_FILE_DIR"/>
+        </inputUIs>
+    </editPage>
+</pages>

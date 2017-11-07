@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editItemStatePage" title="editItemStatePage" entityClass="com.vtradex.wms.server.model.organization.WmsItemState" width="460" height="200">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="itemState.id" title="itemState.id" reserve="false"/>
+            <remote id="itemState.company.id" title="itemState.company.id" row="1" col="1" span="2" width="300" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" multiple="false" manualEditable="true" displayColumn="3" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT company.id, company.code, company.name 
+ FROM WmsOrganization company
+ WHERE company.beCompany = true
+and company.beVirtual =false
+ AND (company.code LIKE :param OR company.name LIKE :param)
+ AND company.status = 'ENABLED']]></hql>
+                <eventListeners/>
+            </remote>
+            <text id="itemState.name" title="itemState.name" row="2" col="1" span="2" width="120px" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <checkbox id="itemState.beReceive" title="itemState.beReceive" row="3" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="itemState.beSend" title="itemState.beSend" row="3" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="itemState.beQuality" title="itemState.beQuality" row="4" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <checkbox id="itemState.beBackInv" title="itemState.beBackInv" row="4" col="2" span="1" defaultValue="true" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <numberText id="itemState.orderbyQuality" title="itemState.orderbyQuality" row="5" col="1" defaultValue="0" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" inVisible="false" validator="integer" returnType="Integer">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+            </numberText>
+            <textArea id="itemState.description" title="itemState.description" row="6" col="1" span="2" readOnly="false" required="false" reserve="true" forceOverride="true" focusUI="false" inVisible="false" rows="4" cols="40">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+        </inputUIs>
+    </editPage>
+</pages>

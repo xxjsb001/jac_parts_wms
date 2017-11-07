@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainQisPlanPage" title="maintainQisPlanPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.move.QisPlan">
+        <workflow/>
+        <datasource><![CDATA[SELECT q.id,
+q.planYear,
+q.planMonth,
+q.factory,
+q.partNo,
+q.supplyNo,
+q.partName,
+q.supplyName,
+q.note,
+q.quantity,
+q.createTime 
+from  QisPlan q where 1=1]]></datasource>
+        <columns>
+            <column id="q.id" title="q.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="q.planYear" title="q.planYear" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="q.planMonth" title="q.planMonth" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="q.factory" title="q.factory" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="q.partNo" title="q.partNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="q.supplyNo" title="q.supplyNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="q.partName" title="q.partName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="q.supplyName" title="q.supplyName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="q.note" title="q.note" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="q.quantity" title="q.quantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="q.createTime" title="q.createTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+        </columns>
+    </maintainPage>
+</pages>

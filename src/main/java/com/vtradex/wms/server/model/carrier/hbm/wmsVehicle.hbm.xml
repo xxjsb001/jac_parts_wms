@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.vtradex.wms.server.model.carrier.WmsVehicle" table="WMS_VEHICLE">
+		<id name="id" column="ID" type="long">
+			<generator class="native">
+				<param name="sequence">seq_wmsVehicle</param>
+				<param name="parameters">START WITH 1000</param>
+			</generator>
+		</id>
+		<property name="license" type="string" column="LIENSE" unique-key="UK_WMS_VEHICLE"/>
+		<many-to-one name="trailerLicense" class="com.vtradex.wms.server.model.carrier.WmsVehicle">
+			<column name="VEHICLE_ID"></column>
+		</many-to-one>
+		<many-to-one name="vehicleType" class="com.vtradex.wms.server.model.carrier.WmsVehicleType">
+			<column name="VEHICLE_TYPE_ID"></column>
+		</many-to-one>
+		<property name="origin" type="string" column="ORIGIN"/>
+		<property name="brands" type="string" column="BRANDS"/>
+		<property name="chassis" type="string" column="CHASSIS"/>
+		<property name="underpanNo" type="string" column="UNDERPANNO"/>
+		<property name="length" type="double" column="LENGTH"/>
+		<property name="width" type="double" column="WIDTH"/>
+		<property name="height" type="double" column="HEIGHT"/>
+		<property name="gps" type="string" column="GPS"/>
+		<property name="fuelConsumption" type="double" column="FUELCONSUMPTION"/>
+		<many-to-one name="masterDriver" class="com.vtradex.wms.server.model.carrier.WmsDriver">
+			<column name="MASTERDRIVER_ID"></column>
+		</many-to-one>
+		<many-to-one name="minorDriver" class="com.vtradex.wms.server.model.carrier.WmsDriver">
+			<column name="MINORDREVER_ID"></column>
+		</many-to-one>
+		<property name="produceDate" type="date" column="PRODUCEDATE"/>
+		<property name="purchaseDate" type="date" column="PURCHASEDATE"/>
+		<property name="registrationDate" type="date" column="REGISTRATIONDATE"/>
+		<property name="reimbursementDate" type="date" column="REIMBURSEMENTDATE"/>
+		<many-to-one name="cityResident" class="com.vtradex.wms.server.model.carrier.WmsCity">
+			<column name="CITY_RESIDENT_ID"></column>
+		</many-to-one>
+		<property name="location" type="string" column="LOCATION"/>
+		<many-to-one name="avaliableCity" class="com.vtradex.wms.server.model.carrier.WmsCity">
+			<column name="AVALIABLE_CITY_ID"></column>
+		</many-to-one>
+		<property name="expectAvaliableTime" type="date" column="EXPECT_AVALIABLE_TIME"/>
+		<property name="vehicleStatus" type="string" column="VEHICLE_STATUS" length="20"/>
+		<property name="beShipment" type="boolean" column="IS_SHIPMENT"/>
+		<property name="beTrailer" type="boolean" column="ISTRAILER"/>
+		<property name="axles" type="integer" column="AXLES"/>
+		<property name="drivingLicense" type="string" column="DRIVING_LICENSE"/>
+		<property name="carAge" type="string" column="CAR_AGE"/>
+		<property name="curbWeight" type="double" column="CURB_WEIGHT"/>
+		<property name="coreSetTotalMass" type="double" column="CORE_SET_TOTAL_MASS"/>
+		<property name="hangingType" type="string" column="HANGING_TYPE"/>
+		<property name="copStartDate" type="date" column="COP_START_DATE"/>
+		<property name="engineNumber" type="string" column="ENGINE_NUMBER"/>
+		<property name="carOwnersName" type="string" column="CAR_OWNERS_NAME"/>
+		<property name="carOwnersId" type="string" column="CAR_OWNERS_ID"/>
+		<property name="carOwnersCompany" type="string" column="CAR_OWNERS_COMPANY"/>
+		<property name="carOwnersAdd" type="string" column="CAR_OWNERS_ADD"/>
+		<property name="carOwnersTel" type="string" column="CAR_OWNERS_TEL"/>
+		<property name="carOwnersMob" type="string" column="CAR_OWNERS_MOB"/>
+		<property name="status" type="string" column="STATUS" length="20"/>
+		<property name="description" type="string" column="DESCRIPTION"/>
+		<set name="details" lazy="true" inverse="true" cascade="all-delete-orphan">
+			<key column="VEHICLE_ID"/>
+			<one-to-many class="com.vtradex.wms.server.model.carrier.WmsVehicleDetail"/>
+		</set>
+		
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID" />
+			<property name="creator" type="string" length="50" column="CREATOR" />
+			<property name="createdTime" type="timestamp" column="CREATED_TIME" />
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID" />
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR" />
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME" />
+		</component>
+	</class>
+</hibernate-mapping>

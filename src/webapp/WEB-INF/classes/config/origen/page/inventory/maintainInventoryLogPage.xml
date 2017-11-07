@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainInventoryLogPage" title="maintainInventoryLogPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.inventory.WmsInventoryLog">
+        <workflow/>
+        <datasource><![CDATA[SELECT inventoryLog.id,
+inventoryLog.logType,
+inventoryLog.updateInfo.createdTime,
+inventoryLog.inOrOut,
+inventoryLog.locationCode,
+inventoryLog.company,
+inventoryLog.billCode,
+inventoryLog.billType.name,
+inventoryLog.itemCode,
+inventoryLog.itemName,
+inventoryLog.packageUnit,
+inventoryLog.quantity,
+inventoryLog.quantityBU,
+inventoryLog.inventoryStatus,
+inventoryLog.lot,
+inventoryLog.description,
+inventoryLog.updateInfo.lastOperator,
+inventoryLog.inOrOut as c1
+ FROM WmsInventoryLog inventoryLog
+ LEFT JOIN inventoryLog.billType
+ WHERE 1=1
+ AND inventoryLog.warehouse = #{SESSION_WAREHOUSE}
+ ORDER BY inventoryLog.id DESC
+ ]]></datasource>
+        <columns>
+            <column id="inventoryLog.id" title="inventoryLog.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="inventoryLog.logType" title="inventoryLog.logType" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsInventoryLogType"/>
+            <column id="inventoryLog.updateInfo.createdTime" title="updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="inventoryLog.inOrOut" title="inventoryLog.inOrOut" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer" format="enumFormat" formatParam="InOrOutType"/>
+            <column id="inventoryLog.locationCode" title="inventoryLog.locationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryLog.itemKey.item.company.name" title="inventoryLog.itemKey.item.company.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryLog.billCode" title="inventoryLog.billCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryLog.billType.name" title="inventoryLog.billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryLog.itemKey.item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryLog.itemKey.item.name" title="item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryLog.packageUnit.unit" title="inventoryLog.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryLog.quantity" title="inventoryLog.quantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="inventoryLog.quantityBU" title="inventoryLog.quantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="inventoryLog.inventoryStatus" title="inventoryLog.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryLog.itemKey.lot" title="inventoryLog.itemKey.lot" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="inventoryLog.description" title="workArea.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        	<column id="inventoryLog.updateInfo.lastOperator" title="asn.updateInfo.lastOperator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        	<column id="c1" title="inventoryLog.inOrOut" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+        </columns>
+    </maintainPage>
+</pages>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainAddRoleGroupsPage">
+	<main>
+		<process id="roleProcess">
+				<tableCommit id="roleProcess.add" process="roleProcess.add"  title="add" enableType="multi" invisible="false">
+	               <mappings>
+					<mapping id="role.id" className="long"/>
+				</mappings>
+				<actions>
+					<action managerName="roleManager" methodName="addRoleGroups" parameter="role.id,obj"/>
+				</actions>
+				<forwards>
+					<forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="false"/>
+				</forwards>
+				</tableCommit>
+		</process>
+	</main>
+</page>

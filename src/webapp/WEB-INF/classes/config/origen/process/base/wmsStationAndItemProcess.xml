@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="wmsStationAndItemProcess" control="-">
+
+	<task id="new" title="新建">
+	</task>
+
+	<task id="edit" title="修改">
+	</task>
+
+</process>

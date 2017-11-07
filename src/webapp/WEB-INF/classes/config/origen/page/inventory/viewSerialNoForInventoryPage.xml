@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="viewSerialNoForInventoryPage" title="viewSerialNoForInventoryPage" entityClass="com.vtradex.wms.server.model.inventory.WmsInventory" width="800" height="500">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="inventory.id" title="inventory.id" reserve="false"/>
+            </inputUIs>
+        </modify>
+        <detail>
+            <datasource><![CDATA[SELECT sn.id,
+ sn.locationCode,
+ sn.pallet,
+ sn.carton,
+ sn.serialNo,
+ sn.item.code,
+ sn.item.name,
+ sn.quantityBU
+ FROM WmsInventoryExtend sn 
+ WHERE 1=1
+ AND sn.inventory.id = {inventory.id}
+ AND sn.status = 'ENABLED']]></datasource>
+            <columns>
+                <column id="sn.id" title="serialNo.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="sn.locationCode" title="serialNo.locationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="sn.pallet" title="serialNo.pallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="sn.carton" title="serialNo.carton" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="sn.serialNo" title="serialNo.serialNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="sn.item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="sn.item.name" title="item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="sn.quantityBU" title="serialNo.quantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

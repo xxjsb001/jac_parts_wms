@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWarehousePage">
+    <main>
+        <process id="warehouseProcess">
+            <tablePopup id="new" title="new" process="warehouseProcess.new" enableType="none" containId="false" maintain="false" pageId="editWarehousePage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="warehouseProcess.edit" enableType="single" containId="true" maintain="false" pageId="editWarehousePage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="enable" title="enable" process="warehouseProcess.enable" enableType="multi" download="false" confirmMessage="confirm.enable">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="disable" title="disable" process="warehouseProcess.disable" enableType="multi" download="false" confirmMessage="confirm.disable">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

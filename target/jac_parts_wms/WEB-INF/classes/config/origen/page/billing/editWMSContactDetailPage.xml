@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWMSContactDetailPage" title="editWMSContactDetailPage" entityClass="com.vtradex.wms.server.model.billing.WMSContactDetail" width="560" height="480" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="contactDetail.id" title="contactDetail.id" reserve="false"/>
+            <remote id="contactDetail.smallCategory.id" title="contactDetail.smallCategory.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[select 
+wc.id,
+wc.code,
+wc.name 
+from WMSBillingCategory wc
+where (wc.code like :param 
+or wc.name like :param)
+and wc.type='SMALL_CATEGORY'
+]]></hql>
+                <eventListeners>
+                    <eventListener id="contactDetail.code" index="2" refreshUI="false"/>
+                </eventListeners>
+            </remote>
+            <text id="contactDetail.code" title="contactDetail.code" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <list id="contactDetail.billingMode" title="contactDetail.billingMode" row="1" col="3" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="WMSBillingModel">
+                <visibleExpression/>
+                <hql><![CDATA[
+ select 
+ enum.enumValue,
+ enum.enumValue
+ from Enumerate enum
+ where enum.enumType='WMSBillingModel'
+ order by enum.id ASC
+]]></hql>
+                <eventListeners/>
+            </list>
+            <date id="contactDetail.startDate" title="contactDetail.startDate" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <date id="contactDetail.endDate" title="contactDetail.endDate" row="2" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </date>
+            <text id="contactDetail.memo" title="contactDetail.memo" row="3" col="1" span="3" width="450" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editManualMovePage">
+    <main>
+        <process id="inventoryProcess">
+            <formCommit id="inventoryMoveConfirm" title="inventoryMoveConfirm" process="inventoryProcess.move" enableType="none" download="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="destLocationId" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="moveQuantity" className="double">
+                        <entries/>
+                    </mapping>
+                    <mapping id="worker" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsInventoryManager" methodName="inventoryManualMove" parameter="obj,destLocationId,moveQuantity,worker"/>
+                </actions>
+                <forwards>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

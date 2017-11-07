@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.inventory.WmsInventoryExtend" table="WMS_INVENTORY_EXTEND">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_wmsInventoryExtend</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id> 
+        <discriminator column="DISCRIMINATOR" type="string"/>
+		
+		<many-to-one name="inventory" class="com.vtradex.wms.server.model.inventory.WmsInventory">
+			<column name="INVENTORY_ID" not-null="true"/>
+		</many-to-one>
+		<property name="locationId" column="LOCATION_ID" type="long"/>
+		<property name="locationCode" column="LOCATION_CODE" type="string" length="50"/>
+		<property name="pallet" column="PALLET" type="string" length="50"/>
+		<property name="carton" column="CARTON" type="string" length="50"/>
+		<property name="serialNo" column="SERIAL_NO" type="string" length="50"/>
+		<many-to-one name="item" class="com.vtradex.wms.server.model.organization.WmsItem">
+			<column name="ITEM_ID" not-null="true"/>
+		</many-to-one>
+		<property name="allocatedQuantityBU" type="double" column="ALLOCATED_QUANTITY_BU" not-null="true"/>
+		<property name="quantityBU" type="double" column="QUANTITY_BU" not-null="true"/>
+
+		<property name="status" column="STATUS" type="string" length="50"/>
+
+		<property name="hashCode" type="string" column="HASH_CODE" length="80" unique-key="UK_INVENTORY_EXTEND"/>
+	</class>
+</hibernate-mapping>

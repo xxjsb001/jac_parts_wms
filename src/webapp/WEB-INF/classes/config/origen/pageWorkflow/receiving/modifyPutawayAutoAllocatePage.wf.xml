@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyPutawayAutoAllocatePage">
+    <main/>
+    <detail>
+        <process id="wmsASNProcess">
+            <tableCommit id="confirmAll" title="confirmAll" process="wmsASNProcess.confirmAll" enableType="none" download="false" confirmMessage="confirm.putawayAutoAllocate">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="putawayAutoAllocate" parameter="parentObj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            
+            <tablePopup id="putawayAutoByHand" title="putawayAutoByHand" process="wmsASNProcess.putawayAutoByHand" enableType="single" containId="true" pageId="editSinglePutawayAutoPage">
+                <enableExpression><![CDATA[${jps.bePutawayAuto} == 'false']]></enableExpression>
+            </tablePopup>
+        </process>
+    </detail>
+</page>

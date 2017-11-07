@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="editUsersPage" title="editUsersPage" entityClass="com.vtradex.thorn.server.model.security.User" onClose="refreshParent" width="430" height="500">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="user.id" reserve="false"/>
+                <hidden id="user.strExtend3" reserve="false"/>
+                <text id="user.loginName" title="user.loginName" row="1" col="1" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="user.name" title="user.name" row="1" col="2" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <password id="user.password" title="user.password" row="2" col="1" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" length="20" trimSpace="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </password>
+                <list id="user.locale" title="user.locale" row="2" col="2" width="120" readOnly="false" required="true" reserve="false" forceOverride="false" enumType="LocalType">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'LocalType']]></hql>
+                    <eventListeners/>
+                </list>
+                <list id="user.referenceModel" title="user.referenceModel" row="3" col="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="false" enumType="ModelType">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'ModelType']]></hql>
+                    <eventListeners/>
+                </list>
+                <text id="user.email" title="user.email" row="3" col="2" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="false" inVisible="false" length="100" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <date id="user.expiryDate" title="user.expiryDate" row="4" col="1" readOnly="false" required="false" reserve="false" forceOverride="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <date id="user.passwordExpiryDate" title="user.passwordExpiryDate" row="4" col="2" readOnly="false" required="false" reserve="false" forceOverride="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <list id="user.firstPage.id" title="welcomePage.key" row="5" col="1" span="1" width="120" readOnly="false" required="false" reserve="false" forceOverride="true">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT 
+ wp.id, wp.value
+ From WelcomePage wp 
+ Where wp.refModel=#{MODELTYPE} 					
+					]]></hql>
+                    <eventListeners/>
+                </list>
+                <text id="user.strExtend1" title="user.strExtend1" row="5" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" length="20" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+            </inputUIs>
+        </modify>
+        <detail autoQuery="false" entityClass="com.vtradex.thorn.server.model.security.Group">
+            <datasource><![CDATA[SELECT group.id,group.code,group.name  from Group group,User user
+ where group in elements(user.groups)
+ /~user.id:AND user.id = {user.id} ~/]]></datasource>
+            <columns>
+                <column id="group.id" title="ID" visible="false" sortable="true"/>
+                <column id="group.code" title="group.code" visible="true" sortable="true"/>
+                <column id="group.name" title="group.name" visible="true" sortable="true"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

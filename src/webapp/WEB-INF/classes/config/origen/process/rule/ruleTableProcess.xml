@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="ruleTableProcess" control="status">
+
+	<task id="new" title="新建">
+	</task>
+
+	<task id="modify" title="修改">
+	</task>
+
+	<task id="delete" title="删除">
+	</task>
+
+	<task id="setFeference" title="设置参考项">
+	</task>
+
+</process>

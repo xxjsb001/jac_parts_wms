@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.shipping.WmsBOLStateLog" table="WMS_BOL_STATE_LOG">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_bolState_log</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+		
+		<many-to-one name="moveDoc" class="com.vtradex.wms.server.model.move.WmsMoveDoc">
+			<column name="MOVE_DOC_ID" not-null="true"/>
+		</many-to-one>
+		
+		<property name="type" type="string">
+			<column name="TYPE" not-null="true" length="50"/>
+		</property>
+		<property name="quantityBU" type="double" column="QUANTITY_BU" not-null="true"/>
+		<property name="inputTime" type="timestamp" column="INPUT_TIME" not-null="true"/>  		
+        <property name="driver" type="string" length="50" column="DRIVER"/>
+		<property name="vehicleNo" type="string" length="50" column="VEHICLE_NO"/>
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	</class>
+</hibernate-mapping>

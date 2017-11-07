@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="viewWorkDocPage" title="modifyWorkDocDetailPage" entityClass="com.vtradex.wms.server.model.move.WmsWorkDoc" width="870" height="500">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="workDoc.id" title="workDoc.id" reserve="false"/>
+                <text id="workDoc.code" title="workDoc.code" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <list id="workDoc.type" title="workDoc.type" row="1" col="2" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="WmsTaskType">
+                    <visibleExpression/>
+                    <hql><![CDATA[SELECT 
+ t.enumValue,t.enumValue 
+ FROM Enumerate t 
+ WHERE t.enumType = 'WmsTaskType']]></hql>
+                    <eventListeners/>
+                </list>
+                <text id="workDoc.workArea.code" title="workDoc.workArea.code" row="1" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="workDoc.worker.name" title="workDoc.worker.name" row="1" col="4" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <date id="workDoc.updateInfo.createdTime" title="workDoc.updateInfo.createdTime" row="1" col="5" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+            </inputUIs>
+        </modify>
+        <detail>
+            <datasource><![CDATA[SELECT task.id,task.originalBillCode,task.type,task.fromLocationCode,task.toLocationCode,task.itemKey.item.code,task.itemKey.item.name,task.packageUnit.unit,task.planQuantity,task.planQuantityBU,task.movedQuantityBU,task.itemKey.lotInfo.soi,task.itemKey.lotInfo.supplier.name,task.inventoryStatus,task.status  FROM WmsTask task
+ LEFT JOIN task.itemKey.lotInfo.supplier
+ WHERE 1=1
+ AND task.workDoc.id in ({parentIds})]]></datasource>
+            <columns>
+                <column id="task.id" title="task.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.originalBillCode" title="task.originalBillCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.type" title="task.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" format="enumFormat" formatParam="WmsTaskType"/>
+                <column id="task.fromLocationCode" title="task.fromLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.toLocationCode" title="task.toLocationCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.itemKey.item.code" title="task.itemKey.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.itemKey.item.name" title="task.itemKey.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.packageUnit.unit" title="task.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.planQuantity" title="task.planQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.planQuantityBU" title="task.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.movedQuantityBU" title="task.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.itemKey.lotInfo.soi" title="task.itemKey.lotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.itemKey.lotInfo.supplier.name" title="task.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="task.inventoryStatus" title="task.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="task.status" title="task.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" format="enumFormat" formatParam="WmsTaskStatus"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

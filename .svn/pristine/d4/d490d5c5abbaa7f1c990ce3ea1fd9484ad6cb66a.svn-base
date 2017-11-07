@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="wmsBillingPurchaseInvoiceManagePage">
+    <main>
+        <process id="wmsBillingPurchaseProcess">
+            <tablePopup id="new" title="new" process="wmsBillingPurchaseProcess.new" enableType="none" containId="false" pageId="editPurchaseInvoiceDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="purchaseImport" title="purchaseImport" process="wmsBillingPurchaseProcess.purchaseImport" enableType="none" containId="false" pageId="customsWmsPurchaseInvoiceDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="edit" title="edit" process="wmsBillingPurchaseProcess.edit" enableType="single" containId="true" pageId="editPurchaseInvoiceDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="enable" title="enable" process="wmsBillingPurchaseProcess.enable" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainPage.enable">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="delete" title="delete" process="wmsBillingPurchaseProcess.delete" enableType="none" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.wmsBillingPurchaseInvoiceManagePage.delete">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

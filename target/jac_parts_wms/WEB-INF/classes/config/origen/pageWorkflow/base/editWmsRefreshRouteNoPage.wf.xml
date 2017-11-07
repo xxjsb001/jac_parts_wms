@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsRefreshRouteNoPage">
+    <main>
+        <process id="wmsLocationBaseProcess">
+            <formCommit id="refreshRouteNo" title="refreshRouteNo" process="wmsLocationBaseProcess.refreshRouteNo" enableType="none" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="warehouseAreaId" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="zone" className="int">
+                        <entries/>
+                    </mapping>
+                    <mapping id="channelLines" className="string">
+                        <entries/>
+                    </mapping>
+                    <mapping id="startLines" className="string">
+                        <entries/>
+                    </mapping>
+					<mapping id="startRouteNo" className="int">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsLocationManager" methodName="autoCreateRouteNo" parameter="warehouseAreaId,zone,channelLines,startLines,startRouteNo"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

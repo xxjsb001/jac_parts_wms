@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <reportPopupPage id="printAsnReportPage" title="printAsnReportPage" reportFile="jacASNReport.raq" parameter="asnId=?,asnReceiveType" width="900" height="450">
+        <inputUIs>
+            <list id="asnReceiveType" title="receiveType" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="AsnReceiveType">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT 
+enumerate.enumValue,enumerate.enumValue
+FROM Enumerate enumerate
+WHERE enumerate.enumType='AsnReceiveType'
+ORDER BY ID DESC]]></hql>
+                <eventListeners/>
+            </list>
+        </inputUIs>
+    </reportPopupPage>
+</pages>

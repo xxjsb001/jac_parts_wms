@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainUserPage">
+    <main>
+        <process id="userProcess">
+            <tablePopup id="new" title="new" process="userProcess.new" enableType="none" containId="false" pageId="editUsersPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="userProcess.modify" enableType="single" containId="true" pageId="editUsersPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="active" title="active" process="userProcess.active" enableType="multi">
+                <enableExpression/>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tableCommit id="unActive" title="unActive" process="userProcess.unActive" enableType="multi">
+                <enableExpression/>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tablePopup id="userProcess.add" title="bindRole" enableType="single" containId="true" pageId="editUserRolesPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail>
+        <process/>
+    </detail>
+</page>

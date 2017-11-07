@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsUserSupplierPage" title="maintainWmsUserSupplierPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.organization.WmsUserSupplierHead">
+        <workflow/>
+        <datasource><![CDATA[SELECT usd.id,
+usd.user.loginName,
+usd.user.name
+ FROM WmsUserSupplierHead usd
+ WHERE 1=1
+ ORDER BY usd.id]]></datasource>
+        <columns>
+            <column id="usd.id" title="us.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="usd.user.code" title="user.loginName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="usd.user.name" title="user.name" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

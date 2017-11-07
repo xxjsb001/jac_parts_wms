@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="invokeReportPermissionPage" title="invokeReportPermissionPage" pageLocale="false" autoQuery="true" entityClass="com.vtradex.repc.server.model.report.ReportFile" width="800" height="500">
+        <workflow/>
+        <datasource><![CDATA[SELECT file.id,
+file.code,
+file.name,
+file.classification,
+file.style,
+file.type,
+file.grammarType,
+file.fileName,
+file.status,
+file.description 
+ FROM ReportFile file
+ WHERE 1=1 AND file.id not in (select reportRole.reportFile.id from ReportRole reportRole where reportRole.role.id in ({maintainRolePage.ids}))
+]]></datasource>
+        <columns>
+            <column id="file.id" title="maintainBOPage.ibo.id" pageLocale="false" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.code" title="ReportFile.file.code" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.name" title="ReportFile.file.name" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="file.classification" title="ReportFile.file.classification" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.style" title="ReportFile.file.style" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" format="enumFormat" formatParam="FileStyle"/>
+            <column id="file.type" title="ReportFile.file.type" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="FileType"/>
+            <column id="file.grammarType" title="ReportFile.file.grammarType" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" format="enumFormat" formatParam="FileGrammarType"/>
+            <column id="file.fileName" title="ReportFile.file.fileName" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="file.status" title="ReportFile.file.status" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>
+            <column id="file.description" title="ReportFile.file.description" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

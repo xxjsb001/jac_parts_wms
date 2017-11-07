@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainGroupPage">
+	<main>
+		<process id="groupProcess">
+				<tablePopup id="new"  process="groupProcess.new" title="new"
+					enableType="none" containId="false" pageId="editGroupsPage" />
+				<tablePopup id="modify"  process="groupProcess.modify" title="modify" enableType="single" containId="true" pageId="editGroupsPage" />
+				
+				<tableCommit id="delete"  process="groupProcess.delete" title="delete"
+					enableType="multi" confirmMessage="confirm.delete">
+	                <actions>
+	                    <action managerName="roleManager" methodName="deleteGroups" parameter="obj"/>
+	                </actions>
+	                <forwards>
+	                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+	                </forwards>
+				</tableCommit>
+				<tablePopup id="groupProcess.add" title="bindUser" enableType="single" containId="true" pageId="editUserBindingPage" />
+		</process>
+	</main>
+</page>

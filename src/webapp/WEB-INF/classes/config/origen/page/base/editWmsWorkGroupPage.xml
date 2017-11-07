@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+	<modifyDetailPage id="editWmsWorkGroupPage" title="editWmsWorkGroupPage" entityClass="com.vtradex.wms.server.model.warehouse.WmsWorker" onClose="refreshParent" width="450" height="500">
+        <initListeners/>
+	        <modify>
+	            <inputUIs>
+	            <hidden id="workGroup.id" title="workGroup.id" reserve="false"/>
+	            <text id="workGroup.code" title="workGroup.code" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" trimSpace="true">
+	                <visibleExpression/>
+	                <hql/>
+	                <eventListeners/>
+	            </text>
+	            <text id="workGroup.name" title="workGroup.name" row="1" col="2" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+	                <visibleExpression/>
+	                <hql/>
+	                <eventListeners/>
+	            </text>
+	            <text id="masterBOL.description" title="masterBOL.description" row="6" col="1" span="4" width="420" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+	            <text id="workGroup.type" title="workGroup.type" row="3" col="1" span="1" defaultValue="GROUP" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="true" trimSpace="true">
+	                <visibleExpression/>
+	                <hql/>
+	                <eventListeners/>
+	            </text>
+	        </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.warehouse.WmsWorker">
+            <datasource><![CDATA[SELECT workerDetail.id,workerDetail.name,workerDetail.station
+        FROM WmsWorker workerDetail 
+        where workerDetail.worker.id = {workGroup.id}
+]]></datasource>
+	        <columns>
+	            <column id="workerDetail.id" title="workerDetail.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+	            <column id="workerDetail.name" title="workerDetail.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        	<column id="workerDetail.station" title="workerDetail.worker.station" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+	        </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainVehicleAttachmentPage" title="maintainVehicleAttachmentPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.carrier.WmsVehicleDetail" width="600" height="400" onClose="refreshParent">
+        <workflow/>
+        <datasource><![CDATA[SELECT vehicleDetail.id,
+vehicleDetail.name,
+vehicleDetail.filePath 
+ from WmsVehicleDetail vehicleDetail
+where 1=1 and vehicleDetail.vehicle.id={parentId}
+]]></datasource>
+        <columns>
+            <column id="vehicleDetail.id" title="vehicleDetail.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="vehicleDetail.name" title="vehicleDetail.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="vehicleDetail.filePath" title="vehicleDetail.filePath" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

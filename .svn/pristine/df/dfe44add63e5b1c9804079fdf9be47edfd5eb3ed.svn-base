@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainUnInvokeReportFilePage" title="maintainUnInvokeReportFilePage" entityClass="com.vtradex.repc.server.model.report.ReportFile" autoQuery="true" width="800" height="350" >
+        <search>  
+            <inputUIs>
+                <text id="file.code" title="ReportFile.file.code" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="false"/>
+                <text id="file.name" title="ReportFile.file.name" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" inVisible="false" trimSpace="true" isPrecision="false"/>
+            </inputUIs>
+        </search>
+        <datasource type="hql"><![CDATA[ SELECT 
+ reportFile.id, reportFile.code, reportFile.name, reportFile.classification,
+ reportFile.style, reportFile.type, reportFile.grammarType, reportFile.fileName,
+ reportFile.active,reportFile.description,
+ (SELECT count(*) FROM PagePermission pp WHERE pp.elementId=reportFile.code and pp.role.id in ({parentIds}))
+ FROM ReportFile reportFile
+ WHERE 1=1 and reportFile.active=true
+ /~file.code: AND reportFile.code like {file.code}~/
+ /~file.name: AND reportFile.name like {file.name}~/
+]]></datasource>
+        <columns>
+            <column id="file.id" title="maintainBOPage.ibo.id" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.code" title="ReportFile.file.code" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.name" title="ReportFile.file.name" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.classification" title="ReportFile.file.classification" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.style" title="ReportFile.file.style" visible="true" horizonAlign="center" verticalAlign="middle" format="enumFormat" formatParam="FileStyle"  />
+            <column id="file.type" title="ReportFile.file.type" visible="true" horizonAlign="center" verticalAlign="middle"  format="enumFormat" formatParam="FileType" />
+            <column id="file.grammarType" title="ReportFile.file.grammarType" visible="true" horizonAlign="center" verticalAlign="middle"  format="enumFormat" formatParam="FileGrammarType"/>
+            <column id="file.fileName" title="ReportFile.file.fileName" visible="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="file.active" title="ReportFile.file.isActive" visible="true" horizonAlign="center" verticalAlign="middle" format="booleanFormat"  />
+            <column id="file.description" title="ReportFile.file.description" visible="true" horizonAlign="center" verticalAlign="middle"/>
+			<column id="number" title="invoke" visible="true" horizonAlign="center" verticalAlign="middle" format="invokeFormat"/>
+        </columns>
+    </maintainPage>
+</pages>

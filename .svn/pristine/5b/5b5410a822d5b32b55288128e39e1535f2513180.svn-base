@@ -1,0 +1,10 @@
+asnDetail.lotInfo.serialNo=\u5E8F\u5217\u53F7
+modifyDetail=\u4FDD\u5B58
+asnDetail.lotInfo.expireDate=\u5931\u6548\u65E5\u671F
+asnDetail.lotInfo.batchNum=\u5382\u5546\u6279\u6B21\u53F7
+asnDetail.lotInfo.produceDate=\u751F\u4EA7\u65E5\u671F
+warnDate=\u8FD1\u6548\u671F
+asnDetail.expectedQuantityBU=\u671F\u5F85\u6570\u91CF
+asnDetail.lotInfo.supplier.id=\u4F9B\u5E94\u5546
+addDetail=\u4FDD\u5B58
+asnDetail.lotInfo.warnDate=\u8FD1\u6548\u671F

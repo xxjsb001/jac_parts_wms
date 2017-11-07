@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyUnPutawayAutoAllocatePage">
+    <main/>
+    <detail>
+        <process id="wmsASNProcess">
+            <tableCommit id="confirmAll" title="confirmAll" process="wmsASNProcess.confirmAll" enableType="none" download="false" confirmMessage="confirm.unPutawayAutoAllocate">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="unPutawayAutoAllocate" parameter="parentObj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            
+            <tableCommit id="singleConfirm" title="singleConfirm" process="wmsASNProcess.singleConfirm" enableType="multi" download="false" confirmMessage="confirm.unPutawayAutoAllocate">
+                <enableExpression><![CDATA[${task.status} == 'OPEN']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="unPutawayAutoSingle" parameter="parentObj,obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+        
+    </detail>
+</page>

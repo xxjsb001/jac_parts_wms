@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editRuleTablePage">
+    <main>
+        <process id="ruleTableProcess">
+            <formCommit id="save" title="save" pageLocale="false" process="ruleTableProcess.new" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings>
+                	<mapping id="ruleTable" className="com.vtradex.rule.server.model.rule.RuleTable"/>
+                </mappings>
+                <actions>
+                    <action managerName="ruleTableManager" methodName="storeRuleTable" parameter="ruleTable"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="saveModify" title="saveModify" pageLocale="false" process="ruleTableProcess.modify" enableType="none" download="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

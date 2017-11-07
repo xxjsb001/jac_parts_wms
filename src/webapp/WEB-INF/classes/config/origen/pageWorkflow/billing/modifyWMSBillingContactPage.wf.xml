@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="modifyWMSBillingContactPage">
+    <main>
+        <process id="wmsBillingContactProcess">
+            <formCommit id="new" title="new" process="wmsBillingContactProcess.new" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="new">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsBillingManager" methodName="saveWMSContact" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="edit" title="edit" process="wmsBillingContactProcess.edit" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsBillingManager" methodName="saveWMSContact" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail>
+        <process id="wmsBillingContactProcess">
+            <tablePopup id="newDetail" title="newDetail" process="wmsBillingContactProcess.newDetail" enableType="none" containId="false" pageId="editWMSContactDetailPage">
+                <enableExpression><![CDATA[${wmsContact.id}!='']]></enableExpression>
+            </tablePopup>
+            <tablePopup id="editDetail" title="editDetail" process="wmsBillingContactProcess.editDetail" enableType="single" containId="true" pageId="editWMSContactDetailPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="deleteDetail" title="deleteDetail" process="wmsBillingContactProcess.deleteDetail" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.modifyWMSBillingContactPage.deleteDetail">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

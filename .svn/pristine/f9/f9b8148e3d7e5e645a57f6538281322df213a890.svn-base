@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.organization.WmsItemState" table="WMS_ITEM_STATE">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_itemState</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+
+		<many-to-one name="company" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="COMPANY_ID" not-null="true" unique-key="UK_ITEM_STATE"/>
+		</many-to-one>
+		<property name="name" type="string">
+			<column name="NAME" not-null="true" length="50" unique-key="UK_ITEM_STATE"/>
+		</property>	
+		<property name="status" type="string">
+            <column name="STATUS" length="50"/>
+        </property>
+		<property name="description" column="DESCRIPTION" type="string" length="255"/>			
+        <property name="beReceive" column="IS_RECEIVE" type="yes_no"/>
+        <property name="beSend" column="IS_SEND" type="yes_no"/>
+		<property name="beQuality" column="IS_QUALITY" type="yes_no"/>
+		<property name="beBackInv" column="IS_BACKINV" type="yes_no"/>
+		<property name="orderbyQuality" type="integer" column="ORDERBY_QUALITY"/>
+		<property name="backInventoryState" column="BACK_INVENTORY_STATE" type="string" length="50"/>
+		
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	 </class>
+</hibernate-mapping>

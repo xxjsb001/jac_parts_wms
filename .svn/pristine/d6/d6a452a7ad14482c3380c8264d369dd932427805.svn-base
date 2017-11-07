@@ -1,0 +1,60 @@
+package com.vtradex.wms.server.service.interfaces;
+
+import com.vtradex.thorn.server.service.BaseManager;
+import com.vtradex.wms.server.model.receiving.WmsASN;
+
+/**
+ * 处理中间表数据
+ * @author 方顺
+ * @date 2017-6-29 08:44:20
+ */
+public interface WmsDealInterfaceDataManager extends BaseManager{
+	
+	/**
+	 * 定时处理SRM送货以及MES退料接口数据
+	 * @author fs 
+	 */
+	void dealMesAndSrmOrder();
+	
+	/**
+	 * ASN过账确认将明细传给ERP
+	 * @param asn
+	 * @author fs
+	 */
+	void dealAsnData(WmsASN asn);
+	
+	/**
+	 * 处理中间表数据,生成发货单
+	 * @date 2017-7-2 15:16:57
+	 * @author fs
+	 */
+	void dealPicketTicketData();
+	
+	/**
+	 * 处理中间表器具物料关系对应表数据
+	 * @date 2017-7-4 09:42:01
+	 * @author fs
+	 */
+	void dealStationAndItemData();
+	
+	/**
+	 * 处理供应商物料关系对应表数据
+	 * @date 2017-7-4 10:41:44
+	 * @author fs
+	 */
+	void dealSupplierAndItemData();
+	
+	/**
+	 * 处理供应商物料关系对应表数据
+	 * @date 2017-7-4 10:59:20
+	 * @author fs
+	 */
+	void dealErpItemData();
+
+	/**
+	 * 处理供应商物料关系对应表数据
+	 * @date 2017-7-4 14:28:24
+	 * @author fs
+	 */
+	void dealErpSupplierData();
+}

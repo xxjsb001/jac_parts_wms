@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="modifyWmsUserSupplierPage" title="modifyWmsUserSupplierPage" entityClass="com.vtradex.wms.server.model.organization.WmsUserSupplierHead" width="680" height="360">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="usd.id" reserve="true"/>
+                <remote id="usd.user.id" title="user.name" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="false" focusUI="false" inVisible="false" editModel="uneditable" multiple="false" displayColumn="3" manualEditable="true" displayedTableHead="序号,登录名,用户名">
+                    <visibleExpression/>
+                    <hql><![CDATA[SELECT user.id, user.loginName,user.name
+ FROM User user
+WHERE 1=1
+AND user.status = 'ACTIVE'
+AND (user.loginName LIKE :param OR user.name LIKE :param)]]></hql>
+                    <eventListeners/>
+                </remote>
+            </inputUIs>
+        </modify>
+         <detail entityClass="com.vtradex.wms.server.model.organization.WmsUserSupplier">
+            <datasource><![CDATA[SELECT us.id,us.supplier.code,us.supplier.name FROM WmsUserSupplier us
+ WHERE 1=1
+ /~usd.id:AND us.userHead.id = {usd.id} ~/
+ ORDER BY  us.id ASC]]></datasource>
+            <columns>
+                <column id="us.id" title="uu.id" visible="false" sortable="true"/>
+                <column id="us.supplier.code" title="asn.supplier.code" visible="true" sortable="true" horizonAlign="center"/>
+                <column id="us.supplier.name" title="asnDetail.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

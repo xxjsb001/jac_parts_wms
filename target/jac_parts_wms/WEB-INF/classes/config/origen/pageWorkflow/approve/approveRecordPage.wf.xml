@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="approveRecordPage">
+    <main>
+        <process id="thornApproveProcess">
+            <tablePopup id="viewLog" title="viewLog" process="thornApproveProcess.viewLog" enableType="single" containId="true" pageId="approveRecordLogPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsMasterBOLDetailPage" title="maintainWmsMasterBOLDetailPage" autoQuery="false" entityClass="com.vtradex.wms.server.model.shipping.WmsBOLDetail">
+        <workflow/>
+        <datasource><![CDATA[
+SELECT bolDetail.id,
+bolDetail.bol.pickCode,
+bolDetail.bol.code,
+bolDetail.subCode,
+bolDetail.container,
+bolDetail.boxTag,
+bolDetail.beReturn,
+bolDetail.bol.status,
+bolDetail.bol.billTypeName,
+bolDetail.bol.vehicle.license,
+bolDetail.bol.wmsDriver.name,
+bolDetail.bol.shipTime,
+bolDetail.itemKey.item.code,
+bolDetail.itemKey.item.name,
+bolDetail.quantityBU,
+bolDetail.signQty,
+bolDetail.slr,
+bolDetail.tfd,
+bolDetail.productionLine,
+bolDetail.requireArriveDate,
+bolDetail.itemKey.lotInfo.supplier.name,
+bolDetail.itemKey.lotInfo.supplier.code
+ FROM WmsBOLDetail bolDetail 
+ LEFT JOIN bolDetail.bol.wmsDriver 
+ LEFT JOIN bolDetail.bol.vehicle
+ WHERE 1=1 
+ ORDER BY bolDetail.bol.code desc,bolDetail.id 
+ ]]></datasource>
+        <columns>
+         	<column id="bolDetail.id" title="bolDetail.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bolDetail.bol.pickCode" title="pickTicket.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="bol.code" title="bol.code" width="120" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="bol.subCode" title="bol.subCode" width="120" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="bolDetail.container" title="bolDetail.container" width="120" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="bolDetail.boxTag" title="bolDetail.boxTag" width="120" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="bolDetail.beReturn" title="bolDetail.beReturn" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
+            <column id="bol.status" title="bol.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsBOLStatus"/>
+            <column id="bol.billTypeName" title="bol.billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.vehicle.license" title="bol.vehicle.license" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.wmsDriver.name" title="bol.wmsDriver.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.shipTime" title="bol.shipTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="bolDetail.item.code" title="bolDetail.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bolDetail.item.name" title="bolDetail.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bolDetail.quantityBU" title="bolDetail.quantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="bolDetail.signQty" title="bolDetail.signQty" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="bolDetail.slr" title="bolDetail.slr" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="bolDetail.tfd" title="bolDetail.tfd" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        	<column id="bolDetail.productionLine" title="bolDetail.productionLine" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        	<column id="bolDetail.requireArriveDate" title="bolDetail.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+        	<column id="bolDetail.itemKey.lotInfo.supplier.name" title="inventory.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="bolDetail.itemKey.lotInfo.supplier.code" title="inventory.itemKey.lotInfo.supplier.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

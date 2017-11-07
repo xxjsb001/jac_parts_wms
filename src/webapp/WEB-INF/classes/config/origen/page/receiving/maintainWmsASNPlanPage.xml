@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="maintainWmsASNPlanPage" title="maintainWmsASNPlanPage" className="com.vtradex.thorn.client.template.gantt.MaintainGanttChartPage">
+	<buttons>
+		<button id="wmsASNPlanProcess.newPlan" title="wmsASNPlanProcess.newPlan" pageId="editWmsASNPlanPage" />
+		<button id="wmsASNPlanProcess.newMasterPlan" title="wmsASNPlanProcess.newMasterPlan" pageId="editWmsMasterPlanPage" />
+ 	</buttons>
+	</customPage>
+</pages>

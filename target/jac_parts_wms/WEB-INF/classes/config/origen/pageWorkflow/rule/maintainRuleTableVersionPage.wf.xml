@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainRuleTableVersionPage">
+    <main>
+        <process id="versionProcess">
+            <tablePopup id="new" title="new" process="versionProcess.new" enableType="none" containId="false" pageId="editVersionPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="versionProcess.modify" enableType="single" containId="true" pageId="editVersionPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="versionProcess.delete" enableType="multi" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainRuleTableVersionPage.delete">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="aopVersionManager" methodName="offLine" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="upLine" title="upLine" process="versionProcess.upLine" enableType="multi" download="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsTransactionalManager" methodName="uplineRuleTable" parameter="obj"/>
+<!--                     <action managerName="aopVersionManager" methodName="onLine" parameter="obj"/> -->
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="unActive" title="unActive" process="versionProcess.unActive" enableType="multi" download="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="aopVersionManager" methodName="offLine" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="import" title="import" process="versionProcess.import" enableType="single" containId="false" pageId="importRuleTablePage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="export" title="export" process="versionProcess.export" enableType="single" download="true">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="id" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="downLoadRuleTableDetailAction" methodName="exportRuleTable" parameter="id"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="editRuleTableDetail" title="editRuleTableDetail" process="versionProcess.editRuleTableDetail" enableType="single" containId="true" pageId="customRuleTableDetailPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

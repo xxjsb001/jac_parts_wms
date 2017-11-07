@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editQualityBillStatusPage" title="editQualityBillStatusPage" entityClass="com.vtradex.wms.server.model.organization.WmsQualityBillStatus" width="580" height="170" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="wqb.id" title="wqb.id" reserve="false"/>
+            <remote id="wqb.company.id" title="item.company" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[SELECT 
+company.id,
+company.code,
+company.name
+FROM WmsOrganization company,WmsWarehouseAndCompany wwa 
+WHERE company.beCompany = true
+and company.beVirtual =false
+AND company.status = 'ENABLED'
+AND (company.code LIKE :param OR company.name LIKE :param) 
+and wwa.company.id=company.id
+AND wwa.warehouse.id = #{SESSION_WAREHOUSE} 
+ 		]]></hql>
+                    <eventListeners>
+                        <eventListener id="wqb.billType.id" index="1" refreshUI="true"/>
+                        <eventListener id="wqb.itemState.id" index="1" refreshUI="true"/>
+                    </eventListeners>
+                </remote>
+                <list id="wqb.billType.id" title="pickTicket.billType.id" row="1" col="2" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT
+ billType.id,
+ billType.name
+ FROM WmsBillType billType
+ WHERE 1=1 
+ AND billType.type = 'QUALITY'					
+ AND billType.company.id = ${wqb.company.id}
+ AND billType.status = 'ENABLED']]></hql>
+                    <eventListeners/>
+                </list>
+                
+                <remote id="wqb.itemState.id" title="inventoryLog.inventoryStatus" row="1" col="3" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,是否返库,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[SELECT
+ itemState.id,
+ itemState.beBackInv,
+ itemState.name
+ FROM WmsItemState itemState
+ WHERE 1=1 
+ AND itemState.company.id = ${wqb.company.id}
+AND (itemState.name LIKE :param)
+ 		]]></hql>
+                    <eventListeners>
+                        <eventListener id="wqb.itemState.beBackInv" index="2" refreshUI="false"/>
+                    </eventListeners>
+           		</remote>
+            <text id="wqb.repelStatus" title="wqb.repelStatus" row="4" col="1" span="2" width="220" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <list id="wqb.backInventoryState.id" title="itemState.backInventoryState" row="4" col="2" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                    <visibleExpression>  
+						<![CDATA[${wqb.itemState.beBackInv}=='false']]>  
+					</visibleExpression>
+                    <hql><![CDATA[ SELECT
+ itemState.id,
+ itemState.name
+ FROM WmsItemState itemState
+ WHERE 1=1 
+ AND itemState.company.id = ${wqb.company.id}
+ ]]></hql>
+                    <eventListeners/>
+            </list>
+            <text id="wqb.description" title="billType.description" row="5" col="1" span="2" width="320" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            
+            <text id="wqb.itemState.beBackInv" title="itemState.beBackInv" row="6" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" inVisible="false" length="100" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                 <eventListeners>  
+					<eventListener id="wqb.backInventoryState.id" refreshUI="true"/>  
+				 </eventListeners>
+           </text>
+        </inputUIs>
+    </editPage>
+</pages>

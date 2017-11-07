@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="editinputColPage" title="editinputColPage" entityClass="com.vtradex.repc.server.model.report.ReportFile" width="580" height="350">
+        <modify>
+            <inputUIs>
+                <hidden id="file.id" reserve="false"/>
+				<text id="file.code" title="ReportFile.file.code" row="1" col="1" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="file.name" title="ReportFile.file.name" row="1" col="2" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <list id="file.type" title="ReportFile.file.type" row="1" col="3" width="120" readOnly="true" required="false" reserve="false" forceOverride="false" enumType="FileType">
+                    <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+ 					enumerate.enumValue,null,null  From Enumerate enumerate 
+ 					where enumerate.enumType = 'FileType']]></hql>
+                </list>
+                <text id="file.fileName" title="ReportFile.file.fileName" row="2" col="1" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <text id="file.classification" title="ReportFile.file.classification" row="2" col="2" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+                <list id="file.grammarType" title="ReportFile.file.grammarType" row="2" col="3" width="120" readOnly="true" required="false" reserve="false" forceOverride="false" enumType="FileGrammarType">
+                    <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+					 enumerate.enumValue From Enumerate enumerate 
+ 					where enumerate.enumType = 'FileGrammarType']]></hql>
+                </list>
+                <text id="file.statement" title="ReportFile.file.statement" row="3" col="1" readOnly="true" required="false" reserve="false" forceOverride="false" inVisible="false" trimSpace="true" isPrecision="true"/>
+          	    <list id="file.style" title="ReportFile.file.style" row="3" col="3" width="120" readOnly="true" required="false" reserve="false" forceOverride="false" enumType="FileStyle">
+                    <hql><![CDATA[ SELECT 
+ 					enumerate.enumValue,
+					 enumerate.enumValue  From Enumerate enumerate 
+ 					where enumerate.enumType = 'FileStyle']]></hql>
+                </list>
+            </inputUIs>
+        </modify>
+        <detail autoQuery="false" entityClass="com.vtradex.repc.server.model.report.ReportColumn" >
+            <datasource><![CDATA[select reportColumn.id, 
+ reportColumn.code,
+ reportColumn.name,
+ reportColumn.formatter, 
+ reportColumn.formatterParams
+ from ReportColumn reportColumn 
+ where 1=1 and reportColumn.reportFile.id={file.id}
+ ORDER BY reportColumn.lineNo
+ 
+ ]]></datasource>
+            <columns>
+                <column id="reportColumn.id" title="ID" visible="false"/>
+                <column id="reportColumn.code" title="reportColumn.code" visible="true" horizonAlign="left"/>
+                <column id="reportColumn.name" title="reportColumn.name" visible="true" horizonAlign="left"/>
+                <column id="reportColumn.formatter" title="reportColumn.formatter" visible="true" horizonAlign="left"/>
+                <column id="reportColumn.formatterParams" title="reportColumn.formatterParams" visible="true" horizonAlign="left"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

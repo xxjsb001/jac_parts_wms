@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.move.WmsWorkDoc" table="WMS_WORK_DOC">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_wmsWorkDoc</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>		
+        <discriminator column="DISCRIMINATOR" type="string"/>
+        <version name="version" type="long" column="VERSION"/>
+        
+        <many-to-one name="warehouse" class="com.vtradex.wms.server.model.warehouse.WmsWarehouse">
+			<column name="WAREHOUSE_ID" not-null="true" unique-key="UK_WMS_WORKDOC"/>
+		</many-to-one>
+        <many-to-one name="company" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="COMPANY_ID" not-null="false"/>
+		</many-to-one>
+        <many-to-one name="workArea" class="com.vtradex.wms.server.model.warehouse.WmsWorkArea">
+			<column name="WORK_AREA_ID" not-null="true"/>
+		</many-to-one>
+        <many-to-one name="worker" class="com.vtradex.wms.server.model.warehouse.WmsWorker">
+			<column name="WORKER_ID"/>
+		</many-to-one>
+        
+        <property name="code" type="string" length="50" column="CODE" not-null="true" unique-key="UK_WMS_WORKDOC"/>
+        <property name="type" type="string" length="50" column="TYPE"/>
+        <property name="status" type="string" length="50" column="STATUS"/>
+        <property name="originalBillCode" type="string" length="50" column="ORIGINAL_BILL_CODE"/>
+
+        <property name="expectedQuantityBU" type="double" column="EXPECT_QUANTITY_BU" not-null="true"/>
+        <property name="movedQuantityBU" type="double" column="MOVED_QUANTITY_BU" not-null="true"/>
+
+        <property name="printTimes" type="integer" column="PRINT_TIMES" not-null="true"/>
+        
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+
+        <set name="tasks" lazy="true" cascade="none">
+			<key column="WORK_DOC_ID"/>
+			<one-to-many class="com.vtradex.wms.server.model.move.WmsTask"></one-to-many>
+		</set>
+        
+	</class>
+</hibernate-mapping>

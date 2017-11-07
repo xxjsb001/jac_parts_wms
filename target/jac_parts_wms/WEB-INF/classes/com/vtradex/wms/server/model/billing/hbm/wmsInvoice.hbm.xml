@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.billing.WMSInvoice" table="WMS_INVOICE">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_WMS_INVOICE</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+		<discriminator column="DISCRIMINATOR" type="string"/>
+		<property name="serialCode" type="string" length="100" column="SERIAL_CODE"/>  
+		<many-to-one name="supplier" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="SUPPLIER_ID" not-null="true"/>
+		</many-to-one>
+		<many-to-one name="warehouse" class="com.vtradex.wms.server.model.warehouse.WmsWarehouse">
+			<column name="WAREHOUSE_ID"/>
+		</many-to-one>
+		<many-to-one name="contact" class="com.vtradex.wms.server.model.billing.WMSContact">
+			<column name="WMS_CONTACT_ID" not-null="true"/>
+		</many-to-one>
+		 <many-to-one name="accountingSubject" class="com.vtradex.wms.server.model.billing.WMSBillingCategory">
+			<column name="WMS_ACCOUNTING_SUBJECT_ID" not-null="true"/>
+		</many-to-one>
+		<property name="invoiceDate" type="date"   column="INVOICE_DATE" />
+	    <property name="sumSysAmount" type="double"   column="SUM_SYS_AMOUNT"/>
+		<property name="sumManualAmount" type="double"   column="SUM_MANUAL_AMOUNT"/>
+		<property name="taxingPoint" type="double"   column="TAXING_POINT" />
+        <property name="tax" type="double"   column="TAX" />
+		<property name="paidTax" type="double"   column="PAID_TAX" />
+		<property name="paidAmount" type="double"   column="PAID_AMOUNT" />
+		<property name="makeupPerson" type="string" length="100" column="MAKEUP_PERSON"/>  
+		<property name="code" type="string" length="100" column="CODE"/>  
+		<property name="status" type="string" length="30" column="STATUS"/>     
+        <property name="payType" type="string" length="30" column="PAY_TYPE"/>   
+		<property name="startDate" type="date"  column="START_DATE"/>
+		<property name="endDate" type="date"  column="END_DATE"/> 
+		<property name="billScope" type="string" length="100" column="BILLING_SCOPE" />  
+		<property name="memo" type="string" length="255" column="MEMO"/>   
+		<property name="makeUpMemo" type="string" length="255" column="MAKEUP_MEMO"/>   
+
+		<set name="categories" table="WMS_INVOICE_DETAIL_CATEGORY" inverse="true" lazy="true" cascade="all-delete-orphan">
+			<key column="WMS_INVOICE_ID"/>
+			<one-to-many class="com.vtradex.wms.server.model.billing.WMSInvoiceDetailCategory"/>
+		</set>
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	 </class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsJobLogPage" title="maintainWmsJobLogPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.middle.WmsJobLog">
+        <workflow/>
+        <datasource><![CDATA[SELECT log.id,
+log.type,
+log.operName,
+log.operException,
+log.updateInfo.creator,
+log.updateInfo.createdTime 
+ FROM WmsJobLog log 
+ WHERE 1=1
+ ORDER BY log.id desc]]></datasource>
+        <columns>
+            <column id="log.id" title="locationStatus.id" width="60" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="integer"/>
+            <column id="log.type" title="log.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" width="60" dataType="enum" format="enumFormat" formatParam="WmsLogType"/>
+            <column id="log.operName" title="log.operName" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsLogTitle"/>
+            <column id="log.operException " title="el.operException" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" width="500"/>
+        	<column id="log.updateInfo.creator" title="pickTicket.updateInfo.creator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string" width="80"/>
+        	<column id="log.updateInfo.createdTime" title="moveDoc.updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" width="130" dataType="date"/>
+        </columns>
+    </maintainPage>
+</pages>

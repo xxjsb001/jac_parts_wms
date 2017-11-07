@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainThornJobUserPage">
+    <main>
+        <process id="thornJobProcess">
+            <tablePopup id="addJobUser" title="addJobUser" process="thornJobProcess.addJobUser" enableType="none" containId="false" pageId="addThornJobUserPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="removeUser" title="removeUser" process="thornJobProcess.removeUser" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="thornOrganizationJobManager" methodName="removeThornJobUser" parameter="obj,parentObj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

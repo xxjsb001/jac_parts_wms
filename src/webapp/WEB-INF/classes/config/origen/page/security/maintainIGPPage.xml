@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainIGPPage" title="maintainIGPPage" entityClass="com.vtradex.thorn.server.config.globalparam.GlobalParam" autoQuery="true">
+        <datasource type="hql"><![CDATA[ SELECT 
+ igp.id,
+ igp.referenceModel,
+ igp.groupName,
+ igp.type,
+ igp.paramId,
+ igp.value,
+ igp.bean,
+ igp.description
+ FROM GlobalParam igp 
+ WHERE 1=1 
+  order by igp.id desc 
+ ]]></datasource>
+        <columns>
+            <column id="globalParam.id" title="globalParam.id" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="globalParam.referenceModel" title="globalParam.referenceModel" visible="true" horizonAlign="left" verticalAlign="middle" format="enumFormat" formatParam="ModelType"/>
+            <column id="globalParam.groupName" title="globalParam.groupName" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="globalParam.type" title="globalParam.type" visible="true" horizonAlign="left" verticalAlign="middle" format="enumFormat" formatParam="GlobalParamType"/>
+            <column id="globalParam.paramId" title="globalParam.paramId" visible="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="globalParam.value" title="globalParam.value" visible="true" color="blue" horizonAlign="left" verticalAlign="middle"/>
+            <column id="globalParam.bean" title="globalParam.bean" visible="true" color="red" horizonAlign="left" verticalAlign="middle"/>
+            <column id="globalParam.description" title="globalParam.description" visible="true" horizonAlign="left" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

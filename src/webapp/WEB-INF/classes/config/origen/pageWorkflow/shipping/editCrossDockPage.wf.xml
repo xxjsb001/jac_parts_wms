@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editCrossDockPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <formCommit id="crossDock" title="crossDock" process="wmsMoveDocProcess.crossDock" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="setShippingLocation" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

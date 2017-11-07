@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.inventory.WmsStorageDaily" table="WMS_STORAGE_DAILY">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_storageDaily</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id>
+        <discriminator column="DISCRIMINATOR" type="string"/>
+        
+        <many-to-one name="warehouse" class="com.vtradex.wms.server.model.warehouse.WmsWarehouse">
+			<column name="WAREHOUSE_ID" not-null="true" unique-key="UK_STORAGE_DAILY"/>
+		</many-to-one>
+         <many-to-one name="itemKey" class="com.vtradex.wms.server.model.inventory.WmsItemKey">
+			<column name="ITEM_KEY_ID" not-null="true" unique-key="UK_STORAGE_DAILY"/>
+		</many-to-one>
+		 <property name="computeDate" type="date">
+			<column name="COMPUTE_DATE" not-null="true" unique-key="UK_STORAGE_DAILY"/>
+		</property>
+        <property name="previousQuantityBU" type="double" column="PREVIOUS_QUANTITY_BU" not-null="true"/>
+        <property name="receiveQuantityBU" type="double" column="RECEIVE_QUANTITY_BU" not-null="true"/>
+        <property name="shipQuantityBU" type="double" column="SHIP_QUANTITY_BU" not-null="true"/>
+        <property name="processDecQuantityBU" type="double" column="PROCESS_DECQUANTITY_BU" not-null="true"/>        
+        <property name="processIncQuantityBU" type="double" column="PROCESS_INCQUANTITY_BU" not-null="true"/>		
+        <property name="countAdjustQuantityBU" type="double" column="ADJ_QUANTITY_BU" not-null="true"/>       
+        <property name="leftQuantityBU" type="double" column="LEFT_QUANTITY_BU" not-null="true"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editThornApproveDetailPage">
+    <main>
+        <process id="thornApproveProcess">
+            <formCommit id="new" title="new" process="thornApproveProcess.new" enableType="none" download="false" closeTransactional="false" visibleType="new">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="thornApprove.id" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="thornOrganizationJobManager" methodName="storeThornApproveDetail" parameter="thornApprove.id,obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="modify" title="modify" process="thornApproveProcess.modify" enableType="none" download="false" closeTransactional="false" visibleType="edit">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="thornApprove.id" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="thornOrganizationJobManager" methodName="storeThornApproveDetail" parameter="thornApprove.id,obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

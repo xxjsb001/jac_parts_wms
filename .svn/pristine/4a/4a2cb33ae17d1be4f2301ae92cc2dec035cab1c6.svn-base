@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainImportRecordPage">
+    <main>
+        <process id="importRecordProcess">
+            <tableCommit id="download" title="download" process="importRecordProcess.download" enableType="single" download="true" closeTransactional="false">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="id" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="downLoadImportRecordAction" methodName="exportImportReocrd" parameter="id"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

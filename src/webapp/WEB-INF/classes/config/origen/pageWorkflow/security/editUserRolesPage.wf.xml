@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editUserRolesPage">
+	<main>
+	</main>
+	<detail>
+		<process id="userProcess">
+				<tablePopup id="addRole" process="userProcess.add" title="addRole" invisible="false" containId="false" pageId="addUserRolesPage"/>
+                <tableCommit id="deleteRole" process="userProcess.delete" title="deleteRole" enableType="multi" invisible="false" confirmMessage="confirm.delete">
+                    <actions>
+                        <action managerName="userManager" methodName="deleteRoles" parameter="parentObj,obj"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                    </forwards>
+                </tableCommit>
+		</process>
+	</detail>
+</page>

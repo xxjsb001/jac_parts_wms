@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.vtradex.wms.server.model.carrier.WmsVehicleType" table="WMS_VEHICLE_TYPE">
+		<id name="id" column="ID" type="long">
+			<generator class="native">
+				<param name="sequence">seq_wmsVehicleType</param>
+				<param name="parameters">START WITH 1000</param>
+			</generator>
+		</id>
+		
+		<property name="code" type="string">
+			<column name="CODE" not-null="true" length="30" unique-key="UK_WMS_VEHICLE_TYPE"></column>
+		</property> 
+		<property name="description" type="string" column="DESCRIPTION" length="255"/>
+		<property name="name" type="string">
+			<column name="NAME" not-null="true" length="50"></column>
+		</property> 
+		<property name="carType" type="string" column="CAR_TYPE"/>
+		<property name="status" type="string" column="STATUS"/>
+		
+		<property name="fuel" type="string" column="FUEL"/>
+		<property name="height" type="double">
+			<column name="HEIGHT" default="0"></column>
+		</property> 
+		<property name="length" type="double" column="LENGTH"/>
+		<property name="power" type="double" column="POWER"/>
+		
+		<property name="volume" type="double" column="VOLUME"/>
+		<property name="weight" type="double" column="WEIGHT"/>
+		<property name="width" type="double" column="WIDTH"/>
+		
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID" />
+			<property name="creator" type="string" length="50" column="CREATOR" />
+			<property name="createdTime" type="timestamp" column="CREATED_TIME" />
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID" />
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR" />
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME" />
+		</component>
+		
+	</class>
+</hibernate-mapping>

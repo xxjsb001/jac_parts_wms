@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="addThornJobUserPage" title="addThornJobUserPage" autoQuery="false" entityClass="com.vtradex.thorn.server.model.security.User" width="700" height="450">
+        <workflow/>
+        <datasource><![CDATA[SELECT user.id,
+user.loginName,
+user.name 
+ from User user WHERE 1=1 and user.status = 'ACTIVE' and user.id not in (select thornJobUser.user.id  from ThornJobUser thornJobUser where thornJobUser.thornJob.id in ({maintainThornJobPage.ids}) )]]></datasource>
+        <columns>
+            <column id="user.id" title="user.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="user.loginName" title="user.loginName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="user.name" title="user.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

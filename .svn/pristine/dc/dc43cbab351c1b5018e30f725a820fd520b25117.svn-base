@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainLotRulePage" title="maintainLotRulePage" autoQuery="true" entityClass="com.vtradex.wms.server.model.organization.WmsLotRule">
+        <workflow/>
+        <datasource><![CDATA[SELECT wlr.id,
+wlr.code,
+wlr.status,
+wlr.description 
+ from WmsLotRule wlr where 1=1
+ order by wlr.code]]></datasource>
+        <columns>
+            <column id="wlr.id" title="wlr.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="wlr.code" title="wlr.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wlr.status" title="wlr.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>
+            <column id="wlr.description" title="wlr.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

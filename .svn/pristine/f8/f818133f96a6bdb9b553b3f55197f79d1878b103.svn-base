@@ -1,0 +1,88 @@
+package com.vtradex.wms.server.telnet.shell.pick;
+
+import java.io.IOException;
+
+import org.apache.commons.lang.StringUtils;
+
+import net.wimpi.telnetd.net.Connection;
+
+import com.vtradex.kangaroo.shell.BreakException;
+import com.vtradex.kangaroo.shell.ContinueException;
+import com.vtradex.kangaroo.shell.ShellFactory;
+import com.vtradex.kangaroo.shell.Thorn4BaseShell;
+import com.vtradex.wms.server.model.inventory.WmsInventory;
+import com.vtradex.wms.server.telnet.dto.WmsPickContainerDTO;
+import com.vtradex.wms.server.telnet.pick.WmsPickRFManager;
+import com.vtradex.wms.server.web.filter.WmsWorkerHolder;
+
+/**
+ * 散件拣货
+ * @author Administrator
+ *
+ */
+public class WmsPickPartShell extends Thorn4BaseShell{
+	
+	private final WmsPickRFManager pickRFManager;
+	
+	public WmsPickPartShell(WmsPickRFManager pickRFManager) {
+		this.pickRFManager = pickRFManager;
+	}
+
+	public static final String PAGE_ID = "wmsPickPartShell"; 
+	
+	@Override
+	protected void mainProcess(Connection connection) throws BreakException,
+			ContinueException, IOException, Exception {
+		
+		Long moveDocId = (Long)this.getParentValue("MOVEDOC_ID");
+		String container = (String) this.getParentValue("CONTAINER");
+		WmsPickContainerDTO dto = (WmsPickContainerDTO) this.getParentContext().get("CURRENT_DTO");
+		if(dto == null || dto.getUnMoveQuantityBU() == 0D){
+			dto = pickRFManager.getWmsTaskByMoveDocId(moveDocId, container);
+		}
+		if(dto == null){
+			this.forward(ShellFactory.getMainShell(),"没有拣货任务");
+		}
+		this.output("器具型号", container);
+		this.output("物料编码", dto.getItemCode());
+		this.output("物料名称", dto.getItemName());
+		this.output("供应商编码", dto.getSupplier());
+		this.output("推荐库位", dto.getLocationCode());
+		String locCode = this.getTextField("拣选库位");
+		if(StringUtils.isEmpty(locCode)){
+			this.setStatusMessage("拣选库位不能为空");
+		}
+		dto.setPickLocCode(locCode);
+		this.put("MOVEDOC_ID", moveDocId);
+		this.put("CONTAINER", container);
+		if("00".equals(locCode)){//器具满了换器具
+			this.forward(WmsPickMoveDocDetailShell.PAGE_ID);
+		}
+		if("01".equals(locCode)){//物料短缺
+			pickRFManager.markTaskException(dto.getTaskId());
+			this.forward(WmsPickPartShell.PAGE_ID);
+		}
+		if(!dto.getLocationCode().equals(locCode)){
+			String isChanged = this.getTextField("库位与推荐的不一致是否更改:是-1/否-0");
+			if("1".equals(isChanged)){
+				WmsInventory inv =pickRFManager.getInventoryQtyByLocation(dto.getPickLocCode(),dto.getItemCode(),dto.getSupplier());
+				if(inv == null){
+					this.context.put("CURRENT_DTO", dto);
+					this.forward(WmsPickPartShell.PAGE_ID,"库位未找到库存，请重新输入");
+				}
+				dto.setInventoryId(inv.getId());
+				if(inv.getAvailableQuantityBU() < dto.getUnMoveQuantityBU()){
+					dto.setUnMoveQuantityBU(inv.getAvailableQuantityBU());
+				}
+				this.context.put("CURRENT_DTO", dto);
+				this.forward(WmsPickPartShell2.PAGE_ID);
+			}else{
+				this.context.put("CURRENT_DTO", dto);
+				this.forward(WmsPickPartShell.PAGE_ID);
+			}	
+		}else{
+			this.context.put("CURRENT_DTO", dto);
+			this.forward(WmsPickPartShell2.PAGE_ID);
+		}	
+	}
+}

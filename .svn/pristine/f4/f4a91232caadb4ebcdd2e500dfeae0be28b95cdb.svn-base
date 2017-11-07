@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsTransStatePage" title="editWmsTransStatePage" entityClass="com.vtradex.wms.server.model.organization.WmsTransState" width="450" height="330" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="transState.id" reserve="false"/>
+            <text id="transState.name" title="transState.name" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <textArea id="transState.description" title="transState.description" row="2" col="1" span="2" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" rows="3" cols="50">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+        </inputUIs>
+    </editPage>
+</pages>

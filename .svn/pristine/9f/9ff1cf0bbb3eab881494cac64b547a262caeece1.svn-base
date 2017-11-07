@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.inventory.WmsSafeInventory" table="WMS_SAFE_INVENTORY" dynamic-update="true">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_safeinventory</param>
+                <param name="parameters">START WITH 200000</param>
+            </generator>
+        </id> 
+        <discriminator column="DISCRIMINATOR" type="string"/>
+		<version name="version" column="VERSION" type="long"/>
+		
+		<many-to-one name="suppiler" class="com.vtradex.wms.server.model.organization.WmsOrganization">
+			<column name="SUPPILER_ID" />
+		</many-to-one>
+		<many-to-one name="item" class="com.vtradex.wms.server.model.organization.WmsItem">
+			<column name="ITEM_ID" />
+		</many-to-one>
+		<property name="safeInvQty" type="double" column="SAFE_INVQTY" />
+		<property name="minInvQty" type="double" column="MIN_INVQTY" />
+		<property name="remark" type="string" column="REMARK"/>
+		<property name="status" type="string">
+            <column name="STATUS" length="100" />
+        </property>
+        <property name="artStatus" type="string" column="ART_STATUS"/>
+	</class>
+</hibernate-mapping>

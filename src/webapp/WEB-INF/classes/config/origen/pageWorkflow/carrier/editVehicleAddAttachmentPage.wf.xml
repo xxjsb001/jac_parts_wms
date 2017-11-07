@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editVehicleAddAttachmentPage">
+    <main>
+        <process id="wmsVehicleDetailProcess">
+            <formCommit id="addAttachment" title="addAttachment" process="wmsVehicleDetailProcess.addAttachment" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="new">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="filePath" className="file">
+                        <entries/>
+                    </mapping>
+                    <mapping id="maintainWmsVehiclePage.id" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsVehicleManager" methodName="addAttachment" parameter="maintainWmsVehiclePage.id,filePath"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

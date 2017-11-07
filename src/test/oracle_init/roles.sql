@@ -1,0 +1,12 @@
+INSERT INTO  roles  VALUES ('1', 'SUPERVISOR', '系统管理员', 'T', '2', 'admin', null, '2', 'admin', null);
+INSERT INTO  roles  VALUES ('3', 'RECEIVE', '收货员', 'F', '2', 'admin', null, '2', 'admin', null);
+INSERT INTO  roles  VALUES ('4', 'SHIP', '发货员', 'F', null, null, null, null, null, null);
+INSERT INTO  roles  VALUES ('5', 'INVENTORY', '库管员', 'F', '2', 'admin', null, '2', 'admin', null);
+INSERT INTO  roles  VALUES ('6', 'FINANCE', '财务', 'F', null, null, null, null, null, null);
+INSERT INTO  roles  VALUES ('7', 'ADMIN', '库内系统管理员', 'F', null, null, null, null, null, null);
+INSERT INTO  roles  VALUES ('8', 'RULE_ADMIN', '规则管理员', 'F', null, null, null, null, null, null);
+INSERT INTO  roles  VALUES ('9', 'RULE_DATE', '规则数据管理员', 'F', null, null, null, null, null, null);
+INSERT INTO  roles  VALUES ('10', 'PUBLIC', '公共权限', 'F', null, null, null, null, null, null);
+INSERT INTO  roles  VALUES ('11', 'REPORT', '报表员', 'F', null, null, null, null, null, null);
+INSERT INTO  roles  VALUES ('12', 'MANAGER', '总部管理员', 'F', null, null, null, null, null, null);
+INSERT INTO  roles  VALUES ('13', 'RF', 'RF', 'F', '2', 'admin', null, '2', 'admin', null);

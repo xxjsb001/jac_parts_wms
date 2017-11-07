@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainStorageDailyPage" title="maintainStorageDailyPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.inventory.WmsStorageDaily">
+        <workflow/>
+        <datasource><![CDATA[SELECT daily.id,
+daily.computeDate,
+itemKey.item.company.name,
+itemKey.item.code,
+itemKey.item.name,
+itemKey.lot,
+daily.previousQuantityBU,
+daily.receiveQuantityBU,
+daily.shipQuantityBU,
+daily.processDecQuantityBU,
+daily.processIncQuantityBU,
+daily.countAdjustQuantityBU,
+daily.leftQuantityBU 
+ FROM WmsStorageDaily daily
+LEFT JOIN daily.itemKey itemKey
+WHERE 1 = 1
+AND daily.warehouse = #{SESSION_WAREHOUSE}
+AND (daily.receiveQuantityBU <> 0 
+OR  daily.shipQuantityBU <> 0
+OR  daily.leftQuantityBU <> 0)
+ORDER BY daily.id DESC]]></datasource>
+        <columns>
+            <column id="daily.id" title="daily.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="daily.computeDate" title="daily.computeDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="daily.itemKey.item.company" title="daily.itemKey.item.company" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="itemKey.item.code" title="daily.itemKey.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="itemKey.item.name" title="daily.itemKey.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="itemKey.lot" title="daily.itemKey.lot" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="daily.previousQuantityBU" title="daily.previousQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="daily.receiveQuantityBU" title="daily.receiveQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="daily.shipQuantityBU" title="daily.shipQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="daily.processDecQuantityBU" title="daily.processDecQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="daily.processIncQuantityBU" title="daily.processIncQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="daily.countAdjustQuantityBU" title="daily.countAdjustQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="daily.leftQuantityBU" title="daily.leftQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+        </columns>
+    </maintainPage>
+</pages>

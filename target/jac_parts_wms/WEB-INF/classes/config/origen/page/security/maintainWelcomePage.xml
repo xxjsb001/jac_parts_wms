@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWelcomePage" title="maintainWelcomePage" autoQuery="false" entityClass="com.vtradex.thorn.server.model.welcomepage.WelcomePage">
+        <workflow/>
+        <datasource><![CDATA[SELECT welcomePage.id,
+welcomePage.key,
+welcomePage.value,
+welcomePage.isThornPage,
+welcomePage.description 
+ FROM WelcomePage welcomePage
+ WHERE 1=1 
+  order by welcomePage.id ]]></datasource>
+        <columns>
+            <column id="welcomePage.id" title="welcomePage.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="welcomePage.key" title="welcomePage.key" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="welcomePage.value" title="welcomePage.value" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle"/>
+            <column id="welcomePage.isThornPage" title="welcomePage.isThornPage" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
+            <column id="welcomePage.description" title="welcomePage.description" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle"/>
+        </columns>
+    </maintainPage>
+</pages>

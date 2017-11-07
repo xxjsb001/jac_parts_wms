@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="importBOPage">
+	<main>
+		<process id="BOProcess">
+                <formCommit id="import" process="BOProcess.import" title="import" enableType="none" invisible="false">
+	                     <mappings>
+                    <mapping id="importInfo" className="com.vtradex.thorn.server.model.imports.ImportInfo">
+                        <entries>
+                            <entry front="importInfo.boId" end="boId"/>
+                            <entry front="importInfo.hasTableHead" end="hasTableHead"/>
+                            <entry front="importInfo.errorToContinue" end="errorToContinue"/>
+                        </entries>
+                    </mapping>
+                    <mapping id="importInfo.csvFile" className="file"/>
+               	 </mappings>
+	                <actions>
+	                    <action managerName="importManager" methodName="importData" parameter="importInfo,importInfo.csvFile"/>
+	                </actions>
+                </formCommit>
+		</process>
+	</main>
+</page>

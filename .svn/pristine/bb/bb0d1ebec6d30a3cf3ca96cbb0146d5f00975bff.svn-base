@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editSplitPalletPage" title="editSplitPalletPage" entityClass="com.vtradex.wms.server.model.inventory.WmsInventoryExtend">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="wsn.id" title="inventory.id" reserve="false"/>
+            <text id="splitPalletQuantity" title="splitPalletQuantity" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" validator="number" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

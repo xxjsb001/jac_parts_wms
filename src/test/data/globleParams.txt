@@ -1,0 +1,1 @@
+appRoot=http://192.168.11.137:8077/jac_fdj_wms#reportName=wmsPalletSerial.raq#printServiceName=Zebra ZT410 (203 dpi)

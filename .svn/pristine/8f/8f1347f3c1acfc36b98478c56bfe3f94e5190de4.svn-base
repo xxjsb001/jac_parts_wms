@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainAddWmsCountDetailPage">
+    <main>
+        <process id="wmsLocationBaseProcess">
+            <tableCommit id="new" title="new" process="wmsLocationBaseProcess.addLocation" enableType="multi" download="false" closeTransactional="false" confirmMessage="confirm.new">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="countPlan.id" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsCountPlanManager" methodName="addDetail" parameter="countPlan.id, obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

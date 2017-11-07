@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editWmsEnumTypePage">
+    <main>
+        <process id="wmsEnumTypeProcess">
+            <formCommit id="new" title="new" process="wmsEnumTypeProcess.new" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="new">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards>
+                	<forward name="resetWindow" newEnabled="true" editEnabled="false"/>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="edit" title="edit" process="wmsEnumTypeProcess.edit" enableType="single" multiMapping="false" download="false" closeTransactional="false" visibleType="edit">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

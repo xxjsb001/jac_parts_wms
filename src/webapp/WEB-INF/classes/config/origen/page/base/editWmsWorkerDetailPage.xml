@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editWmsWorkerDetailPage" title="editWmsWorkerDetailPage" width="220" height="200">
+        <workflow/>
+        <initListeners/>
+        <inputUIs> 
+            <remote id="worker.id" title="workerDetail.name" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="false" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[select w.id, w.code, w.name from WmsWorker w
+ where w.id not in (select worker.id from WmsWorker worker 
+ where worker.worker.id=${editWmsWorkGroupPage.workGroup.id})
+ and w.type = 'PERSON' 
+ and w.status = 'ENABLED'
+ and (w.code like :param or w.name like :param)]]></hql>
+                <eventListeners/>
+            </remote>
+            <text id="worker.station" title="workerDetail.worker.station" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainIGPPage">
+	<main>
+		<process id="IGPProcess">
+			<tablePopup id="modify"  process="IGPProcess.modify" title="modify" enableType="single" invisible="true" containId="true" pageId="editIGPPage"/>
+		</process>
+	</main>
+</page>

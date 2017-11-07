@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainAddRuleTablePage" title="maintainAddRuleTablePage" pageLocale="false" autoQuery="true" entityClass="com.vtradex.rule.server.model.rule.RuleTable" width="600" height="450" onClose="refreshParent">
+        <workflow/>
+        <datasource><![CDATA[SELECT ruleTable.id,
+ruleTable.name,
+ruleTable.sortDesc,
+ruleTable.description 
+ FROM RuleTable ruleTable , GroupRuleTable groupRuleTable WHERE 1=1 
+ AND groupRuleTable.id = {groupRuleTable.id} 
+ AND ruleTable NOT IN ELEMENTS (groupRuleTable.ruleTables) 
+ order by ruleTable.sortDesc]]></datasource>
+        <columns>
+            <column id="ruleTable.id" title="ruleTable.id" pageLocale="false" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="ruleTable.name" title="ruleTable.name" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="ruleTable.sortDesc" title="ruleTable.sortDesc" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+            <column id="ruleTable.description" title="ruleTable.description" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

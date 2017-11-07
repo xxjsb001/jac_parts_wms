@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsMoveDocPickTicketPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <tablePopup id="view" title="view" process="wmsMoveDocProcess.view" enableType="single" containId="true" pageId="viewWmsMoveDocPickTicketPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="autoAllocate" title="autoAllocate" process="wmsMoveDocProcess.autoAllocate" enableType="multi" download="false" closeTransactional="true">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="manualAllocate" title="manualAllocate" process="wmsMoveDocProcess.manualAllocate" enableType="single" containId="true" pageId="manualPickingAllocatePage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="cancelAllocate" title="unallocate" process="wmsMoveDocProcess.cancelAllocate" enableType="single" containId="true" pageId="modifyWmsMoveDocCancelAllocatePickTicketPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="active" title="active" process="wmsMoveDocProcess.active" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="activePickByJac" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="unActive" title="unActive" process="wmsMoveDocProcess.unActive" enableType="multi" multiMapping="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="unActivePickByJac" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="confirm" title="confirm" process="wmsMoveDocProcess.confirm" enableType="single" containId="true" pageId="modifyMoveConfirmPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="unPickConfirm" title="unPickConfirm" process="wmsMoveDocProcess.unPickConfirm" enableType="single" containId="true" pageId="editWmsPickBackTaskPage">
+                <enableExpression><![CDATA[${moveDoc.status} != 'OPEN']]></enableExpression>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="wmsMoveDocProcess.delete" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="deleteMoveDocPlan" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tableCommit id="cancelAllTask" title="cancelAllTask" process="wmsMoveDocProcess.cancelAllTask" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression><![CDATA[${moveDoc.status} == 'OPEN' && ${moveDoc.shipStatus} == 'SHIPPED']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="cancelPickDoc" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="printTask" title="printTask" process="wmsMoveDocProcess.printTask" enableType="single" containId="true" pageId="printPickTaskReportPage">
+                <enableExpression><![CDATA[${moveDoc.status} == 'ACTIVE' && ${moveDoc.shipStatus} == 'UNSHIP']]></enableExpression>
+            </tablePopup>
+            <tablePopup id="checkStation" title="checkStation" process="wmsMoveDocProcess.checkStation" enableType="single" containId="true" pageId="viewMoveDocAndStationPage">
+                <enableExpression><![CDATA[${moveDoc.status}=='ACTIVE']]></enableExpression>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

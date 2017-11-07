@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="customRuleTableDetailPage" title="customRuleTableDetailPage" className="com.vtradex.rule.client.page.CustomPopuRuleTableDetailPage" width="900" height="500" onClose="refreshParent">
+    	<buttons>
+    		<button id="prettifyRuleTableProcess.seach" title="search"/>
+			<button id="prettifyRuleTableProcess.new" title="new"/>
+			<button id="prettifyRuleTableProcess.modify" title="modify"/>
+			<button id="prettifyRuleTableProcess.save" title="save"/>
+			<button id="prettifyRuleTableProcess.delete" title="delete"/>
+		</buttons>
+    </customPage>
+</pages>
+

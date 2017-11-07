@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editSingleWorkConfirmPage" title="editSingleWorkConfirmPage" entityClass="com.vtradex.wms.server.model.move.WmsTask" width="250" height="300">
+        <workflow/>
+        <initListeners>
+            <initListener id="quantityBU" managerName="wmsWorkDocManager" methodName="getUnWorkQuantityByPageMap" newEnabled="true" editEnabled="true"/>
+        </initListeners>
+        <inputUIs>
+            <hidden id="task.id" title="task.id" reserve="false"/>
+            <hidden id="task.type" title="task.type" reserve="false"/>
+            <hidden id="task.moveDocDetail.id" title="task.moveDocDetail.id" reserve="false"/>
+            <hidden id="task.moveDocDetail.item.id" title="item.id" reserve="false"/>
+            <text id="task.moveDocDetail.item.code" title="item.code" row="1" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="task.moveDocDetail.item.name" title="wsn.item.name" row="2" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="task.fromLocationCode" title="task.oldFromLocationCode" row="3" col="1" defaultValue="${task.fromLocationCode}" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="task.toLocationCode" title="task.oldToLocationCode" row="4" col="1" defaultValue="${task.toLocationCode}" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="task.moveDocDetail.pallet" title="wsn.pallet" row="6" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="task.moveDocDetail.carton" title="wsn.carton" row="7" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="task.moveDocDetail.serialNo" title="wsn.serialNo" row="8" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <remote id="fromLocationId" title="task.fromLocation.id" row="9" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,编码">
+                <visibleExpression><![CDATA[ (${task.type} != 'MV_PUTAWAY') && (${task.type} != 'MV_MOVE') ]]></visibleExpression>
+                <hql><![CDATA[SELECT location.id,location.code
+ FROM WmsLocation location 
+ WHERE 1 = 1
+ AND location.warehouse = #{SESSION_WAREHOUSE} 
+ AND location.status = 'ENABLED'
+ AND location.type = 'STORAGE'
+ AND location.code LIKE :param 
+]]></hql>
+                <eventListeners/>
+            </remote>
+            <remote id="toLocationId" title="task.toLocation.id" row="10" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,编码">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT location.id,location.code
+ FROM WmsLocation location 
+ WHERE 1 = 1
+ AND location.warehouse = #{SESSION_WAREHOUSE} 
+ AND location.status = 'ENABLED'
+ AND (((location.type = 'STORAGE') AND EXISTS (SELECT task.id FROM WmsTask task WHERE (task.type = 'MV_PUTAWAY' OR task.type = 'MV_MOVE') AND task.id = ${task.id}))
+ OR ((location.type = 'SHIP') AND EXISTS (SELECT task.id FROM WmsTask task WHERE (task.type <> 'MV_PUTAWAY' AND task.type <> 'MV_MOVE') AND task.id = ${task.id})))
+ AND location.code LIKE :param 
+]]></hql>
+                <eventListeners/>
+            </remote>
+            <text id="quantityBU" title="wsn.quantityBU" row="14" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" validator="positiveNumberRequired" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <remote id="workerId" title="workerId" row="15" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="false" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[select
+ worker.id, 
+ worker.code,  
+ worker.name
+ from WmsWorker worker 
+ where worker.code like :param
+ and worker.status='ENABLED'
+ and worker.warehouse = #{SESSION_WAREHOUSE} 
+ ]]></hql>
+                <eventListeners/>
+            </remote>
+        </inputUIs>
+    </editPage>
+</pages>

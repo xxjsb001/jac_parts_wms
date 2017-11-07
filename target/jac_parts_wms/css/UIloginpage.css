@@ -1,0 +1,65 @@
+body.loginpage_body{
+background:url(../images/bg_loginpage.jpg) fixed center bottom;
+}
+
+.loginpage{
+width:410px; margin:200px auto;
+}
+.loginpage_box{
+width:411px;
+height:191px;
+background:url(../images/bg_loginpage_box.jpg) no-repeat;
+}
+.loginpage_box th{
+font-size:12px;
+font-weight:normal;
+text-align:right;
+}
+.loginpage_title{
+height:20px;
+font-size:12px; 
+font-family:'宋体';
+padding-top:3px;
+text-indent:10px;
+line-height:20px;
+}
+.loginpage_input{
+width:170px;
+}
+.loginpage_btn_out_off{
+width:80px; 
+height:80px;
+background: url(../images/bg_longinpagebtn_off.gif) no-repeat center; 
+margin-top:38px; 
+margin-left:10px;
+}
+.loginpage_btn_out_on{
+width:80px; 
+height:80px;
+background: url(../images/bg_longinpagebtn_on.gif) no-repeat center; 
+margin-top:38px; 
+margin-left:10px;
+}
+.loginpage_btn_out_onclick{
+}
+
+.loginpage_btn_in_off{
+width:80px; 
+height:80px; 
+background: url(../images/loginpage_btn_off.gif) no-repeat center;
+}
+.loginpage_btn_in_on{
+width:80px; 
+height:80px; 
+background: url(../images/loginpage_btn_on.gif) no-repeat center;
+}
+login_btn_in_onclick{
+width:80px; 
+height:80px; 
+background: url(../images/loginpage_btn_onclick.gif) no-repeat center;
+}
+a.loginpage_btn{
+display:block;
+width:80px; 
+height:80px;
+}

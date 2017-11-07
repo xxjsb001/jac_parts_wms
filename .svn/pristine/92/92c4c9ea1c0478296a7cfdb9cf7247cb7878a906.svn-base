@@ -1,0 +1,60 @@
+package com.vtradex.wms.server.telnet.shell.pick;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.vtradex.kangaroo.shell.PageableBaseShell;
+import com.vtradex.wms.server.model.move.WmsMoveDocStatus;
+import com.vtradex.wms.server.model.move.WmsMoveDocType;
+import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
+import com.vtradex.wms.server.web.filter.WmsWorkerHolder;
+
+public class WmsPickMoveDocShell extends PageableBaseShell{
+	
+	public static final String PAGE_ID = "wmsPickMoveDocShell";
+	
+	public static final String MOVEDOC_ID = "MOVEDOC_ID";
+
+	@Override
+	public String[] getTableHeader() {
+		return new String[]{"序号", "拣货单号"};
+	}
+
+	@Override
+	public String getHql() {
+		String hql = " SELECT doc.id,doc.code FROM WmsMoveDoc doc WHERE 1=1 " +
+				" AND doc.id NOT IN (SELECT mds.moveDocDetail.moveDoc.id FROM WmsMoveDocAndStation mds WHERE mds.isPartPick ='N' )"+ 
+				" /~状态: AND doc.status in  ({状态})~/" +
+				" /~类型: AND doc.type in ({类型})~/" +
+				" /~备料工: AND doc.blg.id = {备料工}~/" +
+				" /~仓库: AND doc.warehouse.id = {仓库}~/";
+		return hql;
+	}
+
+	@Override
+	public String getNextShell() {
+		Object[] rowData = (Object[])get(ROW_DATA_KEY);
+		if(rowData != null){
+			this.put(MOVEDOC_ID, rowData[0]);
+		}
+		return WmsPickMoveDocDetailShell.PAGE_ID;
+	}
+
+	@Override
+	public Map<String, Object> getParams() {
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<String> status = new ArrayList<String>();
+		List<String> types = new ArrayList<String>();
+		status.add(WmsMoveDocStatus.ACTIVE);
+		status.add(WmsMoveDocStatus.WORKING);
+		types.add(WmsMoveDocType.MV_PICKTICKET_PICKING);
+		params.put("状态", status);
+		params.put("类型", types);
+		params.put("备料工", WmsWorkerHolder.getWmsWorker().getId());
+		params.put("仓库", WmsWarehouseHolder.getWmsWarehouse().getId());
+		return params;
+	}
+
+}

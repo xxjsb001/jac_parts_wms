@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainUnInvokeReportFilePage">
+	<main>
+		<process id="reportProcess">
+			<tableCommit id="invoke" process="reportProcess.add" title="invoke" enableType="multi" invisible="true">
+                <enableExpression><![CDATA[(${number}<='0')]]></enableExpression>
+                <actions>
+                    <action managerName="reportFileManager" methodName="invokePagePermission" parameter="obj,parentObj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tableCommit id="unInvoke" process="reportProcess.add" title="unInvoke" enableType="single" invisible="true">
+                <enableExpression><![CDATA[(${number}>'0')]]></enableExpression>
+                <actions>
+                    <action managerName="reportFileManager" methodName="unInvokePagePermission" parameter="obj,parentObj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+		</process>
+	</main>
+</page>

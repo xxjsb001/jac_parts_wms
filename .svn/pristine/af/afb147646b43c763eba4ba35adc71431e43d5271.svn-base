@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="modifySplitMoveDocPage" title="modifySplitMoveDocPage" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc" onClose="refreshParent" width="880" height="500">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="moveDoc.id" title="moveDoc.id" reserve="false"/>
+                <text id="moveDoc.code" title="moveDoc.code" row="1" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.billType.name" title="moveDoc.billType.name" row="1" col="2" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <numberText id="moveDoc.planQuantityBU" title="moveDoc.planQuantityBU" row="1" col="3" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </numberText>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.move.WmsMoveDocDetail">
+            <datasource><![CDATA[SELECT detail.id,detail.item.code,detail.item.name,detail.packageUnit.unit,detail.planQuantity,detail.planQuantityBU,detail.planQuantityBU AS cancelReceivedQtyBU  FROM WmsMoveDocDetail detail 
+WHERE 1=1 
+/~moveDoc.id: AND detail.moveDoc.id={moveDoc.id}~/
+ORDER BY detail.id]]></datasource>
+            <columns>
+                <column id="detail.id" title="detail.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="detail.item.code" title="detail.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="detail.item.name" title="detail.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="detail.packageUnit.unit" title="detail.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="detail.planQuantity" title="detail.planQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="detail.planQuantityBU" title="detail.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="cancelReceivedQtyBU" title="cancelReceivedQtyBU" visible="true" sortable="false" horizonAlign="center" verticalAlign="middle" inputUI="numberText"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

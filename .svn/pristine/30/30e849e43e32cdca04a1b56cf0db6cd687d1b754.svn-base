@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="editCreateMoveDocPage" title="editCreateMoveDocPage" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc" onClose="refreshParent" width="800" height="550">
+        <initListeners>
+            <initListener id="moveDoc.movePlanTitle" managerName="wmsMoveDocManager" methodName="getTitleByMovePlanTitle" newEnabled="true" editEnabled="false"/>
+		</initListeners>
+        <modify>
+            <inputUIs>
+                <hidden id="moveDoc.id" reserve="false"/>
+                <text id="moveDoc.code" title="moveDoc.code" row="1" col="1" span="1" readOnly="true" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <text id="moveDoc.movePlanTitle" title="moveDoc.movePlanTitle" row="1" col="2" span="1" width="200" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.move.WmsMoveDocDetail">
+            <datasource><![CDATA[SELECT moveDocDetail.id,moveDocDetail.fromLocationCode,moveDocDetail.pallet,
+            moveDocDetail.itemKey.item.code,moveDocDetail.itemKey.item.name,moveDocDetail.packageUnit.unit,
+            moveDocDetail.planQuantity,moveDocDetail.planQuantityBU,moveDocDetail.processQuantityBU,moveDocDetail.allocatedQuantityBU,
+            moveDocDetail.movedQuantityBU,moveDocDetail.itemKey.lotInfo.extendPropC1,moveDocDetail.itemKey.lotInfo.storageDate,
+            moveDocDetail.itemKey.lotInfo.soi,moveDocDetail.itemKey.lotInfo.productDate,moveDocDetail.itemKey.lotInfo.expireDate,
+            moveDocDetail.itemKey.lotInfo.warnDate,moveDocDetail.receivedDate,moveDocDetail.itemKey.lotInfo.supplier.name,moveDocDetail.replenishmentArea  
+            from WmsMoveDocDetail moveDocDetail 
+LEFT JOIN moveDocDetail.itemKey.lotInfo.supplier
+WHERE 1=1
+/~moveDoc.id: and moveDocDetail.moveDoc.id = {moveDoc.id} ~/
+ORDER BY moveDocDetail.id ASC]]></datasource>
+            <columns>
+                <column id="moveDocDetail.id" title="moveDocDetail.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.fromLocation.code" title="moveDocDetail.fromLocation.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.pallet" title="moveDocDetail.pallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.itemKey.item.code" title="moveDocDetail.itemKey.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.itemKey.item.name" title="moveDocDetail.itemKey.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.packageUnit.unit" title="moveDocDetail.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.planQuantity" title="moveDocDetail.planQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.planQuantityBU" title="moveDocDetail.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.processQuantityBU" title="moveDocDetail.processQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.allocatedQuantityBU" title="moveDocDetail.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.movedQuantityBU" title="moveDocDetail.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.itemKey.lotInfo.extendPropC1" title="lotInfo.extendPropC1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="TypeOfExtendPropC1"/>
+                <column id="moveDocDetail.itemKey.lotInfo.storageDate" title="moveDocDetail.itemKey.lotInfo.storageDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.itemKey.lotInfo.soi" title="moveDocDetail.itemKey.lotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.itemKey.lotInfo.productDate" title="moveDocDetail.itemKey.lotInfo.produceDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.itemKey.lotInfo.expireDate" title="moveDocDetail.itemKey.lotInfo.expireDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.itemKey.lotInfo.warnDate" title="moveDocDetail.itemKey.lotInfo.warnDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.receivedDate" title="moveDocDetail.receivedDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.itemKey.lotInfo.supplier.name" title="moveDocDetail.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+                <column id="moveDocDetail.replenishmentArea" title="asnDetail.qualityCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

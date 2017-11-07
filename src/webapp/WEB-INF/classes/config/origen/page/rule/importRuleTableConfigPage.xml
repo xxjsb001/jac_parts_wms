@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="importRuleTableConfigPage" title="importRuleTableConfigPage">
+        <inputUIs>
+            <file id="importFile" title="importFile" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showImage="false" fileSize="22577152">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </file>
+        </inputUIs>
+    </editPage>
+</pages>

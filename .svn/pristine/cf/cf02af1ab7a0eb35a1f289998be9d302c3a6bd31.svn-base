@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editCompanyAndTypePage" title="editCompanyAndTypePage" entityClass="com.vtradex.wms.server.model.organization.WmsCompanyAndBillType">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="wcb.id" title="wcb.id" reserve="false"/>
+            <remote id="wcb.company.id" title="wcb.company.id" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT 
+ company.id,
+ company.code,
+ company.name
+ FROM   WmsOrganization   company,WmsWarehouseAndCompany wwa 
+ WHERE   company.beCompany  = true 
+and company.beVirtual =false
+AND company.status = 'ENABLED' 
+AND (company.code  LIKE :param OR  company.name LIKE :param) 
+and wwa.company.id=company.id
+AND wwa.warehouse.id = #{SESSION_WAREHOUSE} ]]></hql>
+                <eventListeners>
+                    <eventListener id="wcb.billType.id" index="1" refreshUI="false"/>
+                </eventListeners>
+            </remote>
+            <list id="wcb.billType.id" title="wcb.billType.id" row="1" col="1" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                <visibleExpression/>
+                <hql><![CDATA[ SELECT
+ billType.id,
+ billType.name
+ FROM WmsBillType billType
+ WHERE 1=1 
+ AND billType.status = 'ENABLED'  AND billType.company.id=${wcb.company.id}]]></hql>
+                <eventListeners/>
+            </list>
+            <list id="wcb.rule" title="wcb.rule" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" validator="required" enumType="TypeOfCompanyAndBill">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'TypeOfCompanyAndBill' order by enumerate.id desc]]></hql>
+                <eventListeners/>
+            </list>
+        </inputUIs>
+    </editPage>
+</pages>

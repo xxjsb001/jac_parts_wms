@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainRuleTablePage" title="maintainRuleTablePage" pageLocale="false" autoQuery="true" entityClass="com.vtradex.rule.server.model.rule.RuleTable">
+        <workflow/>
+        <datasource><![CDATA[SELECT ruleTable.id,
+ruleTable.name,
+ruleTable.sortDesc,
+ruleTable.description 
+ FROM RuleTable ruleTable WHERE 1=1 order by ruleTable.sortDesc]]></datasource>
+        <columns>
+            <column id="ruleTable.id" title="ruleTable.id" pageLocale="false" visible="false" horizonAlign="center" verticalAlign="middle"/>
+            <column id="ruleTable.name" title="ruleTable.name" pageLocale="false" visible="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="ruleTable.sortDesc" title="ruleTable.sortDesc" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
+            <column id="ruleTable.description" title="ruleTable.description" pageLocale="false" visible="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

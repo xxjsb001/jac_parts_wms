@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editShipRecordPage" title="editShipRecordPage" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="moveDoc.id" title="moveDoc.id" reserve="false"/>
+            <remote id="moveDoc.carrier.id" title="moveDoc.carrier.id" row="1" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="normal" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT carrier.id,carrier.code,carrier.name FROM WmsOrganization carrier WHERE 1=1 AND carrier.beCarrier=true AND carrier.status='ENABLED' AND (carrier.code LIKE :param OR carrier.name LIKE :param)]]></hql>
+                <eventListeners/>
+            </remote>
+            <text id="moveDoc.driver" title="moveDoc.driver" row="1" col="2" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <text id="moveDoc.vehicleNo" title="moveDoc.vehicleNo" row="2" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

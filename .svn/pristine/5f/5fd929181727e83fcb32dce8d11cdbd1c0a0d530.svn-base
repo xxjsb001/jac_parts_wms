@@ -1,0 +1,25 @@
+package com.vtradex.wms.server.service.interfaces.pojo;
+
+import java.util.List;
+
+
+import com.vtradex.thorn.server.service.pojo.DefaultBaseManager;
+import com.vtradex.wms.server.model.interfaces.MiddleAsnSrmDetail;
+import com.vtradex.wms.server.model.interfaces.WHead;
+import com.vtradex.wms.server.service.interfaces.WmsDealTaskManager;
+
+public class DefaultWmsDealTaskManager 
+			extends DefaultBaseManager implements WmsDealTaskManager{
+
+	public void dealAsn(Long id){
+		WHead w = commonDao.load(WHead.class, id);
+		if(w==null){
+			return;
+		}
+		List<MiddleAsnSrmDetail> mm = commonDao.findByQuery("", "", "");
+		//生效ASN...
+		
+		//如果成功就将WHead的状态改了
+	}
+
+}

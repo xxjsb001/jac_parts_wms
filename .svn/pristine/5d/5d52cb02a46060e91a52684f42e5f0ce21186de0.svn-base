@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainCompanyBillTypePage" title="maintainCompanyBillTypePage" autoQuery="true" entityClass="com.vtradex.wms.server.model.organization.WmsCompanyAndBillType">
+        <workflow/>
+        <datasource><![CDATA[SELECT wcb.id,
+wcb.company.name,
+wcb.billType.name,
+wcb.rule 
+ from WmsCompanyAndBillType wcb
+where 1=1
+order by wcb.id desc ]]></datasource>
+        <columns>
+            <column id="wcb.id" title="wcb.id" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="wcb.company.name" title="wcb.company.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wcb.billType.name" title="wcb.billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wcb.rule" title="wcb.rule" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string" format="enumFormat" formatParam="TypeOfCompanyAndBill"/>
+        </columns>
+    </maintainPage>
+</pages>

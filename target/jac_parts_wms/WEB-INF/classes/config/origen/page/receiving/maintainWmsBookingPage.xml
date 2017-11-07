@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="maintainWmsBookingPage" title="maintainWmsBookingPage" className="com.vtradex.thorn.client.template.gantt.MaintainGanttChartPage">
+	<buttons>
+		<button id="wmsBookingProcess.newPlan" title="wmsBookingProcess.newPlan" pageId="editWmsASNPlanPage" />
+		<button id="wmsBookingProcess.newNoCodePlan" title="wmsBookingProcess.newNoCodePlan" pageId="editWmsASNPlanNoCodePage" />
+		<button id="wmsBookingProcess.newMasterPlan" title="wmsBookingProcess.newMasterPlan" pageId="editWmsMasterPlanPage" />
+ 	</buttons>
+	</customPage>
+</pages>

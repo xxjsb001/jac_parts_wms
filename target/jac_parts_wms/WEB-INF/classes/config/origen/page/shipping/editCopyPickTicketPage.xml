@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editCopyPickTicketPage" title="editCopyPickTicketPage" entityClass="com.vtradex.wms.server.model.shipping.WmsPickTicket" width="230" height="200">
+        <workflow/>
+        <inputUIs>
+            <hidden id="pickTicket.id" title="pickTicket.id" reserve="false"/>
+	         <text id="quantity" title="pickTicket.copyQuantity" row="1" readOnly="false" required="true" reserve="false" forceOverride="false" inVisible="false" validator="positiveNumber" trimSpace="true">
+	             <visibleExpression/>
+	             <hql/>
+	             <eventListeners/>
+	         </text>
+        </inputUIs>
+    </editPage>
+</pages>

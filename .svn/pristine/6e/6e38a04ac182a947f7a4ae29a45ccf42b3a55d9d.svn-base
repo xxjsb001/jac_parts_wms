@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<menus>
+    <menuItem title="menu_base" dir="base">
+        <menuItem title="menu_warehouse" dir="menu_warehouse">
+            <menuItem title="menu_maintainWarehousePage" pageId="maintainWarehousePage"/>
+            <menuItem title="menu_maintainWmsWarehouseAreaPage" pageId="maintainWmsWarehouseAreaPage"/>
+            <menuItem title="menu_maintainWmsLocationPage" pageId="maintainWmsLocationPage"/>
+            <menuItem title="menu_maintainWarehouseAndUserPage" pageId="maintainWarehouseAndUserPage"/>
+        </menuItem>
+        <menuItem title="menu_organization" dir="menu_organization">
+            <menuItem title="maintainWmsOrganizationPage" pageId="maintainWmsOrganizationPage"/>
+            <menuItem title="menu_maintainWmsbillTypePage" pageId="maintainWmsBillTypePage"/>
+            <menuItem title="menu_maintainWmsQualityBillStatusPage" pageId="maintainWmsQualityBillStatusPage"/>
+            <menuItem title="menu_maintainMiddleCompanyExtendsPage" pageId="maintainMiddleCompanyExtendsPage"/>
+            <menuItem title="menu_maintainWarehouseAndCompanyPage" pageId="maintainWarehouseAndCompanyPage"/>
+            <menuItem title="menu_maintainCompanyBillTypePage" pageId="maintainCompanyBillTypePage"/>
+        </menuItem>
+        <menuItem title="menu_sku" dir="menu_sku">
+            <menuItem title="maintainWmsItemPage" pageId="maintainWmsItemPage"/>
+            <menuItem title="menu_maintainLotRulePage" pageId="maintainLotRulePage"/>
+            <menuItem title="menu_maintainWmsItemStatePage" pageId="maintainWmsItemStatePage"/>
+            <menuItem title="menu_maintainWmsBoxTypePage" pageId="maintainWmsBoxTypePage"/>
+            <menuItem title="menu_maintainWmsBlgItemPage" pageId="maintainWmsBlgItemPage"/>
+            <menuItem title="menu_maintainWmsStationAndItemPage" pageId="maintainWmsStationAndItemPage"/>
+            <menuItem title="menu_maintainWmsEnumTypePage" pageId="maintainWmsEnumTypePage"/>
+        </menuItem>
+    </menuItem>
+    <menuItem title="menu_Vehicle" dir="Vehicle">
+        <menuItem title="menu_maintainWmsVehicleTypePage" pageId="maintainWmsVehicleTypePage"/>
+        <menuItem title="menu_maintainWmsVehiclePage" pageId="maintainWmsVehiclePage"/>
+        <menuItem title="menu_maintainWmsDriverPage" pageId="maintainWmsDriverPage"/>
+    </menuItem>
+    <menuItem title="menu_hr" dir="hr">
+        <menuItem title="menu_maintainWmsWorkAreaPage" pageId="maintainWmsWorkAreaPage"/>
+        <menuItem title="maintainWmsWorkerPage" pageId="maintainWmsWorkerPage"/>
+        <menuItem title="maintainWmsWorkGroupPage" pageId="maintainWmsWorkGroupPage"/>
+        <menuItem title="menu_maintainWmsPickWorkerPage" pageId="maintainWmsPickWorkerPage"/>
+    </menuItem>
+    <menuItem title="menu_receiving" dir="receiving">
+        <menuItem title="menu_maintainWmsASNPage" pageId="maintainWmsASNPage"/>
+        <menuItem title="maintainWmsReceivedRecordPage" pageId="maintainWmsReceivedRecordPage"/>
+        <menuItem title="maintainWmsASNBakPage" pageId="maintainWmsASNBakPage"/>
+    </menuItem>
+    <menuItem title="menu_shipping" dir="shipping">
+        <menuItem title="maintainWmsPickTicketPage" pageId="maintainWmsPickTicketPage"/>
+        <menuItem title="maintainWmsPickTicketDetailPage" pageId="maintainWmsPickTicketDetailPage"/>
+        <menuItem title="maintainWmsMoveDocPickTicketPage" pageId="maintainWmsMoveDocPickTicketPage"/>
+       <!--  <menuItem title="menu_maintainWmsBOLPage" pageId="maintainWmsBOLPage"/> -->
+        <menuItem title="maintainWmsPickedRecordPage" pageId="maintainWmsPickedRecordPage"/>
+        <menuItem title="menu_maintainWmsPickTicketAndStationPage" pageId="maintainWmsPickTicketAndStationPage"/>
+        <menuItem title="menu_maintainWmsMasterBOLPage" pageId="maintainWmsMasterBOLPage"/>
+    </menuItem>
+    <!-- 
+    <menuItem title="menu_move" dir="move">
+        <menuItem title="menu_maintainMoveDocPage" pageId="maintainWmsMoveDocPlanPage"/>
+    </menuItem>
+     -->
+    <menuItem title="menu_replenishment" dir="replenishment">
+        <menuItem title="maintainWmsMoveDocReplenishmentPage" pageId="maintainWmsMoveDocReplenishmentPage"/>
+    </menuItem>
+    <menuItem title="menu_quality" dir="quality">
+        <menuItem title="maintainWmsMoveDocQualityPage" pageId="maintainWmsMoveDocQualityPage"/>
+        <menuItem title="maintainWmsMoveDocQualityDetailPage" pageId="maintainWmsMoveDocQualityDetailPage"/>
+        <menuItem title="maintainWmsQualityMoveSoiLogPage" pageId="maintainWmsQualityMoveSoiLogPage"/>
+    </menuItem>
+    <menuItem title="menu_inventory" dir="inventory">
+        <menuItem title="menu_maintainInventorySerialNoPage" pageId="maintainInventorySerialNoPage"/>
+        <menuItem title="menu_maintainInventoryPage" pageId="maintainInventoryPage"/>
+        <menuItem title="menu_maintainInventoryAccountPage" pageId="maintainInventoryAccountPage"/>
+        <menuItem title="menu_viewInventoryLogPage" pageId="maintainInventoryLogPage"/>
+        <menuItem title="menu_maintainMisInventoryPage" pageId="maintainMisInventoryPage"/>
+        <menuItem title="menu_maintainStorageHeadPage" pageId="maintainStorageHeadPage"/>
+        <menuItem title="menu_maintainMesMisInventoryPage" pageId="maintainMesMisInventoryPage"/>
+        <menuItem title="maintainWmsSafeInventoryPage" pageId="maintainWmsSafeInventoryPage"/>
+    </menuItem>
+    <menuItem title="menu_count" dir="count">
+        <menuItem title="menu_menu_maintainWmsCountPlanPage" pageId="maintainWmsCountPlanPage"/>
+        <menuItem title="maintainWmsCountRecordViewPage" pageId="maintainWmsCountRecordViewPage"/>
+    </menuItem>
+    <menuItem title="menu_rule" dir="rule">
+        <menuItem title="t_ruleManager" dir="ruleManager">
+            <menuItem title="t_maintainRulePage" pageId="maintainRulePage"/>
+            <menuItem title="t_maintainGroupRuleTablePage" pageId="maintainGroupRuleTablePage"/>
+            <menuItem title="t_maintainRuleTablePage" pageId="maintainRuleTablePage"/>
+        </menuItem>
+        <menuItem title="t_maintainRuleTableVersionPage" pageId="maintainRuleTableVersionPage"/>
+        <menuItem title="t_maintainPrettifyRuleTablePage" pageId="maintainPrettifyRuleTablePage"/>
+    </menuItem>
+    <menuItem title="menu_report" pageId="customerReportFilePage" dir="report"/>
+    <menuItem title="menu_security" dir="security">
+        <menuItem title="menu_right">
+            <menuItem title="maintainUserPage" pageId="maintainUserPage"/>
+            <menuItem title="maintainRolePage" pageId="maintainRolePage"/>
+            <menuItem title="maintainGroupPage" pageId="maintainGroupPage"/>
+        </menuItem>
+        <menuItem title="menu_import">
+            <menuItem title="maintainBOPage" pageId="maintainBOPage"/>
+            <menuItem title="importBOPage" pageId="importBOPage"/>
+        </menuItem>
+        <menuItem title="maintainReportConfigPage" pageId="maintainReportConfigPage"/>
+        <menuItem title="maintainIGPPage" pageId="maintainIGPPage"/>
+        <menuItem title="maintainWelcomePage" pageId="maintainWelcomePage"/>
+        <menuItem title="maintainRuleExceptionLogPage" pageId="maintainRuleExceptionLogPage"/>
+        <menuItem title="maintainExceptionLogPage" pageId="maintainExceptionLogPage"/>
+    </menuItem>
+    <menuItem title="menu_middle" dir="middle">
+        <menuItem title="maintainMiddlePage" pageId="maintainMiddlePage"/>
+        <menuItem title="menu_maintainTaskPage" pageId="maintainTaskPage"/>
+    </menuItem>
+</menus>

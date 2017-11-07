@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="wmsPickTicketAndStationGroupPage" title="wmsPickTicketAndStationGroupPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.shipping.WmsMoveDocAndStation">
+        <workflow/>
+        <datasource><![CDATA[SELECT 
+was.type,
+was.container,
+was.boxTag,
+worker.name,
+worker.code,
+was.isFinished 
+ from WmsMoveDocAndStation was 
+left join was.item item 
+left join was.moveDocDetail ptd
+left join ptd.moveDoc md 
+left join md.blg worker
+where 1=1 
+group by was.type,
+was.container,
+was.boxTag,
+worker.name,
+worker.code,
+was.isFinished
+order by was.isFinished desc]]></datasource>
+        <columns>
+            <column id="was.type" title="was.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="was.container" title="was.container" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="was.boxTag" title="was.boxTag" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="ptd.pickWorker" title="ptd.pickWorker" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="ptd.pickWorkerCode" title="ptd.pickWorkerCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="was.isFinished" title="was.isFinished" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
+        </columns>
+    </maintainPage>
+</pages>

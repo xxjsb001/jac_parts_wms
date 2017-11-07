@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsMoveDocPlanPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <tablePopup id="view" title="view" process="wmsMoveDocProcess.view" enableType="single" containId="true" pageId="editCreateMoveDocPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="new" title="new" process="wmsMoveDocProcess.new" enableType="none" containId="false" pageId="editCreateMoveDocPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="modify" title="modify" process="wmsMoveDocProcess.modify" enableType="single" containId="true" pageId="editCreateMoveDocPage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="delete" title="delete" process="wmsMoveDocProcess.delete" enableType="multi" download="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="deleteMoveDocPlan" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <!-- 
+            <tableCommit id="autoAllocate" title="autoAllocate" process="wmsMoveDocProcess.autoAllocate" enableType="multi" download="false" closeTransactional="true">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+             -->
+            <tablePopup id="allocate" title="manualAllocate" process="wmsMoveDocProcess.manualAllocate" enableType="single" containId="true" pageId="modifyWmsMoveDocHandPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="cancelAllocate" title="unallocate" process="wmsMoveDocProcess.cancelAllocate" enableType="single" containId="true" pageId="modifyWmsMoveDocCancelAllocatePage">
+                <enableExpression/>
+            </tablePopup>
+            <tableCommit id="active" title="active" process="wmsMoveDocProcess.active" enableType="multi" download="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="activeMoveByJac" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="findWorker" title="findWorker" process="wmsMoveDocProcess.findWorker" enableType="single" containId="true" pageId="editFindWorkerByMovePage">
+                <enableExpression><![CDATA[${moveDoc.status}=='ACTIVE']]></enableExpression>
+            </tablePopup>
+			<tableCommit id="unActive" title="unActive" process="wmsMoveDocProcess.unActive" enableType="multi" multiMapping="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsMoveDocManager" methodName="unActiveMoveByJac" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+            <!-- <tableCommit id="confirm" title="confirm" process="wmsMoveDocProcess.confirm" enableType="multi" multiMapping="false" closeTransactional="false">
+                <enableExpression/>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="pickConfirmAll" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit> -->
+            <tableCommit id="close" title="close" process="wmsMoveDocProcess.close" enableType="multi" download="false">
+                <enableExpression/>
+                <mappings/>
+                <actions/>
+                <forwards/>
+            </tableCommit>
+            <tablePopup id="viewWmsTaskLog" title="viewWmsTaskLog" process="wmsMoveDocProcess.viewWmsTaskLog" enableType="single" containId="true" pageId="viewWmsTaskLogFromMoveDoc">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

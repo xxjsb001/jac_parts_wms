@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editinputColPage">
+	<detail>
+		<process id="reportProcess">
+            <tablePopup id="new" process="reportProcess.add" title="new" enableType="none" containId="false" pageId="editColPage"/>
+            <tablePopup id="modify"  process="reportProcess.add" title="modify" enableType="single" containId="true" pageId="editColPage"/>
+            <tableCommit id="delete"  process="reportProcess.add" title="delete" enableType="multi" confirmMessage="confirm.delete">
+                    <actions>
+                        <action managerName="reportFileManager" methodName="deleteReportColumn" parameter="obj"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshWindow" newEnabled="false" editEnabled="false"/>
+                    </forwards>
+           </tableCommit>
+           <tableCommit id="up"   process="reportProcess.up" title="up" enableType="single" >
+                    <actions>
+                        <action managerName="reportFileManager" methodName="upReportColumn" parameter="obj"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshWindow" newEnabled="false" editEnabled="false"/>
+                    </forwards>
+           </tableCommit>
+            <tableCommit id="down"  process="reportProcess.down" title="down" enableType="single" >
+                    <actions>
+                        <action managerName="reportFileManager" methodName="downReportColumn" parameter="obj"/>
+                    </actions>
+                    <forwards>
+                        <forward name="refreshWindow" newEnabled="false" editEnabled="false"/>
+                    </forwards>
+           </tableCommit>
+		</process>
+	</detail>
+</page>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="wmsManulSepratePage">
+    <main>
+        <process id="wmsWaveDocPickProcess"/>
+    </main>
+    <detail>
+        <process id="wmsPickTicketBaseProcess">
+            <tableCommit id="seprate" title="seprate" process="wmsPickTicketBaseProcess.seprate" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression><![CDATA[${waveDoc.pickStatus}!='SEPRATED']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsPickTicketManager" methodName="seprate" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+            <tableCommit id="unseprate" title="unseprate" process="wmsPickTicketBaseProcess.unseprate" enableType="multi" download="false" closeTransactional="false">
+                <enableExpression><![CDATA[${waveDoc.pickStatus}=='SEPRATED']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsPickTicketManager" methodName="unseprate" parameter="obj"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </tableCommit>
+        </process>
+    </detail>
+</page>

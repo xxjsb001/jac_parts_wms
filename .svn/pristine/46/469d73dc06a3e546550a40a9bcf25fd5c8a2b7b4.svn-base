@@ -1,0 +1,9 @@
+moveDoc.driver=\u53F8\u673A
+moveDoc.signTime=\u7B7E\u6536\u65F6\u95F4
+moveDoc.updateTime=\u6700\u540E\u66F4\u65B0\u65F6\u95F4
+moveDoc.type=\u7C7B\u578B
+moveDoc.code=\u5355\u636E\u53F7
+moveDoc.vehicleNo=\u8F66\u724C\u53F7
+moveDoc.arriveTime=\u8FD0\u62B5\u65F6\u95F4
+moveDoc.backTime=\u56DE\u5355\u65F6\u95F4
+moveDoc.shipTime=\u53D1\u8F66\u65F6\u95F4

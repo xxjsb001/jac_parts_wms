@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="taskConfirmByMoveDocPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <formCommit id="singleConfirm" title="singleConfirm" process="wmsMoveDocProcess.singleConfirm" enableType="none" download="false" closeTransactional="true" confirmMessage="confirm" visibleType="edit">
+                <enableExpression/>
+                <mappings>
+                	<mapping id="moveDoc.id" className="long">
+                        <entries/>
+                    </mapping>
+                     <mapping id="movedQuantityBU" className="double">
+                        <entries/>
+                    </mapping>
+                    <mapping id="wsnId" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="workerId" className="long">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsWorkDocManager" methodName="singleConfirm" parameter="obj,moveDoc.id,movedQuantityBU,wsnId,workerId"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

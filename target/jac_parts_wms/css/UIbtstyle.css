@@ -1,0 +1,82 @@
+.btn {
+  float:left;
+  margin:0 0 5px 0;
+  font:12px Arial,Sans-serif;
+  letter-spacing:4px;
+  text-decoration:none;
+  color:#222;
+  white-space:nowrap;
+  }
+.onbtn {
+  margin-right:3px;
+  white-space:nowrap;
+  }
+.btn span.bt {
+  display:block;
+  float:left;
+  position:relative;
+  margin:0 1px;
+  padding:1px 0;
+  font-weight:normal;
+  }
+.btn span.bt span.bt {
+  background:none;
+  display:block;
+  position:relative;
+  margin:0 -1px;
+  padding:0 1px;
+  }
+.btn span.bt span.bt span.bt {
+  margin:0;
+  padding:3px 9px 1px;
+  }
+.btn:hover, .btngrp a:hover {
+  cursor:pointer;
+  }
+.pointer .btn:hover, .pointer .btngrp a:hover {
+  cursor:pointer;
+  }
+.onbtn span.bt, .btngrp span.bt, .btn:hover span.bt {
+  background:#ddd url(../images/bg_tfoot_bt.jpg) repeat-x 0 0;
+  padding:0;
+  border:solid #ccc;
+  border-width:1px 0;
+  }
+.onbtn span.bt span.bt, .btngrp span.bt span.bt, .btn:hover span.bt span.bt {
+  padding:0;
+  border-width:0 1px;
+  }
+.onbtn span.bt span.bt span.bt, .btngrp span.bt span.bt span.bt, .btn:hover span.bt span.bt span.bt {
+  padding:3px 9px 1px;
+  border-width:0;
+  }
+.onbtn:hover span.bt, .btngrp span.bt span.bt span.bt a:hover {
+  background-image:none;
+  background-color:#DDDDDD;
+  border-color:#9cf #69e #69e #7af;
+  }
+.btn:active {
+  color:#111;
+  }
+.btn:active span.bt, .btngrp span.bt span.bt span.bt a:active {
+  background-image:none;
+  background-color:#ccc;
+  }
+.btn:active span.bt span.bt {
+  background-color:transparent;
+  }
+.ButtonDisabled span.bt{
+  background:#ddd url(../images/bg_tfoot_bt_disabled.jpg) repeat-x 0 0;
+  color:D0D0D0;
+  }
+.btngrp{
+float:left;
+margin:8px 0px 0px 3px;
+}
+.btnmargin {
+	margin: 10px 0px 5px 4px;
+}
+.buttonPanel {
+	margin: 5px;
+	margin-bottom:0px;
+}

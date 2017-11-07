@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editRuleTableItemPage">
+    <main>
+        <process id="ruleTableProcess">
+            <formCommit id="save" title="save" process="ruleTableProcess.new" enableType="none" download="false" visibleType="new">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="ruleTableItem" className="com.vtradex.rule.server.model.rule.RuleTableItem">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="ruleTableManager" methodName="storeRuleTableItem" parameter="maintainRuleTablePage.obj,ruleTableItem"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+            <formCommit id="saveModify" title="saveModify" process="ruleTableProcess.modify" enableType="none" download="false" visibleType="edit">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="ruleTableItem" className="com.vtradex.rule.server.model.rule.RuleTableItem">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="ruleTableManager" methodName="storeRuleTableItem" parameter="maintainRuleTablePage.obj,ruleTableItem"/>
+                </actions>
+                <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

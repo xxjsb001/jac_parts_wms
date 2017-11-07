@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainStorageDailyPage">
+    <main>
+        <process id="inventoryProcess">
+            <tablePopup id="initdayend" title="initdayend" process="inventoryProcess.initdayend" enableType="none" containId="false" pageId="initStorageDailyPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="inventorydayend" title="inventorydayend" process="inventoryProcess.inventorydayend" enableType="none" containId="false" pageId="inventoryDayendPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>
+    </main>
+    <detail/>
+</page>

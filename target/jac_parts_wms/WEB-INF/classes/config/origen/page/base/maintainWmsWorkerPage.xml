@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsWorkerPage" title="maintainWmsWorkerPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.warehouse.WmsWorker">
+        <workflow/>
+        <datasource><![CDATA[SELECT wk.id,
+wk.code,
+wk.name,
+wk.status,
+wk.user.name,
+wk.description 
+ FROM WmsWorker wk 
+ LEFT JOIN wk.user 
+ WHERE 1=1
+ AND wk.warehouse = #{SESSION_WAREHOUSE}
+ AND wk.type = 'PERSON' 
+ ORDER BY wk.code
+ ]]></datasource>
+        <columns>
+            <column id="wk.id" title="wk.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="wk.code" title="wk.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wk.name" title="wk.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wk.status" title="wk.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>
+            <column id="wk.user.name" title="wk.user.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wk.description" title="wk.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        </columns>
+    </maintainPage>
+</pages>

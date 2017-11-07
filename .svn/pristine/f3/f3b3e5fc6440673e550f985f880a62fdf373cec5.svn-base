@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process id="groupRuleTableProcess" control="status">
+
+	<task id="new" title="新建">
+	</task>
+
+	<task id="modify" title="修改">
+	</task>
+
+	<task id="import" title="导入">
+	</task>
+
+	<task id="export" title="导出">
+	</task>
+
+	<task id="delete" title="删除">
+	</task>
+
+</process>

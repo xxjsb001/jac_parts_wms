@@ -1,0 +1,83 @@
+/*data view*/
+.x-panel-body {
+	background: white;
+	font: 11px Arial, Helvetica, sans-serif;
+}
+.x-editable{
+	font-size: 9px;
+}
+
+.x-editable_f{
+	font-size: 12px;
+}
+
+loading-indicator {
+	font-size: 11px;
+	background-image: url('../images/default/grid/loading.gif');
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-left: 20px;
+	margin: 10px;
+}
+
+/*showcase view*/
+.x-panel-body {
+	background: white;
+	font: 11px Arial, Helvetica, sans-serif;
+}
+
+.thumb {
+	background: #8db2e3;
+	padding: 1px;
+}
+
+.thumb img {
+	height: 90px;
+	width: 125px;
+}
+
+.thumb-wrap {
+	float: left;
+	margin: 4px;
+	padding: 5px;
+	margin-right: 10px;
+	margin-left: 10px;
+	padding-right: 10px;
+	padding-left: 10px;
+	/*
+	word-break: break-all;
+	*/
+	width: 127px;
+}
+
+.thumb-wrap span {
+	display: block;
+	text-align: center;
+	/*
+	word-break: break-all;
+	overflow:hidden;
+	word-wrap:break-word;
+	word-break:normal;
+	width: 127px;
+	*/
+	
+}
+.x-view-over {
+	border: 1px solid #8db2e3;
+	background: #efefef url( ../images/default/grid/row-over.gif ) repeat-x left top;
+	padding: 4px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.x-view-selected {
+	background: #eff5fb url( ../images/view/selected.gif ) no-repeat right bottom;
+	border: 1px solid #99bbe8;
+	padding: 4px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.x-view-selected .thumb {
+	background: transparent;
+}

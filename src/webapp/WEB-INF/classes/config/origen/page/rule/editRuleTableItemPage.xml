@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editRuleTableItemPage" title="editRuleTableItemPage" entityClass="com.vtradex.rule.server.model.rule.RuleTableItem" width="220" height="150">
+        <workflow/>
+        <initListeners>
+            <initListener id="ruleTableItem.values" managerName="ruleTableManager" methodName="getRuleTableItemValue" newEnabled="false" editEnabled="true"/>
+        </initListeners>
+        <inputUIs>
+            <hidden id="ruleTableItem.id" title="ruleTableItem.id" reserve="false"/>
+            <text id="ruleTableItem.reference" title="ruleTableItem.reference" row="1" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </text>
+            <list id="ruleTableItem.type" title="ruleTableItem.type" row="2" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="RuleTableItem">
+                <visibleExpression/>
+                <hql><![CDATA[SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'RuleTableItem']]></hql>
+                <eventListeners>
+                    <eventListener id="ruleTableItem.gradeItem" index="0" refreshUI="true"/>
+                    <eventListener id="ruleTableItem.referenceType" index="0" refreshUI="true"/>
+                </eventListeners>
+            </list>
+            <checkbox id="ruleTableItem.gradeItem" title="ruleTableItem.gradeItem" row="3" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression><![CDATA[${ruleTableItem.type} == '2_REFERENCE']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </checkbox>
+            <list id="ruleTableItem.referenceType" title="ruleTableItem.referenceType" row="4" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="ReferenceType">
+                <visibleExpression><![CDATA[${ruleTableItem.type} != '1_BIND']]></visibleExpression>
+                <hql><![CDATA[SELECT 
+ enumerate.enumValue,
+ enumerate.enumValue From Enumerate enumerate 
+ where enumerate.enumType = 'ReferenceType' ORDER BY enumerate.id ]]></hql>
+                <eventListeners>
+                    <eventListener id="ruleTableItem.values" index="0" refreshUI="true"/>
+                </eventListeners>
+            </list>
+            <text id="ruleTableItem.values" title="ruleTableItem.values" row="5" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                <visibleExpression><![CDATA[${ruleTableItem.referenceType} == 'list']]></visibleExpression>
+                <hql/>
+                <eventListeners/>
+            </text>
+        </inputUIs>
+    </editPage>
+</pages>

@@ -1,0 +1,70 @@
+package com.vtradex.wms.server.telnet.shell.pick;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang.math.NumberUtils;
+
+import com.vtradex.kangaroo.shell.BreakException;
+import com.vtradex.kangaroo.shell.ContinueException;
+import com.vtradex.kangaroo.shell.PageableBaseShell;
+import com.vtradex.wms.server.telnet.pick.WmsPickRFManager;
+
+public class WmsPickMoveDocDetailShell extends PageableBaseShell{
+	
+	private final WmsPickRFManager pickRFManager;
+	
+	public WmsPickMoveDocDetailShell(WmsPickRFManager pickRFManager) {
+		this.pickRFManager = pickRFManager;
+	}
+
+	public static final String PAGE_ID = "wmsPickMoveDocDetailShell";
+	
+	public static final String MOVEDOC_ID = "MOVEDOC_ID";
+	
+	@Override
+	public String[] getTableHeader() {
+		return new String[]{"序号", "物料  ","数量"};
+	}
+
+	@Override
+	public String getHql() {
+		String hql = " SELECT det.moveDoc.id,det.item.code,det.planQuantityBU - det.movedQuantityBU FROM WmsMoveDocDetail det " +
+				" WHERE 1=1 AND det.planQuantityBU-det.movedQuantityBU > 0 " +
+				" /~拣货单序号: AND det.moveDoc.id = {拣货单序号}~/ ";
+		return hql;
+	}
+
+	@Override
+	public String getNextShell() {
+		Object[] rowData = (Object[])get(ROW_DATA_KEY);
+		if(rowData != null){
+			this.put(MOVEDOC_ID, rowData[0]);
+		}
+		return WmsPickPartShell.PAGE_ID;
+	}
+
+	@Override
+	public Map<String, Object> getParams() {
+		Object moveDocId =  this.getParentValue("MOVEDOC_ID");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("拣货单序号", moveDocId);
+		return params;
+	}
+	
+	protected void chooseChange(String choose) throws BreakException, ContinueException{
+		if(!NumberUtils.isNumber(choose)){
+			//选择不是数字则认为扫描的器具号并校验器具是否存在
+			if(!pickRFManager.checkContainer(choose)){
+				this.setStatusMessage("器具不存在");
+			}
+			put("CONTAINER",choose);
+			super.chooseChange("1");
+			forward(getNextShell());
+		}else{
+			this.setStatusMessage("请扫描器具");
+			super.chooseChange(choose);
+		}
+	}
+
+}

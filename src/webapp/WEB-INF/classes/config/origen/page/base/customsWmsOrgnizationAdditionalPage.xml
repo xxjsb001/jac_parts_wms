@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <customPage id="customsWmsOrgnizationAdditionalPage" title="customsWmsOrgnizationAdditionalPage" className="com.vtradex.thorn.client.template.ImportPageTemplate" onClose="refreshParent" width="400" height="200">
+		<buttons>
+    		<button id="importAdditionalInfo" title="search">
+    			<actions>
+    				<action managerName="wmsOrganizationManager" methodName="importAdditionalInfo" />
+    			</actions>
+    		</button>
+    </buttons>
+	</customPage>
+</pages>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <modifyDetailPage id="modifyWMSBillingContactPage" title="modifyWMSBillingContactPage" entityClass="com.vtradex.wms.server.model.billing.WMSContact" width="700" height="640">
+        <initListeners/>
+        <modify>
+            <inputUIs>
+                <hidden id="wmsContact.id" title="wmsContact.id" reserve="false"/>
+                <remote id="wmsContact.supplier.id" title="wmsContact.supplier.id" row="1" col="1" span="1" width="160" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" multiple="false" manualEditable="true" displayColumn="3" percentSignPosition="both" displayedTableHead="序号,代码,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT 
+ company.id,
+ company.code,
+ company.name
+ FROM WmsOrganization   company 
+ WHERE company.beSupplier = true
+and company.beVirtual =false
+AND company.status = 'ENABLED'  
+AND (company.code  LIKE :param OR  company.name LIKE :param) ]]></hql>
+                    <eventListeners/>
+                </remote>
+                <text id="wmsContact.code" title="wmsContact.code" row="1" col="2" span="1" width="160" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" trimSpace="true">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </text>
+                <list id="wmsContact.payType" title="wmsContact.payType" row="1" col="3" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false" enumType="WMSInvoicePayType">
+                    <visibleExpression/>
+                    <hql><![CDATA[ select 
+ enum.enumValue,
+ enum.enumValue
+ from Enumerate enum
+ where enum.enumType='WMSInvoicePayType'
+ order by enum.id ASC
+]]></hql>
+                    <eventListeners/>
+                </list>
+                <date id="wmsContact.startDate" title="wmsContact.startDate" row="2" col="1" span="1" width="160" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <date id="wmsContact.endDate" title="wmsContact.endDate" row="2" col="2" span="1" width="160" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showTime="false" manualEditable="true" defaultCurrentDate="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </date>
+                <numberText id="wmsContact.taxPoints" title="wmsContact.taxPoints" row="2" col="3" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </numberText>
+                <textArea id="wmsContact.memo" title="wmsContact.memo" row="3" col="1" span="2" width="380" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql/>
+                    <eventListeners/>
+                </textArea>
+            </inputUIs>
+        </modify>
+        <detail entityClass="com.vtradex.wms.server.model.billing.WMSContactDetail" autoQuery="true">
+            <datasource><![CDATA[SELECT contactDetail.id,contactDetail.code,contactDetail.startDate,contactDetail.endDate,smallCategory.name,smallCategory.code,contactDetail.billingMode,contactDetail.memo  from WMSContactDetail contactDetail 
+left join contactDetail.smallCategory smallCategory
+left join contactDetail.contact contact 
+left join contact.supplier supplier
+where contact.id={wmsContact.id}]]></datasource>
+            <columns>
+                <column id="contactDetail.id" title="contactDetail.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+                <column id="contactDetail.code" title="contactDetail.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="contactDetail.startDate" title="contactDetail.startDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+                <column id="contactDetail.endDate" title="contactDetail.endDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+                <column id="smallCategory.name" title="smallCategory.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="smallCategory.code" title="smallCategory.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+                <column id="contactDetail.billingMode" title="contactDetail.billingMode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WMSBillingModel"/>
+                <column id="contactDetail.memo" title="contactDetail.memo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            </columns>
+        </detail>
+    </modifyDetailPage>
+</pages>

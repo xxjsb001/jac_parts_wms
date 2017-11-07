@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainAddWmsCountDetailPage" title="maintainAddWmsCountDetailPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.warehouse.WmsLocation" width="800" height="400" onClose="refreshParent">
+        <workflow/>
+        <datasource><![CDATA[SELECT location.id,
+location.code,
+location.verifyCode,
+location.routeNo,
+location.warehouseArea.name,
+location.type,
+location.locationStatus,
+location.status 
+ FROM WmsLocation location
+WHERE 1=1 
+AND location.warehouse = #{SESSION_WAREHOUSE}
+AND location.lockCount=false
+AND location.status='ENABLED'
+AND location.type='STORAGE'
+AND location.id NOT IN (
+SELECT wmsCountDetail.locationId FROM WmsCountDetail wmsCountDetail 
+WHERE wmsCountDetail.countPlan.id={modifyWmsCountDetailPage.countPlan.id}
+AND wmsCountDetail.countPlan.status NOT IN ('FINISHED','CANCELED')
+)
+ORDER BY location.code]]></datasource>
+        <columns>
+            <column id="location.id" title="location.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="location.code" title="location.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="location.verifyCode" title="location.verifyCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="location.routeNo" title="location.routeNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="location.warehouseArea.name" title="location.warehouseArea.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="location.type" title="location.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string" format="enumFormat" formatParam="WmsLocationType"/>
+            <column id="location.locationStatus" title="location.locationStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string" format="enumFormat" formatParam="WmsLocationStatus"/>
+            <column id="location.status" title="location.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string" format="enumFormat" formatParam="BaseStatus"/>
+        </columns>
+    </maintainPage>
+</pages>
