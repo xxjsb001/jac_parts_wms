@@ -38,9 +38,7 @@ public class WmsBOLOverShell extends Thorn4BaseShell{
 		try{
 			pickRFManager.createWmsBol(dtos,license);
 		}catch(Exception e){
-//			this.put(CURRENT_DTOS, dtos);
 			this.put(CURRENT_LICENSE, license);
-//			this.setStatusMessage(JavaTools.spiltLast(e.getMessage(), ":"));
 			this.forward(WmsBOLShell.PAGE_ID,JavaTools.spiltLast(e.getMessage(), ":"));
 		}
 		this.output("成功,2秒后自动跳转...");

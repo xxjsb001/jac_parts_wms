@@ -13,4 +13,7 @@ public interface HeadType {
 	
 	/**时序件发货单*/
 	public static String PICK_SPS = "PICK_SPS";
+	
+	/**创建BOL*/
+	public static String CREATE_BOL = "CREATE_BOL";
 }

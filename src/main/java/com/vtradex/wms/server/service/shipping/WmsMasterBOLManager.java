@@ -1,6 +1,5 @@
 package com.vtradex.wms.server.service.shipping;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -75,6 +74,9 @@ public interface WmsMasterBOLManager extends BaseManager {
 	 */
 	@Transactional
 	void scanSubBol(String subCode);
+	
+	@Transactional
+	void createWmsBolDoAsyn(Long id);
 	/**
 	 * 打印配送单
 	 * @param bol

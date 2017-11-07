@@ -448,7 +448,7 @@ public class DefaultWmsDealInterfaceDataManager
 		
 		List<Long> ids = new ArrayList<Long>();//中间表数据id
 		/***/
-		WHead w = new WHead(1, new Date(), "ASN");
+		WHead w = new WHead(1, new Date(), HeadType.ASN);
 		commonDao.store(w);
 		for(Object[] obj : tempDatas){
 			Long id = (Long) obj[0];

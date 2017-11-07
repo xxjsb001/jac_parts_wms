@@ -697,7 +697,7 @@ public class DefaultmilldleSessionManager extends DefaultBaseManager implements 
 	public void saveAsnDataToWms(List<Object[]> tempDatas,WmsWarehouse warehouse,
 			String tableName){
 		
-		WHead w = new WHead(1, new Date(), "ASN");
+		WHead w = new WHead(1, new Date(), HeadType.ASN);
 		commonDao.store(w);
 		for(Object[] obj : tempDatas){
 //			Long id = (Long) obj[0];

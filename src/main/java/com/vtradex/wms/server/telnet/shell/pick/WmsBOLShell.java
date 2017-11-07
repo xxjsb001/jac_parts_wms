@@ -71,23 +71,6 @@ public class WmsBOLShell extends Thorn4BaseShell{
 				this.put(CURRENT_DTOS, dtos);
 				this.put(CURRENT_LICENSE, license);
 				this.forward(WmsBOLOverShell.PAGE_ID,"装车确认中...");
-				
-				/*this.output("请耐心等待...");
-				try{
-					pickRFManager.createWmsBol(dtos,license);
-				}catch(Exception e){
-					this.put(CURRENT_DTOS, dtos);
-					this.put(CURRENT_LICENSE, license);
-					this.remove("器具编码(00装车结束)");
-					this.setStatusMessage(JavaTools.spiltLast(e.getMessage(), ":"));
-				}
-				this.output("成功,2秒后自动跳转...");
-				try {
-					Thread.sleep(1000*2);//2s
-				} catch (InterruptedException e) {
-					logger.error("", e);
-				}
-				this.forward(WmsBOLShell.PAGE_ID,ShellExceptions.NEXT_VEHICLE);*/
 			}else{
 				this.put(CURRENT_DTOS, dtos);
 				this.put(CURRENT_LICENSE, license);

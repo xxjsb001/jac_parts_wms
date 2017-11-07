@@ -524,6 +524,16 @@
             <value>com/vtradex/wms/server/model/shipping/hbm/wmsPickContainer.hbm.xml</value>
         </constructor-arg>
     </bean>
+    <bean id="wBolsHibernateMappingResource" class="com.vtradex.thorn.server.dao.hibernate.HibernateMappingResource">
+        <constructor-arg>
+            <value>com/vtradex/wms/server/model/interfaces/hbm/wBols.hbm.xml</value>
+        </constructor-arg>
+    </bean>
+    <bean id="wContainersHibernateMappingResource" class="com.vtradex.thorn.server.dao.hibernate.HibernateMappingResource">
+        <constructor-arg>
+            <value>com/vtradex/wms/server/model/interfaces/hbm/wContainers.hbm.xml</value>
+        </constructor-arg>
+    </bean>
     
     
 </beans>
