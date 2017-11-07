@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<pages>
-    <reportPopupPage id="editPrintOrderPage" title="editPrintOrderPage" reportFile="orderJh.raq" parameter="id=?" width="1000" height="450">
-        <inputUIs/>
-    </reportPopupPage>
-</pages>

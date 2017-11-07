@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<pages>
-    <reportPopupPage id="printLocationPage" title="printLocationPage" reportFile="XG_JCSJ.raq" parameter="parentIds" width="900" height="450">
-        <inputUIs>
-        </inputUIs>
-    </reportPopupPage>
-</pages>

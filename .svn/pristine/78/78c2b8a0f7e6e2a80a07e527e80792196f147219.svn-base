@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<pages>
-    <customPage id="manualWmsWaveDocAllocatePage" title="manualWmsWaveDocAllocatePage" onClose="refreshParent" className="com.vtradex.wms.client.ui.page.ManualWmsWaveAllocatePage" width="950" height="600"/>
-</pages>

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<pages>
-    <customPage id="inventoryVisibilityPage" title="inventoryVisibilityPage" className="com.vtradex.wms.client.inventoryviewUI.page.Page_InventoryVisibility"/>
-</pages>

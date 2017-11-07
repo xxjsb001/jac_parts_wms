@@ -1,6 +1,0 @@
-<module>
-	<inherits name='com.vtradex.thorn.ApplicationWindow'/>
-	<inherits name='com.vtradex.repc.ReportCenter'/>
-	<inherits name='com.vtradex.rule.RuleCenter'/>
-	<entry-point class='com.vtradex.wms.client.WMS'/>
-</module>

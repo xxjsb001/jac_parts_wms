@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<pages>
-    <reportPopupPage id="editPrintTagPage" title="editPrintTagPage" reportFile="wmsBolContainer.raq" parameter="parentIds" width="950" height="480">
-        <inputUIs/>
-    </reportPopupPage>
-</pages>

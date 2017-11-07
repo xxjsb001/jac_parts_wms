@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<pages>
-    <reportPopupPage id="printMesPage" title="printMesPage" reportFile="jacMiddleDeliveryDoc.raq" parameter="parentIds" width="900" height="600">
-        <inputUIs/>
-    </reportPopupPage>
-</pages>

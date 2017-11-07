@@ -1,3 +1,0 @@
-shellFactory.initializeShell=newLoginShell
-shellFactory.mainShell=thorn4MenuShell
-shellFactory.entranceShell=newLoginShell
