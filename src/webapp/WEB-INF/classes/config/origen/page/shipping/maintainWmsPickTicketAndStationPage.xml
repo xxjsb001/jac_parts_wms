@@ -20,8 +20,10 @@ was.loadage,
 was.boxTagQty,
 worker.name,
 worker.code,
+ptd.productionLine,
 pick.requireArriveDate,
 ptd.shipLotInfo.supplier,
+ptd.shipLotInfo.extendPropC20,
 was.isFinished,
 was.seq,
 was.endseq,
@@ -49,14 +51,15 @@ where 1=1 order by was.id desc]]></datasource>
             <column id="was.pickQuantity" title="was.pickQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" color="red" inputUI="text" inputUIValidator="numberRequired"/>
             <column id="was.type" title="was.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="was.typeName" title="sa.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
-<!--             <column id="was.container" title="was.container" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/> -->
             <column id="was.boxTag" title="was.boxTag" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="was.loadage" title="was.loadage" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
             <column id="was.boxTagQty" title="was.boxTagQty" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
             <column id="ptd.pickWorker" title="ptd.pickWorker" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="ptd.pickWorkerCode" title="ptd.pickWorkerCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="ptd.productionLine" title="bolDetail.productionLine" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="pick.requireArriveDate" title="pick.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
-            <column id="ptd.shipLotInfo.supplier" title="ptd.shipLotInfo.supplier" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="ptd.shipLotInfo.supplier" title="inventory.itemKey.lotInfo.supplier.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="ptd.shipLotInfo.extendPropC20" title="inventory.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="was.isFinished" title="was.isFinished" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
         	<column id="was.seq" title="apl.seq" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
 	       	<column id="was.endseq" title="apl.endseq" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
