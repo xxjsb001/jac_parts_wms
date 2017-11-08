@@ -736,4 +736,13 @@
 			</bean>
 		</property>
 	</bean>	
+	<bean id="jacPickTicketManager" parent="abstractTransactionProxy">
+		<property name="target">
+			<bean class="com.vtradex.wms.server.service.shipping.DefaultJacPickTicketManager" parent="baseManager" >
+		       	<constructor-arg index="0">
+					<ref bean="wmsPickTicketManager"></ref>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>	
 </beans>

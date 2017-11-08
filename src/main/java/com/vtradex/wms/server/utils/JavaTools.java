@@ -214,6 +214,17 @@ public class JavaTools extends HibernateCommonDao{
 			return null;
 		}
 	 }
+	 public static Date stringFDate(String str,String pattern) {
+		if (str == null || str.trim().equals("") || str.trim().equals("0"))
+			return null;
+		DateFormat df = new SimpleDateFormat(pattern);
+		try {
+			return df.parse(str.trim());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	 }
 	//013
 	 /**
 		 * stringToDate-huangshaokang

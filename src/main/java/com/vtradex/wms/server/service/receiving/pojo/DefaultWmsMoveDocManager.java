@@ -662,9 +662,12 @@ public class DefaultWmsMoveDocManager extends DefaultBaseManager implements
 					moveDoc.setCompany(pickTicket.getCompany());
 					moveDoc.setCarrier(pickTicket.getCarrier());
 					moveDoc.setClassType(classType);
-//					moveDoc.setBeCrossDock(pickTicket.getBeCrossDock());
-//					moveDoc.setShipLocation(pickTicket.getShipLocation());
 					moveDoc.setDock(pickTicket.getDock());
+//					if(WmsMoveDocType.LOT_PICKING.equals(pickTicket.getBillType().getCode())){
+//						moveDoc.setType(WmsMoveDocType.LOT_PICKING);
+//					}else{
+//						moveDoc.setType(WmsMoveDocType.MV_PICKTICKET_PICKING);
+//					}
 					moveDoc.setType(WmsMoveDocType.MV_PICKTICKET_PICKING);
 					
 					WmsBillType billType = wmsBillTypeManager.getWmsBillType(

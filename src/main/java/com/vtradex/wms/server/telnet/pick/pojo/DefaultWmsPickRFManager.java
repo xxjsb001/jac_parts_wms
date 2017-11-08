@@ -818,7 +818,7 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 			if(containers.size()<=0){
 				return;
 			}
-			WBols w = new WBols(pickCode, vehicle);
+			WBols w = new WBols(pickCode, vehicle,WmsWarehouseHolder.getWmsWarehouse());
 			commonDao.store(w);
 			Set<WContainers> details = new HashSet<WContainers>();
 			Iterator<String> it = containers.iterator();

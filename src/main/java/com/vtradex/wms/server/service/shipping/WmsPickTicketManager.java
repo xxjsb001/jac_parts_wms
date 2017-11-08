@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vtradex.thorn.server.service.BaseManager;
 import com.vtradex.wms.server.model.move.WmsTaskLog;
+import com.vtradex.wms.server.model.organization.WmsBillType;
 import com.vtradex.wms.server.model.organization.WmsPackageUnit;
 import com.vtradex.wms.server.model.shipping.WmsPickTicket;
 import com.vtradex.wms.server.model.shipping.WmsPickTicketDetail;
@@ -156,9 +157,9 @@ public interface WmsPickTicketManager extends BaseManager {
 	
 	@Transactional
 	String batchPickTicketSingle(Long companyId, Long billTypeId, Long num, Long skuNum, List<WmsPackageUnit> currentPackageUnits);
+	@Transactional
+	void lotPick(String x,List<Long> ids,WmsBillType bType,String batch);
+	@Transactional
+	void cancelLot(WmsPickTicket pickTicket);
 	
-	/**
-	 * 打印MES
-	 */
-	Boolean printMes(Map<Object, Object> map);
 }

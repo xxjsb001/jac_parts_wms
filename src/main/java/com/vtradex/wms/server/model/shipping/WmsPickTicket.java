@@ -134,6 +134,11 @@ public class WmsPickTicket extends Entity {
 	//批次
 	private String batch;
 	
+	//批拣单增加字段,来源于汇总后的发货单明细
+	/**生产线*/
+	private String productionLine;	
+	/**工位*/
+	private String station;
 		
 	
 	public WmsPickTicket() {
@@ -196,6 +201,23 @@ public class WmsPickTicket extends Entity {
 
 	public String getOdrSu() {
 		return odrSu;
+	}
+
+
+	public String getProductionLine() {
+		return productionLine;
+	}
+
+	public void setProductionLine(String productionLine) {
+		this.productionLine = productionLine;
+	}
+
+	public String getStation() {
+		return station;
+	}
+
+	public void setStation(String station) {
+		this.station = station;
 	}
 
 

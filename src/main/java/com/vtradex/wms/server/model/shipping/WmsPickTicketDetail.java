@@ -93,6 +93,9 @@ public class WmsPickTicketDetail extends Entity {
 	
 	//来源
 	private String fromSource;
+	//========批拣信息
+	/**批拣编码*/
+	private String lotPickCode;
 	
 	public WmsPickTicketDetail(WmsPickTicket pickTicket, WmsItem item,
 			ShipLotInfo shipLotInfo, WmsPackageUnit packageUnit,
@@ -123,6 +126,14 @@ public class WmsPickTicketDetail extends Entity {
 		this.pcs = pcs;
 		this.supplier = supplier;
 		this.inventoryStatus = inventoryStatus;
+	}
+
+	public String getLotPickCode() {
+		return lotPickCode;
+	}
+
+	public void setLotPickCode(String lotPickCode) {
+		this.lotPickCode = lotPickCode;
 	}
 
 	public String getFromSource() {

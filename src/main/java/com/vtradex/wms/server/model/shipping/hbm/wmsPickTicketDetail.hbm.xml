@@ -82,8 +82,9 @@
 		<property name="packageNum" type="double" column="PACKAGE_NUM"/>
 		<property name="packageQty" type="double" column="PACKAGE_QTY"/>
 		<property name="remark" type="string" column="REMARK" length="255"/>
-		
 		<property name="fromSource" type="string" column="FROM_SOURCE"/>
+		<property name="lotPickCode" type="string" length="100" column="LOT_PICK_CODE"/>
+		
 		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
 			<property name="creatorId" type="long" column="CREATOR_ID"/>
 			<property name="creator" type="string" length="50" column="CREATOR"/>

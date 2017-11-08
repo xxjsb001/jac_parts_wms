@@ -22,6 +22,7 @@ import com.vtradex.wms.server.model.interfaces.WBols;
 import com.vtradex.wms.server.model.interfaces.WContainers;
 import com.vtradex.wms.server.model.inventory.WmsItemKey;
 import com.vtradex.wms.server.model.move.WmsMoveDoc;
+import com.vtradex.wms.server.model.move.WmsMoveDocType;
 import com.vtradex.wms.server.model.move.WmsTask;
 import com.vtradex.wms.server.model.organization.WmsPackageUnit;
 import com.vtradex.wms.server.model.shipping.WmsBOL;
@@ -34,6 +35,7 @@ import com.vtradex.wms.server.model.shipping.WmsPickTicket;
 import com.vtradex.wms.server.model.shipping.WmsPickTicketDetail;
 import com.vtradex.wms.server.model.shipping.WmsTaskAndStation;
 import com.vtradex.wms.server.model.warehouse.WmsBoxType;
+import com.vtradex.wms.server.model.warehouse.WmsWarehouse;
 import com.vtradex.wms.server.service.interfaces.WmsDealInterfaceDataManager;
 import com.vtradex.wms.server.service.sequence.WmsBussinessCodeManager;
 import com.vtradex.wms.server.service.shipping.WmsMasterBOLManager;
@@ -217,7 +219,8 @@ public class DefaultWmsMasterBOLManager extends DefaultBaseManager implements
 					"SPS_PICKING".equals(billCode) || 
 						"NORMOL_PICKING".equals(billCode) ||
 							"BL_PICKING".equals(billCode) ||
-							 "KB_PICKING".equals(billCode)){//紧急补料出货单
+							 "KB_PICKING".equals(billCode) ||//紧急补料出货单
+							 WmsMoveDocType.LOT_PICKING.equals(billCode)){
 				/**时序件、看板件、计划件出库数据传MES*/
 				wmsDealInterfaceDataManager.outBoundToMes(detail,moveDoc,i,task,billCode);
 			}else{
@@ -271,16 +274,16 @@ public class DefaultWmsMasterBOLManager extends DefaultBaseManager implements
 			dto.getContainers().add(c.getContainer());
 			dtos.put(w.getPickCode(), dto);
 		}
-		createWmsBolDo(dto, w.getVehicle(), w.getVehicle().getLicense(), w.getPickCode());
+		createWmsBolDo(dto, w.getVehicle(), w.getVehicle().getLicense(), w.getPickCode(),w.getWarehouse());
 	}
-	private void createWmsBolDo(WmsBOLDTO dto,WmsVehicle vehicle,String license,String pickCode){
+	private void createWmsBolDo(WmsBOLDTO dto,WmsVehicle vehicle,String license,String pickCode,WmsWarehouse warehouse){
 		Set<String> containers = dto.getContainers();
 		if(containers.size()<=0){
 			return;
 		}
 		//创建装车单
 		WmsBOL bol = EntityFactory.getEntity(WmsBOL.class);
-		bol.setWarehouse(WmsWarehouseHolder.getWmsWarehouse());
+		bol.setWarehouse(warehouse);
 		bol.setCode(codeManager.generateCodeByRule(bol.getWarehouse(), 
 				bol.getWarehouse().getName(), "装车单", ""));
 		bol.setVehicle(vehicle);
@@ -291,7 +294,9 @@ public class DefaultWmsMasterBOLManager extends DefaultBaseManager implements
 		WmsPickTicket pick = (WmsPickTicket) commonDao.findByQueryUniqueResult(hql, "code", pickCode);
 		bol.setBillTypeName(pick.getBillType().getName());
 		bol.setRequireArriveDate(pick.getRequireArriveDate());
-		workflowManager.doWorkflow(bol, "masterBOLProcess.new");
+//		workflowManager.doWorkflow(bol, "masterBOLProcess.new");
+		bol.setStatus(WmsBOLStatus.UNSHIP);
+		commonDao.store(bol);
 		
 		Iterator<String> it = containers.iterator();
 		Map<String,String> subMap = new HashMap<String, String>();

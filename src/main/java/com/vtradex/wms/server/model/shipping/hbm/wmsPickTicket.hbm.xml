@@ -113,6 +113,9 @@
 		<property name="source" type="string" column="SOURCE" length="50"/>		
 		<property name="odrSu" type="string" length="100" column="ODR_SU"/>
 		<property name="batch" type="string" length="100" column="BATCH"/>
+		<property name="productionLine" type="string" length="100" column="PRODUCTION_LINE"/>
+		<property name="station" type="string" length="100" column="STATION"/>
+		
 		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
 			<property name="creatorId" type="long" column="CREATOR_ID"/>
 			<property name="creator" type="string" length="50" column="CREATOR"/>

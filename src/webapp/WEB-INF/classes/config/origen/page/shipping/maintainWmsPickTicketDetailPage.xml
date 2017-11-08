@@ -12,7 +12,7 @@ billType.name,pickTicket.status,pickTicket.orderDate,pickTicket.finshDate,
         pickTicketDetail.shipLotInfo.extendPropC1,
         pickTicket.requireArriveDate,
         pickTicketDetail.shipLotInfo.soi,pickTicketDetail.shipLotInfo.supplier,
-        pickTicketDetail.description,pickTicketDetail.hashCode  
+        pickTicketDetail.description,pickTicketDetail.lotPickCode  
         FROM WmsPickTicketDetail pickTicketDetail
         LEFT JOIN pickTicketDetail.pickTicket pickTicket
         LEFT JOIN pickTicketDetail.pickTicket.billType billType
@@ -43,6 +43,7 @@ billType.name,pickTicket.status,pickTicket.orderDate,pickTicket.finshDate,
             <column id="pickTicketDetail.shipLotInfo.soi" title="shipLotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
             <column id="pickTicketDetail.shipLotInfo.supplier" title="shipLotInfo.supplier" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
             <column id="pickTicketDetail.description" title="processDoc.description" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+         	<column id="pickTicketDetail.lotPickCode" title="pickTicketDetail.lotPickCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/> 
          </columns>
     </maintainPage>
 </pages>

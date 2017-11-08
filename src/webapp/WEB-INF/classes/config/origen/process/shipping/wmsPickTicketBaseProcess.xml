@@ -67,7 +67,10 @@
 
 	<task id="printMes" title="打印mes单据明细">
 	</task>
-
+	
+	<task id="lotPick" title="生成批拣单">
+	</task>
+	
 	<task id="editSupplier" title="维护供应商">
 	</task>
 

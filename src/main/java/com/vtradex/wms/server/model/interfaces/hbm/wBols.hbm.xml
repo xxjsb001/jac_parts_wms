@@ -18,6 +18,9 @@
 			<key column="W_BOL_S_ID"/>
 			<one-to-many class="com.vtradex.wms.server.model.interfaces.WContainers"></one-to-many>
 		</set>
+		<many-to-one name="warehouse" class="com.vtradex.wms.server.model.warehouse.WmsWarehouse">
+			<column name="WAREHOUSE_ID"/>
+		</many-to-one>
 		
 		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
 			<property name="creatorId" type="long" column="CREATOR_ID"/>

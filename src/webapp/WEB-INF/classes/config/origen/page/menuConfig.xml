@@ -46,6 +46,7 @@
     </menuItem>
     <menuItem title="menu_shipping" dir="shipping">
         <menuItem title="maintainWmsPickTicketPage" pageId="maintainWmsPickTicketPage"/>
+        <menuItem title="maintainWmsLotPickTicketPage" pageId="maintainWmsLotPickTicketPage"/>
         <menuItem title="maintainWmsPickTicketDetailPage" pageId="maintainWmsPickTicketDetailPage"/>
         <menuItem title="maintainWmsPickTicketAndAppliancePage" pageId="maintainWmsPickTicketAndAppliancePage"/>
         <menuItem title="maintainWmsMoveDocPickTicketPage" pageId="maintainWmsMoveDocPickTicketPage"/>

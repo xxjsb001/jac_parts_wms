@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
@@ -20,13 +22,11 @@ import com.vtradex.thorn.server.service.WorkflowManager;
 import com.vtradex.thorn.server.service.pojo.DefaultBaseManager;
 import com.vtradex.thorn.server.util.BeanUtils;
 import com.vtradex.thorn.server.util.LocalizedMessage;
-import com.vtradex.thorn.server.web.security.UserHolder;
 import com.vtradex.wms.client.ui.constant.CT_PA;
 import com.vtradex.wms.client.ui.javabean.PT_ALLOCATED;
 import com.vtradex.wms.client.ui.javabean.PT_AVAILABLE;
 import com.vtradex.wms.client.ui.javabean.PT_DETAILS;
 import com.vtradex.wms.client.ui.javabean.PT_INFO;
-import com.vtradex.wms.server.action.PickTicketBaseShipDecision;
 import com.vtradex.wms.server.model.base.BaseStatus;
 import com.vtradex.wms.server.model.base.ShipLotInfo;
 import com.vtradex.wms.server.model.inventory.WmsInventory;
@@ -44,6 +44,7 @@ import com.vtradex.wms.server.model.organization.WmsBillType;
 import com.vtradex.wms.server.model.organization.WmsItemState;
 import com.vtradex.wms.server.model.organization.WmsOrganization;
 import com.vtradex.wms.server.model.organization.WmsPackageUnit;
+import com.vtradex.wms.server.model.receiving.WmsSource;
 import com.vtradex.wms.server.model.shipping.WmsBOLStateLog;
 import com.vtradex.wms.server.model.shipping.WmsPickTicket;
 import com.vtradex.wms.server.model.shipping.WmsPickTicketDetail;
@@ -59,6 +60,8 @@ import com.vtradex.wms.server.service.rule.WmsTransactionalManager;
 import com.vtradex.wms.server.service.sequence.WmsBussinessCodeManager;
 import com.vtradex.wms.server.service.shipping.WmsPickTicketManager;
 import com.vtradex.wms.server.service.workDoc.WmsWorkDocManager;
+import com.vtradex.wms.server.utils.JavaTools;
+import com.vtradex.wms.server.utils.MyUtils;
 import com.vtradex.wms.server.utils.NewLotInfoParser;
 import com.vtradex.wms.server.utils.PackageUtils;
 import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
@@ -920,16 +923,70 @@ public class DefaultWmsPickTicketManager extends DefaultBaseManager implements W
 		return "";
 	}
 	
-	/**
-	 *  打印MES
-	 */
-	public Boolean printMes(Map<Object, Object> map){
-		List<Long> parentIds = (List<Long>) map.get("parentIds");
-		if(parentIds != null){
-			for(Long id : parentIds){
-//				WmsPickTicket pickTicket = this.commonDao.load(WmsPickTicket.class, id);
+	public void lotPick(String x,List<Long> ids,WmsBillType bType,String batch){
+		Map<String,List<WmsPickTicketDetail>> ys = new HashMap<String, List<WmsPickTicketDetail>>();
+		List<WmsPickTicketDetail> pps = null;
+		Double quantity = 0D;
+		//Y规则:供应商+物料
+		String y = "",code = codeManager.generateCodeByRule(WmsWarehouseHolder.getWmsWarehouse(), 
+				bType.getCompany().getName(), "发货单", bType.getName());
+		Map<Long,WmsPickTicket> p = new HashMap<Long, WmsPickTicket>();
+		for(Long id : ids){
+			WmsPickTicketDetail pp = commonDao.load(WmsPickTicketDetail.class, id);
+			y = pp.getItem().getCode()+MyUtils.spilt1+pp.getSupplier().getCode();
+			if(ys.containsKey(y)){
+				pps = ys.get(y);
+			}else{
+				pps = new ArrayList<WmsPickTicketDetail>();
 			}
+			pps.add(pp);
+			ys.put(y, pps);
+			
+			quantity += pp.getExpectedQuantityBU();
+			pp.setLotPickCode(code);
+			commonDao.store(pp);
+			if(!p.containsKey(pp.getPickTicket().getId())){
+				pp.getPickTicket().setStatus(WmsPickTicketStatus.WORKING);
+				p.put(pp.getPickTicket().getId(), pp.getPickTicket());
+			}
+			
+		}ids.clear();p.clear();
+		
+		String[] xp = x.split(MyUtils.spilt1);//货主+单据类型+收货道口+计划日期+产线+工位
+		Date requireArriveDate = JavaTools.stringFDate(xp[3], JavaTools.dmy_hms);
+		WmsPickTicket pickTicket = new WmsPickTicket(WmsWarehouseHolder.getWmsWarehouse(),bType.getCompany(), bType, 
+				code, "", WmsPickTicketStatus.OPEN, requireArriveDate, quantity, 0d, 0d, 0d,
+				"XG0202", xp[2],WmsSource.INTERFACE,new Date(),"XG02Z2",batch);
+		pickTicket.setProductionLine(xp[4]);
+		pickTicket.setStation(xp[5]);
+		commonDao.store(pickTicket);
+		
+		int i = 1;
+		Integer lineNo = 10;
+		Iterator<Entry<String, List<WmsPickTicketDetail>>> it = ys.entrySet().iterator();
+		while(it.hasNext()){
+			Entry<String, List<WmsPickTicketDetail>> entry = it.next();
+			y = entry.getKey();
+			pps = entry.getValue();
+			
+			quantity = 0D;
+			for(WmsPickTicketDetail pp : pps){
+				quantity += pp.getExpectedQuantityBU();
+			}
+//			System.out.println(y+":"+pps.size()+"="+quantity);
+			
+			WmsPickTicketDetail detail = new WmsPickTicketDetail(pickTicket, pps.get(0).getItem(), 
+					pps.get(0).getShipLotInfo(),pps.get(0).getPackageUnit(),quantity, quantity, 0d, 0d, 0d, null, 
+					null, pps.get(0).getProductionLine(), pps.get(0).getStation(), pps.get(0).getIsJp(),lineNo*i,pps.get(0).getSx(),
+					pps.get(0).getMinQty(),pps.get(0).getPcs(),pps.get(0).getSupplier(),"-");
+			commonDao.store(detail);
+			i++;
 		}
-		return true;
+	}
+	public void cancelLot(WmsPickTicket pickTicket){
+		String hql = "UPDATE WmsPickTicket p SET p.status =:status WHERE EXISTS (select 1 from WmsPickTicketDetail pp where pp.lotPickCode =:lotPickCode and p.id = pp.pickTicket.id)";
+		int i = commonDao.executeByHql(hql, new String[]{"status","lotPickCode"}, 
+				new Object[]{WmsPickTicketStatus.OPEN,pickTicket.getCode()});
+		LocalizedMessage.setMessage(MyUtils.fontByBlue("成功,回写发货单条数:"+i));
 	}
 }
