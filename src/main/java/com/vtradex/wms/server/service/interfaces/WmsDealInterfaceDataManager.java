@@ -120,7 +120,8 @@ public interface WmsDealInterfaceDataManager extends BaseManager{
 	/**出库数据传MES*/
 	@Transactional
 	void outBoundToMes(WmsBOLDetail detail,WmsMoveDoc moveDoc,int i,WmsTask task,String billCode);
-	
+	@Transactional
+	void outBoundLotToMes(Long id);
 	/**出库数据的器具信息传MES*/
 //	void outBoundApplianceToMes(WmsTask task,WmsBOLDetail detail);
 	/**取消质检*/

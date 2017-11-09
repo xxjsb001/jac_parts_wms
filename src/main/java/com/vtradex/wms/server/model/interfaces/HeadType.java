@@ -16,4 +16,7 @@ public interface HeadType {
 	
 	/**创建BOL*/
 	public static String CREATE_BOL = "CREATE_BOL";
+	
+	/**发运数据传MES*/
+	public static String W_DELIVER_MES = "W_DELIVER_MES";
 }

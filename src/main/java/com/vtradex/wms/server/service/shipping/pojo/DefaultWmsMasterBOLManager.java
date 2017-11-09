@@ -12,12 +12,14 @@ import java.util.Set;
 import com.vtradex.thorn.client.ui.page.IPage;
 import com.vtradex.thorn.server.exception.BusinessException;
 import com.vtradex.thorn.server.model.EntityFactory;
+import com.vtradex.thorn.server.model.message.Task;
 import com.vtradex.thorn.server.service.WorkflowManager;
 import com.vtradex.thorn.server.service.pojo.DefaultBaseManager;
 import com.vtradex.thorn.server.util.LocalizedMessage;
 import com.vtradex.thorn.server.web.security.UserHolder;
 import com.vtradex.wms.server.model.base.BaseStatus;
 import com.vtradex.wms.server.model.carrier.WmsVehicle;
+import com.vtradex.wms.server.model.interfaces.HeadType;
 import com.vtradex.wms.server.model.interfaces.WBols;
 import com.vtradex.wms.server.model.interfaces.WContainers;
 import com.vtradex.wms.server.model.inventory.WmsItemKey;
@@ -41,6 +43,7 @@ import com.vtradex.wms.server.service.sequence.WmsBussinessCodeManager;
 import com.vtradex.wms.server.service.shipping.WmsMasterBOLManager;
 import com.vtradex.wms.server.service.workDoc.WmsWorkDocManager;
 import com.vtradex.wms.server.telnet.dto.WmsBOLDTO;
+import com.vtradex.wms.server.utils.JavaTools;
 import com.vtradex.wms.server.utils.MyUtils;
 import com.vtradex.wms.server.utils.StringHelper;
 import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
@@ -200,29 +203,39 @@ public class DefaultWmsMasterBOLManager extends DefaultBaseManager implements
 		commonDao.store(bol);
 	}
 	public void shippingWmsBOL(WmsBOL bol){
+//		System.out.println("01::"+JavaTools.format(new Date(), JavaTools.dmy_hms));
 		workDocManager.upBolTagsNum(bol);
+//		System.out.println("02::"+JavaTools.format(new Date(), JavaTools.dmy_hms));
 		String hql = "FROM WmsBOLDetail bd WHERE bd.bol.id =:bolId ";
 		List<WmsBOLDetail> details = commonDao.findByQuery(hql, "bolId", bol.getId());
 		int i = 1; //数据条数标识
 		List<String> boxTags = new ArrayList<String>();
 		List<String> containers = new ArrayList<String>();
 		List<Long> wmsTaskAndStationIds = new ArrayList<Long>();
+		//统计相同子单号下相同物料的配送总量
+		Map<String,Double> itemSubQtys = new HashMap<String, Double>();
+		Double itemSubQty = 0D;
+		String key = "",billCode = "";
 		for(WmsBOLDetail detail : details){
 			WmsTask task = commonDao.load(WmsTask.class, detail.getTask().getId());
 			WmsMoveDoc moveDoc = commonDao.load(WmsMoveDoc.class, task.getMoveDocDetail().getMoveDoc().getId());
 			WmsPickTicket pickTicket = commonDao.load(WmsPickTicket.class, moveDoc.getPickTicket().getId());
+//			System.out.println("03::"+JavaTools.format(new Date(), JavaTools.dmy_hms));
 			workDocManager.pickShipByTask(task, detail.getQuantityBU(), moveDoc);
+//			System.out.println("04::"+JavaTools.format(new Date(), JavaTools.dmy_hms));
 			
-			String billCode= pickTicket.getBillType().getCode();
+			billCode= pickTicket.getBillType().getCode();
 			
 			if("PLAN_PICKING".equals(billCode) || 
 					"SPS_PICKING".equals(billCode) || 
 						"NORMOL_PICKING".equals(billCode) ||
 							"BL_PICKING".equals(billCode) ||
-							 "KB_PICKING".equals(billCode) ||//紧急补料出货单
-							 WmsMoveDocType.LOT_PICKING.equals(billCode)){
+							 "KB_PICKING".equals(billCode)//紧急补料出货单
+							 ){
 				/**时序件、看板件、计划件出库数据传MES*/
 				wmsDealInterfaceDataManager.outBoundToMes(detail,moveDoc,i,task,billCode);
+			}else if(WmsMoveDocType.LOT_PICKING.equals(billCode)){//批拣单后台任务执行
+				//下面统一任务执行数据...
 			}else{
 				/**出库数据传ERP*/
 				wmsDealInterfaceDataManager.outBoundToErp(detail,moveDoc,i,task,billCode);
@@ -235,10 +248,30 @@ public class DefaultWmsMasterBOLManager extends DefaultBaseManager implements
 			
 			boxTags.add(detail.getBoxTag());
 			containers.add(detail.getContainer());
-		}
+//			System.out.println("05::"+JavaTools.format(new Date(), JavaTools.dmy_hms));
+			
+			key = detail.getSubCode()+detail.getItemKey().getItem().getId();
+			if(itemSubQtys.containsKey(key)){
+				itemSubQty = itemSubQtys.get(key);
+			}else{
+				itemSubQty = 0D;
+			}
+			itemSubQty += detail.getQuantityBU();
+			itemSubQtys.put(key, itemSubQty);
+			detail.setItemSubQty(itemSubQtys.get(key));
+			commonDao.store(detail);
+		}itemSubQtys.clear();
+//		System.out.println("06::"+JavaTools.format(new Date(), JavaTools.dmy_hms));
 		workDocManager.upBolTagsShip(bol,boxTags,containers,wmsTaskAndStationIds);
+//		System.out.println("07::"+JavaTools.format(new Date(), JavaTools.dmy_hms));
 		bol.setShipTime(new Date());
 		commonDao.store(bol);
+//		System.out.println("08::"+JavaTools.format(new Date(), JavaTools.dmy_hms));
+		if(WmsMoveDocType.LOT_PICKING.equals(billCode)){//一种BOL只允许装同一类型的发货单,所以理论讲这里应该都相同
+			Task t = new Task(HeadType.W_DELIVER_MES, 
+			"wmsDealInterfaceDataManager"+MyUtils.spiltDot+"outBoundLotToMes", bol.getId());
+			commonDao.store(t);
+		}
 	}
 	
 	public void deleteWmsBOL(WmsBOL bol){

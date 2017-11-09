@@ -1496,18 +1496,12 @@ public class DefaultWmsWorkDocManager extends DefaultBaseManager implements WmsW
 	}
 	
 	public 	void upBolTagsNum(WmsBOL bol){
+//		System.out.println("001::"+JavaTools.format(new Date(), JavaTools.dmy_hms));
 		String hql = "SELECT count(distinct detail.boxTag) as boxTag FROM WmsBOLDetail detail WHERE detail.bol.id =:bolId ";
 		Long tags = (Long) commonDao.findByQueryUniqueResult(hql, "bolId",bol.getId());
 		bol.setBoxTagNums(Integer.parseInt(tags==null?"0":tags.toString()));
 		commonDao.store(bol);
-		//按照子单号+物料汇总求和=子单号下每种物料的配送总量
-		String sql = "UPDATE "+WmsTables.WMS_BOL_DETAIL+" bb set bb.ITEM_SUB_QTY = ("+
-				" SELECT sum(bb2.quantity_bu) as qt FROM "+WmsTables.WMS_BOL_DETAIL+" bb2"+
-				" LEFT JOIN "+WmsTables.WMS_BOL+" bol on bol.id = bb2.bol_id"+
-				" WHERE bol.id = ? AND bb2.sub_code = bb.sub_code AND bb2.item_key_id = bb.item_key_id"+
-				" GROUP BY bb2.item_key_id,bb2.sub_code"+
-				" )";
-		jdbcTemplate.update(sql, new Object[]{bol.getId()});
+//		System.out.println("002::"+JavaTools.format(new Date(), JavaTools.dmy_hms));
 	}
 	//更新标签状态为发运
 	public void upBolTagsShip(WmsBOL bol,List<String> boxTags,List<String> containers,List<Long> wmsTaskAndStationIds){

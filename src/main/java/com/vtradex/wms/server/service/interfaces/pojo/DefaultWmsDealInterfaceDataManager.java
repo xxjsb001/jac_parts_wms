@@ -40,6 +40,7 @@ import com.vtradex.wms.server.model.interfaces.WHead;
 import com.vtradex.wms.server.model.move.QisPlan;
 import com.vtradex.wms.server.model.move.WmsMoveDoc;
 import com.vtradex.wms.server.model.move.WmsMoveDocDetail;
+import com.vtradex.wms.server.model.move.WmsMoveDocType;
 import com.vtradex.wms.server.model.move.WmsTask;
 import com.vtradex.wms.server.model.organization.WmsBillType;
 import com.vtradex.wms.server.model.organization.WmsEnumType;
@@ -51,6 +52,7 @@ import com.vtradex.wms.server.model.organization.WmsStationAndItem;
 import com.vtradex.wms.server.model.receiving.WmsASN;
 import com.vtradex.wms.server.model.receiving.WmsASNDetail;
 import com.vtradex.wms.server.model.receiving.WmsSource;
+import com.vtradex.wms.server.model.shipping.WmsBOL;
 import com.vtradex.wms.server.model.shipping.WmsBOLDetail;
 import com.vtradex.wms.server.model.shipping.WmsMoveDocAndStation;
 import com.vtradex.wms.server.model.shipping.WmsPickTicket;
@@ -68,6 +70,7 @@ import com.vtradex.wms.server.utils.JavaTools;
 import com.vtradex.wms.server.utils.MyUtils;
 import com.vtradex.wms.server.utils.StringHelper;
 import com.vtradex.wms.server.utils.WmsTables;
+import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
 
 public class DefaultWmsDealInterfaceDataManager  
 				extends DefaultBaseManager implements WmsDealInterfaceDataManager{
@@ -2571,12 +2574,7 @@ public class DefaultWmsDealInterfaceDataManager
 		if(null == connection){//处理装车单第一条数据的时候获取连接,处理第二条数据的时候就不用再获取连接了
 			throw new BusinessException("数据库连接失败,请检查!!");
 		}
-		String insertSql = "insert into "+MiddleTableName.W_DELIVER_MES
-						+ "(ID,ODR_NO,MESODR_NO,ODR_TYPE,LINE_NO,DEMAND_DATE,DELIVER_DATE,"
-						+ "SUPPLY_NO,ITEM,ODR_QTY,DEL_QTY,FWARE,DWARE,PRODUCT_LINE,SHDK,SLR,"
-						+ "LICENSE,IS_JP,BATCH,STATION,APPLIANCE_TYPE,APPLIANCE_NAME,"
-						+ "APPLIANCE_AMOUNT,APPLIANCE_SUM,REMARK,STATUS) values"
-						+ "(wseq_W_DELIVER_MES.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String insertSql = insertMesSql();
 		PreparedStatement pre = null;
 		
 		WmsPickTicket pickTicket = commonDao.load(WmsPickTicket.class,moveDoc.getPickTicket().getId());
@@ -2588,7 +2586,6 @@ public class DefaultWmsDealInterfaceDataManager
 		Integer applianceAmount=0;
 		if(mas.size() > 0){
 			applianceType = mas.get(0).getType() == null ? null : mas.get(0).getType().toString();
-//			applianceName = mas.get(0).getn 暂时没有器具名称
 			applianceAmount = mas.get(0).getLoadage() == null ? 0 : mas.get(0).getLoadage();
 		}
 		String subCode = detail.getSubCode();//子单号
@@ -2601,40 +2598,44 @@ public class DefaultWmsDealInterfaceDataManager
 		try {
 			pre =connection.prepareStatement(insertSql);
 			
-			pre.setString(1, subCode);//子单号
-			pre.setString(2, getMayNullData1(mesCode));//MES料单号
-			pre.setString(3, billCode);//单据类型
-			pre.setInt(4, 10 * i);//行号
-			pre.setTimestamp(5, Timestamp.valueOf
-					(DateUtil.formatDateToStr
-							(pickTicket.getRequireArriveDate() == null 
-								? new Date() : pickTicket.getRequireArriveDate())));//生产日期
-//			pre.setDate(6, new java.sql.Date(new Date().getTime()));//发运日期
-			pre.setTimestamp(6, Timestamp.valueOf(DateUtil.formatDateToStr(new Date())));
-			pre.setString(7, getMayNullData1(supplyCode));//供应商
-			pre.setString(8, detail.getItemKey().getItem().getCode());//货品编码
-			pre.setDouble(9, moveDocDetail.getPlanQuantityBU());//订单数量
-			pre.setDouble(10, detail.getQuantityBU());//发运数量
-			pre.setString(11, moveDoc.getCompany().getCode());//货主
-			pre.setString(12, getMayNullData1(pickTicket.getReceiveHouse()));//目的仓库
-			pre.setString(13, productionLine);//生产线
-			pre.setString(14, getMayNullData1(pickTicket.getReceiveDoc()));//收货道口
-			pre.setString(15, moveDoc.getBlg().getName());//备料工
-			pre.setString(16, detail.getBol().getVehicleNo());//车牌号
-			if(null == pickTicketDetail.getIsJp()){//是否集配
-				pre.setString(17,null);
-			}else{
-				pre.setString(17,pickTicketDetail.getIsJp() == true ? "Y" : "N" );
-			}
-			pre.setString(18, pickTicket.getBatch());//批次
-			pre.setString(19, station);//工位
-			pre.setString(20, applianceType);//器具类型
-			pre.setString(21, applianceName);//器具名称
-			pre.setInt(22, applianceAmount);//满载量
-			pre.setInt(23, mas.size());//器具个数
-			pre.setString(24, remark);//备注
-			pre.setString(25, "1");//状态
-			pre.executeUpdate();
+			insertMes(pre, subCode, mesCode, billCode, i, pickTicket.getRequireArriveDate(), supplyCode, itemCode, 
+					moveDocDetail.getPlanQuantityBU(),detail.getQuantityBU(), moveDoc.getCompany().getCode(), 
+					pickTicket.getReceiveHouse(), productionLine, pickTicket.getReceiveDoc(), moveDoc.getBlg().getName(), 
+					detail.getBol().getVehicleNo(), pickTicketDetail.getIsJp(), pickTicket.getBatch(), station, applianceType, 
+					applianceName, applianceAmount, mas.size(), remark);
+//			pre.setString(1, subCode);//子单号
+//			pre.setString(2, getMayNullData1(mesCode));//MES料单号
+//			pre.setString(3, billCode);//单据类型
+//			pre.setInt(4, 10 * i);//行号
+//			pre.setTimestamp(5, Timestamp.valueOf
+//					(DateUtil.formatDateToStr
+//							(pickTicket.getRequireArriveDate() == null 
+//								? new Date() : pickTicket.getRequireArriveDate())));//生产日期
+//			pre.setTimestamp(6, Timestamp.valueOf(DateUtil.formatDateToStr(new Date())));
+//			pre.setString(7, getMayNullData1(supplyCode));//供应商
+//			pre.setString(8, detail.getItemKey().getItem().getCode());//货品编码
+//			pre.setDouble(9, moveDocDetail.getPlanQuantityBU());//订单数量
+//			pre.setDouble(10, detail.getQuantityBU());//发运数量
+//			pre.setString(11, moveDoc.getCompany().getCode());//货主
+//			pre.setString(12, getMayNullData1(pickTicket.getReceiveHouse()));//目的仓库
+//			pre.setString(13, productionLine);//生产线
+//			pre.setString(14, getMayNullData1(pickTicket.getReceiveDoc()));//收货道口
+//			pre.setString(15, moveDoc.getBlg().getName());//备料工
+//			pre.setString(16, detail.getBol().getVehicleNo());//车牌号
+//			if(null == pickTicketDetail.getIsJp()){//是否集配
+//				pre.setString(17,null);
+//			}else{
+//				pre.setString(17,pickTicketDetail.getIsJp() == true ? "Y" : "N" );
+//			}
+//			pre.setString(18, pickTicket.getBatch());//批次
+//			pre.setString(19, station);//工位
+//			pre.setString(20, applianceType);//器具类型
+//			pre.setString(21, applianceName);//器具名称
+//			pre.setInt(22, applianceAmount);//满载量
+//			pre.setInt(23, mas.size());//器具个数
+//			pre.setString(24, remark);//备注
+//			pre.setString(25, "1");//状态
+//			pre.executeUpdate();
 		
 			outBoundApplianceToMes( moveDocDetail, subCode, mesCode, billCode, 
 					connection, pre, supplyCode,  itemCode, detail.getQuantityBU(), 
@@ -2646,6 +2647,110 @@ public class DefaultWmsDealInterfaceDataManager
 			closeConnection(null, pre, connection);
 		}
 		logger.error("-----出库数据传MES结束-----");
+	}
+	private String insertMesSql(){
+		String insertSql = "INSERT INTO "+MiddleTableName.W_DELIVER_MES
+				+ "(ID,ODR_NO,MESODR_NO,ODR_TYPE,LINE_NO,DEMAND_DATE,DELIVER_DATE,"
+				+ "SUPPLY_NO,ITEM,ODR_QTY,DEL_QTY,FWARE,DWARE,PRODUCT_LINE,SHDK,SLR,"
+				+ "LICENSE,IS_JP,BATCH,STATION,APPLIANCE_TYPE,APPLIANCE_NAME,"
+				+ "APPLIANCE_AMOUNT,APPLIANCE_SUM,REMARK,STATUS) values"
+				+ "(wseq_W_DELIVER_MES.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		return insertSql;
+	}
+	private void insertMes(PreparedStatement pre,String subCode,String mesCode,String billCode,int i,Date requireArriveDate
+			,String supplyCode,String itemCode,Double planQuantityBU,Double shipQuantityBU,String companyCode,String receiveHouse,String productionLine
+			,String receiveDoc,String blgName,String vehicleNo,Boolean isJp,String batch,String station,String applianceType
+			,String applianceName,int applianceAmount,int size,String remark) throws SQLException{
+		pre.setString(1, subCode);//子单号
+		pre.setString(2, getMayNullData1(mesCode));//MES料单号
+		pre.setString(3, billCode);//单据类型
+		pre.setInt(4, 10 * i);//行号
+		pre.setTimestamp(5, Timestamp.valueOf
+				(DateUtil.formatDateToStr
+						(requireArriveDate == null ? new Date() : requireArriveDate)));//生产日期
+//		pre.setDate(6, new java.sql.Date(new Date().getTime()));//发运日期
+		pre.setTimestamp(6, Timestamp.valueOf(DateUtil.formatDateToStr(new Date())));
+		pre.setString(7, getMayNullData1(supplyCode));//供应商
+		pre.setString(8, itemCode);//货品编码
+		pre.setDouble(9, planQuantityBU);//订单数量
+		pre.setDouble(10, shipQuantityBU);//发运数量
+		pre.setString(11, companyCode);//货主
+		pre.setString(12, getMayNullData1(receiveHouse));//目的仓库
+		pre.setString(13, productionLine);//生产线
+		pre.setString(14, getMayNullData1(receiveDoc));//收货道口
+		pre.setString(15, blgName);//备料工
+		pre.setString(16, vehicleNo);//车牌号
+		if(null == isJp){//是否集配
+			pre.setString(17,null);
+		}else{
+			pre.setString(17,isJp == true ? "Y" : "N" );
+		}
+		pre.setString(18, batch);//批次
+		pre.setString(19, station);//工位
+		pre.setString(20, applianceType);//器具类型
+		pre.setString(21, applianceName);//器具名称
+		pre.setInt(22, applianceAmount);//满载量
+		pre.setInt(23, size);//器具个数
+		pre.setString(24, remark);//备注
+		pre.setString(25, "1");//状态
+		pre.executeUpdate();
+	}
+	public void outBoundLotToMes(Long id){
+		WmsBOL bol = commonDao.load(WmsBOL.class, id);
+		if(bol!=null){
+			Connection connection = null;
+			PreparedStatement pre = null;
+			try {
+				connection = getConnection();
+				if(null == connection){//处理装车单第一条数据的时候获取连接,处理第二条数据的时候就不用再获取连接了
+					throw new BusinessException("数据库连接失败,请检查!!");
+				}
+				String insertSql = insertMesSql();
+				String hqlPP = "FROM WmsPickTicketDetail pp WHERE pp.lotPickCode =:lotPickCode" +
+						" AND pp.item.code =:item AND pp.supplier.code =:supplier";
+				//根据当前发运明细数据,通过获取发货单号+物料编码+供应商编码,找到原始的发货单信息
+				String hql = "FROM WmsBOLDetail bd WHERE bd.bol.id =:bolId ";
+				List<WmsBOLDetail> details = commonDao.findByQuery(hql, "bolId", bol.getId());
+				int i = 1; //数据条数标识
+				String supplyCode = "",itemCode="";
+				Double avaliableQty = 0D,ppQty = 0D,shipQuantityBU = 0D;
+				for(WmsBOLDetail detail : details){
+					avaliableQty = detail.getQuantityBU();
+					supplyCode = detail.getItemKey().getLotInfo().getSupplier().getCode();
+					itemCode = detail.getItemKey().getItem().getCode();
+					List<WmsPickTicketDetail> pps = commonDao.findByQuery(hqlPP,new String[]{"lotPickCode","item","supplier"},
+							new Object[]{bol.getPickCode(),itemCode,supplyCode});
+
+					pre =connection.prepareStatement(insertSql);
+					for(WmsPickTicketDetail pp : pps){
+						ppQty = pp.getExpectedQuantityBU();
+						shipQuantityBU = avaliableQty>ppQty?ppQty:avaliableQty;
+						insertMes(pre, detail.getSubCode(), pp.getPickTicket().getRelatedBill1(), WmsMoveDocType.LOT_PICKING, i, 
+								detail.getRequireArriveDate(), supplyCode, itemCode, ppQty, shipQuantityBU, 
+								pp.getPickTicket().getCompany().getCode(), pp.getPickTicket().getReceiveHouse(), 
+								pp.getProductionLine(), pp.getPickTicket().getReceiveDoc(), "SL011", 
+								detail.getBol().getVehicleNo(), pp.getIsJp(), pp.getPickTicket().getBatch(),  
+								pp.getStation(),"散件","散件", 2147483647, 1, pp.getRemark());
+						pp.ship(shipQuantityBU);
+						commonDao.store(pp);
+						avaliableQty -= shipQuantityBU;
+						if(avaliableQty<=0){
+							break;
+						}
+					}
+					i++;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}catch(Exception e){
+				e.printStackTrace();
+				throw new BusinessException(e.getMessage());
+			}finally{
+				closeConnection(null, pre, connection);
+			}
+		}else{
+			System.out.println("WmsBOL is null id = "+ id);
+		}
 	}
 	List<WmsMoveDocAndStation> getmoveDocAndStation(Long moveDocDetailId){
 		String hql = "from WmsMoveDocAndStation s where s.moveDocDetail.id=:id";

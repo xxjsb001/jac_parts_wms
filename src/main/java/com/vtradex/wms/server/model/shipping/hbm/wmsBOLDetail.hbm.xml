@@ -40,5 +40,6 @@
 		<property name="requireArriveDate" type="timestamp" column="REQUIRE_ARRIVEDATE"/>
 		<property name="boxTag" type="string" column="BOX_TAG" length="100"/>
 		<property name="wmsTaskAndStationId" type="long" column="WMSTASKANDSTATION_ID"/>
+		<property name="itemSubQty" type="double" column="ITEM_SUB_QTY" not-null="false"/>
 	</class>
 </hibernate-mapping>

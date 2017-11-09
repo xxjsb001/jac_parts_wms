@@ -68,7 +68,17 @@ public class WmsBOLDetail extends Entity {
 	private String boxTag;
 	/**WmsTaskAndStation*/
 	private Long wmsTaskAndStationId;
+	/**相同子单号下相同物料的配送总量*/
+	private Double itemSubQty = 0D;
 	
+	public Double getItemSubQty() {
+		return itemSubQty;
+	}
+
+	public void setItemSubQty(Double itemSubQty) {
+		this.itemSubQty = itemSubQty;
+	}
+
 	public Long getWmsTaskAndStationId() {
 		return wmsTaskAndStationId;
 	}

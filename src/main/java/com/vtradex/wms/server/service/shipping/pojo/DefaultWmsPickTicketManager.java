@@ -955,7 +955,7 @@ public class DefaultWmsPickTicketManager extends DefaultBaseManager implements W
 		String[] xp = x.split(MyUtils.spilt1);//货主+单据类型+收货道口+计划日期+产线+工位
 		Date requireArriveDate = JavaTools.stringFDate(xp[3], JavaTools.dmy_hms);
 		WmsPickTicket pickTicket = new WmsPickTicket(WmsWarehouseHolder.getWmsWarehouse(),bType.getCompany(), bType, 
-				code, "", WmsPickTicketStatus.OPEN, requireArriveDate, quantity, 0d, 0d, 0d,
+				code, code, WmsPickTicketStatus.OPEN, requireArriveDate, quantity, 0d, 0d, 0d,
 				"XG0202", xp[2],WmsSource.INTERFACE,new Date(),"XG02Z2",batch);
 		pickTicket.setProductionLine(xp[4]);
 		pickTicket.setStation(xp[5]);
