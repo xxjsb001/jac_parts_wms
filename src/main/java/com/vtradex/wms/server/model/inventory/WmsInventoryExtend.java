@@ -137,8 +137,8 @@ public class WmsInventoryExtend extends Entity {
 		return BeanUtils.getFormat(this.inventory.getId(), this.pallet, this.carton, this.serialNo);
 	}
 	public static void main(String[] args) throws ParseException {
-		Long id = 317366L;
-		String pallet = "-";//221647_1,221647_2,221647_3,221647_4,221647_5,221647_6
+		Long id = 348445L;
+		String pallet = "226696_1";//221647_1,221647_2,221647_3,221647_4,221647_5,221647_6
 		//BaseStatus.NULLVALUE
 		String[] pallets = pallet.split(",");
 		for(String p : pallets){

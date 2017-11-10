@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="importItemClass2Page">
+    <main>
+        <process id="wmsPickWorkersProcess">
+            <formCommit id="import" title="import" process="wmsPickWorkersProcess.import" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="importFile" className="file">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsItemManager" methodName="importItemClass2" parameter="importFile"/>
+                </actions>
+                <forwards/>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -15,6 +15,7 @@ pick.requireArriveDate,
 moveDoc.blg.name,
 moveDoc.station,
 moveDoc.classType,
+moveDoc.class4,
 moveDoc.planQuantityBU,
 moveDoc.allocatedQuantityBU,
 moveDoc.movedQuantityBU,
@@ -53,7 +54,8 @@ moveDoc.updateInfo.updateTime
             <column id="pick.requireArriveDate" title="pick.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
             <column id="moveDoc.blg.name" title="pickWorker.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.station" title="pickTicketDetail.station" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
-            <column id="moveDoc.classType" title="moveDoc.classType" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.classType" title="item.class2" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.class4" title="item.class4" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.planQuantityBU" title="moveDoc.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
             <column id="moveDoc.allocatedQuantityBU" title="moveDoc.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
             <column id="moveDoc.movedQuantityBU" title="moveDoc.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>

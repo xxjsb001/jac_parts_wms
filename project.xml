@@ -847,16 +847,6 @@
                 <war.bundle>true</war.bundle>
             </properties>
         </dependency>
-        <dependency>
-            <groupId>commons-email</groupId>
-            <artifactId>mail</artifactId>
-            <jar>activation.jar</jar>
-            <type>jar</type>
-            <url>http://jakarta.apache.org/commons/logging/</url>
-            <properties>
-                <war.bundle>true</war.bundle>
-            </properties>
-        </dependency>
          <!-- jcifs -->
 		<dependency>
             <groupId>jcifs</groupId>

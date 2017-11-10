@@ -157,5 +157,6 @@
 	    <property name="isPrint" type="yes_no" column="IS_PRINT"/>
 	    <property name="printDate" type="timestamp" column="PRINT_DATE"/>
 	    <property name="printUser" type="string" column="PRINT_USER"/>
+	    <property name="class4" type="string" column="class4" length="50"/>
 	</class>
 </hibernate-mapping>

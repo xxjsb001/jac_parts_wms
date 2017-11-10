@@ -629,7 +629,8 @@ public class DefaultWmsMoveDocManager extends DefaultBaseManager implements
 			for(Map<String,Object> detailMap : moveList){
 				Long detailId = (Long)detailMap.get("明细序号");
 				Double quantityBU = Double.valueOf(detailMap.get("数量").toString());
-				String classType = (String)detailMap.get("分类");
+				String classType = (String)detailMap.get("拣货分类");//物料属性
+				String class4 = (String)detailMap.get("ABC分类");//物料优先级
 				WmsPickTicketDetail pickTicketDetail = load(WmsPickTicketDetail.class,detailId);
 				String hql = "FROM WmsBlgItem wbi WHERE 1=1 AND wbi.item.id =:itemId";//AND wbi.billType.id = :billTypeId 
 				//库存调整出库和退供应商出库单据类型采用B,其他采用A
@@ -653,6 +654,9 @@ public class DefaultWmsMoveDocManager extends DefaultBaseManager implements
 				hql = "FROM WmsMoveDoc doc WHERE doc.pickTicket.id =:pickTicketId AND doc.blg.id =:blgId ";
 				if(!"SPS_PICKING".equals(pickTicket.getBillType().getCode())){
 					hql += " AND doc.station = '"+station+"'";
+					hql += " AND doc.classType = '"+classType+"'";
+				}else{
+					classType = MyUtils.SPS_APPLIANCE;
 				}
 				WmsMoveDoc moveDoc = (WmsMoveDoc) commonDao.findByQueryUniqueResult(hql, new String[]{"pickTicketId","blgId"}, 
 						new Object[]{pickTicket.getId(),wbi.getBlg().getId()});
@@ -662,6 +666,7 @@ public class DefaultWmsMoveDocManager extends DefaultBaseManager implements
 					moveDoc.setCompany(pickTicket.getCompany());
 					moveDoc.setCarrier(pickTicket.getCarrier());
 					moveDoc.setClassType(classType);
+					moveDoc.setClass4(class4);
 					moveDoc.setDock(pickTicket.getDock());
 //					if(WmsMoveDocType.LOT_PICKING.equals(pickTicket.getBillType().getCode())){
 //						moveDoc.setType(WmsMoveDocType.LOT_PICKING);

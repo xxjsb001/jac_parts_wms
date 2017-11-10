@@ -23,8 +23,6 @@ import com.vtradex.wms.server.model.warehouse.WmsDock;
 import com.vtradex.wms.server.model.warehouse.WmsLocation;
 import com.vtradex.wms.server.model.warehouse.WmsWarehouse;
 import com.vtradex.wms.server.model.warehouse.WmsWorker;
-import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
-
 /**
  * 移位单
  * 
@@ -171,8 +169,10 @@ public class WmsMoveDoc extends VersionalEntity {
 	/** 行号 */
 	private Integer lineNo;
 
-	/** 分类**/
+	/** 物料属性-分类**/
 	private String classType;
+	/** 物料优先级-ABC分类**/
+	private String class4;
 
 	/** 是否虚拟移位计划 */
 	private Boolean beVirtualMove = Boolean.FALSE;
@@ -237,6 +237,13 @@ public class WmsMoveDoc extends VersionalEntity {
 	}
 
 
+	public String getClass4() {
+		return class4;
+	}
+
+	public void setClass4(String class4) {
+		this.class4 = class4;
+	}
 
 	public void setPrintUser(String printUser) {
 		this.printUser = printUser;

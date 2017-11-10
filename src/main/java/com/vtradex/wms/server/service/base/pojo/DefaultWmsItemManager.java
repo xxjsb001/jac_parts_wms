@@ -1,20 +1,29 @@
 package com.vtradex.wms.server.service.base.pojo;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+
+import jxl.Sheet;
+import jxl.Workbook;
 
 import com.vtradex.thorn.client.ui.page.IPage;
 import com.vtradex.thorn.server.exception.BusinessException;
 import com.vtradex.thorn.server.model.EntityFactory;
 import com.vtradex.thorn.server.service.WorkflowManager;
 import com.vtradex.thorn.server.service.pojo.DefaultBaseManager;
+import com.vtradex.thorn.server.util.LocalizedMessage;
 import com.vtradex.wms.server.model.base.LotInfo;
 import com.vtradex.wms.server.model.inventory.WmsItemKey;
 import com.vtradex.wms.server.model.inventory.WmsMisInventory;
 import com.vtradex.wms.server.model.organization.WmsItem;
 import com.vtradex.wms.server.model.organization.WmsLotRule;
+import com.vtradex.wms.server.model.organization.WmsOrganization;
 import com.vtradex.wms.server.model.organization.WmsPackageChangeLog;
 import com.vtradex.wms.server.model.organization.WmsPackageUnit;
 import com.vtradex.wms.server.model.receiving.WmsASNDetail;
@@ -22,6 +31,7 @@ import com.vtradex.wms.server.model.warehouse.WmsWarehouse;
 import com.vtradex.wms.server.service.base.WmsItemManager;
 import com.vtradex.wms.server.service.rule.WmsRuleManager;
 import com.vtradex.wms.server.service.sequence.WmsBussinessCodeManager;
+import com.vtradex.wms.server.utils.MyUtils;
 
 @SuppressWarnings("unchecked")
 public class DefaultWmsItemManager extends DefaultBaseManager implements WmsItemManager {
@@ -326,6 +336,91 @@ public class DefaultWmsItemManager extends DefaultBaseManager implements WmsItem
 			mis.setItemName(itemMap.get(mis.getItemCode()));
 			commonDao.store(mis);
 //			System.out.println(obj[0]+","+obj[1]+","+obj[2]+","+obj[3]+","+obj[4]+","+obj[5]);
+		}
+	}
+	
+	public void importItemClass2(File file){
+		if (file == null) {
+			throw new BusinessException("file_not_found");
+		}
+		String name = file.getName();
+		if (!name.substring(name.lastIndexOf(".") + 1,
+				name.lastIndexOf(".") + 4).equals("xls")) {
+			throw new BusinessException("this.file.error");
+		}
+		Sheet sheet = null;
+//		Sheet[] sheets = null;
+		try {
+			Workbook wb = Workbook.getWorkbook(new FileInputStream(file));
+			sheet = wb.getSheet(0);
+//			sheets = wb.getSheets();// 获取所有的sheet  
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		Map<String,WmsOrganization> companys = new HashMap<String, WmsOrganization>();
+		WmsOrganization company = null;
+		String hqlC = "FROM WmsOrganization company WHERE (company.name =:name OR company.neiBuName =:name OR company.code =:name)" +
+					" AND company.beCompany = true"+
+					" AND company.beVirtual =false AND company.status = 'ENABLED'";
+		
+		Map<String,WmsItem> items = new HashMap<String, WmsItem>();
+		WmsItem item = null;
+		String hqlI = "FROM WmsItem item "+
+				 " WHERE item.code =:code"+
+				 " AND item.status = 'ENABLED'"+
+				 " AND item.company.id =:company";
+		
+		Boolean iserror = false;
+		String errorMes = "";
+		
+		int rowNum = sheet.getRows(); 
+		for (int i = 1; i < rowNum; i++) {//含头信息
+			String companyName = sheet.getCell(0,i).getContents();//货主名称/内部名称/编码	
+			String itemCode = sheet.getCell(1,i).getContents();//物料编码
+			String class2 = sheet.getCell(2,i).getContents();//物料属性/拣选分类
+//			System.out.println(companyName+","+itemCode+","+class2);
+			
+			if(companys.containsKey(companyName)){
+				company = companys.get(companyName);
+			}else{
+				company = (WmsOrganization) commonDao.findByQueryUniqueResult(hqlC, "name", companyName.trim());
+			}
+			if(company==null){
+				iserror = true;
+				errorMes = "失败!货主信息为空:"+companyName;
+				break;
+			}else{
+				companys.put(companyName, company);
+			}
+			
+			if(items.containsKey(itemCode)){
+				item = items.get(itemCode);
+			}else{
+				item = (WmsItem) commonDao.findByQueryUniqueResult(hqlI, new String[]{"code","company"}, 
+						new Object[]{itemCode.trim(),company.getId()});
+			}
+			if(item==null){
+				iserror = true;
+				errorMes = "失败!货品信息为空:"+itemCode;
+				break;
+			}else{
+				items.put(itemCode, item);
+			}
+			
+			if(StringUtils.isEmpty(class2)){
+				iserror = true;
+				errorMes = "失败!物料属性为空:"+itemCode;
+				break;
+			}
+			
+			item.setClass2(class2);
+			commonDao.store(item);
+		}
+		if(iserror){
+			LocalizedMessage.setMessage(MyUtils.font2(errorMes));
+		}else{
+			errorMes = "成功更新条数:"+rowNum;
+			LocalizedMessage.setMessage(MyUtils.fontByBlue(errorMes));
 		}
 	}
 }

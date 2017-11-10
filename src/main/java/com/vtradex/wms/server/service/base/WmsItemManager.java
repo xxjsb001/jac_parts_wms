@@ -1,5 +1,6 @@
 package com.vtradex.wms.server.service.base;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vtradex.thorn.server.service.BaseManager;
 import com.vtradex.wms.server.model.base.LotInfo;
-import com.vtradex.wms.server.model.inventory.WmsInventoryExtend;
 import com.vtradex.wms.server.model.inventory.WmsItemKey;
 import com.vtradex.wms.server.model.organization.WmsItem;
 import com.vtradex.wms.server.model.organization.WmsPackageUnit;
@@ -89,4 +89,6 @@ public interface WmsItemManager extends BaseManager {
 	/**报缺库存物料**/
 	@Transactional
 	void sysInventoryMissDo(List<Object[]> doObj,Map<String,String> itemMap);
+	/**物料拣选分类维护**/
+	void importItemClass2(File file);
 }

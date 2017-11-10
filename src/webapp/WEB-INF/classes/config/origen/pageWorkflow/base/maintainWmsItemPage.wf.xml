@@ -25,6 +25,11 @@
                 <enableExpression/>
             </tablePopup>-->
         </process>
+        <process id="wmsPickWorkersProcess">
+        	 <tablePopup id="import" title="import" process="wmsPickWorkersProcess.import" enableType="none" containId="false" pageId="importItemClass2Page">
+	                <enableExpression/>
+	        </tablePopup>
+        </process>
     </main>
     <detail/>
 </page>

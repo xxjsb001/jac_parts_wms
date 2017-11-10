@@ -24,6 +24,8 @@ ptd.productionLine,
 pick.requireArriveDate,
 ptd.shipLotInfo.supplier,
 ptd.shipLotInfo.extendPropC20,
+md.classType,
+md.class4,
 was.isFinished,
 was.seq,
 was.endseq,
@@ -60,6 +62,8 @@ where 1=1 order by was.id desc]]></datasource>
             <column id="pick.requireArriveDate" title="pick.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
             <column id="ptd.shipLotInfo.supplier" title="inventory.itemKey.lotInfo.supplier.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="ptd.shipLotInfo.extendPropC20" title="inventory.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="md.classType" title="item.class2" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="md.class4" title="item.class4" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="was.isFinished" title="was.isFinished" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
         	<column id="was.seq" title="apl.seq" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
 	       	<column id="was.endseq" title="apl.endseq" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>

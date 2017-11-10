@@ -8,6 +8,7 @@ import java.util.Map;
 import com.vtradex.wms.server.model.move.WmsMoveDocStatus;
 import com.vtradex.wms.server.model.move.WmsMoveDocType;
 import com.vtradex.wms.server.telnet.shell.JacPageableBaseShell;
+import com.vtradex.wms.server.utils.MyUtils;
 import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
 import com.vtradex.wms.server.web.filter.WmsWorkerHolder;
 //RF拣货
@@ -19,7 +20,7 @@ public class WmsPickMoveDocShell extends JacPageableBaseShell{
 
 	@Override
 	public String[] getTableHeader() {
-		return new String[]{"序号", "拣货单号","需求时间","原始单据类型"};
+		return new String[]{"序号", "拣货单号","需求时间","属性","产线"};
 	}
 
 	@Override
@@ -30,14 +31,17 @@ public class WmsPickMoveDocShell extends JacPageableBaseShell{
 //				" /~类型: AND doc.type in ({类型})~/" +
 //				" /~备料工: AND doc.blg.id = {备料工}~/" +
 //				" /~仓库: AND doc.warehouse.id = {仓库}~/";
-		String hql = " SELECT DISTINCT mds.moveDocDetail.moveDoc.id,mds.moveDocDetail.moveDoc.code" +
-				",to_char(mds.moveDocDetail.moveDoc.pickTicket.requireArriveDate,'yyMMdd hh24mi'),mds.moveDocDetail.moveDoc.originalBillType.name" +
+		String hql = " SELECT DISTINCT mds.moveDocDetail.moveDoc.id" +
+				",substr(mds.moveDocDetail.moveDoc.code,7,length(mds.moveDocDetail.moveDoc.code)) as code" +
+				",to_char(mds.moveDocDetail.moveDoc.pickTicket.requireArriveDate,'yyMMdd') as requireArriveDate" +// hh24mi
+				",mds.moveDocDetail.moveDoc.classType" +//originalBillType.name
+				",mds.moveDocDetail.productionLine" +
 				" FROM WmsMoveDocAndStation mds WHERE 1=1 "+ 
 				" /~状态: AND mds.moveDocDetail.moveDoc.status in  ({状态})~/" +
 				" /~类型: AND mds.moveDocDetail.moveDoc.type in ({类型})~/" +
 				" /~备料工: AND mds.moveDocDetail.moveDoc.blg.id = {备料工}~/" +
 				" /~仓库: AND mds.moveDocDetail.moveDoc.warehouse.id = {仓库}~/"+
-				" ORDER BY to_char(mds.moveDocDetail.moveDoc.pickTicket.requireArriveDate,'yyMMdd hh24mi')";
+				" ORDER BY to_char(mds.moveDocDetail.moveDoc.pickTicket.requireArriveDate,'yyMMdd'),mds.moveDocDetail.moveDoc.classType,mds.moveDocDetail.productionLine";// hh24mi
 		return hql;
 	}
 
@@ -46,7 +50,7 @@ public class WmsPickMoveDocShell extends JacPageableBaseShell{
 		Object[] rowData = (Object[])get(ROW_DATA_KEY);
 		if(rowData != null){
 			this.put(MOVEDOC_ID, rowData[0]);
-			if("时序件出库单".equals(rowData[3])){
+			if(MyUtils.SPS_APPLIANCE.equals(rowData[3])){//"时序件出库单"
 				return WmsPickContainerCodeShell.PAGE_ID;
 			}
 			return WmsRfMoveDocDetailShell.PAGE_ID;
