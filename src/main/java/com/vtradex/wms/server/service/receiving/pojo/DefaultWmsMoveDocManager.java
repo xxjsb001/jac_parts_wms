@@ -651,6 +651,9 @@ public class DefaultWmsMoveDocManager extends DefaultBaseManager implements
 					station = pickTicketDetail.getStation();
 				}
 				
+				if(StringUtils.isEmpty(classType)){
+					classType = BaseStatus.NULLVALUE;
+				}
 				hql = "FROM WmsMoveDoc doc WHERE doc.pickTicket.id =:pickTicketId AND doc.blg.id =:blgId ";
 				if(!"SPS_PICKING".equals(pickTicket.getBillType().getCode())){
 					hql += " AND doc.station = '"+station+"'";
