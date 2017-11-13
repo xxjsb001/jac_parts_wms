@@ -956,7 +956,7 @@ public class DefaultWmsPickTicketManager extends DefaultBaseManager implements W
 		Date requireArriveDate = JavaTools.stringFDate(xp[3], JavaTools.dmy_hms);
 		WmsPickTicket pickTicket = new WmsPickTicket(WmsWarehouseHolder.getWmsWarehouse(),bType.getCompany(), bType, 
 				code, code, WmsPickTicketStatus.OPEN, requireArriveDate, quantity, 0d, 0d, 0d,
-				"XG0202", xp[2],WmsSource.INTERFACE,new Date(),"XG02Z2",batch);
+				"XG0202", xp[2],WmsSource.INTERFACE,new Date(),xp[4],batch);
 		pickTicket.setProductionLine(xp[4]);
 		pickTicket.setStation(xp[5]);
 		commonDao.store(pickTicket);
