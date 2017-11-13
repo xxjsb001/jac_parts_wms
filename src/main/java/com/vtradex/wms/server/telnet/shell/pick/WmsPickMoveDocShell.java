@@ -20,7 +20,7 @@ public class WmsPickMoveDocShell extends JacPageableBaseShell{
 
 	@Override
 	public String[] getTableHeader() {
-		return new String[]{"序号", "拣货单号","需求时间","属性","产线"};
+		return new String[]{"序号", "拣货单号","需求时间","产线","属性"};
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class WmsPickMoveDocShell extends JacPageableBaseShell{
 		String hql = " SELECT DISTINCT mds.moveDocDetail.moveDoc.id" +
 				",substr(mds.moveDocDetail.moveDoc.code,7,length(mds.moveDocDetail.moveDoc.code)) as code" +
 				",to_char(mds.moveDocDetail.moveDoc.pickTicket.requireArriveDate,'yyMMdd') as requireArriveDate" +// hh24mi
-				",mds.moveDocDetail.moveDoc.classType" +//originalBillType.name
 				",mds.moveDocDetail.productionLine" +
+				",mds.moveDocDetail.moveDoc.classType" +//originalBillType.name
 				" FROM WmsMoveDocAndStation mds WHERE 1=1 "+ 
 				" /~状态: AND mds.moveDocDetail.moveDoc.status in  ({状态})~/" +
 				" /~类型: AND mds.moveDocDetail.moveDoc.type in ({类型})~/" +
@@ -50,7 +50,7 @@ public class WmsPickMoveDocShell extends JacPageableBaseShell{
 		Object[] rowData = (Object[])get(ROW_DATA_KEY);
 		if(rowData != null){
 			this.put(MOVEDOC_ID, rowData[0]);
-			if(MyUtils.SPS_APPLIANCE.equals(rowData[3])){//"时序件出库单"
+			if(MyUtils.SPS_APPLIANCE.equals(rowData[4])){//"时序件出库单"
 				return WmsPickContainerCodeShell.PAGE_ID;
 			}
 			return WmsRfMoveDocDetailShell.PAGE_ID;
