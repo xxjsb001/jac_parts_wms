@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <pages>
-    <maintainPage id="maintainWmsMasterBOLPage" title="maintainWmsMasterBOLPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.shipping.WmsBOL">
+    <maintainPage id="maintainWmsMasterBOLPage" title="maintainWmsMasterBOLPage" autoQuery="false" entityClass="com.vtradex.wms.server.model.shipping.WmsBOL">
         <workflow/>
         <datasource><![CDATA[SELECT bol.id,
 bol.code,
 bol.status,
 bol.pickCode,
 bol.requireArriveDate,
-bol.carrier.name,
+bol.productionLine,
 bol.billTypeName,
 bol.vehicle.license,
 bol.quantity,
@@ -39,7 +39,7 @@ bol.description
             <column id="bol.status" title="bol.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsBOLStatus"/>
             <column id="bol.pickCode" title="pickTicket.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="bol.requireArriveDate" title="pick.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
-            <column id="bol.carrier.name" title="bol.carrier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="bol.productionLine" title="bolDetail.productionLine" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="bol.billTypeName" title="bol.billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
             <column id="bol.vehicle.license" title="bol.vehicle.license" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
             <column id="bol.quantity" title="bol.quantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>

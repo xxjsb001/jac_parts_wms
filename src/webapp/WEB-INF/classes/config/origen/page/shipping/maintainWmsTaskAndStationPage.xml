@@ -7,6 +7,7 @@
 moveDoc.code,
 moveDoc.relatedBill1,
 moveDoc.originalBillType.name,
+moveDoc.productionLine,
 station.boxTag,
 wts.container,
 moveDocDetail.item.code,
@@ -14,17 +15,22 @@ moveDocDetail.item.name,
 wts.pickQuantityBu,
 station.isFinished,
 wts.isJoinBOL,
-wts.shipStatus
+wts.shipStatus,
+pick.requireArriveDate,
+moveDocDetail.shipLotInfo.supplier,
+moveDocDetail.shipLotInfo.extendPropC20
  from WmsTaskAndStation wts
  left join wts.station station  
 left join station.moveDocDetail moveDocDetail
 left join moveDocDetail.moveDoc moveDoc
+left join moveDoc.pickTicket pick 
 where 1=1 order by wts.id desc]]></datasource>
         <columns>
             <column id="wts.id" title="wts.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.code" title="moveDoc.code" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.relatedBill1" title="pickTicket.relatedBill1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.originalBillType.name" title="moveDoc.originalBillType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.productionLine" title="bolDetail.productionLine" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="station.boxTag" title="was.boxTag" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="wts.container" title="wts.container" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDocDetail.item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
@@ -33,6 +39,9 @@ where 1=1 order by wts.id desc]]></datasource>
         	<column id="station.isFinished" title="was.isFinished" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" width="65"/>
         	<column id="wts.isJoinBOL" title="boxType.isBol" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" width="75"/>
         	<column id="wts.shipStatus" title="was.shipStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocShipStatus"/>
+        	<column id="pick.requireArriveDate" title="pick.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="moveDocDetail.shipLotInfo.supplier" title="inventory.itemKey.lotInfo.supplier.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDocDetail.shipLotInfo.extendPropC20" title="inventory.itemKey.lotInfo.supplier.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
         </columns>
     </maintainPage>
 </pages>

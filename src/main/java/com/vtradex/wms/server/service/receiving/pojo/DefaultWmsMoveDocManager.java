@@ -697,6 +697,7 @@ public class DefaultWmsMoveDocManager extends DefaultBaseManager implements
 					moveDoc.setIntendShipDate(pickTicket.getIntendShipDate());
 					moveDoc.setStation(station);
 					moveDoc.setRelatedBill1(pickTicket.getRelatedBill1());
+					moveDoc.setProductionLine(pickTicketDetail.getProductionLine());//增加产线
 					commonDao.store(moveDoc);
 					
 					this.workflowManager.doWorkflow(moveDoc, "wmsMoveDocProcess.new");

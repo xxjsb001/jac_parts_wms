@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <pages>
-    <maintainPage id="maintainWmsMoveDocPickTicketPage" title="maintainWmsMoveDocPickTicketPage" autoQuery="true" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc">
+    <maintainPage id="maintainWmsMoveDocPickTicketPage" title="maintainWmsMoveDocPickTicketPage" autoQuery="false" entityClass="com.vtradex.wms.server.model.move.WmsMoveDoc">
         <workflow/>
         <datasource><![CDATA[SELECT moveDoc.id,
 moveDoc.code,
@@ -13,6 +13,7 @@ moveDoc.status,
 moveDoc.shipStatus,
 pick.requireArriveDate,
 moveDoc.blg.name,
+moveDoc.productionLine,
 moveDoc.station,
 moveDoc.classType,
 moveDoc.class4,
@@ -53,6 +54,7 @@ moveDoc.updateInfo.updateTime
             <column id="moveDoc.shipStatus" title="moveDoc.shipStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocShipStatus"/>
             <column id="pick.requireArriveDate" title="pick.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
             <column id="moveDoc.blg.name" title="pickWorker.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.productionLine" title="bolDetail.productionLine" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.station" title="pickTicketDetail.station" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.classType" title="item.class2" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.class4" title="item.class4" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>

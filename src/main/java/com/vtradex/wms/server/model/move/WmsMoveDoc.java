@@ -214,6 +214,8 @@ public class WmsMoveDoc extends VersionalEntity {
 	
 	/**打印人*/
 	private String printUser;
+	/**生产线*/
+	private String productionLine;
 	
 	public WmsMoveDoc(WmsWarehouse warehouse, WmsOrganization company,
 		WmsBillType billType, String code,String title) {
@@ -231,11 +233,16 @@ public class WmsMoveDoc extends VersionalEntity {
 	}
 	
 	
-	
+	public String getProductionLine() {
+		return productionLine;
+	}
+	public void setProductionLine(String productionLine) {
+		this.productionLine = productionLine;
+	}
+
 	public String getPrintUser() {
 		return printUser;
 	}
-
 
 	public String getClass4() {
 		return class4;

@@ -78,7 +78,17 @@ public class WmsBOL extends Entity {
 	private Date requireArriveDate;
 	/**器具标签总数*/
 	private Integer boxTagNums = 0;
+	/**生产线*/
+	private String productionLine;
 	
+	public String getProductionLine() {
+		return productionLine;
+	}
+
+	public void setProductionLine(String productionLine) {
+		this.productionLine = productionLine;
+	}
+
 	public Date getRequireArriveDate() {
 		return requireArriveDate;
 	}

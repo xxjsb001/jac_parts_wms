@@ -49,6 +49,7 @@
 	    <property name="pickCode" type="string" column="PICK_CODE" length="50"/>
 	    <property name="requireArriveDate" column="REQUIRE_ARRIVE_DATE" type="timestamp"/>
 	    <property name="boxTagNums" type="integer" column="BOXTAG_NUMS"/>
+	    <property name="productionLine" type="string" column="PRODUCTION_LINE" length="50"/>
 	    
 		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
 			<property name="creatorId" type="long" column="CREATOR_ID"/>

@@ -158,5 +158,6 @@
 	    <property name="printDate" type="timestamp" column="PRINT_DATE"/>
 	    <property name="printUser" type="string" column="PRINT_USER"/>
 	    <property name="class4" type="string" column="class4" length="50"/>
+	    <property name="productionLine" type="string" length="100" column="PRODUCTION_LINE"/>
 	</class>
 </hibernate-mapping>
