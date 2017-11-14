@@ -414,6 +414,7 @@ public class DefaultWmsMasterBOLManager extends DefaultBaseManager implements
 					bol.addDetail(bolDetail);
 		            this.commonDao.store(bolDetail);
 		            bol.refreshQuantity();
+		            bol.setProductionLine(moveDoc.getProductionLine());
 		            commonDao.store(bol);
 		            
 		            WmsBolDetailExtend bolExt = new WmsBolDetailExtend(bolDetail, moveDoc.getRelatedBill1(), pickTicket.getOdrSu(),wmds.getFromStorage(), 
