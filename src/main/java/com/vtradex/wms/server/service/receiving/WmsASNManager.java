@@ -268,4 +268,8 @@ public interface WmsASNManager extends BaseManager {
 	 * @author fs
 	 */
 	Map printPalltDirec(WmsASN asn);
+	
+	/***扫码ASN打印上架单*/
+	@Transactional
+	Map printPutDirect(String asnCode);
 }

@@ -1917,7 +1917,58 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 		detail.getAsn().setIsCheckMT(Boolean.TRUE);
 		commonDao.store(detail.getAsn());
 	}
-	
+	public Map printPutDirect(String asnCode){
+		String hql = "FROM WmsASN asn WHERE asn.relatedBill1 =:code";
+		WmsASN asn = (WmsASN) commonDao.findByQueryUniqueResult(hql, 
+				new String[]{"code"}, new Object[]{asnCode});
+		if(asn==null){
+			hql = "FROM WmsASN asn WHERE asn.code =:code";
+			asn = (WmsASN) commonDao.findByQueryUniqueResult(hql, 
+					new String[]{"code"}, new Object[]{asnCode});
+			if(asn==null){
+				System.out.println("单据号不存在:"+asnCode);
+			}
+		}
+		Map result = new HashMap();
+		if(asn!=null){
+			if(asn.getStatus().equals(WmsASNStatus.RECEIVED) 
+					|| asn.getStatus().equals(WmsASNStatus.RECEIVING)){
+				asn.setPrintDate(new Date());//打印上架单时间
+				asn.setPrintPerson(UserHolder.getUser().getName());//打印人
+				asn.setIsPrint(Boolean.TRUE);//是否打印
+				commonDao.store(asn);
+				Task task = new Task(HeadType.CONFIRM_ACCOUNT, 
+						"wmsDealTaskManager"+MyUtils.spiltDot+"confirmAccount", asn.getId());
+				commonDao.store(task);
+				//统计明细是否全部确认
+				/*Boolean beReceived = false;
+				Set<WmsASNDetail> details = asn.getDetails();
+				for(WmsASNDetail detail : details){
+					beReceived = detail.getBeReceived();
+				}
+				if(beReceived){
+					//发送过账确认任务
+					Task task = new Task(HeadType.CONFIRM_ACCOUNT, 
+							"wmsDealTaskManager"+MyUtils.spiltDot+"confirmAccount", asn.getId());
+					commonDao.store(task);
+				}*/
+				
+				
+				Map<Long,String> reportValue = new HashMap<Long, String>();
+				reportValue.put(asn.getId(), "parts_sjzyd.raq");
+				
+				result.put(IPage.REPORT_VALUES, reportValue);
+				result.put(IPage.REPORT_PRINT_NUM, 1);
+				
+				Map<String,Object> params = new HashMap<String, Object>();
+				params.put("ids", asn.getId());
+				result.put(IPage.REPORT_PARAMS, params);
+			}else{
+				System.out.println("未完成收货:"+asnCode);
+			}
+		}
+		return result;
+	}
 	@Override
 	public Map printPalltDirec(WmsASN asn){
 		asn.setPrintDate(new Date());//打印托盘标签时间
