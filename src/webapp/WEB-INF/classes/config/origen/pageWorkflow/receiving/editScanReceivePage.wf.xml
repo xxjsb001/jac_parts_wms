@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editScanReceivePage">
+    <main>
+        <process id="wmsASNProcess">
+            <formDirectPrint id="scanReceive" title="scanReceive" process="wmsASNProcess.scanReceive" enableType="none" accelerateKey="Enter" download="false" closeTransactional="false" visibleType="none" raq="parts_sjzyd.raq">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="asn.code" className="string">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="printPutDirect" parameter="asn.code"/>
+                </actions>
+                <forwards/>
+            </formDirectPrint>
+        </process>
+    </main>
+    <detail/>
+</page>

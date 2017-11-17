@@ -158,7 +158,14 @@
 
 	<task id="printASNBak" title="补打ASN">
 	</task>
-
+	
+<!-- 新增补打上架单 -->
+	<task id="printShelves" title="补打上架作业单">
+	</task>
+<!-- 新增扫扫码收货 -->	
+	<task id="scanReceive" title="扫码收货">
+	</task>
+	
 	<task id="viewShelvesConfirm" title="查看上架日志">
 	</task>
 

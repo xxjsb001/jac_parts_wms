@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages>
+    <reportPopupPage id="printShelvesPage" title="printShelvesPage" reportFile="parts_sjzyd.raq" parameter="ids" width="900" height="450">
+        <inputUIs>
+        </inputUIs>
+    </reportPopupPage>
+</pages>

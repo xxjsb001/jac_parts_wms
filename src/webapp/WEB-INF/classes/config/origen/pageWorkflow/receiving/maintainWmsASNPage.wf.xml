@@ -51,11 +51,13 @@
             <tablePopup id="cancelReceive" title="cancelReceive" process="wmsASNProcess.cancelReceive" enableType="single" containId="true" pageId="modifyDetailCancelReceivePage">
                 <enableExpression><![CDATA[(${asn.autoAllocateStauts} == 'OPEN' && ${asn.shelvesStauts} == 'UNPUTAWAY' && ${asn.confirmAccount}=='false') ]]></enableExpression>
             </tablePopup>
-            <tablePopup id="submitSupport" title="submitSupport" process="wmsASNProcess.submitSupport" enableType="single" containId="true" pageId="editSubmitSupportPage">
+            
+         <!-- <tablePopup id="submitSupport" title="submitSupport" process="wmsASNProcess.submitSupport" enableType="single" containId="true" pageId="editSubmitSupportPage">
                 <enableExpression><![CDATA[${asn.status}=='RECEIVING' || ${asn.status}=='RECEIVED' && ${asn.confirmAccount}=='false' && 
 ${asn.isCheckMT}=='false']]></enableExpression>
-            </tablePopup>
-            <tableCommit id="confirmAccount" title="confirmAccount" process="wmsASNProcess.confirmAccount" enableType="single" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainWmsASNPage.confirmAccount">
+            </tablePopup>  -->  
+            
+         <!-- <tableCommit id="confirmAccount" title="confirmAccount" process="wmsASNProcess.confirmAccount" enableType="single" multiMapping="false" download="false" closeTransactional="false" confirmMessage="confirm.maintainWmsASNPage.confirmAccount">
                 <enableExpression><![CDATA[${asn.isCheckMT}=='true' 
 && ${asn.confirmAccount}=='false']]></enableExpression>
                 <mappings/>
@@ -65,7 +67,8 @@ ${asn.isCheckMT}=='false']]></enableExpression>
                 <forwards>
                     <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
                 </forwards>
-            </tableCommit>
+            </tableCommit>  -->  
+            
             <tableDirectPrint id="printASN" title="printASN" process="wmsASNProcess.print" enableType="single" multiMapping="false" download="false" closeTransactional="true" raq="jacASNReport.raq">
                 <enableExpression/>
                 <mappings/>
@@ -75,33 +78,44 @@ ${asn.isCheckMT}=='false']]></enableExpression>
                 <forwards/>
             </tableDirectPrint>
             
-            <tableDirectPrint id="printPalltDirec" title="printPalltDirec" process="wmsASNProcess.printPalltDirec" enableType="single" multiMapping="false" download="false" closeTransactional="true" raq="wmsPalletSerial.raq">
+         <!-- <tableDirectPrint id="printPalltDirec" title="printPalltDirec" process="wmsASNProcess.printPalltDirec" enableType="single" multiMapping="false" download="false" closeTransactional="true" raq="wmsPalletSerial.raq">
                 <enableExpression><![CDATA[${asn.isPrint}=='false']]></enableExpression>
                 <mappings/>
                 <actions>
                     <action managerName="wmsASNManager" methodName="printPalltDirec" parameter="obj"/>
                 </actions>
                 <forwards/>
-            </tableDirectPrint>
+            </tableDirectPrint> -->
+            
             <tablePopup id="viewReceivedRecord" title="viewReceivedRecord" process="wmsASNProcess.viewReceivedRecord" enableType="single" containId="true" pageId="viewWmsReceivedRecord">
                 <enableExpression/>
             </tablePopup>
-            <tablePopup id="palletSerial" title="palletSerial" process="wmsASNProcess.palletSerial" enableType="single" containId="true" pageId="maintainPalletSerialPage" multiPage="{4}=='已签收不合格品退回单':maintainPalletAutoPage">
+            
+         <!--  <tablePopup id="palletSerial" title="palletSerial" process="wmsASNProcess.palletSerial" enableType="single" containId="true" pageId="maintainPalletSerialPage" multiPage="{4}=='已签收不合格品退回单':maintainPalletAutoPage">
                 <enableExpression><![CDATA[${asn.confirmAccount}=='true' && ${asn.isPrint}=='true']]></enableExpression>
-            </tablePopup>
-            <tablePopup id="putawayAutoAllocate" title="putawayAutoAllocate" process="wmsASNProcess.putawayAutoAllocate" enableType="single" containId="true" pageId="modifyPutawayAutoAllocatePage">
+            </tablePopup> -->  
+            
+         <!--  <tablePopup id="putawayAutoAllocate" title="putawayAutoAllocate" process="wmsASNProcess.putawayAutoAllocate" enableType="single" containId="true" pageId="modifyPutawayAutoAllocatePage">
                 <enableExpression><![CDATA[(${asn.autoAllocateStauts} == 'PARTALLOCATED' || ${asn.autoAllocateStauts} == 'OPEN' && ${asn.confirmAccount}=='true')]]></enableExpression>
-            </tablePopup>
-            <tablePopup id="unPutawayAutoAllocate" title="unPutawayAutoAllocate" process="wmsASNProcess.unPutawayAutoAllocate" enableType="single" containId="true" pageId="modifyUnPutawayAutoAllocatePage">
+            </tablePopup>  -->  
+            
+         <!-- <tablePopup id="unPutawayAutoAllocate" title="unPutawayAutoAllocate" process="wmsASNProcess.unPutawayAutoAllocate" enableType="single" containId="true" pageId="modifyUnPutawayAutoAllocatePage">
                 <enableExpression><![CDATA[(${asn.autoAllocateStauts} == 'PARTALLOCATED' || ${asn.autoAllocateStauts} == 'ALLOCATED') && ${asn.shelvesStauts} !='FINISHED']]></enableExpression>
-            </tablePopup>
-            <tablePopup id="shelvesConfirm" title="shelvesConfirm" process="wmsASNProcess.shelvesConfirm" enableType="single" containId="true" pageId="modifyShelvesConfirmPage">
+            </tablePopup>  -->  
+            
+         <!--  <tablePopup id="shelvesConfirm" title="shelvesConfirm" process="wmsASNProcess.shelvesConfirm" enableType="single" containId="true" pageId="modifyShelvesConfirmPage">
                 <enableExpression><![CDATA[(${asn.autoAllocateStauts} == 'PARTALLOCATED' || ${asn.autoAllocateStauts} == 'ALLOCATED') && ${asn.shelvesStauts} !='FINISHED']]></enableExpression>
-            </tablePopup>
+            </tablePopup>  --> 
+            
             <tablePopup id="viewShelvesConfirm" title="viewShelvesConfirm" process="wmsASNProcess.shelvesConfirm" enableType="single" containId="true" pageId="viewModifyShelvesConfirmPage">
                 <enableExpression/>
             </tablePopup>
             <tablePopup id="view" title="view" process="wmsASNProcess.view" enableType="none">
+                <enableExpression/>
+            </tablePopup>
+          
+       <!-- 新增扫码入库按钮 -->     
+            <tablePopup id="scanReceive" title="scanReceive" process="wmsASNProcess.scanReceive" enableType="none" containId="false" pageId="editScanReceivePage">
                 <enableExpression/>
             </tablePopup>
         </process>

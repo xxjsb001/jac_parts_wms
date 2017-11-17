@@ -11,6 +11,10 @@
             </tablePopup>
             <tablePopup id="printTrayTag" title="printTrayTag" process="wmsASNProcess.printTrayTag" enableType="single" containId="true" pageId="printTrayTagPage">
                 <enableExpression/>
+            </tablePopup>            
+<!-- 新增补打上架单按钮 -->
+            <tablePopup id="printShelves" title="printShelves" process="wmsASNProcess.printShelves" enableType="single" containId="true" pageId="printShelvesPage">
+                <enableExpression/>
             </tablePopup>
         </process>
     </main>

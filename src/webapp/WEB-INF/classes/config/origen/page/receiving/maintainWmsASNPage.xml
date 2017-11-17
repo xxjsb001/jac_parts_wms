@@ -13,12 +13,10 @@ asn.relatedBill1,
 asn.relatedBill2,
 asn.orderDate,
 asn.status,
-asn.autoAllocateStauts,
 asn.shelvesStauts,
 asn.estimateDate,
 asn.expectedQuantityBU,
 asn.receivedQuantityBU,
-asn.allocatedQuantityBU,
 asn.movedQuantityBU,
 asn.startReceivedDate,
 asn.supplier.code,
@@ -37,7 +35,7 @@ asn.updateInfo.lastOperator
  AND asn.warehouse = #{SESSION_WAREHOUSE}
  AND (asn.supplier.code = #{SESSION_ORGANIZATION_CODE} OR #{SESSION_ORGANIZATION_CODE} = 'all' OR asn.supplier.code in (SELECT us.supplier.code FROM WmsUserSupplier us WHERE us.userHead.user = #{SESSION_USERS}))
  ORDER BY asn.id DESC
- ]]></datasource>
+ ]]></datasource> <!-- 删除分配状态和分配数量字段 -->
         <columns>
             <column id="asn.id" title="asn.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
             <column id="asn.company.name" title="asn.company.name" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
@@ -49,12 +47,12 @@ asn.updateInfo.lastOperator
             <column id="asn.relatedBill2" title="asn.relatedBill2" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="asn.orderDate" title="asn.orderDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date" format="dateFormat"/>
             <column id="asn.status" title="asn.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsASNStatus"/>
-            <column id="asn.autoAllocateStauts" title="asn.autoAllocateStauts" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocStatus"/>
+        <!-- <column id="asn.autoAllocateStauts" title="asn.autoAllocateStauts" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocStatus"/> -->
             <column id="asn.shelvesStauts" title="asn.shelvesStauts" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsASNShelvesStauts"/>
             <column id="asn.estimateDate" title="asn.estimateDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
             <column id="asn.expectedQuantityBU" title="asn.expectedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
             <column id="asn.receivedQuantityBU" title="asn.receivedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
-            <column id="asn.allocatedQuantityBU" title="moveDoc.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+        <!-- <column id="asn.allocatedQuantityBU" title="moveDoc.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>-->
             <column id="asn.movedQuantityBU" title="asn.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
             <column id="asn.reserveBeginTime" title="asn.reserveBeginTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
             <column id="asn.supplier.code" title="asn.supplier.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
