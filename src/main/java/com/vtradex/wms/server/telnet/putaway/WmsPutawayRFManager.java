@@ -125,4 +125,11 @@ public interface WmsPutawayRFManager extends BaseManager {
 	/**RF单一上架确认*/
 	@Transactional
 	String shelvesConfirm(String palletNos,String locationCode);
+	
+	Long findAsnId(String asnCode);
+	Long findLoc(String locationCode);
+	Long findDetail(String itemCode,Long asnId);
+	/**RF扫码上架确认*/
+	@Transactional
+	String putAway(Long detailId,Double putQuantity,Long locId);
 }

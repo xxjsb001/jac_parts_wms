@@ -14,6 +14,8 @@ import com.vtradex.wms.server.model.organization.WmsOrganization;
 import com.vtradex.wms.server.model.receiving.JacPalletSerial;
 import com.vtradex.wms.server.model.receiving.WmsASN;
 import com.vtradex.wms.server.model.receiving.WmsASNDetail;
+import com.vtradex.wms.server.model.receiving.WmsReceivedRecord;
+import com.vtradex.wms.server.model.warehouse.WmsLocation;
 
 public interface WmsASNManager extends BaseManager {
 	
@@ -147,6 +149,9 @@ public interface WmsASNManager extends BaseManager {
 	/**手工上架分配 yc.min 201504010*/
 	@Transactional
 	void putawayAutoByHand(JacPalletSerial jps,Long asnId,Long locationId,Long workerId);
+	/**单一上架预分配步骤*/
+	WmsTask putawayAutoSingleStep(WmsReceivedRecord rec,Double allocateQty
+			,WmsLocation toLoc,WmsASNDetail detail,String asnCode);
 	/**取消上架分配 yc.min 20150409*/
 	@Transactional
 	void unPutawayAutoAllocate(WmsASN wmsAsn);

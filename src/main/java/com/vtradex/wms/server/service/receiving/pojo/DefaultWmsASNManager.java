@@ -503,6 +503,26 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 		jps.setBePutawayAuto(true);
 		commonDao.store(jps);
 	}
+	//单一上架预分配步骤
+	public WmsTask putawayAutoSingleStep(WmsReceivedRecord rec,Double allocateQty
+			,WmsLocation toLoc,WmsASNDetail detail,String asnCode){
+		WmsLocation srcLoc = commonDao.load(WmsLocation.class, rec.getLocationId());
+		WmsItemKey itemKey = commonDao.load(WmsItemKey.class, rec.getItemKey().getId());
+		WmsInventory srcInventory = load(WmsInventory.class,rec.getInventoryId());
+		srcInventory.allocatePickup(allocateQty);
+		commonDao.store(srcInventory);
+		//预分配目标库存
+		WmsInventory dstInventory = wmsInventoryManager.allocatePutaway(toLoc, itemKey, detail.getPackageUnit() 
+				,rec.getInventoryStatus(),allocateQty,1);
+		// 调用规则刷新库满度
+		wmsInventoryManager.refreshLocationUseRate(toLoc, 0);
+		commonDao.store(toLoc);
+		//产生task
+		WmsTask task = taskManager.getTaskByJAC(srcLoc, WmsMoveDocType.MV_PUTAWAY, asnCode, detail.getId().toString(), 
+				BaseStatus.NULLVALUE, toLoc, itemKey, rec.getPackageUnit(), rec.getInventoryStatus(), 
+				allocateQty, rec.getInventoryId(), dstInventory.getId());
+		return task;
+	}
 	public void putawayAutoByHand(JacPalletSerial jps,Long asnId,Long locationId,Long workerId){
 //		System.out.println(jps+","+asnId+","+locationId+","+workerId);
 		jps = commonDao.load(JacPalletSerial.class, jps.getId());

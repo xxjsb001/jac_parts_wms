@@ -14,6 +14,7 @@ import com.vtradex.wms.server.model.base.BaseStatus;
 import com.vtradex.wms.server.model.base.LotInfo;
 import com.vtradex.wms.server.model.inventory.WmsInventory;
 import com.vtradex.wms.server.model.inventory.WmsInventoryExtend;
+import com.vtradex.wms.server.model.inventory.WmsItemKey;
 import com.vtradex.wms.server.model.move.WmsMoveDoc;
 import com.vtradex.wms.server.model.move.WmsMoveDocDetail;
 import com.vtradex.wms.server.model.move.WmsMoveDocStatus;
@@ -30,7 +31,9 @@ import com.vtradex.wms.server.model.receiving.WmsASN;
 import com.vtradex.wms.server.model.receiving.WmsASNDetail;
 import com.vtradex.wms.server.model.receiving.WmsASNQualityStauts;
 import com.vtradex.wms.server.model.receiving.WmsASNShelvesStauts;
+import com.vtradex.wms.server.model.receiving.WmsASNStatus;
 import com.vtradex.wms.server.model.receiving.WmsBooking;
+import com.vtradex.wms.server.model.receiving.WmsReceivedRecord;
 import com.vtradex.wms.server.model.warehouse.WmsDock;
 import com.vtradex.wms.server.model.warehouse.WmsLocation;
 import com.vtradex.wms.server.model.warehouse.WmsLocationType;
@@ -1162,5 +1165,74 @@ public class DefaultWmsPutawayRFManager extends DefaultBaseManager implements Wm
 		}
 		return "end";
 		
+	}
+	
+	public Long findAsnId(String asnCode){
+		WmsASN asn = (WmsASN) commonDao.findByQueryUniqueResult("FROM WmsASN asn WHERE asn.code =:code", 
+				new String[]{"code"}, new Object[]{asnCode});
+		if(asn==null){
+			asn = (WmsASN) commonDao.findByQueryUniqueResult("FROM WmsASN asn WHERE asn.relatedBill1 =:relatedBill1", 
+					new String[]{"relatedBill1"}, new Object[]{asnCode});
+			if(asn==null){
+				return 0L;
+			}
+		}
+		if(asn.getStatus().equals(WmsASNStatus.RECEIVED) 
+				|| asn.getStatus().equals(WmsASNStatus.RECEIVING)){
+			return asn.getId();
+		}else{
+			return null;
+		}
+	}
+	public Long findLoc(String locationCode){
+		WmsLocation toLoc = (WmsLocation)commonDao.findByQueryUniqueResult("FROM WmsLocation loc WHERE loc.code=:code","code",locationCode);
+		if(toLoc == null){
+			return null;
+		}else{
+			return toLoc.getId();
+		}
+	}
+	
+	public Long findDetail(String itemCode,Long asnId){
+		String hql = "FROM WmsASNDetail detail WHERE detail.asn.id =:asnId " +
+				" AND (detail.receivedQuantityBU - detail.movedQuantityBU) > 0 " +//收货量大于上架量
+				" AND detail.item.code =:itemCode";
+		List<WmsASNDetail> asnDetailList = commonDao.findByQuery(hql, 
+				new String[]{"asnId","itemCode"}, 
+				new Object[]{asnId,itemCode});
+		if(asnDetailList==null || asnDetailList.size()<=0){
+			return null;
+		}
+		return asnDetailList.get(0).getId();
+		
+	}
+	
+	public String putAway(Long detailId,Double putQuantity,Long locId){
+		WmsASNDetail detail = commonDao.load(WmsASNDetail.class, detailId);
+		Double moveQty = detail.getUnMoveQtyBU();
+		if(moveQty<=0){
+			return "失败!已上架完成";
+		}
+		if(putQuantity == Double.MAX_VALUE){
+			putQuantity = moveQty;
+		}
+		if(putQuantity>0 && putQuantity>moveQty){
+			return "失败!上架量超出可用量";
+		}
+		WmsLocation toLoc = commonDao.load(WmsLocation.class, locId);
+		List<WmsReceivedRecord> receivedRecords = commonDao.findByQuery("FROM WmsReceivedRecord r WHERE r.asnDetail.id =:asnDetail", 
+				new String[]{"asnDetail"}, new Object[]{detailId});
+		if(receivedRecords==null || receivedRecords.size()<=0){
+			return "失败!无收货记录";
+		}
+		//约定:一个明细只允许收货一次,所以收货记录必定只有一条
+		WmsTask task = asnManager.putawayAutoSingleStep(receivedRecords.get(0), putQuantity, toLoc, detail, detail.getAsn().getCode());
+		asnManager.singleConfirm(task, detail.getAsn().getId(), 0L,WmsWorkerHolder.getWmsWorker().getId());
+		return MyUtils.SUCCESS;
+		
+	}
+	public static void main(String[] args) {
+		System.out.println(Double.MAX_VALUE);
+		System.out.println(Double.MAX_VALUE > 10000000);
 	}
 }

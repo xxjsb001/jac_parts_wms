@@ -309,7 +309,9 @@ public class WmsASNDetail extends Entity{
 		this.movedQuantityBU -= movedQuantityBU;
 		asn.cancelMovedQuantity(movedQuantityBU);
 	}
-	
+	public double getUnMoveQtyBU() {
+		return this.receivedQuantityBU - this.movedQuantityBU;
+	}
 	public Double getMovedQuantityBU() {
 		return movedQuantityBU;
 	}

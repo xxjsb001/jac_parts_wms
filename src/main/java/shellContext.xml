@@ -340,4 +340,12 @@
             <ref bean="wmsPickRFManager"/>
         </constructor-arg>
     </bean>
+    
+    
+    
+    <bean id="wmsASNPutScanShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsASNPutScanShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
  </beans>

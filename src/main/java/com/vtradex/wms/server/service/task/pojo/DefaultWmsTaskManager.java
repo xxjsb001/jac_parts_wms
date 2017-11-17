@@ -129,8 +129,8 @@ public class DefaultWmsTaskManager extends DefaultBaseManager implements
 		newTask.setToLocationCode(dstLoc.getCode());
 		newTask.setPlanQuantity(PackageUtils.convertPackQuantity(quantityBU, packageUnit));
 		newTask.setPlanQuantityBU(quantityBU);
-		newTask.setOriginalBillCode(originalBillCode);
-		newTask.setRelatedBill(relatedBill);
+		newTask.setOriginalBillCode(originalBillCode);//上架的话记录ASN号
+		newTask.setRelatedBill(relatedBill);//上架的话记录ASN明细ID
 		newTask.setPallet(pallet == null ? BaseStatus.NULLVALUE : pallet);
 		newTask.setSrcInventoryId(srcInventoryId);
 		newTask.setDescInventoryId(dstInventoryId);
