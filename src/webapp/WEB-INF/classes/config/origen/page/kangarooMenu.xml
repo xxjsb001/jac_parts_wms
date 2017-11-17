@@ -19,19 +19,21 @@
 <!-- $Id: kangarooMenu.xml,v 1.11 2016/05/26 06:09:48 yongcheng.min Exp $ -->
 <Menus>
 	<Menu name="main" title="main">
+		<!-- 
 		<Item name="wmsASN" title="收货管理">
-<!-- 			<Item name="wmsASNCodeShell" title="整单收货" location="wmsASNCodeShell" /> -->
-<!-- 			<Item name="wmsASNDetailShell" title="单一明细收货" location="wmsASNDetailShell" /> -->
-<!-- 			<Item name="wmsASNCodeConfirmShell" title="收货过账" location="wmsASNCodeConfirmShell" /> -->
-<!-- 			<Item name="wmsPalletSerialShell" title="明细码托" location="wmsPalletSerialShell" /> -->
+			<Item name="wmsASNCodeConfirmShell" title="收货过账" location="wmsASNCodeConfirmShell" />
+			<Item name="wmsPalletSerialShell" title="明细码托" location="wmsPalletSerialShell" />
 		</Item>
+		 -->
 		<!-- 
 		<Item name="putaway" title="上架管理">
 			<Item name="wmsASNputawayAutoAllocateShell" title="上架分配" location="wmsASNputawayAutoAllocateShell" />
 			<Item name="wmsASNPutawayShell" title="上架确认" location="wmsShelvesConfirmShell" />
 		</Item>
 		 -->
-		<Item name="wmsASNPutScanShell" title="上架确认" location="wmsASNPutScanShell" />
+		 <Item name="wmsASNCodeShell" title="整单收货" location="wmsASNCodeShell" />
+ 		 <Item name="wmsASNDetailShell" title="单一明细收货" location="wmsASNDetailShell" />
+		 <Item name="wmsASNPutScanShell" title="上架确认" location="wmsASNPutScanShell" />
 		<Item name="wmsWorkDocTableShell" title="拣货管理">
 <!-- 			<Item name="wmsPickContainerCodeShell" title="容器拣货" location="wmsPickContainerCodeShell" /> -->
 <!-- 			<Item name="wmsPickConfirmAllShell" title="拣货扫码" location="wmsPickConfirmAllShell" /> -->

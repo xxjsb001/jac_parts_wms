@@ -70,7 +70,6 @@ import com.vtradex.wms.server.utils.JavaTools;
 import com.vtradex.wms.server.utils.MyUtils;
 import com.vtradex.wms.server.utils.StringHelper;
 import com.vtradex.wms.server.utils.WmsTables;
-import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
 
 public class DefaultWmsDealInterfaceDataManager  
 				extends DefaultBaseManager implements WmsDealInterfaceDataManager{

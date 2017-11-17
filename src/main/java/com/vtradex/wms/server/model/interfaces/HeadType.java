@@ -19,4 +19,7 @@ public interface HeadType {
 	
 	/**发运数据传MES*/
 	public static String W_DELIVER_MES = "W_DELIVER_MES";
+	
+	/**过账确认*/
+	public static String CONFIRM_ACCOUNT = "CONFIRM_ACCOUNT";
 }

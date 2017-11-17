@@ -25,6 +25,7 @@ import com.vtradex.wms.server.model.shipping.WmsPickTicketDetail;
 import com.vtradex.wms.server.model.shipping.WmsPickTicketStatus;
 import com.vtradex.wms.server.model.warehouse.WmsWarehouse;
 import com.vtradex.wms.server.service.interfaces.WmsDealTaskManager;
+import com.vtradex.wms.server.service.receiving.WmsASNManager;
 import com.vtradex.wms.server.service.sequence.WmsBussinessCodeManager;
 
 public class DefaultWmsDealTaskManager 
@@ -224,5 +225,10 @@ public class DefaultWmsDealTaskManager
 			totalQty += qty;
 		}
 		updateTotalQty(pickTicket, null, totalQty);//更新单头数量
+	}
+	
+	public void confirmAccount(Long asnId){
+		WmsASNManager wmsASNManager = (WmsASNManager) applicationContext.getBean("wmsASNManager");
+		wmsASNManager.confirmAccount(commonDao.load(WmsASN.class, asnId));
 	}
 }

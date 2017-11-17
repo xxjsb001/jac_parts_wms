@@ -30,7 +30,7 @@ public class WmsASNCodeShell extends Thorn4BaseShell{
 		if (StringUtils.isEmpty (asnCode) || "-".equals(asnCode)) {
 			this.setStatusMessage("收货单号不规范");
 		}
-		String messge = "操作成功,请继续(..返回主菜单;...退出登录)"+MyUtils.enter;
+		String messge = "操作成功,请继续(00上一级;01退出)"+MyUtils.enter;
 		Long asnId = wmsReceivingRFManager.findAsnId(asnCode);
 		if(asnId==null || asnId == 0L){
 			messge = "失败!找不到符合条件的ASN号:"+MyUtils.enter;
@@ -40,7 +40,8 @@ public class WmsASNCodeShell extends Thorn4BaseShell{
 			if(!num1.equals("1")){
 				messge = num1+MyUtils.enter;
 				messge += asnCode;
-			}else{
+			}
+			/*else{
 				String num2  = wmsReceivingRFManager.palletAuto(asnId);
 				if(!num2.equals("1")){
 					List<String> goList =new ArrayList<String>();
@@ -61,7 +62,7 @@ public class WmsASNCodeShell extends Thorn4BaseShell{
 						this.getTextField("RF扫描会自动打印,但未打印");
 					}
 				}
-			}
+			}*/
 		}
 		this.forward(WmsASNCodeShell.PAGE_ID,messge);
 	}
@@ -76,9 +77,9 @@ public class WmsASNCodeShell extends Thorn4BaseShell{
 	            forward(ShellFactory.getEntranceShell());  
 	        else  
 	            forward(getShellByQQ());  
-	    }else if(value.equalsIgnoreCase("..")){//跳转至上一屏  
+	    }else if(value.equalsIgnoreCase("00")){//跳转至上一屏  
 	        forwardByKeyboard("XX");  
-	    }else if(value.equalsIgnoreCase("...")){//退出登录  
+	    }else if(value.equalsIgnoreCase("01")){//退出登录  
 	        forwardByKeyboard("QQ");  
 	    } 
 	} 

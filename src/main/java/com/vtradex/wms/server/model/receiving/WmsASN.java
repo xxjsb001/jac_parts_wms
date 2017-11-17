@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.vtradex.thorn.server.annotation.UniqueKey;
-import com.vtradex.thorn.server.exception.OriginalBusinessException;
 import com.vtradex.thorn.server.model.VersionalEntity;
 import com.vtradex.wms.server.model.base.Contact;
 import com.vtradex.wms.server.model.move.WmsMoveDocStatus;
@@ -98,7 +97,6 @@ public class WmsASN extends VersionalEntity {
 	private Date printDate;
 	private Boolean isPrint = Boolean.FALSE;
 	
-	
 	public WmsASN(){
 
 	}
@@ -127,7 +125,6 @@ public class WmsASN extends VersionalEntity {
 	}
 
 	
-
 	public String getPrintPerson() {
 		return printPerson;
 	}

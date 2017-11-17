@@ -25,4 +25,7 @@ public interface WmsDealTaskManager  extends BaseManager {
 	/**处理接口传输过来的时序件信息*/
 	@Transactional
 	void dealSpsPickData(Long id);
+	/**过账确认*/
+	@Transactional
+	void confirmAccount(Long asnId);
 }

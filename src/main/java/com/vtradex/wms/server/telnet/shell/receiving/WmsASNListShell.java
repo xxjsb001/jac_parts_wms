@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.vtradex.kangaroo.shell.PageableBaseShell;
 import com.vtradex.wms.server.model.receiving.WmsASNStatus;
+import com.vtradex.wms.server.telnet.shell.JacPageableBaseShell;
 import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
 
 /**
@@ -15,7 +15,7 @@ import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
  * @author <a href="brofe.pan@gmail.com">潘宁波</a>
  * @version $Revision: 1.1.1.1 $Date: 2015/03/25 02:48:55 $
  */
-public class WmsASNListShell extends PageableBaseShell {
+public class WmsASNListShell extends JacPageableBaseShell {
 	
 	public static final String PAGE_ID = "wmsASNListShell";
 
@@ -27,7 +27,7 @@ public class WmsASNListShell extends PageableBaseShell {
 	@Override
 	public String getHql() {
 		String hql = "select a.id, a.item.code || '/' ||a.item.name|| '/' || a.expectedQuantityBU || '/' || a.receivedQuantityBU "+ 
-				" from WmsASNDetail a where 1=1 and (a.expectedQuantityBU- a.receivedQuantityBU)>0" +
+				" from WmsASNDetail a where 1=1 and a.beReceived = false" +//(a.expectedQuantityBU- a.receivedQuantityBU)>0
 				" /~状态: AND a.asn.status not in  ({状态})~/" +
 				" /~仓库: AND a.asn.warehouse.id = {仓库}~/" +
 				" /~收货ID: AND a.asn.id = {收货ID}~/";//

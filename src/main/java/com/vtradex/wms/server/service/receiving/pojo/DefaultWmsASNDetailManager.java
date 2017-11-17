@@ -162,9 +162,6 @@ public class DefaultWmsASNDetailManager extends DefaultBaseManager implements
 			WmsLocation loc = findReceiveLocation(detail.getAsn().getWarehouse(), "ASN", 
 					detail.getAsn().getBillType().getCode(), false, detail.getLotInfo().getSupplier().getCode());
 			receiveLocId = loc.getId();
-			/*WmsBooking booking = detail.getBooking();
-			WmsDock dock = booking.getDock();
-			receiveLocId = dock.getReceiveLocationId();*/
 		}
 		
 		pallet = StringUtils.isEmpty(pallet) ? BaseStatus.NULLVALUE : pallet;
@@ -262,11 +259,12 @@ public class DefaultWmsASNDetailManager extends DefaultBaseManager implements
 	/**
 	 * 收货确认 Telnet
 	 */
+	@SuppressWarnings("unchecked")
 	public void receiving(WmsASNDetail detail, double receiveQty, WmsPackageUnit packageUnit, LotInfo lotInfo, 
 			String status, WmsLocation recLoc, String pallet, String carton, String serialNo,Long workerId,String inventoryState) {
-//		if(detail.getBeReceived()){
-//			return;
-//		}
+		if(detail.getBeReceived()){
+			return;
+		}
 		if(detail.getExpectedQuantityBU() - detail.getReceivedQuantityBU() <= 0){
 			return;
 		}

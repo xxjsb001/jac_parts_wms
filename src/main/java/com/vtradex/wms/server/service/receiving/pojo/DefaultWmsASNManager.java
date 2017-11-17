@@ -17,6 +17,7 @@ import com.vtradex.thorn.client.utils.StringUtils;
 import com.vtradex.thorn.server.exception.BusinessException;
 import com.vtradex.thorn.server.exception.OriginalBusinessException;
 import com.vtradex.thorn.server.model.EntityFactory;
+import com.vtradex.thorn.server.model.message.Task;
 import com.vtradex.thorn.server.service.WorkflowManager;
 import com.vtradex.thorn.server.service.pojo.DefaultBaseManager;
 import com.vtradex.thorn.server.util.BeanUtils;
@@ -24,6 +25,7 @@ import com.vtradex.thorn.server.util.LocalizedMessage;
 import com.vtradex.thorn.server.web.security.UserHolder;
 import com.vtradex.wms.server.model.base.BaseStatus;
 import com.vtradex.wms.server.model.base.LotInfo;
+import com.vtradex.wms.server.model.interfaces.HeadType;
 import com.vtradex.wms.server.model.inventory.WmsInventory;
 import com.vtradex.wms.server.model.inventory.WmsInventoryExtend;
 import com.vtradex.wms.server.model.inventory.WmsInventoryLogType;
@@ -179,14 +181,7 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 			String carton = StringUtils.isEmpty(detail.getCarton()) ? BaseStatus.NULLVALUE : detail.getCarton();
 			String serialNo = StringUtils.isEmpty(detail.getSerialNo()) ? BaseStatus.NULLVALUE : detail.getSerialNo();
 			detailManager.receiving(detail, PackageUtils.convertPackQuantity(detail.getUnReceivedQtyBU(), detail.getPackageUnit()), detail.getPackageUnit(), lotInfo, 
-					BaseStatus.NULLVALUE, loc, 
-					pallet, carton, serialNo,workerId);
-//			if(!detail.getIsSupport()){
-//				String hql = "from JacPalletSerial where asnDetail.id=:detailId";
-//				JacPalletSerial jacPalletSerial = (JacPalletSerial) commonDao.findByQueryUniqueResult(hql,"detailId",detail.getId());
-//				jacPalletSerial.setExpectedQuantityBU(detail.getReceivedQuantityBU());
-//				commonDao.store(jacPalletSerial);
-//			}
+					BaseStatus.NULLVALUE, loc,pallet, carton, serialNo,workerId);
 		}
 	}
 	public void detailReceive(WmsASNDetail detail, Long packageUnitId,double quantity, 
@@ -220,9 +215,6 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 	
 	public void detailReceive(WmsASNDetail detail, Long packageUnitId,double quantity, 
 			Long receiveLocId, String itemStateId,Long workerId,String inventoryStatus) {
-		//if(detail.getBooking() == null) {
-		//	throw new OriginalBusinessException("未预约收货月台,请预约！");
-		//}	
 		if(quantity > (detail.getExpectedQuantityBU()-detail.getReceivedQuantityBU())){
 			throw new BusinessException("收货数量不能大于ASN明细的期待数量");
 		}
@@ -1851,7 +1843,7 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 		asn.setConfirmAccount(Boolean.TRUE);
 		commonDao.store(asn);
 		/**创建托盘对象*/
-		for(WmsASNDetail asnDetail : asn.getDetails()){
+		/*for(WmsASNDetail asnDetail : asn.getDetails()){
 			for(int i =0 ; i<asnDetail.getPalletNo(); i++){
 				JacPalletSerial jps = EntityFactory.getEntity(JacPalletSerial.class);
 				jps.setAsnDetail(asnDetail);
@@ -1866,7 +1858,7 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 				commonDao.store(jacPalletSerial);
 			}
 			
-			/**更新库存状态*/
+			*//**更新库存状态*//*
 			String inventoryStatus = "";
 			Map<String,Object> problem = new HashMap<String, Object>();
 			problem.put("供应商",asnDetail.getAsn().getSupplier().getCode());
@@ -1880,7 +1872,7 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 					asnDetail.getAsn().getCompany().getName(), "收货货品状态规则", problem);
 			inventoryStatus = result.get("状态").toString();
 			
-			/**更新库存以及收货记录里面的库存状态*/
+			*//**更新库存以及收货记录里面的库存状态*//*
 			String hql = "from WmsReceivedRecord r where r.asnDetail.id=:id";
 			List<WmsReceivedRecord> records = commonDao.findByQuery(hql,"id",asnDetail.getId());
 			if(records!=null && records.size()>0){
@@ -1891,7 +1883,7 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 				hql = "update WmsInventory set status=:status where id="+invId;
 				commonDao.executeByHql(hql, "status", inventoryStatus);
 			}
-		}
+		}*/
 	}
 	@Override
 	public void CheckMt(WmsASNDetail detail,List tableValues) {
