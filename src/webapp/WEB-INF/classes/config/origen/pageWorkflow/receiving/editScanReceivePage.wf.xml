@@ -13,7 +13,9 @@
                 <actions>
                     <action managerName="wmsASNManager" methodName="printPutDirect" parameter="asn.code"/>
                 </actions>
-                <forwards/>
+                <forwards>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
             </formDirectPrint>
         </process>
     </main>

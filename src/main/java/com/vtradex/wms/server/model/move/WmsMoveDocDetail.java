@@ -686,7 +686,10 @@ public class WmsMoveDocDetail extends Entity {
 		this.moveDoc.originalPickBack(quantity);
 		calculateLoad();
 	}
-	
+	/**未移位量*/
+	public Double unMoveQty(){
+		return this.planQuantityBU-this.movedQuantityBU;
+	}
 	
 	public void calculateLoad(){
 		setWeight(DoubleUtils.formatByPrecision(getPlanQuantity() * getPackageUnit().getWeight(),3));

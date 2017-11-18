@@ -133,4 +133,12 @@ public interface WmsPickRFManager extends WmsCommonRFManager{
 	Map checkContainerList(Long id);
 	/**容器退拣*/
 	Map containerPickBack(Long id,String supCode,Double pickBackQty,String descLoc);
+	
+	Map<String,String> findMove(String pickNo);
+//	Map<String,String> findContainer(String container);
+//	Map<String,String> findLoc(String location);
+//	Map<String,String> findMoveDetail(String pickNo,String itemCode);
+	/**明细拣货*/
+	@Transactional
+	Map<String,String> singlePicQty(String pickNo,String container,String fromLocationCode,String itemCode,Double picQuantity);
 }

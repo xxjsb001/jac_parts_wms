@@ -122,7 +122,7 @@ public class WmsMoveDoc extends VersionalEntity {
 	/** 加工费用 */
 	private Double payment = 0.0D;
 
-	/** 收货预约开始时间 */
+	/** 拣货扫码开始时间 */
 	private Date reserveBeginTime;
 	/** 收货预约结束时间 */
 	private Date reserveFinishTime;
@@ -136,7 +136,7 @@ public class WmsMoveDoc extends VersionalEntity {
 
 	/** 承运商 */
 	private WmsOrganization carrier;
-	/** 司机 */
+	/** 司机 /拣货备料作为RF扫码人员使用*/
 	private String driver;
 	/** 车牌号 */
 	private String vehicleNo;

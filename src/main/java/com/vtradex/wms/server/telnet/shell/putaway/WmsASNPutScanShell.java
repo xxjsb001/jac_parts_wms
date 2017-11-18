@@ -8,6 +8,7 @@ import net.wimpi.telnetd.net.Connection;
 
 import com.vtradex.kangaroo.shell.BreakException;
 import com.vtradex.kangaroo.shell.ContinueException;
+import com.vtradex.kangaroo.shell.ShellFactory;
 import com.vtradex.kangaroo.shell.Thorn4BaseShell;
 import com.vtradex.wms.server.telnet.putaway.WmsPutawayRFManager;
 import com.vtradex.wms.server.utils.JavaTools;
@@ -40,13 +41,17 @@ public class WmsASNPutScanShell extends Thorn4BaseShell{
 			if (StringUtils.isEmpty (asnCode) || "-".equals(asnCode)) {
 				this.setStatusMessage("收货单号不规范");
 			}
+			asnCode = asnCode.trim();
+			if(MyUtils.OVER.equals(asnCode)){
+				forward(ShellFactory.getMainShell());
+			}
 			asnId = wmsPutawayRFManager.findAsnId(asnCode);
 			if(asnId==null || asnId == 0L){
 				messge = "失败!单号不存在:"+MyUtils.enter;
 				messge += asnCode;
 				this.forward(WmsASNPutScanShell.PAGE_ID,messge);
 			}else{
-				messge = "请扫描库位";
+				messge = "扫描库位";
 				this.put(ASN_ID, asnId);
 				this.forward(WmsASNPutScanShell.PAGE_ID,messge);
 			}
@@ -54,6 +59,11 @@ public class WmsASNPutScanShell extends Thorn4BaseShell{
 			String locCode = this.getTextField("soi.locCode");
 			if (StringUtils.isEmpty (locCode) || "-".equals(locCode)) {
 				this.setStatusMessage("失败!库位号不规范");
+			}
+			locCode = locCode.trim();
+			if(MyUtils.OVER.equals(locCode)){
+				messge = "扫描收货单号";
+				this.forward(WmsASNPutScanShell.PAGE_ID,messge);
 			}
 			locId = wmsPutawayRFManager.findLoc(locCode);
 			if(locId==null || locId == 0L){
@@ -71,6 +81,12 @@ public class WmsASNPutScanShell extends Thorn4BaseShell{
 			String itemCode = this.getTextField("soi.itemCode");
 			if (StringUtils.isEmpty (itemCode) || "-".equals(itemCode)) {
 				this.setStatusMessage("失败!物料码不规范");
+			}
+			itemCode = itemCode.trim();
+			if(MyUtils.OVER.equals(itemCode)){
+				messge = "扫描库位";
+				this.put(ASN_ID, asnId);
+				this.forward(WmsASNPutScanShell.PAGE_ID,messge);
 			}
 			detailId = wmsPutawayRFManager.findDetail(itemCode, asnId);
 			if(detailId==null || detailId == 0L){

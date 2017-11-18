@@ -1918,6 +1918,7 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 		commonDao.store(detail.getAsn());
 	}
 	public Map printPutDirect(String asnCode){
+		asnCode = asnCode==null?"-":asnCode.trim();
 		String hql = "FROM WmsASN asn WHERE asn.relatedBill1 =:code";
 		WmsASN asn = (WmsASN) commonDao.findByQueryUniqueResult(hql, 
 				new String[]{"code"}, new Object[]{asnCode});
@@ -1926,11 +1927,20 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 			asn = (WmsASN) commonDao.findByQueryUniqueResult(hql, 
 					new String[]{"code"}, new Object[]{asnCode});
 			if(asn==null){
-				System.out.println("单据号不存在:"+asnCode);
+				throw new BusinessException("单据号不存在:"+asnCode);
 			}
 		}
 		Map result = new HashMap();
 		if(asn!=null){
+			//统计明细是否全部确认
+			Boolean beReceived = true;
+			Set<WmsASNDetail> details = asn.getDetails();
+			for(WmsASNDetail detail : details){
+				beReceived = detail.getBeReceived();
+				if(!beReceived){
+					throw new BusinessException("明细未全部确认:"+asnCode);
+				}
+			}
 			if(asn.getStatus().equals(WmsASNStatus.RECEIVED) 
 					|| asn.getStatus().equals(WmsASNStatus.RECEIVING)){
 				asn.setPrintDate(new Date());//打印上架单时间

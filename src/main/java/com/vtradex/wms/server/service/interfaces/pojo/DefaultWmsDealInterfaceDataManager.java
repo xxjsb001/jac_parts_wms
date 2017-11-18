@@ -629,7 +629,7 @@ public class DefaultWmsDealInterfaceDataManager
 		if(null == connection){
 			throw new BusinessException("数据库连接失败!!!");
 		}
-		WmsWarehouse w = commonDao.load(WmsWarehouse.class, asn.getWarehouse().getId());
+//		WmsWarehouse w = commonDao.load(WmsWarehouse.class, asn.getWarehouse().getId());
 		WmsBillType bill = commonDao.load(WmsBillType.class,asn.getBillType().getId());
 		PreparedStatement pre = null;
 		ResultSet rs = null;
