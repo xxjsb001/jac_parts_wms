@@ -45,6 +45,7 @@ public class WmsPickTicketAndAppliance extends Entity  {
 	
 	private Double activeQty = 0D;//激活数量,解决同一物料拆分拣货的场景
 	
+	private Double pickQty = 0D;//虚拟扣减时判断当前明细已拣货量
 	
 	public WmsPickTicketAndAppliance(){}
 	
@@ -82,6 +83,16 @@ public class WmsPickTicketAndAppliance extends Entity  {
 		this.remark = remark;
 		this.sx = sx;
 	}
+
+	public Double getPickQty() {
+		return pickQty;
+	}
+
+
+	public void setPickQty(Double pickQty) {
+		this.pickQty = pickQty;
+	}
+
 
 	public Double getActiveQty() {
 		return activeQty;
@@ -241,7 +252,9 @@ public class WmsPickTicketAndAppliance extends Entity  {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
+	public Double getAvailableQuantityBU(){
+		return this.qty-this.pickQty;
+	}
 	
 	
 	

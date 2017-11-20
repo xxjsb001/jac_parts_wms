@@ -1512,7 +1512,7 @@ public class DefaultWmsMoveRFManager extends DefaultBaseManager implements WmsMo
 		moveDocDetail.setRelatedId(ix.getId());//补货明细与子表一对一
 		commonDao.store(moveDocDetail);
 		wmsTaskManager.createWmsTask(moveDocDetail, itemKey,
-				srcInv.getStatus(), allocateQuantityBU);
+				srcInv.getStatus(), allocateQuantityBU,moveDocDetail.getMoveDoc().getCode());
 		WmsMoveDoc moveDoc = moveDocDetail.getMoveDoc();
 		moveDoc.setStatus(WmsMoveDocStatus.ALLOCATED);
 		moveDoc.refreshQuantity();

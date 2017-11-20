@@ -126,3 +126,6 @@ CREATOR, CREATED_TIME, LAST_OPERATOR_ID, LAST_OPERATOR, UPDATE_TIME)
 VALUES
    (SEQ_ENUMERATE.NEXTVAL, 'com.vtradex.thorn.server.config.globalparam.GlobalParam', 'rule_rf', 'P_STRING', '规则上线RF同步URL', 'origen', 'http://localhost:8082/jac_fdj_wms/rf', '', '
 规则上线RF同步URL', 'wms', null, '', null,null , '', null);
+
+insert into global_params (ID, DISCRIMINATOR, PARAM_ID, TYPE, GROUP_NAME, REF_MODEL, PARAM_VALUE, PARAM_BEAN, DESCRIPTION, MODULE, CREATOR_ID, CREATOR, CREATED_TIME, LAST_OPERATOR_ID, LAST_OPERATOR, UPDATE_TIME)
+values (SEQ_ENUMERATE.NEXTVAL, 'com.vtradex.thorn.server.config.globalparam.GlobalParam', 'printContainerURL', 'P_STRING', '交接单打印', 'origen', 'http://192.168.10.92:8087/jac_parts_wms/reportJsp/directPrint.jsp?raq=parts_sjzyd.raq', '', '交接单打印报表', 'wms', null, '', '', null, '', '');

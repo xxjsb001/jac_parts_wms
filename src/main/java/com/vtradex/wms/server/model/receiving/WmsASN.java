@@ -48,6 +48,8 @@ public class WmsASN extends VersionalEntity {
 	private Date startReceivedDate;
 	/**收货结束时间*/
 	private Date endReceivedDate;
+	/** 上架开始时间 20171120**/
+	private Date startShelvesDate;
 	/** 发货人 --备用*/
 	private String fromName;
 	/** 发货人联系方式 --备用 */
@@ -261,7 +263,15 @@ public class WmsASN extends VersionalEntity {
 	public void setEndReceivedDate(Date endReceivedDate) {
 		this.endReceivedDate = endReceivedDate;
 	}
+	
+    /**20171120 新增上架开始时间 **/
+	public Date getStartShelvesDate() {
+		return startShelvesDate;
+	}
 
+	public void setStartShelvesDate(Date startShelvesDate) {
+		this.startShelvesDate = startShelvesDate;
+	}
 
 	public Double getMovedQuantityBU() {
 		return movedQuantityBU;

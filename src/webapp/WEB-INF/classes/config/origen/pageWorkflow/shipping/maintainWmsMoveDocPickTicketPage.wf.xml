@@ -6,26 +6,35 @@
             <tablePopup id="view" title="view" process="wmsMoveDocProcess.view" enableType="single" containId="true" pageId="viewWmsMoveDocPickTicketPage">
                 <enableExpression/>
             </tablePopup>
-            <tableCommit id="autoAllocate" title="autoAllocate" process="wmsMoveDocProcess.autoAllocate" enableType="multi" download="false" closeTransactional="true">
+            <!-- 20171120注释自动分配按钮 -->
+            <!--  <tableCommit id="autoAllocate" title="autoAllocate" process="wmsMoveDocProcess.autoAllocate" enableType="multi" download="false" closeTransactional="true">
                 <enableExpression/>
                 <mappings/>
                 <actions/>
                 <forwards/>
-            </tableCommit>
-            <tablePopup id="manualAllocate" title="manualAllocate" process="wmsMoveDocProcess.manualAllocate" enableType="single" containId="true" pageId="manualPickingAllocatePage">
+            </tableCommit> -->
+            
+            <!-- 20171120注释手工分配按钮 -->
+            <!-- <tablePopup id="manualAllocate" title="manualAllocate" process="wmsMoveDocProcess.manualAllocate" enableType="single" containId="true" pageId="manualPickingAllocatePage">
                 <enableExpression/>
-            </tablePopup>
+            </tablePopup>  --> 
+            
+            <!-- 20171120注释分配取消按钮 
             <tablePopup id="cancelAllocate" title="unallocate" process="wmsMoveDocProcess.cancelAllocate" enableType="single" containId="true" pageId="modifyWmsMoveDocCancelAllocatePickTicketPage">
                 <enableExpression/>
-            </tablePopup>
-            <tableCommit id="active" title="active" process="wmsMoveDocProcess.active" enableType="multi" download="false" closeTransactional="false">
+            </tablePopup>  -->
+            
+            <!-- 20171120注释激活按钮 -->
+            <!-- <tableCommit id="active" title="active" process="wmsMoveDocProcess.active" enableType="multi" download="false" closeTransactional="false">
                 <enableExpression/>
                 <mappings/>
                 <actions>
                     <action managerName="wmsWorkDocManager" methodName="activePickByJac" parameter="obj"/>
                 </actions>
                 <forwards/>
-            </tableCommit>
+            </tableCommit> -->  
+            
+            <!-- 20171120注释反激活按钮 
             <tableCommit id="unActive" title="unActive" process="wmsMoveDocProcess.unActive" enableType="multi" multiMapping="false" closeTransactional="false">
                 <enableExpression/>
                 <mappings/>
@@ -33,7 +42,8 @@
                     <action managerName="wmsWorkDocManager" methodName="unActivePickByJac" parameter="obj"/>
                 </actions>
                 <forwards/>
-            </tableCommit>
+            </tableCommit> -->
+            
             <!-- 
             <tablePopup id="confirm" title="confirm" process="wmsMoveDocProcess.confirm" enableType="single" containId="true" pageId="modifyMoveConfirmPage">
                 <enableExpression/>
@@ -58,20 +68,30 @@
                 </actions>
                 <forwards/>
             </tableCommit>
-            <tablePopup id="printTask" title="printTask" process="wmsMoveDocProcess.printTask" enableType="single" containId="true" managerName="wmsMoveDocManager" methodName="printTask" pageId="printPickTaskReportPage">
+            
+            <!-- 20171120注释打印拣货单按钮 -->
+            <!-- <tablePopup id="printTask" title="printTask" process="wmsMoveDocProcess.printTask" enableType="single" containId="true" managerName="wmsMoveDocManager" methodName="printTask" pageId="printPickTaskReportPage">
+                <enableExpression><![CDATA[${moveDoc.status} == 'ACTIVE' && ${moveDoc.shipStatus} == 'UNSHIP']]></enableExpression>
+            </tablePopup>  -->  
+            
+            <!-- 20171120增加新打印拣货单按钮 -->
+            <tablePopup id="printTask" title="printTask" process="wmsMoveDocProcess.printTask" enableType="multi" containId="true" managerName="wmsMoveDocManager" methodName="printTask" pageId="printNewPickTaskReportPage">
                 <enableExpression><![CDATA[${moveDoc.status} == 'ACTIVE' && ${moveDoc.shipStatus} == 'UNSHIP']]></enableExpression>
             </tablePopup>
+            
             <!-- managerName="wmsMoveDocManager" methodName="printTask"  -->
             <tablePopup id="checkStation" title="checkStation" process="wmsMoveDocProcess.checkStation" enableType="single" containId="true" pageId="viewMoveDocAndStationPage">
                 <enableExpression><![CDATA[${moveDoc.status}=='ACTIVE']]></enableExpression>
             </tablePopup>
         </process>
         
-        <process id="wmsMoveDocProcess">
+           <!-- 20171120注释预览拣货单按钮 -->
+           <!--  <process id="wmsMoveDocProcess">
         	<tablePopup id="printTask" title="printTask01" process="wmsMoveDocProcess.printTask" enableType="single" containId="true" managerName="wmsMoveDocManager" methodName="printTask" pageId="printPickTask01ReportPage">
                 <enableExpression><![CDATA[${moveDoc.status} == 'ACTIVE' && ${moveDoc.shipStatus} == 'UNSHIP']]></enableExpression>
             </tablePopup>
-        </process>
+        </process> -->
+        
     </main>
     <detail/>
 </page>

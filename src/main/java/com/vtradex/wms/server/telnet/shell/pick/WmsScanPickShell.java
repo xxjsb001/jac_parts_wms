@@ -149,7 +149,7 @@ public class WmsScanPickShell extends Thorn4BaseShell{
 				messge = "失败!拣货量不可小于等于0";
 				this.setStatusMessage(messge);
 			}
-			Map<String,String> result = pickRFManager.singlePicQty(pickNo, container, location, itemCode,picQuantity);
+			Map<String,String> result = pickRFManager.singlePicQty(pickNo, container, location, itemCode,picQuantity,"RF扫码拣货",true);
 			messge = result.get(ERROR_MESG);
 			if(!StringUtils.isEmpty(messge)){
 				if(messge.equals(ERROR_ITEM_NULL) //物料明细不存在

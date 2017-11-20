@@ -47,6 +47,8 @@
 	<task id="viewPrintOrder" title="预览打印配送单">
 	</task>
 	
+	<task id="scanPickOver" title="备料交接">
+	</task>
 	<task id="scanSubBol" title="回单扫描">
 	</task>
 

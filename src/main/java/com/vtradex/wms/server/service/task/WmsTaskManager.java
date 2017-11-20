@@ -31,7 +31,8 @@ public interface WmsTaskManager extends BaseManager {
 	 * @throws BusinessException
 	 */
 	@Transactional
-	WmsTask createWmsTask(WmsMoveDocDetail moveDocDetail, WmsItemKey itemKey, String srcInventoryStatus, double allocateQuantityBU) throws BusinessException;
+	WmsTask createWmsTask(WmsMoveDocDetail moveDocDetail, WmsItemKey itemKey, String srcInventoryStatus, 
+			double allocateQuantityBU,String relatedBill) throws BusinessException;
 	
     /**
      * 创建上架任务

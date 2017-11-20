@@ -140,5 +140,8 @@ public interface WmsPickRFManager extends WmsCommonRFManager{
 //	Map<String,String> findMoveDetail(String pickNo,String itemCode);
 	/**明细拣货*/
 	@Transactional
-	Map<String,String> singlePicQty(String pickNo,String container,String fromLocationCode,String itemCode,Double picQuantity);
+	Map<String,String> singlePicQty(String pickNo,String container,String fromLocationCode,String itemCode,Double picQuantity
+			,String description,Boolean checkBox);
+	@Transactional
+	void spsPicking(Long id);
 }

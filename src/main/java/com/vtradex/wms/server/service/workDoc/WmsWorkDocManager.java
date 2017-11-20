@@ -83,6 +83,9 @@ public interface WmsWorkDocManager extends BaseManager {
 	/**扫码核单yc.min*/
 	@Transactional
 	Map getWmsScanBolGwt(Map param);
+	/**备料交接_扫码器具码yc.min*/
+	@Transactional
+	Map getWmsScanContainer(Map param);
 	/**拣货单发运确认yc.min*/
 	@Transactional
 	void pickShipAll(WmsMoveDoc moveDoc);

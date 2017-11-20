@@ -39,5 +39,6 @@
 		<property name="sx" type="int" column="SX"/>
 		
 		<property name="activeQty" type="double" column="ACTIVE_QTY"/>
+		<property name="pickQty" type="double" column="PICK_QTY"/>
 	</class>
 </hibernate-mapping>

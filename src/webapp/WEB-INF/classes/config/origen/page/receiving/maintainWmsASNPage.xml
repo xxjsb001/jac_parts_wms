@@ -23,6 +23,7 @@ asn.supplier.code,
 asn.isCheckMT,
 asn.confirmAccount,
 asn.printASNReportDate,
+asn.startShelvesDate,
 asn.source,
 asn.remark,
 asn.printPerson,
@@ -59,6 +60,8 @@ asn.updateInfo.lastOperator
             <column id="asn.isCheckMT" title="asn.isCheckMT" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" formatParam="Boolean"/>
             <column id="asn.confirmAccount" title="asn.confirmAccount" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" formatParam="Boolean"/>
             <column id="asn.printASNReportDate" title="asn.printASNReportDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <!-- 20171120 新增上架开始时间字段 -->
+            <column id="asn.startShelvesDate" title="asn.startShelvesDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
             <column id="asn.source" title="asn.source" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsSource"/>
             <column id="asn.remark" title="asn.remark" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="asn.printPerson" title="asn.printPerson" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>

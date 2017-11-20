@@ -16,15 +16,19 @@ import com.vtradex.thorn.client.ui.table.RowData;
 import com.vtradex.thorn.server.exception.BusinessException;
 import com.vtradex.thorn.server.model.EntityFactory;
 import com.vtradex.thorn.server.model.message.Task;
-import com.vtradex.thorn.server.model.message.TaskStatus;
 import com.vtradex.thorn.server.service.WorkflowManager;
 import com.vtradex.thorn.server.service.pojo.DefaultBaseManager;
 import com.vtradex.thorn.server.util.BeanUtils;
 import com.vtradex.thorn.server.util.LocalizedMessage;
+import com.vtradex.thorn.server.web.security.UserHolder;
 import com.vtradex.wms.client.scanBol.EditWmsScanBol;
 import com.vtradex.wms.client.scanBol.businessObject.BusinessNode;
+import com.vtradex.wms.client.scanPickOver.EditScanPickOver;
 import com.vtradex.wms.server.action.PickTicketBaseShipDecision;
 import com.vtradex.wms.server.model.base.BaseStatus;
+import com.vtradex.wms.server.model.interfaces.HeadType;
+import com.vtradex.wms.server.model.interfaces.WBols;
+import com.vtradex.wms.server.model.interfaces.WContainers;
 import com.vtradex.wms.server.model.inventory.WmsInventory;
 import com.vtradex.wms.server.model.inventory.WmsInventoryExtend;
 import com.vtradex.wms.server.model.inventory.WmsInventoryLogType;
@@ -33,6 +37,7 @@ import com.vtradex.wms.server.model.move.WmsBoxDetail;
 import com.vtradex.wms.server.model.move.WmsMoveDoc;
 import com.vtradex.wms.server.model.move.WmsMoveDocDetail;
 import com.vtradex.wms.server.model.move.WmsMoveDocShipStatus;
+import com.vtradex.wms.server.model.move.WmsMoveDocStatus;
 import com.vtradex.wms.server.model.move.WmsMoveDocType;
 import com.vtradex.wms.server.model.move.WmsTask;
 import com.vtradex.wms.server.model.move.WmsTaskStatus;
@@ -57,6 +62,7 @@ import com.vtradex.wms.server.model.warehouse.WmsLocationType;
 import com.vtradex.wms.server.model.warehouse.WmsWarehouse;
 import com.vtradex.wms.server.model.warehouse.WmsWarehouseArea;
 import com.vtradex.wms.server.model.warehouse.WmsWorkArea;
+import com.vtradex.wms.server.service.GlobalParamUtils;
 import com.vtradex.wms.server.service.inventory.WmsInventoryExtendManager;
 import com.vtradex.wms.server.service.inventory.WmsInventoryManager;
 import com.vtradex.wms.server.service.rule.WmsRuleManager;
@@ -66,7 +72,6 @@ import com.vtradex.wms.server.service.task.WmsTaskManager;
 import com.vtradex.wms.server.service.workDoc.WmsWorkDocManager;
 import com.vtradex.wms.server.utils.JavaTools;
 import com.vtradex.wms.server.utils.MyUtils;
-import com.vtradex.wms.server.utils.WmsTables;
 import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
 
 /**
@@ -1177,7 +1182,7 @@ public class DefaultWmsWorkDocManager extends DefaultBaseManager implements WmsW
 		if(!task.getSrcInventoryId().equals(dstInventory.getId())){//退拣库位与task分配库位不一致,new
 			WmsTaskManager wmsTaskManager = (WmsTaskManager) applicationContext.getBean("wmsTaskManager");
 			WmsTask newTask = wmsTaskManager.createWmsTask(moveDocDetail, dstInventory.getItemKey(),
-					dstInventory.getStatus(), pickBackQty);
+					dstInventory.getStatus(), pickBackQty,moveDoc.getCode());
 			newTask.setToLocationId(task.getToLocationId());
 			newTask.setToLocationCode(task.getToLocationCode());
 			newTask.setDescInventoryId(task.getDescInventoryId());
@@ -1255,6 +1260,85 @@ public class DefaultWmsWorkDocManager extends DefaultBaseManager implements WmsW
 		}else{
 			LocalizedMessage.addLocalizedMessage(MyUtils.font("失败!数量不满足"));
 		}
+	}
+	public Map getWmsScanContainer(Map param){
+		Map result  = new HashMap();
+		String pickCode = param.get(EditScanPickOver.PARAM_CODE).toString().trim();	// 获得录入的拣货单号
+		String container = param.get(EditScanPickOver.PARAM_CONTAINER).toString().trim();	// 获得录入的器具号
+		String message = "交接成功"+ "\n" +pickCode+":"+container;
+		
+		Integer reportPrintNum = 1;
+		Boolean isSuccess = false;
+		String productionLine = null;
+		String url = null,raq = "parts_sjzyd.raq";//根据实际调整 wmsContainer.raq
+		String hql = "FROM WmsMoveDoc moveDoc WHERE moveDoc.code =:pickNo";
+		WmsMoveDoc moveDoc = (WmsMoveDoc) commonDao.findByQueryUniqueResult(hql, "pickNo", pickCode);
+		if(moveDoc==null){
+			message = "失败:拣货单不存在";
+			result.put(BusinessNode.MSG, BusinessNode.SYS_ERROR);
+		}else{
+			productionLine = moveDoc.getProductionLine();
+			//printASNURL=http://192.168.10.92:8087/jac_parts_wms/reportJsp/directPrint.jsp
+			url = GlobalParamUtils.getGloableStringValue("printContainerURL");
+			if(StringUtils.isEmpty(url)){
+				message = "全局参数缺失[printContainerURL],请添加后重启服务!";
+				result.put(BusinessNode.MSG, BusinessNode.SYS_ERROR);
+			}else{
+				if(WmsMoveDocType.SPS_PICKING.equals(moveDoc.getOriginalBillType().getCode())){
+					//则系统要发异步的扣减库存逻辑
+					String relatedBill1 = moveDoc.getPickTicket().getRelatedBill1();
+					hql = "SELECT appl.id FROM WmsPickTicketAndAppliance appl WHERE appl.sheetNo =:sheetNo" +
+							" AND appl.no =:boxTag";
+					List<Long> appls = commonDao.findByQuery(hql, new String[]{"sheetNo","boxTag"}, 
+							new Object[]{relatedBill1,container});
+					if(appls==null || appls.size()<=0){
+						message = "失败:时序件无时序数据(mes提供)";
+						result.put(BusinessNode.MSG, BusinessNode.SYS_ERROR);
+					}else{
+						reportPrintNum = 0;//时序件提前打印器具单
+						message = (StringUtils.isEmpty(productionLine)?"":productionLine)+ "\n" +container;
+						isSuccess = true;
+						//异步任务
+						WBols w = new WBols(relatedBill1, null,WmsWarehouseHolder.getWmsWarehouse());
+						commonDao.store(w);
+						WContainers c = new WContainers(w, container);
+						commonDao.store(c);
+						Set<WContainers> details = new HashSet<WContainers>();
+						details.add(c);
+						w.setDetails(details);
+						Task task = new Task(HeadType.SPS_PICKING, 
+								"wmsPickRFManager"+MyUtils.spiltDot+"spsPicking", w.getId());
+						commonDao.store(task);
+						if(moveDoc.getStatus().equals(WmsMoveDocStatus.OPEN)){
+							moveDoc.setReserveBeginTime(new Date());//备料单扫描时间
+							moveDoc.setDriver(UserHolder.getUser().getName());//备料单扫描人
+							moveDoc.setStatus(WmsMoveDocStatus.ACTIVE);
+							commonDao.store(moveDoc);
+						}
+					}
+				}else{
+					//校验容器和拣货单是否有绑定关系,通过task
+					hql = "SELECT task.id FROM WmsTask task WHERE task.originalBillCode =:originalBillCode AND task.relatedBill =:relatedBill";
+					List<Long> tasks = commonDao.findByQuery(hql, new String[]{"originalBillCode","relatedBill"}, 
+							new Object[]{pickCode,container});
+					if(tasks==null || tasks.size()<=0 ){
+						message = "失败:容器和拣货单无任务";
+						result.put(BusinessNode.MSG, BusinessNode.SYS_ERROR);
+					}else{
+						message = (StringUtils.isEmpty(productionLine)?"":productionLine)+ "\n" +container+ "\n" +pickCode;
+						isSuccess = true;
+					}
+				}
+			}
+		}
+		if(isSuccess){
+			String printUrl = url+"?raq="+raq+"&params=ids=" + moveDoc.getId()+"&needSelectPrinter=no";//根据实际调整
+			result.put(EditScanPickOver.RETURN_PRINT_URL, printUrl);
+			result.put(EditScanPickOver.REPORT_PRINT_NUM, reportPrintNum);//打印次数
+			result.put(BusinessNode.MSG, BusinessNode.ON_SUCCESS);
+		}
+		result.put(EditScanPickOver.RETURN_NAME, message);
+		return result;
 	}
 	public Map getWmsScanBolGwt(Map param){
 		Map result  = new HashMap();

@@ -448,7 +448,7 @@ public class DefaultWmsMoveDocManager extends DefaultBaseManager implements
 			
 			commonDao.store(moveDocDetail);
 			wmsTaskManager.createWmsTask(moveDocDetail, itemKey,
-					srcInv.getStatus(), allocateQuantityBU);
+					srcInv.getStatus(), allocateQuantityBU,moveDocDetail.getMoveDoc().getCode());
 			
 			doProcessEntityAllocateResult(moveDocDetail, allocateQuantityBU);
 		}
@@ -600,7 +600,7 @@ public class DefaultWmsMoveDocManager extends DefaultBaseManager implements
 			
 			commonDao.store(moveDocDetail);
 			wmsTaskManager.createWmsTask(moveDocDetail, itemKey,
-					srcInv.getStatus(), allocateQuantityBU);
+					srcInv.getStatus(), allocateQuantityBU,moveDocDetail.getMoveDoc().getCode());
 
 			doProcessEntityAllocateResult(moveDocDetail, allocateQuantityBU);
 		}
@@ -1055,7 +1055,8 @@ public class DefaultWmsMoveDocManager extends DefaultBaseManager implements
 		
 		wmsInventoryManager.verifyLocation(BaseStatus.LOCK_IN,toLoc.getId(), wdd.getPackageUnit(),task.getItemKey().getId(),
 				task.getItemKey().getItem().getId(),  planQuantityBU, task.getPallet());
-		WmsTask newTask = wmsTaskManager.createWmsTask(wdd, task.getItemKey(), task.getInventoryStatus(), planQuantityBU);
+		WmsTask newTask = wmsTaskManager.createWmsTask(wdd, task.getItemKey(), task.getInventoryStatus(), 
+				planQuantityBU,moveDoc.getCode());
 		newTask.setToLocationId(toLoc.getId());
 		newTask.setToLocationCode(toLoc.getCode());
 		newTask.setBeManual(task.getBeManual());
@@ -1204,7 +1205,7 @@ public class DefaultWmsMoveDocManager extends DefaultBaseManager implements
 		return itemStates;
 	}
 	private void writeQuality(WmsMoveDocDetail wdd,Double planQty,Boolean isBeBackInv,String itemStatus){
-		WmsTask task = wmsTaskManager.createWmsTask(wdd, wdd.getItemKey(), itemStatus, planQty);
+		WmsTask task = wmsTaskManager.createWmsTask(wdd, wdd.getItemKey(), itemStatus, planQty,wdd.getMoveDoc().getCode());
 		task.setBeManual(isBeBackInv);
 		commonDao.store(task);
 		wdd.process(planQty);

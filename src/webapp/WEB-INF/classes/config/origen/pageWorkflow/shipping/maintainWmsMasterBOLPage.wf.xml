@@ -3,6 +3,9 @@
 <page id="maintainWmsMasterBOLPage">
     <main>
         <process id="masterBOLProcess">
+        	<tablePopup id="scanPickOver" title="scanPickOver" process="masterBOLProcess.scanPickOver" enableType="none" containId="false" pageId="editScanPickOverPage">
+				<enableExpression/>
+			</tablePopup>
             <tablePopup id="view" title="view" process="masterBOLProcess.view" enableType="single" containId="true" pageId="viewModifyMasterBOLPage">
                 <enableExpression/>
             </tablePopup>

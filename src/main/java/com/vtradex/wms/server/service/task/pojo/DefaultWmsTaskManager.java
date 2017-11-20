@@ -45,7 +45,8 @@ public class DefaultWmsTaskManager extends DefaultBaseManager implements
 	 * @return
 	 * @throws BusinessException
 	 */
-	public WmsTask createWmsTask(WmsMoveDocDetail moveDocDetail, WmsItemKey itemKey, String srcInventoryStatus, double allocateQuantityBU) throws BusinessException {
+	public WmsTask createWmsTask(WmsMoveDocDetail moveDocDetail, WmsItemKey itemKey, String srcInventoryStatus
+			,double allocateQuantityBU,String relatedBill) throws BusinessException {
 		WmsTask newTask = EntityFactory.getEntity(WmsTask.class);
 		newTask.setType(moveDocDetail.getMoveDoc().getType());
 		newTask.setItemKey(itemKey);
@@ -56,7 +57,7 @@ public class DefaultWmsTaskManager extends DefaultBaseManager implements
 		newTask.setPlanQuantity(PackageUtils.convertPackQuantity(allocateQuantityBU, moveDocDetail.getPackageUnit()));
 		newTask.setPlanQuantityBU(allocateQuantityBU);
 		newTask.setOriginalBillCode(moveDocDetail.getMoveDoc().getCode());
-		newTask.setRelatedBill(moveDocDetail.getMoveDoc().getCode());
+		newTask.setRelatedBill(relatedBill);//容器拣货时,保存容器号
 		newTask.setPallet(moveDocDetail.getPallet() == null ? BaseStatus.NULLVALUE : moveDocDetail.getPallet());
 		if(moveDocDetail.getMoveDoc().isWaveType()){
 			WmsWaveDoc waveDoc = load(WmsWaveDoc.class,moveDocDetail.getMoveDoc().getWaveDoc().getId());

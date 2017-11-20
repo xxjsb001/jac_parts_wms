@@ -22,4 +22,7 @@ public interface HeadType {
 	
 	/**过账确认*/
 	public static String CONFIRM_ACCOUNT = "CONFIRM_ACCOUNT";
+	
+	/**时序拣货*/
+	public static String SPS_PICKING = "SPS_PICKING";
 }

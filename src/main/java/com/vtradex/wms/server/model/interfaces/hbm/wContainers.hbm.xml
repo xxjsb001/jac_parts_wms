@@ -16,7 +16,8 @@
 			<column name="W_BOL_S_ID"/>
 		</many-to-one>
 		
-        <property name="container" type="string" column="container" length="100"/>		
+        <property name="container" type="string" column="container" length="100"/>	
+        <property name="descrption" type="string" column="descrption" length="100"/>	
 	
 		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
 			<property name="creatorId" type="long" column="CREATOR_ID"/>

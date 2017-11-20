@@ -12,6 +12,8 @@ public class WContainers extends VersionalEntity{
 	private WBols bol;
 	
 	private String container;
+	
+	private String descrption;
 
 	public WContainers(WBols bol, String container) {
 		super();
@@ -39,6 +41,13 @@ public class WContainers extends VersionalEntity{
 	public void setContainer(String container) {
 		this.container = container;
 	}
-	
+
+	public String getDescrption() {
+		return descrption;
+	}
+
+	public void setDescrption(String descrption) {
+		this.descrption = descrption;
+	}
 	
 }

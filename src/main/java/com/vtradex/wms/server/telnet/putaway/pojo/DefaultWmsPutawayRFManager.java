@@ -1,5 +1,6 @@
 package com.vtradex.wms.server.telnet.putaway.pojo;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -448,7 +449,7 @@ public class DefaultWmsPutawayRFManager extends DefaultBaseManager implements Wm
 			for (WmsMoveDocDetail detail : moveDoc.getDetails()) {
 				if(putawayLocationCode == null) {
 					WmsTask task = wmsTaskManager.createWmsTask(detail,detail.getItemKey(),
-							detail.getInventoryStatus(), detail.getPlanQuantityBU());
+							detail.getInventoryStatus(), detail.getPlanQuantityBU(),moveDoc.getCode());
 					resetAllocate(task.getId());
 					detail.allocate(task.getPlanQuantityBU());
 				} else {
@@ -1179,6 +1180,10 @@ public class DefaultWmsPutawayRFManager extends DefaultBaseManager implements Wm
 		}
 		if(asn.getStatus().equals(WmsASNStatus.RECEIVED) 
 				|| asn.getStatus().equals(WmsASNStatus.RECEIVING)){
+			if(asn.getShelvesStauts().equals(WmsASNShelvesStauts.UNPUTAWAY)){
+				asn.setStartShelvesDate(new Date());
+				commonDao.store(asn);
+			}
 			return asn.getId();
 		}else{
 			return null;
