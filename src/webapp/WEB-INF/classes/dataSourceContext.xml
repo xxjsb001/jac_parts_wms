@@ -85,8 +85,8 @@
             <value>oracle.jdbc.OracleDriver</value>
         </property>
         <property name="url">
-     		<value>jdbc:oracle:thin:@192.168.10.218:1521:jqwldb</value>
-<!--      		<value>jdbc:oracle:thin:@192.168.10.92:1521:jqwldb</value> -->
+<!--      		<value>jdbc:oracle:thin:@192.168.10.218:1521:jqwldb</value> -->
+     		<value>jdbc:oracle:thin:@192.168.10.92:1521:jqwldb</value>
         </property>
         <property name="username">
           <value>jac_pcl_bms</value>
@@ -100,7 +100,7 @@
             <value>oracle.jdbc.OracleDriver</value>
         </property>
         <property name="url">
-          <value>jdbc:oracle:thin:@192.168.10.92:1521:jqwldb</value>
+          	<value>jdbc:oracle:thin:@192.168.10.92:1521:jqwldb</value>
 <!--                <value>jdbc:oracle:thin:@192.168.11.136:1521:jqwlscl</value> -->
         </property>
         <property name="username">

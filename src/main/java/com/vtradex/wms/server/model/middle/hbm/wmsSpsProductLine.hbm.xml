@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.middle.WmsSpsProductLine" table="W_SPS_PRODUCT_LINE">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">WSEQ_W_SPS_PRODUCT_LINE</param>
+                <param name="parameters">START WITH 1</param>
+            </generator>
+        </id>
+		<property name="sheetNo" type="string" column="ODR_NO" length="32"/>
+		<property name="planTime" type="timestamp" column="DEMAND_DATE" />
+		<property name="sx" type="int" column="SX"/>
+		<property name="containSx" type="int" column="CONTAIN_SX"/>
+		<property name="itemCode" type="string" column="ITEM_CODE"/>
+		<property name="itemName" type="string" column="ITEM_NAME"/>
+		<property name="station" type="string" column="STATION"/>
+		<property name="qty" type="double" column="QTY"/>
+		<property name="remark" type="string" column="REMARK"/>
+		
+		<property name="orderNo" type="string" column="ORDER_NO" length="100"/>
+		<property name="productLine" type="string" column="PRODUCT_LINE" length="50"/>
+		<property name="stock" type="string" column="STOCK" length="50"/>
+		<property name="isSps" type="int" column="is_sps"/>
+		<property name="type" type="string" column="TYPE" length="50"/>
+		<property name="c5" type="string" column="C5" length="50"/>
+		<property name="loadage" type="int" column="LOADAGE"/>
+		<property name="line" type="int" column="LINE"/>
+		<property name="boxTag" type="string" column="BOX_TAG" length="100"/>
+		<property name="supCode" type="string" column="SUP_CODE" length="100"/>
+		<property name="supName" type="string" column="SUP_NAME" length="100"/>
+		
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+	</class>
+</hibernate-mapping>

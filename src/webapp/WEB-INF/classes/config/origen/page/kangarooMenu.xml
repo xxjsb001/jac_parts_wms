@@ -2,15 +2,26 @@
 <!-- $Id: kangarooMenu.xml -->
 <Menus>
 	<Menu name="main" title="main">
-		 <Item name="wmsASNCodeShell" title="整单收货" location="wmsASNCodeShell" />
- 		 <Item name="wmsASNDetailShell" title="单一明细收货" location="wmsASNDetailShell" />
-		 <Item name="wmsASNPutScanShell" title="扫码上架" location="wmsASNPutScanShell" />
 		 <!-- 增加风格线功能,选择时进入界面直接跳转出来 -->
-		 <Item name="wmsScanPickShell" title="扫码备料" location="wmsScanPickShell" />
-		 <Item name="wmsBOLShell" title="加入装车单" location="wmsBOLShell" />
+		 <Item name="wmsPutAsnScanShell" title="扫码上架" location="wmsPutAsnScanShell" />
+		 
+		 <Item name="wmsScanPickShell" title="扫码备料" location="wmsScanPickNewShell" /><!-- WmsScanPickNewShell wmsScanPickShell-->
+		 <Item name="wmsScanBOLShell" title="加入装车单" location="wmsScanBOLShell" />
+		 
+		 <Item name="unbindScanPickShell" title="器具解绑" location="unbindScanPickShell" />
+		 <Item name="viewScanPickContainerShell" title="器具查询" location="viewScanPickContainerShell" />
+		 <Item name="signScanPickContainerShell" title="器具签收" location="signScanPickContainerShell" />
+		 
+		 <Item name="wmsScanMoveShell" title="移位下架" location="wmsScanMoveShell" />
+		 <Item name="wmsScanMoveUpShell" title="移位上架" location="wmsScanMoveUpShell" />
+		 
 		 
 		 <!-- 待测试 -->
 		 <!-- 
+		 <Item name="wmsASNCodeShell" title="整单收货" location="wmsASNCodeShell" />
+ 		 <Item name="wmsASNDetailShell" title="单一明细收货" location="wmsASNDetailShell" />
+		 <Item name="wmsASNPutScanShell" title="扫码上架" location="wmsASNPutScanShell" />
+		 
 		 <Item name="wmsQickMoveShell" title="货品快捷移位" location="wmsQickMoveShell" />
 		 <Item name="wmsInventoryView" title="库存查询" location="wmsInventoryViewShell" />
 		<Item name="wmsWorkDocTableShell" title="拣货管理">
@@ -22,7 +33,7 @@
 		
 <!-- 被遗弃的们,,, -->		
 <!-- 
-
+	<Item name="wmsBOLShell" title="加入装车单" location="wmsBOLShell" />
 	<Item name="switchWorkZoneShell" title="作业区域切换" location="switchWorkZoneShell" />
 	<Item name="wmsReplenishmentMove" title="补货管理">
 			<Item name="wmsReplenishmentOrderShell" title="补货下单" location="wmsReplenishmentOrderShell" />

@@ -1,5 +1,7 @@
 package com.vtradex.wms.server.model.shipping;
 
+
+
 import com.vtradex.thorn.server.model.Entity;
 import com.vtradex.wms.server.model.move.WmsMoveDocShipStatus;
 import com.vtradex.wms.server.model.move.WmsTask;
@@ -27,6 +29,7 @@ public class WmsTaskAndStation extends Entity{
 	private String container;
 	//器具标签
 	private String boxTag;
+
 	
 	/**是否加入装车单*/
 	private Boolean isJoinBOL = Boolean.FALSE;

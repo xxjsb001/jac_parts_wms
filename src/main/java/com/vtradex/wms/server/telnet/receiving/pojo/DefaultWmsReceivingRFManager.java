@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.lang.StringUtils;
@@ -12,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import com.vtradex.thorn.server.exception.BusinessException;
 import com.vtradex.thorn.server.service.WorkflowManager;
 import com.vtradex.thorn.server.service.pojo.DefaultBaseManager;
+import com.vtradex.wms.server.model.base.BaseStatus;
 import com.vtradex.wms.server.model.base.LotInfo;
 import com.vtradex.wms.server.model.organization.WmsItem;
 import com.vtradex.wms.server.model.organization.WmsItemState;
@@ -24,12 +28,15 @@ import com.vtradex.wms.server.model.receiving.WmsASNStatus;
 import com.vtradex.wms.server.model.receiving.WmsBooking;
 import com.vtradex.wms.server.model.warehouse.WmsDock;
 import com.vtradex.wms.server.model.warehouse.WmsLocation;
+import com.vtradex.wms.server.model.warehouse.WmsLocationType;
 import com.vtradex.wms.server.service.receiving.WmsASNManager;
 import com.vtradex.wms.server.telnet.dto.WmsASNDetailDTO;
 import com.vtradex.wms.server.telnet.exception.RFFinishException;
 import com.vtradex.wms.server.telnet.receiving.WmsReceivingRFManager;
+import com.vtradex.wms.server.telnet.shell.putaway.WmsPutAsnDetailShell;
 import com.vtradex.wms.server.utils.JavaTools;
 import com.vtradex.wms.server.utils.VtradexDirectPrintJava;
+import com.vtradex.wms.server.web.filter.WmsWarehouseHolder;
 import com.vtradex.wms.server.web.filter.WmsWorkerHolder;
 
 /**
@@ -357,13 +364,54 @@ public class DefaultWmsReceivingRFManager extends DefaultBaseManager implements 
 	public void detailReceive(Long detailId,Long stateId,Double receivingQuantityBU,Long userId,String inventoryState){
 		WmsASNDetail detail = commonDao.load(WmsASNDetail.class, detailId);
 		WmsPackageUnit u = commonDao.load(WmsPackageUnit.class, detail.getPackageUnit().getId());
-		wmsASNManager.detailReceive(detail, u.getId(), receivingQuantityBU, 0L, stateId.toString(), userId,inventoryState);
+		wmsASNManager.detailReceive(detail, u.getId(), receivingQuantityBU, 0L, stateId==null?null:stateId.toString(), userId,inventoryState);
+	}
+	//明细直接上架
+	public Map<String,String> detailReceiveUp(Long detailId,Double receivingQuantityBU,Long userId,String inventoryState,String locationCode){
+		Map<String,String> result = new HashMap<String, String>();
+		result.put(WmsPutAsnDetailShell.ERROR, "");
+		List<WmsLocation> locs = commonDao.findByQuery("FROM WmsLocation l WHERE l.warehouseArea.code =:code " +
+				"AND l.status =:status AND l.type =:type AND l.warehouse.id =:warehouse", 
+				new String[]{"code","status","type","warehouse"}, 
+				new Object[]{locationCode,BaseStatus.ENABLED,WmsLocationType.STORAGE,WmsWarehouseHolder.getWmsWarehouse().getId()});
+		WmsLocation loc =null;
+		if(locs!=null && locs.size()>0){
+			loc = locs.get(0);
+		}
+		if(loc==null){
+			result.put(WmsPutAsnDetailShell.ERROR, "失败!库区无效");
+		}else{
+			WmsASNDetail detail = commonDao.load(WmsASNDetail.class, detailId);
+			receivingQuantityBU = receivingQuantityBU >= detail.getUnReceivedQtyBU()?detail.getUnReceivedQtyBU():receivingQuantityBU;
+			WmsPackageUnit u = commonDao.load(WmsPackageUnit.class, detail.getPackageUnit().getId());
+			wmsASNManager.detailReceive(detail, u.getId(), receivingQuantityBU,loc.getId(), null, userId,inventoryState);
+		}
+		return result;
 	}
 
 	@Override
 	public WmsASN getAsnById(Long id) {
 		WmsASN asn = commonDao.load(WmsASN.class, id);
 		return asn;
+	}
+	
+	public Map<String,String> checkAsnAll(Long id){
+		Map<String,String> result = new HashMap<String, String>();
+		result.put(WmsPutAsnDetailShell.ERROR, "");
+		WmsASN asn = commonDao.load(WmsASN.class, id);
+		Boolean beReceived = true,iserror = false;
+		Set<WmsASNDetail> details = asn.getDetails();
+		for(WmsASNDetail detail : details){
+			beReceived = detail.getBeReceived();
+			if(!beReceived){
+				iserror = true;
+				break;
+			}
+		}
+		if(!iserror){
+			result.put(WmsPutAsnDetailShell.ERROR, "已全部确认");
+		}
+		return result;
 	}
 	
 	

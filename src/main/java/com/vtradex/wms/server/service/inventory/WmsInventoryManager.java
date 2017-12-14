@@ -281,7 +281,8 @@ public interface WmsInventoryManager extends BaseManager{
 	 * 根据CSV文件初始化库存
 	 * @param file 
 	 */
-	void initInventoryByCVS(File file);
+	@Transactional
+	void initInventoryByCVS(Long companyId,File file);
 
 	/**
 	 * 根据CSV文件增加库存
@@ -296,6 +297,9 @@ public interface WmsInventoryManager extends BaseManager{
 	/** 取消收货 */
 	@Transactional
 	void cancelReceive(WmsReceivedRecord receivedRecord,Double cancelQtyBU);
+	/** 取消收货上架 */
+	@Transactional
+	void cancelReceive(WmsReceivedRecord receivedRecord);
 	
 	@Transactional
 	void cancelMoveDoc(WmsMoveDocDetail wmsMoveDocDetail);

@@ -5,7 +5,7 @@
         <workflow/>
         <initListeners/>
         <inputUIs>
-            <htmlDisplayer id="downloadPath" title="downloadPath" defaultValue="&lt;a href='importTemplate/importBlgItem.xls'&gt; &lt;font&gt;&lt;b&gt;下载导入模板&lt;/b&gt;&lt;/font&gt; &lt;/a&gt;" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+            <htmlDisplayer id="downloadPath" title="downloadPath" defaultValue="&lt;a href='importTemplate/importWmsBlgItem.xls'&gt; &lt;font&gt;&lt;b&gt;下载导入模板&lt;/b&gt;&lt;/font&gt; &lt;/a&gt;" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
                 <visibleExpression/>
                 <hql/>
                 <eventListeners/>

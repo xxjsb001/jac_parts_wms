@@ -170,6 +170,15 @@
 
 	<task id="printQualityView" title="预览打印送检单">
 	</task>
+	
+	<task id="import" title="导入">
+	</task>
+	
+	<task id="printMoveDoc" title="打印移位单">
+	</task>
+	
+	<task id="printMoveDocDetail" title="打印拣货单明细">
+	</task>
 
 	<decision id="wmsMoveDocAllocateDecision" action="wmsMoveDocProcessAction">
 		<to id="ALLOCATED" value="ALL" type="state" />

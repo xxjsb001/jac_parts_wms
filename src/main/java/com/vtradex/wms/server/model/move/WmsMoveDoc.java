@@ -901,7 +901,13 @@ public class WmsMoveDoc extends VersionalEntity {
 	public double getUnMoveQuantityBU(){
 		return this.planQuantityBU-this.movedQuantityBU;
 	}
-
+	
+	public void refreshPlanQuantity(){
+		this.planQuantityBU = 0D;
+		for(WmsMoveDocDetail detail : this.details){
+			this.planQuantityBU += detail.getPlanQuantityBU();
+		}
+	}
 	public WmsMoveDoc cloneWmsMoveDoc(WmsMoveDoc cloneMoveDoc) {
 		BeanUtils.copyEntity(cloneMoveDoc, this);
 		cloneMoveDoc.setId(null);

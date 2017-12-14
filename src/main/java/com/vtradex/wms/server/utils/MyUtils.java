@@ -68,6 +68,10 @@ public class MyUtils {
 	
 	public static String OVER = "00";
 	public static String THIS = "01";//原始的不变
+	public static String SECOND = "02";//原始的不变
+	
+	public static String ZERO = "0";
+	public static String FIRST = "1";
 	
 	public static String YESE = "是";
 	public static String NO = "否";

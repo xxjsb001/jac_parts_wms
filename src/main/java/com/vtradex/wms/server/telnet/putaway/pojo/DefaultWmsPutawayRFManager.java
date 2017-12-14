@@ -50,6 +50,7 @@ import com.vtradex.wms.server.telnet.dto.WmsASNDetailDTO;
 import com.vtradex.wms.server.telnet.dto.WmsPutawayDTO;
 import com.vtradex.wms.server.telnet.exception.RFFinishException;
 import com.vtradex.wms.server.telnet.putaway.WmsPutawayRFManager;
+import com.vtradex.wms.server.telnet.shell.putaway.WmsPutAsnDetailShell;
 import com.vtradex.wms.server.utils.DoubleUtils;
 import com.vtradex.wms.server.utils.MyUtils;
 import com.vtradex.wms.server.utils.PackageUtils;
@@ -1169,26 +1170,48 @@ public class DefaultWmsPutawayRFManager extends DefaultBaseManager implements Wm
 	}
 	
 	public Long findAsnId(String asnCode){
-		WmsASN asn = (WmsASN) commonDao.findByQueryUniqueResult("FROM WmsASN asn WHERE asn.code =:code", 
-				new String[]{"code"}, new Object[]{asnCode});
+		WmsASN asn = (WmsASN) commonDao.findByQueryUniqueResult("FROM WmsASN asn WHERE asn.relatedBill1 =:relatedBill1", 
+				new String[]{"relatedBill1"}, new Object[]{asnCode});
 		if(asn==null){
-			asn = (WmsASN) commonDao.findByQueryUniqueResult("FROM WmsASN asn WHERE asn.relatedBill1 =:relatedBill1", 
-					new String[]{"relatedBill1"}, new Object[]{asnCode});
+			asn = (WmsASN) commonDao.findByQueryUniqueResult("FROM WmsASN asn WHERE asn.code =:code", 
+					new String[]{"code"}, new Object[]{asnCode});
 			if(asn==null){
 				return 0L;
 			}
 		}
-		if(asn.getStatus().equals(WmsASNStatus.RECEIVED) 
-				|| asn.getStatus().equals(WmsASNStatus.RECEIVING)){
-			if(asn.getShelvesStauts().equals(WmsASNShelvesStauts.UNPUTAWAY)){
-				asn.setStartShelvesDate(new Date());
-				commonDao.store(asn);
-			}
-			return asn.getId();
-		}else{
+		if(asn.getStatus().equals(WmsASNStatus.RECEIVED)) {
 			return null;
 		}
+		if(asn.getStatus().equals(WmsASNStatus.OPEN)){
+			asnManager.active(asn);
+			WorkflowManager workflowManager = (WorkflowManager) applicationContext.getBean("workflowManager");
+			workflowManager.doWorkflow(asn, "wmsASNProcess.active");
+		}
+		return asn.getId();
+//		if(asn.getStatus().equals(WmsASNStatus.RECEIVED) 
+//				|| asn.getStatus().equals(WmsASNStatus.RECEIVING)){
+//			if(asn.getShelvesStauts().equals(WmsASNShelvesStauts.UNPUTAWAY)){
+//				asn.setStartShelvesDate(new Date());
+//				commonDao.store(asn);
+//			}
+//			return asn.getId();
+//		}else{
+//			return null;
+//		}
 	}
+	public Map<String,String> getItems(Long detailId){
+		Map<String,String> result = new HashMap<String, String>();
+		WmsASNDetail aa = commonDao.load(WmsASNDetail.class, detailId);
+		if(aa!=null){
+			WmsItem item = commonDao.load(WmsItem.class,aa.getItem().getId());
+			result.put(WmsPutAsnDetailShell.ITEM_CODE, item.getCode());
+			result.put(WmsPutAsnDetailShell.ITEM_NAME, item.getName());
+			result.put(WmsPutAsnDetailShell.LOCATION, item.getClass4());
+			result.put(WmsPutAsnDetailShell.QUANTITY, aa.getExpectedQuantityBU()+"");
+		}
+		return result;
+	}
+	
 	public Long findLoc(String locationCode){
 		WmsLocation toLoc = (WmsLocation)commonDao.findByQueryUniqueResult("FROM WmsLocation loc WHERE loc.code=:code","code",locationCode);
 		if(toLoc == null){

@@ -6,12 +6,15 @@
             <formCommit id="initInventory" title="initInventory" process="inventoryProcess.initInventory" enableType="none" download="false" closeTransactional="false" visibleType="none">
                 <enableExpression/>
                 <mappings>
+                	<mapping id="item.company.id" className="long">
+                        <entries/>
+                    </mapping>
                     <mapping id="inventory.importfile" className="file">
                         <entries/>
                     </mapping>
                 </mappings>
                 <actions>
-                    <action managerName="wmsInventoryManager" methodName="initInventoryByCVS" parameter="inventory.importfile"/>
+                    <action managerName="wmsInventoryManager" methodName="initInventoryByCVS" parameter="item.company.id,inventory.importfile"/>
                 </actions>
                 <forwards>
                     <forward name="refreshParent" newEnabled="true" editEnabled="true"/>

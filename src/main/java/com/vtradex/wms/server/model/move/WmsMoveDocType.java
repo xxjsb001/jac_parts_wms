@@ -22,6 +22,11 @@ public interface WmsMoveDocType {
      * 批次拣货
      */
     public static String LOT_PICKING = "LOT_PICKING";
+    
+    /**
+     * 排序拣货
+     */
+    public static String ORDER_PICKING = "ORDER_PICKING";
     /**
      * 时序拣货
      */

@@ -19,24 +19,27 @@ asn.expectedQuantityBU,
 asn.receivedQuantityBU,
 asn.movedQuantityBU,
 asn.startReceivedDate,
+asn.endReceivedDate,
 asn.supplier.code,
 asn.isCheckMT,
 asn.confirmAccount,
 asn.printASNReportDate,
 asn.startShelvesDate,
+asn.endShelvesDate,
 asn.source,
 asn.remark,
 asn.printPerson,
 asn.printDate,
 asn.isPrint,
 asn.updateInfo.updateTime,
-asn.updateInfo.lastOperator 
+asn.updateInfo.lastOperator,
+asn.updateInfo.createdTime
  FROM WmsASN asn 
  WHERE 1=1
  AND asn.warehouse = #{SESSION_WAREHOUSE}
  AND (asn.supplier.code = #{SESSION_ORGANIZATION_CODE} OR #{SESSION_ORGANIZATION_CODE} = 'all' OR asn.supplier.code in (SELECT us.supplier.code FROM WmsUserSupplier us WHERE us.userHead.user = #{SESSION_USERS}))
  ORDER BY asn.id DESC
- ]]></datasource> <!-- 删除分配状态和分配数量字段 -->
+ ]]></datasource> 
         <columns>
             <column id="asn.id" title="asn.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
             <column id="asn.company.name" title="asn.company.name" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
@@ -56,12 +59,13 @@ asn.updateInfo.lastOperator
         <!-- <column id="asn.allocatedQuantityBU" title="moveDoc.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>-->
             <column id="asn.movedQuantityBU" title="asn.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
             <column id="asn.reserveBeginTime" title="asn.reserveBeginTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="asn.endReceivedDate" title="asn.endReceivedDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
             <column id="asn.supplier.code" title="asn.supplier.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="asn.isCheckMT" title="asn.isCheckMT" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" formatParam="Boolean"/>
             <column id="asn.confirmAccount" title="asn.confirmAccount" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" formatParam="Boolean"/>
             <column id="asn.printASNReportDate" title="asn.printASNReportDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
-            <!-- 20171120 新增上架开始时间字段 -->
-            <column id="asn.startShelvesDate" title="asn.startShelvesDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
+            <column id="asn.startShelvesDate" title="asn.startShelvesDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="asn.endShelvesDate" title="asn.endShelvesDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
             <column id="asn.source" title="asn.source" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsSource"/>
             <column id="asn.remark" title="asn.remark" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="asn.printPerson" title="asn.printPerson" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
@@ -69,6 +73,7 @@ asn.updateInfo.lastOperator
             <column id="asn.isPrint" title="asn.isPrint" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" formatParam="Boolean"/>
             <column id="asn.updateInfo.updateTime" title="asn.updateInfo.updateTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
             <column id="asn.updateInfo.lastOperator" title="asn.updateInfo.lastOperator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="asn.updateInfo.createdTime" title="asn.updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date"/>
         </columns>
     </maintainPage>
 </pages>

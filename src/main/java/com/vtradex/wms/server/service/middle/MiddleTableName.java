@@ -66,4 +66,7 @@ public interface MiddleTableName {
 	String MIDDLE_QUALITY_STATUS = "MIDDLE_QUALITY_STATUS";//MIDDLE_QUALITY_STATUS_WMS
 	/**接口消息表,EDI读取*/
 	String M_MESSAGE = "M_MESSAGE";
+	/**时序BOM*/
+	String WMS_MATBOM_VIEW = "mesxg.wms_matbom_view@xgmes";
+	String W_BOM_MES = "W_BOM_MES";
 }

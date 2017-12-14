@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="importBlOrQjPage" title="importBlOrQjPage" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <htmlDisplayer id="downloadPath" title="downloadPath" defaultValue="&lt;a href='importTemplate/importJjPick.xls'&gt; &lt;font&gt;&lt;b&gt;下载导入模板&lt;/b&gt;&lt;/font&gt; &lt;/a&gt;" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </htmlDisplayer>
+            
+            <remote id="pickTicket.company.id" title="pickTicket.company.id" row="2" col="1" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" editModel="uneditable" multiple="false" manualEditable="true" displayColumn="2" percentSignPosition="both" displayedTableHead="序号,编码,名称">
+                    <visibleExpression/>
+                    <hql><![CDATA[SELECT 
+company.id,
+company.code,
+company.neiBuName
+FROM WmsOrganization company,WmsWarehouseAndCompany wwa 
+WHERE company.beCompany = true
+and company.beVirtual =false
+AND company.status = 'ENABLED'
+AND (company.code LIKE :param OR company.name LIKE :param) 
+and wwa.company.id=company.id
+AND wwa.warehouse.id = #{SESSION_WAREHOUSE} 
+ 		]]></hql>
+                    <eventListeners>
+                        <eventListener id="pickTicket.billType.id" index="1" refreshUI="false"/>
+                    </eventListeners>
+                </remote>
+                <list id="pickTicket.billType.id" title="pickTicket.billType.id" row="3" col="1" span="1" width="120" readOnly="false" required="true" reserve="false" forceOverride="true" forceSpace="false" multiple="false" inVisible="false">
+                    <visibleExpression/>
+                    <hql><![CDATA[ SELECT
+ billType.id,
+ billType.name
+ FROM WmsBillType billType
+ WHERE 1=1 
+ and billType.code in('WMS_JINJI','WMS_QUEJIAN')				
+ AND billType.company.id = ${pickTicket.company.id} 
+ AND billType.status = 'ENABLED']]></hql>
+                    <eventListeners/>
+                </list>
+            <file id="importFile" title="importFile" row="4" col="1" span="1" readOnly="false" required="false" reserve="false" forceOverride="true" focusUI="false" inVisible="false" showImage="false" fileSize="22577152">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </file>
+        </inputUIs>
+    </editPage>
+</pages>

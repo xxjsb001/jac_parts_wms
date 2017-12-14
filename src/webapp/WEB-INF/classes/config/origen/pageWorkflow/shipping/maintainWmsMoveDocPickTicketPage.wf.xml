@@ -76,7 +76,7 @@
             
             <!-- 20171120增加新打印拣货单按钮 -->
             <tablePopup id="printTask" title="printTask" process="wmsMoveDocProcess.printTask" enableType="multi" containId="true" managerName="wmsMoveDocManager" methodName="printTask" pageId="printNewPickTaskReportPage">
-                <enableExpression><![CDATA[${moveDoc.status} == 'ACTIVE' && ${moveDoc.shipStatus} == 'UNSHIP']]></enableExpression>
+                <enableExpression><![CDATA[${moveDoc.transStatus} == 'FINISHED']]></enableExpression>
             </tablePopup>
             
             <!-- managerName="wmsMoveDocManager" methodName="printTask"  -->

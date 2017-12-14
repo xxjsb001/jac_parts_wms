@@ -59,4 +59,10 @@ public class WmsASNListShell extends JacPageableBaseShell {
 		return params;
 	}
 
+	@Override
+	public String getUpShell() {
+		// TODO Auto-generated method stub
+		return WmsASNListShell.PAGE_ID;
+	}
+
 }

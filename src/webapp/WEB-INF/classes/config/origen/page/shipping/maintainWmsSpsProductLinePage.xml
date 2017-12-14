@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsSpsProductLinePage" title="maintainWmsSpsProductLinePage" autoQuery="false" entityClass="com.vtradex.wms.server.model.middle.WmsSpsProductLine">
+        <workflow/>
+        <datasource><![CDATA[SELECT wsp.id,
+wsp.sheetNo,
+wsp.orderNo,
+wsp.planTime,
+wsp.sx,
+wsp.containSx,
+wsp.itemCode,
+wsp.itemName,
+wsp.productLine,
+wsp.station,
+wsp.stock,
+wsp.qty,
+wsp.isSps,
+wsp.type,
+wsp.c5,
+wsp.loadage,
+wsp.line,
+wsp.boxTag,
+wsp.remark,
+wsp.updateInfo.creator,
+wsp.updateInfo.createdTime,
+wsp.updateInfo.lastOperator,
+wsp.updateInfo.updateTime
+ FROM WmsSpsProductLine wsp 
+ WHERE 1=1
+ ORDER BY wsp.id desc
+ ]]></datasource>
+        <columns>
+            <column id="wsp.id" title="wsp.id" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="wsp.sheetNo" title="wsp.sheetNo" width="180" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="wsp.orderNo" title="wsp.orderNo" width="180" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="wsp.planTime" title="wsp.planTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>        
+            <column id="wsp.sx" title="wsp.sx" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="wsp.containSx" title="wsp.containSx" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>           
+            <column id="wsp.itemCode" title="wsp.itemCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+      		<column id="wsp.itemName" title="wsp.itemName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+      		<column id="wsp.productLine" title="wsp.productLine" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>        	
+        	<column id="wsp.station" title="wsp.station" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+        	<column id="wsp.stock" title="wsp.stock" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>           
+            <column id="wsp.qty" title="wsp.qty" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="wsp.isSps" title="wsp.isSps" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="wsp.type" title="wsp.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocType"/>
+            <column id="wsp.c5" title="wsp.c5" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wsp.loadage" title="wsp.loadage" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="wsp.line" title="wsp.line" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>                       
+            <column id="wsp.boxTag" title="wsp.boxTag" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>           
+            <column id="wsp.remark" title="wsp.remark" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wsp.updateInfo.creator" title="wsp.updateInfo.creator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wsp.updateInfo.createdTime" title="wsp.updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+            <column id="wsp.updateInfo.lastOperator" title="wsp.updateInfo.lastOperator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="wsp.updateInfo.updateTime" title="wsp.updateInfo.updateTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+        </columns>
+    </maintainPage>
+</pages>

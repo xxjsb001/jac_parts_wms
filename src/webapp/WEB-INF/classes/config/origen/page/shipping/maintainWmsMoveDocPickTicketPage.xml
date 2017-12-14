@@ -11,6 +11,7 @@ moveDoc.relatedBill1,
 moveDoc.originalBillType.name,
 moveDoc.status,
 moveDoc.shipStatus,
+moveDoc.transStatus,
 pick.requireArriveDate,
 moveDoc.blg.name,
 moveDoc.productionLine,
@@ -18,7 +19,6 @@ moveDoc.station,
 moveDoc.classType,
 moveDoc.class4,
 moveDoc.planQuantityBU,
-moveDoc.allocatedQuantityBU,
 moveDoc.movedQuantityBU,
 moveDoc.beCrossDock,
 moveDoc.shipLocation.code,
@@ -52,6 +52,7 @@ moveDoc.updateInfo.updateTime
             <column id="moveDoc.originalBillType.name" title="moveDoc.originalBillType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.status" title="moveDoc.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocStatus"/>
             <column id="moveDoc.shipStatus" title="moveDoc.shipStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsMoveDocShipStatus"/>
+            <column id="moveDoc.transStatus" title="moveDoc.transStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsWorkDocStatus"/>            
             <column id="pick.requireArriveDate" title="pick.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
             <column id="moveDoc.blg.name" title="pickWorker.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.productionLine" title="bolDetail.productionLine" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
@@ -59,7 +60,7 @@ moveDoc.updateInfo.updateTime
             <column id="moveDoc.classType" title="item.class2" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.class4" title="item.class4" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="moveDoc.planQuantityBU" title="moveDoc.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
-            <column id="moveDoc.allocatedQuantityBU" title="moveDoc.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+     <!--   <column id="moveDoc.allocatedQuantityBU" title="moveDoc.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/> -->
             <column id="moveDoc.movedQuantityBU" title="moveDoc.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
             <column id="moveDoc.beCrossDock" title="moveDoc.beCrossDock" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
             <column id="moveDoc.shipLocation.code" title="moveDoc.shippingLocation" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>

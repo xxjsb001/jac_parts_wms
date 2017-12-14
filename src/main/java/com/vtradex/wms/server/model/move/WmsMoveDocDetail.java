@@ -99,7 +99,7 @@ public class WmsMoveDocDetail extends Entity {
 	/**收货日期*/
 	private Date receivedDate;
 	
-	/** 补货区 /JAC质检唯一单号*/
+	/** 补货区 /JAC质检唯一单号/批次号*/
 	private String replenishmentArea;
 	
 	/** 拣货区 */
@@ -129,6 +129,8 @@ public class WmsMoveDocDetail extends Entity {
 	private String productionLine;	
 	/**送检分类*/
 	private String qualityType;
+	/**物料条码*/
+	private String itemBarCode;
 	
 	public WmsMoveDocDetail() {}
 	
@@ -150,6 +152,15 @@ public class WmsMoveDocDetail extends Entity {
 
 
 
+
+
+	public String getItemBarCode() {
+		return itemBarCode;
+	}
+
+	public void setItemBarCode(String itemBarCode) {
+		this.itemBarCode = itemBarCode;
+	}
 
 	public Date getNeedTime() {
 		return needTime;

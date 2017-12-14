@@ -36,7 +36,7 @@ public class WmsItem extends Entity {
 	private String class3;	
 	/** 货品分类四  ABC分类*/
 	private String class4;
-	/** 货品分类五 */
+	/** 货品分类五 装载器具名称*/
 	private String class5;
 	/**货品条码**/
 	private String barCode;

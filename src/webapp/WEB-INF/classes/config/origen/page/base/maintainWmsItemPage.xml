@@ -13,6 +13,7 @@ item.class1,
 item.class2,
 item.class3,
 item.class4,
+item.class5,
 item.alertLeadingDays,
 item.validPeriod,
 item.status 
@@ -33,6 +34,7 @@ item.status
             <column id="item.class2" title="item.class2" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="item.class3" title="item.class3" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="item.class4" title="item.class4" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="item.class5" title="item.class5" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
             <column id="item.alertLeadingDays" title="item.alertLeadingDays" visible="true" sortable="true" horizonAlign="center" dataType="integer"/>
             <column id="item.validPeriod" title="item.validPeriod" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
             <column id="item.status" title="item.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="BaseStatus"/>

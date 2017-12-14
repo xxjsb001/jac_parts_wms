@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <reportPopupPage id="printMoveDocPage" title="printMoveDocPage" reportFile="wmsMove.raq" parameter="ids=?" width="900" height="500">
+        <inputUIs/>
+    </reportPopupPage>
+</pages>

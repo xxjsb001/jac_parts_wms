@@ -25,4 +25,7 @@ public interface HeadType {
 	
 	/**时序拣货*/
 	public static String SPS_PICKING = "SPS_PICKING";
+	
+	/**时序BOM*/
+	public static String SPS_BOM = "SPS_BOM";
 }

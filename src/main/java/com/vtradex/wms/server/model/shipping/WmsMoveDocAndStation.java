@@ -1,5 +1,6 @@
 package com.vtradex.wms.server.model.shipping;
 
+
 import com.vtradex.thorn.server.model.Entity;
 import com.vtradex.wms.server.model.move.WmsMoveDocDetail;
 import com.vtradex.wms.server.model.move.WmsMoveDocShipStatus;
@@ -55,6 +56,7 @@ public class WmsMoveDocAndStation extends Entity {
 	
 	//器具标签
 	private String boxTag;
+	
 	
 	/**排序号、当前页数、总页数*/
 	private Double seq;

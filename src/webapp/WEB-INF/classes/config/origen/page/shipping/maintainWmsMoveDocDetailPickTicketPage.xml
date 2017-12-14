@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsMoveDocDetailPickTicketPage" title="maintainWmsMoveDocDetailPickTicketPage" autoQuery="false" entityClass="com.vtradex.wms.server.model.move.WmsMoveDocDetail">
+        <workflow/>
+        <datasource><![CDATA[SELECT moveDocDetail.id,
+        moveDoc.warehouse.name,
+moveDoc.company.name,
+moveDoc.billType.name,
+pick.billType.name,
+moveDocDetail.moveDoc.code,
+moveDoc.originalBillCode,
+pick.requireArriveDate,
+moveDocDetail.replenishmentArea,
+moveDocDetail.item.code,
+moveDocDetail.item.name,
+moveDocDetail.packageUnit.unit,
+moveDocDetail.planQuantity,
+moveDocDetail.planQuantityBU,
+moveDocDetail.allocatedQuantityBU,
+moveDocDetail.movedQuantityBU,
+moveDocDetail.shippedQuantityBU,
+moveDocDetail.inventoryStatus,
+moveDocDetail.shipLotInfo.extendPropC1,
+moveDocDetail.shipLotInfo.soi,
+moveDocDetail.shipLotInfo.supplier,
+moveDocDetail.pickWorkerCode,
+moveDocDetail.pickWorker,
+moveDocDetail.productionLine,
+moveDoc.updateInfo.createdTime
+ FROM WmsMoveDocDetail moveDocDetail
+ LEFT JOIN moveDocDetail.moveDoc moveDoc
+ left join moveDoc.pickTicket pick     
+ WHERE 1=1
+ AND moveDoc.type in ('MV_PICKTICKET_PICKING')
+ AND moveDoc.beWave = 'N'
+ AND moveDoc.warehouse = #{SESSION_WAREHOUSE} 
+ ORDER BY moveDocDetail.id desc
+ ]]></datasource>
+        <columns>
+            <column id="moveDocDetail.id" title="moveDocDetail.id" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="moveDoc.warehouse.name" title="moveDoc.warehouse.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="moveDoc.company.name" title="moveDoc.company.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>           
+            <column id="moveDoc.billType.name" title="moveDoc.billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="pick.billType.name" title="pick.billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>            
+            <column id="moveDocDetail.moveDoc.code" title="moveDocDetail.moveDoc.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDoc.originalBillCode" title="moveDoc.originalBillCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>               
+            <column id="pick.requireArriveDate" title="pick.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>            
+            <column id="moveDocDetail.replenishmentArea" title="moveDocDetail.replenishmentArea" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDocDetail.item.code" title="moveDocDetail.item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDocDetail.item.name" title="moveDocDetail.item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDocDetail.packageUnit.unit" title="moveDocDetail.packageUnit.unit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDocDetail.planQuantity" title="moveDocDetail.planQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDocDetail.planQuantityBU" title="moveDocDetail.planQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDocDetail.allocatedQuantityBU" title="moveDocDetail.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDocDetail.movedQuantityBU" title="moveDocDetail.movedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="moveDocDetail.shippedQuantityBU" title="moveDocDetail.shippedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>            
+            <column id="moveDocDetail.inventoryStatus" title="moveDocDetail.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDocDetail.shipLotInfo.extendPropC1" title="lotInfo.extendPropC1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="TypeOfExtendPropC1"/>
+            <column id="moveDocDetail.shipLotInfo.soi" title="moveDocDetail.shipLotInfo.soi" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDocDetail.shipLotInfo.supplier" title="moveDocDetail.shipLotInfo.supplier" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDocDetail.pickWorkerCode" title="moveDocDetail.pickWorkerCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDocDetail.pickWorker" title="moveDocDetail.pickWorker" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="moveDocDetail.productionLine" title="moveDocDetail.productionLine" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+        	<column id="moveDoc.updateInfo.createdTime" title="moveDoc.updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime"/>
+        </columns>
+    </maintainPage>
+</pages>

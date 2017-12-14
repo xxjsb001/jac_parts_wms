@@ -92,6 +92,12 @@ public interface WmsWorkDocManager extends BaseManager {
 	/**拣货单发运确认yc.min*/
 	@Transactional
 	void pickShipByTask(WmsTask task,Double shipQty,WmsMoveDoc moveDoc);
+	
+	/**回单扣库存*/
+	@Transactional
+	Map<String,String> pickShipByTaskScan(WmsTask task,Double picQuantity,WmsMoveDoc moveDoc);
+	/**库存可用量统计*/
+	Map<String,String> pickShipInvsSum(String itemCode,Double shipQty);
 	/**发运登记yc.min*/
 	@Transactional
 	void shipRecord(WmsMoveDoc moveDoc);

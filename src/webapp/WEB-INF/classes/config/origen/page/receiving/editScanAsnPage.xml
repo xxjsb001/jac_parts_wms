@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editScanAsnPage" title="editScanReceivePage" entityClass="com.vtradex.wms.server.model.receiving.WmsASN">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="asn.id" title="asn.id" pageLocale="false" reserve="false"/>
+            <textArea id="asn.code" title="asn.code" pageLocale="false" row="2" col="1" span="2" readOnly="false" required="true" reserve="false" forceOverride="true" focusUI="false" inVisible="false" rows="3" cols="38">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </textArea>
+        </inputUIs>
+    </editPage>
+</pages>

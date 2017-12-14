@@ -12,7 +12,6 @@ billType.name,
 pickTicket.priority,
 pickTicket.status,
 pickTicket.expectedQuantityBU,
-pickTicket.allocatedQuantityBU,
 pickTicket.pickedQuantityBU,
 pickTicket.shippedQuantityBU,
 pickTicket.shipToName,
@@ -49,7 +48,7 @@ billType.code
             <column id="pickTicket.priority" title="pickTicket.priority" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="integer"/>
             <column id="pickTicket.status" title="pickTicket.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsPickTicketStatus"/>
             <column id="pickTicket.expectedQuantityBU" title="pickTicket.expectedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" format="numberFormat" formatParam="1"/>
-            <column id="pickTicket.allocatedQuantityBU" title="pickTicket.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" format="numberFormat" formatParam="6"/>
+<!--             <column id="pickTicket.allocatedQuantityBU" title="pickTicket.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" format="numberFormat" formatParam="6"/> -->
             <column id="pickTicket.pickedQuantityBU" title="pickTicket.pickedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" format="numberFormat" formatParam="3"/>
             <column id="pickTicket.shippedQuantityBU" title="pickTicket.shippedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
             <column id="pickTicket.shipToName" title="pickTicket.shipToName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>

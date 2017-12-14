@@ -7,7 +7,7 @@
         pickTicket.code,pickTicket.relatedBill1,
 billType.name,pickTicket.status,pickTicket.orderDate,pickTicket.finshDate,
         pickTicketDetail.item.code,pickTicketDetail.item.name,pickTicketDetail.packageUnit.unit,
-        pickTicketDetail.expectedQuantity,pickTicketDetail.expectedQuantityBU,pickTicketDetail.allocatedQuantityBU,
+        pickTicketDetail.expectedQuantity,pickTicketDetail.expectedQuantityBU,
         pickTicketDetail.pickedQuantityBU,pickTicketDetail.shippedQuantityBU,pickTicketDetail.inventoryStatus,
         pickTicketDetail.shipLotInfo.extendPropC1,
         pickTicket.requireArriveDate,
@@ -34,7 +34,7 @@ billType.name,pickTicket.status,pickTicket.orderDate,pickTicket.finshDate,
             <column id="pickTicketDetail.packageUnit.unit" title="packageUnit" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
             <column id="pickTicketDetail.expectedQuantity" title="pickTicketDetail.expectedQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
             <column id="pickTicketDetail.expectedQuantityBU" title="pickTicketDetail.expectedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
-            <column id="pickTicketDetail.allocatedQuantityBU" title="pickTicketDetail.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+<!--             <column id="pickTicketDetail.allocatedQuantityBU" title="pickTicketDetail.allocatedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/> -->
             <column id="pickTicketDetail.pickedQuantityBU," title="pickTicketDetail.pickedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
             <column id="pickTicketDetail.shippedQuantityBU" title="pickTicketDetail.shippedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
             <column id="pickTicketDetail.inventoryStatus" title="pickTicketDetail.inventoryStatus" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>

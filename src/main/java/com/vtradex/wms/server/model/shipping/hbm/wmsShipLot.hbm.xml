@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.vtradex.wms.server.model.shipping.WmsShipLot" table="WMS_SHIP_LOT">
+        <id name="id" column="ID" type="long">
+            <generator class="native">
+                <param name="sequence">wseq_shipLot</param>
+                <param name="parameters">START WITH 1</param>
+            </generator>
+        </id>	
+		
+		<many-to-one name="pickTicket" class="com.vtradex.wms.server.model.shipping.WmsPickTicket">
+			<column name="PICKTICKET_ID"/>
+		</many-to-one>
+		
+		<property name="requireArriveDate" type="date" column="REQUIRE_ARRIVE_DATE"/>	
+		<property name="batch" type="integer" column="BATCH"/>	
+						
+		<property name="itemCode" type="string" length="100" column="ITEM_CODE"/>
+		<property name="itemName" type="string" length="100" column="ITEM_NAME"/>
+		<property name="class2" type="string" length="100" column="CLASS2"/>
+					
+		<property name="expectedQuantityBU" type="double" column="EXPECTED_QUANTITY_BU" not-null="true"/>		
+		<property name="pickedQuantityBU" type="double" column="PICKED_QUANTITY_BU" not-null="true"/>
+		<property name="productionLine" type="string" length="100" column="PRODUCTION_LINE"/>
+		
+		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
+			<property name="creatorId" type="long" column="CREATOR_ID"/>
+			<property name="creator" type="string" length="50" column="CREATOR"/>
+			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
+			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
+			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+		</component>
+		
+	</class>	
+</hibernate-mapping>

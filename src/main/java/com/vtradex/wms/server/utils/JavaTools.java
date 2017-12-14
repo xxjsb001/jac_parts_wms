@@ -107,6 +107,8 @@ public class JavaTools extends HibernateCommonDao{
 	//g022
 	/**yyMMdd_HHmmss*/
 	public static String ymd_Hms="yyMMdd_HHmmss";
+	/**yyMMddHHmmss*/
+	public static String ymdHms="yyMMddHHmmss";
     //000
     public static int getSize(int size,int PAGE_NUMBER){
 		int j = size / PAGE_NUMBER;
@@ -1108,6 +1110,21 @@ public class JavaTools extends HibernateCommonDao{
 	        totalDate = Math.abs((timeend - timestart))/(1000*60*60*24);  
 	        return totalDate;  
 	    }
+	    public static int getDistMinDates(Date startDate,Date endDate) throws ParseException    
+	    {  
+	    	SimpleDateFormat simpleFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm");
+	    	String fromDate=simpleFormat.format(startDate);
+	    	String toDate=simpleFormat.format(endDate);
+	    	long from = 0;
+			try {
+				from = simpleFormat.parse(fromDate).getTime();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+	    	long to=simpleFormat.parse(toDate).getTime();
+	    	int minutes=(int)((to-from)/(1000*60));
+	    	return minutes; 
+	    }
 	    //073
 	    public static Integer moveFileToDel(String fromDir,int deleteDays){
 			File srcDir = new File(fromDir);
@@ -1235,6 +1252,8 @@ public class JavaTools extends HibernateCommonDao{
 	    	System.out.println(JavaTools.isNumber(""));
 	    	System.out.println(JavaTools.isNumber(" "));
 	    	System.out.println(JavaTools.isNumber("234"));
+	    	System.out.println(JavaTools.isNumber("-234"));
+	    	System.out.println(JavaTools.isNumber("23.4"));
 	    	System.out.println("------------------------------------");
 	    	System.out.println(JavaTools.isNumeric1("222eee"));
 	    	System.out.println(JavaTools.isNumeric1("www"));
@@ -1292,11 +1311,23 @@ public class JavaTools extends HibernateCommonDao{
 	    			StringUtils.substringBetween("$234556#6bbb#~$~~$","#","$"));
 	    	
 	        // TODO Auto-generated method stub  
-	       /* SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
-	        Date d1=sdf.parse("2012-09-08 10:10:10");  
-	        Date d2=sdf.parse("2012-09-15 00:00:00");  
-	        System.out.println(daysBetween(d1,d2));  
-	  
-	        System.out.println(daysBetween("2012-09-08 10:10:10","2012-09-15 00:00:00"));  */
+	    	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+//	        Date d1=sdf.parse("2012-09-08 10:10:10");  
+//	        Date d2=sdf.parse("2012-09-15 00:00:00");  
+//	        System.out.println(daysBetween(d1,d2));  
+//	        System.out.println(daysBetween("2012-09-08 10:10:10","2012-09-15 00:00:00"));
+//	        System.out.println(getDistDates(d1, d2));
+	    	
+//	    	Date d1=sdf.parse("2012-09-08 10:10:10");  
+//		    Date d2=sdf.parse("2012-09-08 10:10:10"); 
+//	        System.out.println(getDistMinDates(d1,d2)+"分钟");
+//	    	
+//	    	int size = 207,page = 20;
+//	    	int j = size / page;
+//	    	System.out.println(j);
+//			if((size % page) > 0){
+//				j += 1;
+//			}
+//			System.out.println(j);
 	    } 
 }

@@ -28,4 +28,8 @@ public interface WmsDealTaskManager  extends BaseManager {
 	/**过账确认*/
 	@Transactional
 	void confirmAccount(Long asnId);
+	/**mesBom信息同步到WMS*/
+	void mesxgBom(Long id);
+	/**mesBom信息产生发运计划*/
+	void mesxgBomShipLot(Long id);
 }

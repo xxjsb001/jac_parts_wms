@@ -27,8 +27,8 @@ order by was.isFinished desc]]></datasource>
             <column id="was.type" title="was.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="was.container" title="was.container" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="was.boxTag" title="was.boxTag" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
-            <column id="ptd.pickWorker" title="ptd.pickWorker" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
-            <column id="ptd.pickWorkerCode" title="ptd.pickWorkerCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="worker.name" title="worker.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="worker.code" title="worker.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
             <column id="was.isFinished" title="was.isFinished" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat"/>
         </columns>
     </maintainPage>

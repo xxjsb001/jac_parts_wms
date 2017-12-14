@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsReceivedRecordPage">
+    <main>
+        <process id="wmsASNProcess">    
+         <tableCommit id="cancelReceive" title="cancelReceive" process="wmsASNProcess.cancelReceive" enableType="multi" multiMapping="false" download="false" closeTransactional="false">
+                <enableExpression><![CDATA[${asn.confirmAccount}=='false']]></enableExpression>
+                <mappings/>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="cancelReceive" parameter="obj"/>
+                </actions>
+                <forwards/>
+            </tableCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

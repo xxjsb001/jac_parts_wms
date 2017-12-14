@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <maintainPage id="maintainWmsShipLotPage" title="maintainWmsShipLotPage" autoQuery="false" entityClass="com.vtradex.wms.server.model.shipping.WmsShipLot">
+        <workflow/>
+        <datasource><![CDATA[SELECT shipLot.id, 
+ shipLot.pickTicket.code,
+ shipLot.requireArriveDate,
+ shipLot.batch,
+ shipLot.itemCode,
+ shipLot.itemName,
+ shipLot.class2,
+ shipLot.expectedQuantityBU,
+ shipLot.pickedQuantityBU,
+ shipLot.productionLine,
+ shipLot.updateInfo.creator,
+ shipLot.updateInfo.createdTime
+ FROM WmsShipLot shipLot 
+ WHERE 1=1
+ AND shipLot.pickTicket.warehouse = #{SESSION_WAREHOUSE}
+ ORDER BY shipLot.id DESC]]></datasource>
+        <columns>
+            <column id="shipLot.id" title="ID" visible="false" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="shipLot.pickTicket.code" title="shipLot.pickTicket.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="shipLot.requireArriveDate" title="shipLot.requireArriveDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime" format="dateFormat" formatParam="y-m-d h:m:s"/>            
+            <column id="shipLot.batch" title="shipLot.batch" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="long"/>
+            <column id="shipLot.itemCode" title="shipLot.itemCode" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="shipLot.itemName" title="shipLot.itemName" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>
+            <column id="shipLot.class2" title="shipLot.class2" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle"/>            
+            <column id="pickTicket.expectedQuantityBU" title="pickTicket.expectedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" format="numberFormat" formatParam="1"/>
+            <column id="pickTicket.pickedQuantityBU" title="pickTicket.pickedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double" format="numberFormat" formatParam="3"/>
+            <column id="shipLot.productionLine" title="shipLot.productionLine" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>           
+            <column id="shipLot.updateInfo.creator" title="shipLot.updateInfo.creator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
+            <column id="shipLot.updateInfo.createdTime" title="shipLot.updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="datetime" format="dateFormat" formatParam="y-m-d h:m:s"/>
+            </columns>
+    </maintainPage>
+</pages>

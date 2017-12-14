@@ -3,13 +3,13 @@ package com.vtradex.wms.server.telnet.receiving;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.httpclient.HttpException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vtradex.thorn.server.exception.BusinessException;
 import com.vtradex.thorn.server.service.BaseManager;
-import com.vtradex.thorn.server.web.security.UserHolder;
 import com.vtradex.wms.server.model.organization.WmsItemState;
 import com.vtradex.wms.server.model.receiving.WmsASN;
 import com.vtradex.wms.server.model.receiving.WmsASNDetail;
@@ -44,5 +44,10 @@ public interface WmsReceivingRFManager extends BaseManager {
 	public WmsASNDetail getAsnDetail(Long id);
 	public WmsASN getAsnById(Long id);
 	@Transactional
+	Map<String,String> checkAsnAll(Long id);
+	@Transactional
 	void detailReceive(Long detailId,Long stateId,Double receivingQuantityBU,Long userId,String inventoryState);
+	/**明细直接上架*/
+	@Transactional
+	Map<String,String> detailReceiveUp(Long detailId,Double receivingQuantityBU,Long userId,String inventoryState,String locationCode);
 }

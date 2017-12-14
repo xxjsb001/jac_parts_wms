@@ -8,6 +8,8 @@ import com.vtradex.wms.server.model.move.WmsMoveDoc;
 import com.vtradex.wms.server.model.move.WmsTask;
 import com.vtradex.wms.server.model.receiving.WmsASN;
 import com.vtradex.wms.server.model.shipping.WmsBOLDetail;
+import com.vtradex.wms.server.model.shipping.WmsPickTicket;
+import com.vtradex.wms.server.model.shipping.WmsPickTicketDetail;
 
 /**
  * 处理中间表数据
@@ -119,7 +121,8 @@ public interface WmsDealInterfaceDataManager extends BaseManager{
 	
 	/**出库数据传MES*/
 	@Transactional
-	void outBoundToMes(WmsBOLDetail detail,WmsMoveDoc moveDoc,int i,WmsTask task,String billCode);
+	void outBoundToMes(WmsBOLDetail detail,String blgName,WmsPickTicket pickTicket,WmsPickTicketDetail pickTicketDetail,
+			int i,String billCode,String supplyCode,Double planQuantityBU,String itemCode);
 	@Transactional
 	void outBoundLotToMes(Long id);
 	/**出库数据的器具信息传MES*/

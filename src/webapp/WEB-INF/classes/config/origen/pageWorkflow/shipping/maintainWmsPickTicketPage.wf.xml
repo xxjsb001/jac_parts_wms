@@ -9,12 +9,14 @@
             <tablePopup id="new" title="new" process="wmsPickTicketBaseProcess.new" enableType="none" containId="false" pageId="modifyWmsPickTicketPage">
                 <enableExpression/>
             </tablePopup>
+            
             <tablePopup id="edit" title="edit" process="wmsPickTicketBaseProcess.edit" enableType="single" containId="true" pageId="modifyWmsPickTicketPage">
                 <enableExpression><![CDATA[${pickTicket.source}!='INTERFACE']]></enableExpression>
             </tablePopup>
             <tablePopup id="editSupplier" title="editSupplier" process="wmsPickTicketBaseProcess.editSupplier" enableType="single" containId="true" pageId="modifyPickTicketDetailSupplierPage">
                 <enableExpression><![CDATA[${pickTicket.status}=='OPEN']]></enableExpression>
             </tablePopup>
+       
             <tableCommit id="active" title="active" process="wmsPickTicketBaseProcess.active" enableType="multi" download="false" closeTransactional="false">
                 <enableExpression><![CDATA[${billType.code}!='KB_PICKING']]></enableExpression>
                 <mappings/>
@@ -40,7 +42,16 @@
                 <mappings/>
                 <actions/>
                 <forwards/>
-            </tableCommit>
+            </tableCommit>            
+            <tablePopup id="printSeqBoxTag" title="printSeqBoxTag" process="wmsPickTicketBaseProcess.printSeqBoxTag" enableType="single" containId="true" pageId="printSeqBoxTagPage">
+                <enableExpression><![CDATA[${billType.code}=='SPS_PICKING']]></enableExpression>
+            </tablePopup>
+            <tablePopup id="import" title="import" process="wmsPickTicketBaseProcess.import" enableType="none" containId="false" pageId="importBlOrQjPage">
+	                <enableExpression/>
+	        </tablePopup><tablePopup id="editBatch" title="editBatch" process="wmsPickTicketBaseProcess.editBatch" enableType="multi" containId="true" pageId="editBatchPage">
+                <enableExpression><![CDATA[${pickTicket.status}=='OPEN']]></enableExpression>
+            </tablePopup>
+	        
         </process>
     </main>
     <detail/>

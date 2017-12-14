@@ -83,6 +83,13 @@ public class WmsJobLog extends VersionalEntity{
 		this.operException = operException;
 		this.operExceptionMess = operExceptionMess;
 	}
+	public WmsJobLog(String type,String operName,String strExtend1,String strExtend2,String strExtend3){
+		this.type = type;
+		this.operName = operName;
+		this.strExtend1 = strExtend1;
+		this.strExtend2 = strExtend2;
+		this.strExtend3 = strExtend3;
+	}
 	public WmsJobLog(){
 		// 供Hibernate使用，开发者不允许调用
 	}

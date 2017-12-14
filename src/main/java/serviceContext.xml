@@ -727,6 +727,9 @@
 				<property name="codeManager">
 		          	<ref bean="wmsBussinessCodeManager" />
 		       	</property>
+		       	<property name="jdbcTemplateExt1">
+		          	<ref bean="jdbcTemplateExt1" />
+		       	</property>
 			</bean>
 		</property>
 	</bean>	

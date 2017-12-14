@@ -6,6 +6,9 @@
         <datasource><![CDATA[SELECT log.id,
 log.type,
 log.operName,
+log.strExtend1,
+log.strExtend2,
+log.strExtend3,
 log.operException,
 log.updateInfo.creator,
 log.updateInfo.createdTime 
@@ -16,7 +19,10 @@ log.updateInfo.createdTime
             <column id="log.id" title="locationStatus.id" width="60" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="integer"/>
             <column id="log.type" title="log.type" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" width="60" dataType="enum" format="enumFormat" formatParam="WmsLogType"/>
             <column id="log.operName" title="log.operName" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsLogTitle"/>
-            <column id="log.operException " title="el.operException" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" width="500"/>
+            <column id="log.strExtend1" title="log.strExtend1" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="log.strExtend2" title="log.strExtend2" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="log.strExtend3" title="log.strExtend3" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" dataType="string"/>
+            <column id="log.operException " title="el.operException" visible="true" sortable="true" horizonAlign="left" verticalAlign="middle" width="500" dataType="string" />
         	<column id="log.updateInfo.creator" title="pickTicket.updateInfo.creator" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string" width="80"/>
         	<column id="log.updateInfo.createdTime" title="moveDoc.updateInfo.createdTime" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" width="130" dataType="date"/>
         </columns>

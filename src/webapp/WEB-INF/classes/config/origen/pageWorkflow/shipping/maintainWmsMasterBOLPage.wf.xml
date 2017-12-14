@@ -13,7 +13,7 @@
                 <enableExpression/>
                 <mappings/>
                 <actions>
-                    <action managerName="wmsMasterBOLManager" methodName="shippingWmsBOL" parameter="obj"/>
+                    <action managerName="wmsMasterBOLManager" methodName="shippingScanBOL" parameter="obj"/>
                 </actions>
                 <forwards/>
             </tableCommit>
@@ -25,20 +25,20 @@
                 </actions>
                 <forwards/>
             </tableDirectPrint>
-            <tableDirectPrint id="printTag" title="printTag" process="masterBOLProcess.printTag" enableType="single" multiMapping="false" download="false" closeTransactional="true">
-                <enableExpression/>
-                <mappings/>
-                <actions>
-                    <action managerName="wmsMasterBOLManager" methodName="printWmsBOLTag" parameter="obj"/>
-                </actions>
-                <forwards/>
-            </tableDirectPrint>
+<!--             <tableDirectPrint id="printTag" title="printTag" process="masterBOLProcess.printTag" enableType="single" multiMapping="false" download="false" closeTransactional="true"> -->
+<!--                 <enableExpression/> -->
+<!--                 <mappings/> -->
+<!--                 <actions> -->
+<!--                     <action managerName="wmsMasterBOLManager" methodName="printWmsBOLTag" parameter="obj"/> -->
+<!--                 </actions> -->
+<!--                 <forwards/> -->
+<!--             </tableDirectPrint> -->
             <tablePopup id="viewPrintOrder" title="viewPrintOrder" process="masterBOLProcess.viewPrintOrder" enableType="single" containId="true" pageId="editPrintOrderPage">
                 <enableExpression/>
             </tablePopup>
-            <tablePopup id="viewPrintTag" title="viewPrintTag" process="masterBOLProcess.viewPrintTag" enableType="single" containId="true" pageId="editPrintTagPage">
-                <enableExpression/>
-            </tablePopup>
+<!--             <tablePopup id="viewPrintTag" title="viewPrintTag" process="masterBOLProcess.viewPrintTag" enableType="single" containId="true" pageId="editPrintTagPage"> -->
+<!--                 <enableExpression/> -->
+<!--             </tablePopup> -->
         </process>
     </main>
     <detail/>

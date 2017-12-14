@@ -98,6 +98,7 @@
 		<property name="pickWorkerCode" type="string" length="100" column="PICK_WORKER_CODE"/>
 		<property name="productionLine" type="string" length="100" column="PRODUCTION_LINE"/>
 		<property name="qualityType" type="string" length="50" column="QUALITY_TYPE"/>
+		<property name="itemBarCode" type="string" column="ITEM_BAR_CODE" length="100"/>
 		
 		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
 			<property name="creatorId" type="long" column="CREATOR_ID"/>

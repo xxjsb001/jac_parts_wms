@@ -40,5 +40,8 @@
 
 	<task id="printTag" title="箱标签打印">
 	</task>
+	
+	<task id="import" title="导入">
+	</task>
 
 </process>

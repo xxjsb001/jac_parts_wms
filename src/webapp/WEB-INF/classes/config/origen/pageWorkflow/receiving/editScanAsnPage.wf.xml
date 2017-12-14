@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editScanAsnPage">
+    <main>
+        <process id="wmsASNProcess">
+            <formCommit id="save" title="save" process="wmsASNProcess.scanReceive" multiMapping="false" accelerateKey="Enter" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                 <mappings>
+                    <mapping id="asn.code" className="string">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsASNManager" methodName="scanAsnConfirm" parameter="asn.code"/>
+                </actions>
+                <forwards>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

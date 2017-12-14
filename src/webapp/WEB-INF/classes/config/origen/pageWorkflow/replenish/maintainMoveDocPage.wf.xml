@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainMoveDocPage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <tablePopup id="view" title="view" process="wmsMoveDocProcess.view" enableType="single" containId="true" pageId="viewMoveDocPage">
+                <enableExpression/>
+            </tablePopup>            
+            <tablePopup id="printMoveDoc" title="printMoveDoc" process="wmsMoveDocProcess.printMoveDoc" enableType="multi" containId="true" pageId="printMoveDocPage">
+                <enableExpression/>
+            </tablePopup>
+            <tablePopup id="import" title="import" process="wmsMoveDocProcess.import" enableType="none" containId="false" pageId="importMoveDocPage">
+	                <enableExpression/>
+	        </tablePopup>
+            
+        </process>        
+    </main>
+    <detail/>
+</page>

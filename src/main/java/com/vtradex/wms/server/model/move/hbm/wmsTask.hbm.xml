@@ -23,7 +23,6 @@
 		<property name="type" column="TYPE" type="string" length="50"/>
         
 		<property name="originalBillCode" type="string" length="50" column="ORIGINAL_BILLCODE"/>
-		<property name="relatedBill" type="string" length="50" column="RELATED_BILL"/>
 		<property name="pallet" type="string" length="50" column="PALLET"/>
 		
 		<property name="fromLocationId" type="long" column="FROM_LOC_ID" not-null="true"/>
@@ -57,6 +56,10 @@
 		<property name="planVolume" type="double" column="PLAN_VOLUME" not-null="true"/>
 		<property name="pickTime" type="timestamp" column="PICK_TIME"/>
 		<property name="exceptionFlag" column="EXCEPTION_FLAG" type="yes_no"/>
+		<property name="relatedBill" type="string" column="RELATED_BILL" length="200"/>
+		<property name="boxTag" type="string" column="BOX_TAG" length="200"/>
+		<property name="scanBoxTime" type="timestamp" column="SCAN_BOX_TIME"/>
+		<property name="signTime" type="timestamp" column="SIGN_TIME"/>
 		
 		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
 			<property name="creatorId" type="long" column="CREATOR_ID"/>

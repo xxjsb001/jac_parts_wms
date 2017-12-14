@@ -21,11 +21,6 @@ public class WmsBlgItem extends Entity{
 	private WmsWorker blg;
 	/** 备注 */
 	private String remark;
-	/** 单据类型*/
-//	@UniqueKey
-//	private WmsBillType billType;
-	/** 供应商 去掉不用了暂时*/
-//	private WmsOrganization supplier;
 	/** 状态 */
 	private String status; 
 	public Boolean getIsA() {
@@ -43,14 +38,6 @@ public class WmsBlgItem extends Entity{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-//	public WmsBillType getBillType() {
-//		return billType;
-//	}
-//
-//	public void setBillType(WmsBillType billType) {
-//		this.billType = billType;
-//	}
 
 	public WmsItem getItem() {
 		return item;

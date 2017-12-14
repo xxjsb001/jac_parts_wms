@@ -59,7 +59,7 @@ public class WmsPickTicket extends Entity {
 	 */
 	private String status;
 	
-	/** 优先级 */
+	/** 批次拆分,按分钟 ,如果为空或者0,则默认一天4批次拆分 */
 	private Integer priority = 0;
 	/** 承运商 */
 	private WmsOrganization carrier;
@@ -67,7 +67,7 @@ public class WmsPickTicket extends Entity {
 	private String driver;
 	/** 车牌号 */
 	private String vehicleNo;
-	/** 整箱数 */
+	/** 整箱数/生产计划用作总批次数 */
 	private Double boxQuantity = 0D;
 	/** 散件数 */
 	private Double scatteredQuantity = 0D;
@@ -613,6 +613,13 @@ public class WmsPickTicket extends Entity {
 		for (WmsPickTicketDetail detail : this.details) {
 			this.expectedQuantityBU += detail.getExpectedQuantityBU();
 			this.shippedQuantityBU += detail.getShippedQuantityBU();
+		}
+	}
+	/**刷新拣货量*/
+	public void refreshPickQuantityBu(){
+		this.pickedQuantityBU = 0D;
+		for (WmsPickTicketDetail detail : this.details) {
+			this.pickedQuantityBU += detail.getPickedQuantityBU();
 		}
 	}
 

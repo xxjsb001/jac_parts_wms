@@ -63,6 +63,8 @@ public interface WmsMasterBOLManager extends BaseManager {
 	 */
 	@Transactional
 	void shippingWmsBOL(WmsBOL bol);
+	@Transactional
+	void shippingScanBOL(WmsBOL bol);
 	/**
 	 * 删除装车单
 	 * @param bol
@@ -77,6 +79,8 @@ public interface WmsMasterBOLManager extends BaseManager {
 	
 	@Transactional
 	void createWmsBolDoAsyn(Long id);
+	@Transactional
+	void createWmsBolSacnAsyn(Long id);
 	/**
 	 * 打印配送单
 	 * @param bol

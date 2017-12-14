@@ -6,14 +6,19 @@
             <formCommit id="import" title="import" process="wmsPickWorkersProcess.import" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
                 <enableExpression/>
                 <mappings>
+                	<mapping id="item.company.id" className="long">
+                        <entries/>
+                    </mapping>
                     <mapping id="importFile" className="file">
                         <entries/>
                     </mapping>
                 </mappings>
                 <actions>
-                    <action managerName="wmsItemManager" methodName="importItemClass2" parameter="importFile"/>
+                    <action managerName="wmsItemManager" methodName="importItemClass2" parameter="item.company.id,importFile"/>
                 </actions>
-                <forwards/>
+                <forwards>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
             </formCommit>
         </process>
     </main>

@@ -7,4 +7,6 @@
 	<task id="edit" title="修改">
 	</task>
 
+	<task id="import" title="导入">
+	</task>
 </process>

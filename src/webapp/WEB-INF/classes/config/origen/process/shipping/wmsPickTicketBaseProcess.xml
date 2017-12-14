@@ -12,7 +12,7 @@
 	<task id="new" title="新建">
 		<to id="OPEN" type="state"/>
 	</task>
-
+	
 	<task id="view" title="查看">
 	</task>
 
@@ -68,10 +68,19 @@
 	<task id="printMes" title="打印mes单据明细">
 	</task>
 	
+	<task id="printSeqBoxTag" title="打印时序件器具标签">
+	</task>
+	
 	<task id="lotPick" title="生成批拣单">
 	</task>
 	
 	<task id="editSupplier" title="维护供应商">
+	</task>
+	
+	<task id="import" title="导入">
+	</task>
+	
+	<task id="editBatch" title="设置发运批次">
 	</task>
 
 	<decision id="pickTicketBaseShipDecision" action="pickTicketBaseShipAction">

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="importBlOrQjPage">
+    <main>
+        <process id="wmsPickTicketBaseProcess">
+            <formCommit id="import" title="import" process="wmsPickTicketBaseProcess.import" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                	<mapping id="pickTicket.company.id" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="pickTicket.billType.id" className="long">
+                        <entries/>
+                    </mapping>
+                    <mapping id="importFile" className="file">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsItemManager" methodName="importJjPick" parameter="pickTicket.company.id,pickTicket.billType.id,importFile"/>
+                </actions>
+                 <forwards>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -161,5 +161,10 @@ public interface WmsPickTicketManager extends BaseManager {
 	void lotPick(String x,List<Long> ids,WmsBillType bType,String batch);
 	@Transactional
 	void cancelLot(WmsPickTicket pickTicket);
+	@Transactional
+	void importJjPick(Long companyId,Long billTypeId,List<Object[]> objs);
+	/**设置发货单拆分时间  分钟*/
+	@Transactional
+	void editPriority(Integer priority,WmsPickTicket pickTicket);
 	
 }

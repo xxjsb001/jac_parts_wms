@@ -93,5 +93,9 @@ public class DefaultWmsMailManager extends DefaultBaseManager implements WmsMail
 		}
 		
 	}
+	
+	public void sendNotesMail(Long id){
+		
+	}
 
 }

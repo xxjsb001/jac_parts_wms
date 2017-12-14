@@ -15,6 +15,7 @@ import com.vtradex.wms.server.model.move.WmsMoveDoc;
 import com.vtradex.wms.server.model.move.WmsMoveDocDetail;
 import com.vtradex.wms.server.model.move.WmsTask;
 import com.vtradex.wms.server.model.move.WmsTaskLog;
+import com.vtradex.wms.server.model.organization.WmsOrganization;
 import com.vtradex.wms.server.model.receiving.WmsASN;
 
 /**
@@ -313,6 +314,12 @@ public interface WmsMoveDocManager extends BaseManager {
 	 */
 	@Transactional
 	public Map printSendQualityReport(WmsMoveDoc moveDoc);
-
+	@Transactional
 	Boolean printTask(Map map);
+	/**移位单导入*/
+	void importMoveDoc(Long companyId,List<Object[]> obj);
+	/**三日计划排产顺序导入*/
+	void importWmsSpsProductLine(List<String[]> strs);
+	/**mes bom 信息初始化*/
+	void mesxgBom(String boxTag,List<Object[]> obj);
 }

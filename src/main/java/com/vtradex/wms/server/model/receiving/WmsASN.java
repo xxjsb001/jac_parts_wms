@@ -48,8 +48,10 @@ public class WmsASN extends VersionalEntity {
 	private Date startReceivedDate;
 	/**收货结束时间*/
 	private Date endReceivedDate;
-	/** 上架开始时间 20171120**/
+	/** 上架开始时间 **/
 	private Date startShelvesDate;
+	/** 上架结束时间 **/
+	private Date endShelvesDate;
 	/** 发货人 --备用*/
 	private String fromName;
 	/** 发货人联系方式 --备用 */
@@ -272,6 +274,14 @@ public class WmsASN extends VersionalEntity {
 	public void setStartShelvesDate(Date startShelvesDate) {
 		this.startShelvesDate = startShelvesDate;
 	}
+	
+	public Date getEndShelvesDate() {
+		return endShelvesDate;
+	}
+
+	public void setEndShelvesDate(Date endShelvesDate) {
+		this.endShelvesDate = endShelvesDate;
+	}
 
 	public Double getMovedQuantityBU() {
 		return movedQuantityBU;
@@ -466,6 +476,12 @@ public class WmsASN extends VersionalEntity {
 		if (receivedQuantityBU <= 0) {
 			this.setStartReceivedDate(null);
 		}
+		if(this.receivedQuantityBU>0 
+				&& this.receivedQuantityBU<this.expectedQuantityBU){
+			this.status = WmsASNStatus.RECEIVING;
+		}else if(this.receivedQuantityBU<=0){
+			this.status = WmsASNStatus.ACTIVE;
+		}
 	}
 	
 	/**
@@ -484,6 +500,12 @@ public class WmsASN extends VersionalEntity {
 	/** 取消上架 */
 	public void cancelMovedQuantity(Double movedQuantityBU) {
 		this.movedQuantityBU -= movedQuantityBU;
+		if(this.movedQuantityBU>0 && 
+				this.movedQuantityBU<this.expectedQuantityBU){
+			this.shelvesStauts = WmsASNShelvesStauts.PUTAWAY;
+		}else if(this.movedQuantityBU<=0){
+			this.shelvesStauts = WmsASNShelvesStauts.UNPUTAWAY;
+		}
 	}
 	/** 分配调整  yc.min 20150409 */
 	public void editAllocatedQuantityBU(Double allocatedQuantityBU){

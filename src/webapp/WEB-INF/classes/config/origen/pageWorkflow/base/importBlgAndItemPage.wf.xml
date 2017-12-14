@@ -11,7 +11,7 @@
                     </mapping>
                 </mappings>
                 <actions>
-                    <action managerName="wmsOrganizationManager" methodName="importBlgItem" parameter="importFile"/>
+                    <action managerName="wmsItemManager" methodName="importWmsBlgItem" parameter="importFile"/>
                 </actions>
                 <forwards/>
             </formCommit>

@@ -8,11 +8,16 @@ company.neiBuName,
 billType.name,
 asn.code,
 asn.orderDate,
+asn.relatedBill1,
 item.code,
 item.name,
 receivedRecord.packageUnit.unit,
 receivedRecord.receivedQuantity,
 receivedRecord.receivedQuantityBU,
+receivedRecord.movedQuantity,
+asn.status,
+asn.shelvesStauts,
+asn.confirmAccount,
 receivedRecord.pallet,
 receivedRecord.carton,
 receivedRecord.serialNo,
@@ -46,11 +51,16 @@ receivedRecord.updateInfo.creator
             <column id="billType.name" title="billType.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="asn.code" title="asn.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="asn.orderDate" title="asn.orderDate" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="date" format="dateFormat"/>
+            <column id="asn.relatedBill1" title="asn.relatedBill1" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="item.code" title="item.code" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="item.name" title="item.name" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="receivedRecord.packageUnit.unit" title="receivedRecord.packageUnit.id" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="receivedRecord.receivedQuantity" title="receivedRecord.receivedQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
             <column id="receivedRecord.receivedQuantityBU" title="receivedRecord.receivedQuantityBU" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>
+            <column id="receivedRecord.movedQuantity" title="receivedRecord.movedQuantity" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="double"/>            
+            <column id="asn.status" title="asn.status" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsASNStatus"/>            
+            <column id="asn.shelvesStauts" title="asn.shelvesStauts" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="enum" format="enumFormat" formatParam="WmsASNShelvesStauts"/>
+            <column id="asn.confirmAccount" title="asn.confirmAccount" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="boolean" format="booleanFormat" formatParam="Boolean"/>            
             <column id="receivedRecord.pallet" title="receivedRecord.pallet" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="receivedRecord.carton" title="receivedRecord.carton" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>
             <column id="receivedRecord.serialNo" title="receivedRecord.serialNo" visible="true" sortable="true" horizonAlign="center" verticalAlign="middle" dataType="string"/>

@@ -21,6 +21,7 @@ import com.vtradex.thorn.server.service.WorkflowManager;
 import com.vtradex.thorn.server.util.BeanUtils;
 import com.vtradex.thorn.server.web.security.UserHolder;
 import com.vtradex.wms.server.model.base.BaseStatus;
+import com.vtradex.wms.server.model.base.LotInfo;
 import com.vtradex.wms.server.model.base.ShipLotInfo;
 import com.vtradex.wms.server.model.base.WmsLogTitle;
 import com.vtradex.wms.server.model.base.WmsLogType;
@@ -32,6 +33,8 @@ import com.vtradex.wms.server.model.inventory.WmsInventory;
 import com.vtradex.wms.server.model.inventory.WmsInventoryExtend;
 import com.vtradex.wms.server.model.inventory.WmsInventoryLogType;
 import com.vtradex.wms.server.model.inventory.WmsItemKey;
+import com.vtradex.wms.server.model.middle.WmsJobLog;
+import com.vtradex.wms.server.model.middle.WmsSpsProductLine;
 import com.vtradex.wms.server.model.move.WmsMoveDoc;
 import com.vtradex.wms.server.model.move.WmsMoveDocDetail;
 import com.vtradex.wms.server.model.move.WmsMoveDocShipStatus;
@@ -41,18 +44,20 @@ import com.vtradex.wms.server.model.move.WmsTaskStatus;
 import com.vtradex.wms.server.model.move.WmsWorkDoc;
 import com.vtradex.wms.server.model.organization.WmsBillType;
 import com.vtradex.wms.server.model.organization.WmsItem;
+import com.vtradex.wms.server.model.organization.WmsLotRule;
 import com.vtradex.wms.server.model.organization.WmsOrganization;
 import com.vtradex.wms.server.model.organization.WmsPackageUnit;
 import com.vtradex.wms.server.model.shipping.WmsMoveDocAndStation;
 import com.vtradex.wms.server.model.shipping.WmsPickTicket;
-import com.vtradex.wms.server.model.shipping.WmsPickTicketAndAppliance;
 import com.vtradex.wms.server.model.shipping.WmsPickTicketDetail;
+import com.vtradex.wms.server.model.shipping.WmsShipLot;
 import com.vtradex.wms.server.model.shipping.WmsTaskAndStation;
 import com.vtradex.wms.server.model.warehouse.WmsBoxType;
 import com.vtradex.wms.server.model.warehouse.WmsLocation;
 import com.vtradex.wms.server.model.warehouse.WmsLocationType;
 import com.vtradex.wms.server.model.warehouse.WmsWarehouse;
 import com.vtradex.wms.server.model.warehouse.WmsWorker;
+import com.vtradex.wms.server.service.base.WmsItemManager;
 import com.vtradex.wms.server.service.inventory.WmsInventoryManager;
 import com.vtradex.wms.server.service.rule.WmsRuleManager;
 import com.vtradex.wms.server.service.rule.WmsTransactionalManager;
@@ -68,7 +73,10 @@ import com.vtradex.wms.server.telnet.putaway.WmsPutawayRFManager;
 import com.vtradex.wms.server.telnet.shell.ShellExceptions;
 import com.vtradex.wms.server.telnet.shell.pick.WmsBOLShell;
 import com.vtradex.wms.server.telnet.shell.pick.WmsPickBackMoveDocShell;
-import com.vtradex.wms.server.telnet.shell.pick.WmsScanPickShell;
+import com.vtradex.wms.server.telnet.shell.pick.WmsScanBOLShell;
+import com.vtradex.wms.server.telnet.shell.pick.WmsScanPickNewShell;
+import com.vtradex.wms.server.telnet.shell.pick.WmsScanPickShellMessage;
+import com.vtradex.wms.server.utils.JavaTools;
 import com.vtradex.wms.server.utils.LotInfoUtil;
 import com.vtradex.wms.server.utils.MyUtils;
 import com.vtradex.wms.server.utils.PackageUtils;
@@ -730,6 +738,32 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 				new String[]{"license","status"}, new Object[]{license,BaseStatus.ENABLED});
 		return vehicle;
 	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Map checkMoveDocByBoxTag(String boxTag,Map<String,WmsBOLDTO> dtos){
+		Map result  = new HashMap();
+		//拣货扫码:打开;扫码交接:标签;加入bol:工作中;BOL发运:完成
+		String hql = "SELECT task.id FROM WmsTask task WHERE task.status =:status AND task.boxTag =:boxTag";
+		List<Long> tasks = commonDao.findByQuery(hql, new String[]{"status","boxTag"}, 
+				new Object[]{WmsTaskStatus.OPEN,boxTag});
+		if(tasks==null || tasks.size()<=0){
+			result.put(WmsScanBOLShell.ERROR_MESSAGE, "标签下无任务");
+		}else{
+			WmsBOLDTO dto = null;
+			for(Long id : tasks){
+				WmsTask t = commonDao.load(WmsTask.class,id);
+//				WmsMoveDoc doc = commonDao.load(WmsMoveDoc.class, t.getMoveDocDetail().getMoveDoc().getId());
+				if(dtos.containsKey(t.getOriginalBillCode())){
+					dto = dtos.get(t.getOriginalBillCode());
+				}else{
+					dto = new WmsBOLDTO();
+				}
+				dto.getContainers().add(boxTag);
+				dtos.put(t.getOriginalBillCode(), dto);
+			}
+		}
+		result.put(WmsScanBOLShell.CURRENT_DTOS, dtos);
+		return result;
+	}
 	//WmsBOLShell
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map checkMoveDocByContainer(String container,Map<String,WmsBOLDTO> dtos){
@@ -805,6 +839,35 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 			}
 		}
 		return result;
+	}
+	public void createWmsScanBol(Map<String, WmsBOLDTO> dtos,String license){
+		WmsVehicle vehicle = checkVehicleByLicense(license);
+		Iterator<Entry<String, WmsBOLDTO>> iterator = dtos.entrySet().iterator();
+		while(iterator.hasNext()){
+			Entry<String, WmsBOLDTO> entry = iterator.next();
+			String pickCode = entry.getKey();//拣货单号
+			WmsBOLDTO dto = entry.getValue();
+			//以任务的形式后台去跑
+			Set<String> boxTags = dto.getContainers();
+			if(boxTags.size()<=0){
+				return;
+			}
+			WBols w = new WBols(pickCode, vehicle,WmsWarehouseHolder.getWmsWarehouse());
+			commonDao.store(w);
+			Set<WContainers> details = new HashSet<WContainers>();
+			Iterator<String> it = boxTags.iterator();
+			while(it.hasNext()){
+				String container = it.next();
+				WContainers c = new WContainers(w, container);
+				commonDao.store(c);
+				details.add(c);
+			}
+			w.setDetails(details);
+			commonDao.store(w);
+			Task task = new Task(HeadType.CREATE_BOL, 
+					"wmsMasterBOLManager"+MyUtils.spiltDot+"createWmsBolSacnAsyn", w.getId());
+			commonDao.store(task);
+		}
 	}
 	//WmsBOLOverShell
 	public void createWmsBol(Map<String, WmsBOLDTO> dtos,String license){
@@ -1067,17 +1130,17 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 	
 	public Map<String,String> findMove(String pickNo){
 		Map<String,String> result = new HashMap<String, String>();
-		result.put(WmsScanPickShell.ERROR_MESG, "");
+		result.put(WmsScanPickShellMessage.ERROR_MESG, "");
 		
 		String hql = "FROM WmsMoveDoc moveDoc WHERE moveDoc.code =:pickNo";
 		WmsMoveDoc moveDoc = (WmsMoveDoc) commonDao.findByQueryUniqueResult(hql, "pickNo", pickNo);
 		if(moveDoc==null){
-			result.put(WmsScanPickShell.ERROR_MESG, "失败!拣货单不存在");
+			result.put(WmsScanPickShellMessage.ERROR_MESG, "失败!拣货单不存在");
 		}else if(moveDoc.getStatus().equals(WmsMoveDocStatus.FINISHED)){
-			result.put(WmsScanPickShell.ERROR_MESG, "失败!拣货单已完成");
+			result.put(WmsScanPickShellMessage.ERROR_MESG, "失败!拣货单已完成");
 		}else if(moveDoc.getStatus().equals(WmsMoveDocStatus.OPEN)){
-			moveDoc.setReserveBeginTime(new Date());//备料单扫描时间
-			moveDoc.setDriver(UserHolder.getUser().getName());//备料单扫描人
+			moveDoc.setReserveBeginTime(new Date());//备料/移位单扫描时间
+			moveDoc.setDriver(UserHolder.getUser().getName());//备料/移位单扫描人
 			moveDoc.setStatus(WmsMoveDocStatus.ACTIVE);
 			commonDao.store(moveDoc);
 		}
@@ -1121,12 +1184,402 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 //		}
 //		return result;
 //	}
-	
 	@SuppressWarnings("unchecked")
-	public Map<String,String> singlePicQty(String pickNo,String container,String fromLocationCode
-			,String itemCode,Double picQuantity,String description,Boolean checkBox){
+	public Map<String,String> singleMoveUpQty(String moveNo,String descLocationCode
+			,String itemCode,Double picQuantity,Long warehouseId){
 		Map<String,String> result = new HashMap<String, String>();
-		result.put(WmsScanPickShell.ERROR_MESG, "");
+		result.put(WmsScanPickShellMessage.ERROR_MESG, "");
+		
+		String hql = "FROM WmsMoveDocDetail mm WHERE mm.moveDoc.code =:moveNo AND mm.item.code =:itemCode";
+		WmsMoveDocDetail wdd = (WmsMoveDocDetail) commonDao.findByQueryUniqueResult(hql, 
+				new String[]{"moveNo","itemCode"}, new Object[]{moveNo,itemCode});
+		if(wdd==null){
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_NULL);
+		}else if(wdd.unMoveQty()<=0){
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_FINISHED);
+		}else{
+			if(picQuantity == Double.MAX_VALUE){
+				picQuantity = wdd.unMoveQty();
+			}
+			if(picQuantity>wdd.unMoveQty()){
+				result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_PIC_MOVE);
+			}else{
+				hql = "SELECT task.id FROM WmsTask task WHERE task.moveDocDetail.id =:moveDocDetail";
+				List<Long> tasks = commonDao.findByQuery(hql, new String[]{"moveDocDetail"}, 
+						new Object[]{wdd.getId()});
+				if(tasks==null || tasks.size()<=0){
+					result.put(WmsScanPickShellMessage.ERROR_MESG, ShellExceptions.PICK_BACK_IS_NULL);
+				}else{
+					WmsPutawayRFManager wmsPutawayRFManager = (WmsPutawayRFManager) applicationContext.getBean("wmsPutawayRFManager");
+					Long descLocationId = wmsPutawayRFManager.findLoc(descLocationCode);
+					if(descLocationId==null || descLocationId == 0L){
+						result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_LOC_NULL);
+					}else{
+						WmsTransactionalManager transactionalManager = (WmsTransactionalManager) applicationContext.getBean("wmsTransactionalManager");
+						WmsLocation toLocation = commonDao.load(WmsLocation.class, descLocationId);
+						Double availableQuantityBU = 0D,moveQty = 0D,ixQty = 0D,picQty = 0D;
+						Boolean secondSkip = false;
+						for(Long id : tasks){
+							WmsTask task = commonDao.load(WmsTask.class, id);
+							WmsInventory srcInv = commonDao.load(WmsInventory.class, task.getSrcInventoryId());
+							availableQuantityBU = srcInv.getAvailableQuantityBU();
+							moveQty = availableQuantityBU<=picQuantity?availableQuantityBU:picQuantity;//库存表实际可减量
+							if(moveQty<=0){
+								continue;
+							}
+							hql = "FROM WmsInventoryExtend ix WHERE ix.inventory.id =:inventoryId";
+							List<WmsInventoryExtend> ixs = commonDao.findByQuery(hql, "inventoryId", srcInv.getId());
+							if(secondSkip){
+								break;
+							}
+							if(ixs!=null && ixs.size()>0){
+								for(WmsInventoryExtend ix : ixs){
+									ixQty = ix.getQuantityBU();
+									picQty = ixQty<=moveQty?ixQty:moveQty;//子表实际可减量
+									ix.removeQuantity(picQty);
+									commonDao.store(ix);
+									if(ix.getQuantityBU()<=0){
+										commonDao.delete(ix);
+									}
+									srcInv.removeQuantityBU(picQty);
+									commonDao.store(srcInv);
+									////////////
+									moveUp(wdd, transactionalManager, toLocation, srcInv, picQty, task);
+									////////////
+									inventoryLog(wdd, srcInv, toLocation, picQty,"RF移位上架");
+									picQuantity -= picQty;
+									if(picQuantity<=0){//做二级跳出
+										secondSkip = true;
+										break;
+									}
+								}
+							}else{//没有子表也继续扣减
+								srcInv.removeQuantityBU(moveQty);
+								commonDao.store(srcInv);
+								////////////
+								moveUp(wdd, transactionalManager, toLocation, srcInv, moveQty, task);
+								////////////
+								inventoryLog(wdd, srcInv, toLocation, moveQty,"RF移位上架");
+								picQuantity -= moveQty;
+								if(picQuantity<=0){//一级跳出
+									break;
+								}
+							}
+						}
+						if(picQuantity>0){//说明库存数据已经发生变化,要控制本次移位量
+							throw new BusinessException("库存总量不足,还差:"+picQuantity); 
+						}
+					}
+				}
+			}
+		}
+		
+		return result;
+	}
+	private void moveUp(WmsMoveDocDetail wdd,WmsTransactionalManager transactionalManager,WmsLocation toLocation,
+			WmsInventory srcInv,Double quantity,WmsTask task){
+		WmsInventory dstInventory = wmsInventoryManager.getInventoryWithNew(
+				toLocation, srcInv.getItemKey(), srcInv.getPackageUnit(), srcInv.getStatus());
+		dstInventory.addQuantityBU(quantity); 
+		commonDao.store(dstInventory);
+		
+		task.setDescInventoryId(dstInventory.getId());
+		task.setToLocationId(toLocation.getId());
+		task.setToLocationCode(toLocation.getCode());
+		task.editMoveQty(quantity);
+		commonDao.store(task);
+		
+		wdd.move(quantity);
+		transactionalManager.updatePickTicketMovedQuantity(wdd,quantity);
+		WmsMoveDoc moveDoc = wdd.getMoveDoc();
+		if("Y".equals(moveDoc.isFinish())){
+			moveDoc.setStatus(WmsMoveDocStatus.FINISHED);
+		}else{
+			moveDoc.setStatus(WmsMoveDocStatus.WORKING);
+		}
+		commonDao.store(moveDoc);
+	}
+	@SuppressWarnings("unchecked")
+	public Map<String,String> singleMoveQty(String moveNo,String fromLocationCode
+			,String itemCode,Double picQuantity,Long warehouseId){
+		Map<String,String> result = new HashMap<String, String>();
+		result.put(WmsScanPickShellMessage.ERROR_MESG, "");
+		
+		String hql = "FROM WmsMoveDocDetail mm WHERE mm.moveDoc.code =:moveNo AND mm.item.code =:itemCode";
+		WmsMoveDocDetail wdd = (WmsMoveDocDetail) commonDao.findByQueryUniqueResult(hql, 
+				new String[]{"moveNo","itemCode"}, new Object[]{moveNo,itemCode});
+		if(wdd==null){
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_NULL);
+		}else if(wdd.getUnAllocateQuantityBU()<=0){
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_FINISHED);
+		}else{
+			hql = "SELECT SUM(inventory.quantityBU - inventory.allocatedQuantityBU)" +
+					" FROM WmsInventory inventory" +
+					" WHERE inventory.location.code =:location AND inventory.lockLot = false" +
+					" AND inventory.itemKey.item.code =:itemCode";
+			Double qq = (Double) commonDao.findByQueryUniqueResult(hql, 
+					new String[]{"location","itemCode"}, new Object[]{fromLocationCode,itemCode});
+			qq  = qq==null?0D:qq;
+			if(picQuantity == Double.MAX_VALUE){
+				picQuantity = wdd.getUnAllocateQuantityBU();
+			}
+			if(picQuantity>wdd.getUnAllocateQuantityBU()){
+				result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_PIC_MOVE);
+			}else if(qq<picQuantity){
+				result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_PIC_MOVE_INV);
+			}else{
+				WmsPutawayRFManager wmsPutawayRFManager = (WmsPutawayRFManager) applicationContext.getBean("wmsPutawayRFManager");
+				Long fromLocationId = wmsPutawayRFManager.findLoc(fromLocationCode);
+				if(fromLocationId==null || fromLocationId == 0L){
+					result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_LOC_NULL);
+				}else{
+					//产生task,打开状态,设置原库位信息,计划量,移位单激活
+					hql = "FROM WmsInventory inventory" +
+						  " WHERE inventory.location.code =:location AND inventory.lockLot = false" +
+						  " AND inventory.itemKey.item.code =:itemCode" +// AND supplier.code =:supplierCode
+						  " AND (inventory.quantityBU - inventory.allocatedQuantityBU) > 0";
+					List<WmsInventory> srcInvs = commonDao.findByQuery(hql, 
+							new String[]{"location","itemCode"}, new Object[]{fromLocationCode,itemCode});
+					if(srcInvs==null || srcInvs.size()<=0){
+						result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_LOSS);
+					}else{
+						WmsTaskManager wmsTaskManager = (WmsTaskManager) applicationContext.getBean("wmsTaskManager");
+						Double availableQuantityBU = 0D,moveQty = 0D;
+						Boolean isMathcing = true;
+						for(WmsInventory srcInv : srcInvs){
+							isMathcing = srcInv.getItemKey().getLotInfo().getSupplier().getCode()
+									.equals(wdd.getShipLotInfo().getSupplier());
+							if(isMathcing){//优先扣减需求供应商库存
+								availableQuantityBU = srcInv.getAvailableQuantityBU();
+								moveQty = availableQuantityBU<=picQuantity?availableQuantityBU:picQuantity;
+								
+								WmsTask task = wmsTaskManager.createWmsTask(wdd, srcInv.getItemKey(), srcInv.getStatus(),moveQty,null);
+								task.setSrcInventoryId(srcInv.getId());
+								task.setFromLocationId(fromLocationId);
+								task.setFromLocationCode(fromLocationCode);
+								task.setStatus(WmsTaskStatus.OPEN);
+								commonDao.store(task);
+								
+								wdd.setAllocatedQuantityBU(wdd.getAllocatedQuantityBU()+moveQty);
+								commonDao.store(wdd);
+								picQuantity -= moveQty;
+								if(picQuantity<=0){
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return result;
+	}
+	//拣货码返回物料信息
+	public Map<String,String> picBarCode(String moveDetailId,Boolean isPicking){
+		Map<String,String> result = new HashMap<String, String>();
+		result.put(WmsScanPickShellMessage.ERROR_MESG, "");
+		//itemCode = 移位单明细ID
+		String hql = "FROM WmsMoveDocDetail mm WHERE mm.id =:moveDetailId";
+		WmsMoveDocDetail wdd = (WmsMoveDocDetail) commonDao.findByQueryUniqueResult(hql, 
+				new String[]{"moveDetailId"}, new Object[]{Long.parseLong(moveDetailId)});
+		if(wdd==null){
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_NULL);
+		}else if(isPicking && wdd.unMoveQty()<=0){
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_FINISHED);
+		}else{
+			result.put(WmsScanPickNewShell.ITEM_CODE_R, wdd.getItem().getCode());
+			result.put(WmsScanPickNewShell.ITEM_NAME_R, wdd.getItem().getName());
+		}
+		return result;
+	}
+	@SuppressWarnings("unchecked")
+	public Map<String,String> signScanPickContainer(String container){
+		Map<String,String> result = new HashMap<String, String>();
+		result.put(ShellExceptions.MESSAGE, "成功");
+		
+		String hql = "SELECT task.id FROM WmsTask task" +
+				" WHERE task.boxTag =:boxTag";
+		List<Long> tasks = commonDao.findByQuery(hql, new String[]{"boxTag"}, 
+				new Object[]{container});
+		if(tasks==null || tasks.size()<=0){
+			result.put(ShellExceptions.MESSAGE,"失败!PA无该标签任务");
+		}else{
+			//signTime
+			for(Long id : tasks){
+				WmsTask task = commonDao.load(WmsTask.class, id);
+				if(task.getSignTime()!=null){
+					result.put(ShellExceptions.MESSAGE,"重复签收");
+				}else{
+					task.setSignTime(new Date());
+					commonDao.store(task);
+					WmsJobLog wjl = new WmsJobLog(WmsLogType.NOTES, WmsLogTitle.CONTAINER_SIGN, 
+							task.getItemKey().getItem().getCode(),task.getItemKey().getItem().getName(),
+							JavaTools.format(task.getMoveDocDetail().getNeedTime(),JavaTools.y_m_d));
+					commonDao.store(wjl);
+				}
+			}
+		}
+		return result;
+	}
+	@SuppressWarnings("unchecked")
+	public Map<String,String> viewScanPickContainer(String container){
+		Map<String,String> result = new HashMap<String, String>();
+		result.put(WmsScanPickShellMessage.ERROR_MESG, "");
+		
+		String hql = "SELECT task.id FROM WmsTask task WHERE (task.status =:status1 OR task.status =:status2)" +
+				" AND task.relatedBill =:container";
+		List<Long> tasks = commonDao.findByQuery(hql, new String[]{"status1","status2","container"}, 
+				new Object[]{WmsTaskStatus.OPEN,WmsTaskStatus.WORKING,container});
+		if(tasks==null || tasks.size()<=0){
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_TASK_NULL);
+		}
+		return result;
+	}
+	@SuppressWarnings("unchecked")
+	public Map<String,String> unbindPicQty(String container
+			,String moveDetailId){
+		Map<String,String> result = new HashMap<String, String>();
+		result.put(WmsScanPickShellMessage.ERROR_MESG, "");
+		
+		//moveDetailId = 移位单明细ID
+		String hql = "FROM WmsMoveDocDetail mm WHERE mm.id =:moveDetailId";
+		WmsMoveDocDetail wdd = (WmsMoveDocDetail) commonDao.findByQueryUniqueResult(hql, 
+				new String[]{"moveDetailId"}, new Object[]{Long.parseLong(moveDetailId)});
+		if(wdd==null){
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_NULL);
+		}
+		hql = "SELECT task.id FROM WmsTask task WHERE task.status =:status" +
+				" AND task.relatedBill =:container AND task.moveDocDetail.id =:moveDocDetail";
+		List<Long> tasks = commonDao.findByQuery(hql, new String[]{"status","container","moveDocDetail"}, 
+				new Object[]{WmsTaskStatus.OPEN,container,Long.parseLong(moveDetailId)});
+		if(tasks!=null && tasks.size()>0){
+			for(Long id : tasks){
+				WmsTask task = commonDao.load(WmsTask.class, id);
+				wdd.cancelMove(task.getMovedQuantityBU());
+				
+				WmsPickTicketDetail pickTicketDetail = commonDao.load(
+						WmsPickTicketDetail.class, wdd.getRelatedId());
+				pickTicketDetail.cancelPickedQuantityBU(task.getMovedQuantityBU());
+				commonDao.store(pickTicketDetail);
+				//更新发运计划拣货量
+				List<WmsShipLot> lots = commonDao.findByQuery("FROM WmsShipLot lot WHERE lot.pickTicket.id =:pickTicket" +
+						" AND lot.itemCode =:itemCode AND lot.expectedQuantityBU>lot.pickedQuantityBU ORDER BY lot.batch DESC", 
+						new String[]{"pickTicket","itemCode"}, 
+						new Object[]{pickTicketDetail.getPickTicket().getId(),pickTicketDetail.getItem().getCode()});
+				if(lots!=null && lots.size()>0){
+					Double quantity =0D,availableQuantityBU = 0D,picQty = 0D;
+					availableQuantityBU = task.getMovedQuantityBU();
+					for(WmsShipLot sl : lots){
+						quantity = sl.getPickedQuantityBU();
+						picQty = quantity>=task.getMovedQuantityBU()?task.getMovedQuantityBU():quantity;
+						sl.removePickQty(picQty);
+						commonDao.store(sl);
+						availableQuantityBU -= picQty;
+						if(availableQuantityBU<=0){
+							break;
+						}
+					}
+				}
+//				task.setRelatedBill(null);
+//				task.setBoxTag(null);
+//				task.setMovedQuantityBU(0D);
+//				commonDao.store(task);
+				WmsJobLog wjl = new WmsJobLog(WmsLogType.NOTES, WmsLogTitle.CONTAINER_RELEASE, 
+						wdd.getItem().getCode(),wdd.getItem().getName(),
+						JavaTools.format(wdd.getMoveDoc().getPickTicket().getRequireArriveDate(),JavaTools.y_m_d));
+				commonDao.store(wjl);
+				
+				commonDao.delete(task);
+			}
+		}else{
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_TASK_NULL);
+		}
+		return result;
+	}
+	//不校验库存
+		@SuppressWarnings("unchecked")
+		public Map<String,String> singlePicNewQty(String container
+				,String moveDetailId,Double picQuantity,String description,Boolean checkBox,Long warehouseId){
+			Map<String,String> result = new HashMap<String, String>();
+			result.put(WmsScanPickShellMessage.ERROR_MESG, "");
+			
+			//moveDetailId = 移位单明细ID
+			String hql = "FROM WmsMoveDocDetail mm WHERE mm.id =:moveDetailId";
+			WmsMoveDocDetail wdd = (WmsMoveDocDetail) commonDao.findByQueryUniqueResult(hql, 
+					new String[]{"moveDetailId"}, new Object[]{Long.parseLong(moveDetailId)});
+			if(wdd==null){
+				result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_NULL);
+			}else if(wdd.unMoveQty()<=0){
+				result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_FINISHED);
+			}else{
+				if(picQuantity == Double.MAX_VALUE){
+					picQuantity = wdd.unMoveQty();
+				}
+				if(picQuantity>wdd.unMoveQty()){
+					result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_PIC_MOVE);
+				}else{
+					hql = "FROM WmsBoxType bt WHERE bt.code =:code AND bt.status =:status";
+					WmsBoxType bt = (WmsBoxType) commonDao.findByQueryUniqueResult(hql, new String[]{"code","status"}, 
+							new Object[]{container,BaseStatus.ENABLED});
+					if(bt == null && checkBox){
+						result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_CONTAINER_NULL);
+					}else{
+						WmsTransactionalManager transactionalManager = (WmsTransactionalManager) applicationContext.getBean("wmsTransactionalManager");
+						WmsTaskManager wmsTaskManager = (WmsTaskManager) applicationContext.getBean("wmsTaskManager");
+						
+						List<WmsItemKey> iks = commonDao.findByQuery("FROM WmsItemKey ik WHERE ik.item.id =:item" +
+								" AND ik.lotInfo.supplier.code =:supplier", 
+								new String[]{"item","supplier"},
+								new Object[]{wdd.getItem().getId(),wdd.getShipLotInfo().getSupplier()});
+						WmsItemKey ik = null;
+						if(iks!=null && iks.size()>0){
+							ik = iks.get(0);
+						}else{
+							WmsPickTicketDetail pp = commonDao.load(WmsPickTicketDetail.class, wdd.getRelatedId());
+							WmsItemManager wmsItemManager = (WmsItemManager) applicationContext.getBean("wmsItemManager");
+							WmsLotRule lotRule = wdd.getItem().getDefaultLotRule();
+							LotInfo lotInfo = new LotInfo();
+							lotInfo.setProductDate(new Date());
+							lotInfo.setReceivedDate(new Date());
+							lotInfo.setSupplier(pp.getSupplier());
+							lotInfo.prepare(lotRule, wdd.getItem(),"initSoi");
+							ik = wmsItemManager.getItemKey(wdd.getMoveDoc().getWarehouse(), 
+									lotInfo.getSoi(), wdd.getItem(), lotInfo);
+						}
+						
+						wdd.setFromLocationId(1L);
+						wdd.setFromLocationCode("test");
+						commonDao.store(wdd);
+						WmsTask task = wmsTaskManager.createWmsTask(wdd, ik, null,picQuantity,container);
+						task.editMoveQty(picQuantity);
+						commonDao.store(task);
+						
+						wdd.move(picQuantity);
+						transactionalManager.updatePickTicketMovedQuantity(wdd,picQuantity);
+						WmsMoveDoc moveDoc = wdd.getMoveDoc();
+						if("Y".equals(moveDoc.isFinish())){
+							moveDoc.setStatus(WmsMoveDocStatus.FINISHED);
+						}else{
+							moveDoc.setStatus(WmsMoveDocStatus.WORKING);
+						}
+						commonDao.store(moveDoc);
+						
+						WmsJobLog wjl = new WmsJobLog(WmsLogType.NOTES, WmsLogTitle.CONTAINER_PICKING, 
+								wdd.getItem().getCode(),wdd.getItem().getName(),
+								JavaTools.format(moveDoc.getPickTicket().getRequireArriveDate(),JavaTools.y_m_d));
+						commonDao.store(wjl);
+					}
+				}
+			}
+			return result;
+		}
+	//不校验库存
+	@SuppressWarnings("unchecked")
+	public Map<String,String> singlePicQty(String pickNo,String container
+			,String itemCode,Double picQuantity,String description,Boolean checkBox,Long warehouseId){
+		Map<String,String> result = new HashMap<String, String>();
+		result.put(WmsScanPickShellMessage.ERROR_MESG, "");
 		String hql = "FROM WmsMoveDocDetail mm WHERE mm.moveDoc.code =:pickNo AND mm.item.code =:itemCode";
 		WmsMoveDocDetail wdd = (WmsMoveDocDetail) commonDao.findByQueryUniqueResult(hql, 
 				new String[]{"pickNo","itemCode"}, new Object[]{pickNo,itemCode});
@@ -1136,9 +1589,79 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 					new String[]{"pickNo","itemCode"}, new Object[]{pickNo,itemCode});
 		}
 		if(wdd==null){
-			result.put(WmsScanPickShell.ERROR_MESG, WmsScanPickShell.ERROR_ITEM_NULL);
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_NULL);
 		}else if(wdd.unMoveQty()<=0){
-			result.put(WmsScanPickShell.ERROR_MESG, WmsScanPickShell.ERROR_ITEM_FINISHED);
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_FINISHED);
+		}else{
+			if(picQuantity == Double.MAX_VALUE){
+				picQuantity = wdd.unMoveQty();
+			}
+			if(picQuantity>wdd.unMoveQty()){
+				result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_PIC_MOVE);
+			}else{
+				hql = "FROM WmsBoxType bt WHERE bt.code =:code AND bt.status =:status";
+				WmsBoxType bt = (WmsBoxType) commonDao.findByQueryUniqueResult(hql, new String[]{"code","status"}, 
+						new Object[]{container,BaseStatus.ENABLED});
+				if(bt == null && checkBox){
+					result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_CONTAINER_NULL);
+				}else{
+					WmsTransactionalManager transactionalManager = (WmsTransactionalManager) applicationContext.getBean("wmsTransactionalManager");
+					WmsTaskManager wmsTaskManager = (WmsTaskManager) applicationContext.getBean("wmsTaskManager");
+					
+					List<WmsItemKey> iks = commonDao.findByQuery("FROM WmsItemKey ik WHERE ik.item.code =:item", "item", itemCode);
+					WmsItemKey ik = null;
+					if(iks!=null && iks.size()>0){
+						ik = iks.get(0);
+					}else{
+						WmsPickTicketDetail pp = commonDao.load(WmsPickTicketDetail.class, wdd.getRelatedId());
+						WmsItemManager wmsItemManager = (WmsItemManager) applicationContext.getBean("wmsItemManager");
+						WmsLotRule lotRule = wdd.getItem().getDefaultLotRule();
+						LotInfo lotInfo = new LotInfo();
+						lotInfo.setProductDate(new Date());
+						lotInfo.setReceivedDate(new Date());
+						lotInfo.setSupplier(pp.getSupplier());
+						lotInfo.prepare(lotRule, wdd.getItem(),"initSoi");
+						ik = wmsItemManager.getItemKey(wdd.getMoveDoc().getWarehouse(), 
+								lotInfo.getSoi(), wdd.getItem(), lotInfo);
+					}
+					
+					wdd.setFromLocationId(1L);
+					wdd.setFromLocationCode("test");
+					commonDao.store(wdd);
+					WmsTask task = wmsTaskManager.createWmsTask(wdd, ik, null,picQuantity,container);
+					task.editMoveQty(picQuantity);
+					commonDao.store(task);
+					
+					wdd.move(picQuantity);
+					transactionalManager.updatePickTicketMovedQuantity(wdd,picQuantity);
+					WmsMoveDoc moveDoc = wdd.getMoveDoc();
+					if("Y".equals(moveDoc.isFinish())){
+						moveDoc.setStatus(WmsMoveDocStatus.FINISHED);
+					}else{
+						moveDoc.setStatus(WmsMoveDocStatus.WORKING);
+					}
+					commonDao.store(moveDoc);
+				}
+			}
+		}
+		return result;
+	}
+	public Map<String,String> singlePicQty(String pickNo,String container,String fromLocationCode
+			,String itemCode,Double picQuantity,String description,Boolean checkBox,Long warehouseId){
+		Map<String,String> result = new HashMap<String, String>();
+		result.put(WmsScanPickShellMessage.ERROR_MESG, "");
+		String hql = "FROM WmsMoveDocDetail mm WHERE mm.moveDoc.code =:pickNo AND mm.item.code =:itemCode";
+		WmsMoveDocDetail wdd = (WmsMoveDocDetail) commonDao.findByQueryUniqueResult(hql, 
+				new String[]{"pickNo","itemCode"}, new Object[]{pickNo,itemCode});
+		if(wdd==null){
+			hql = "FROM WmsMoveDocDetail mm WHERE mm.moveDoc.pickTicket.relatedBill1 =:pickNo AND mm.item.code =:itemCode";
+			wdd = (WmsMoveDocDetail) commonDao.findByQueryUniqueResult(hql, 
+					new String[]{"pickNo","itemCode"}, new Object[]{pickNo,itemCode});
+		}
+		if(wdd==null){
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_NULL);
+		}else if(wdd.unMoveQty()<=0){
+			result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_ITEM_FINISHED);
 		}else{
 			hql = "SELECT SUM(inventory.quantityBU - inventory.allocatedQuantityBU)" +
 					" FROM WmsInventory inventory" +
@@ -1151,21 +1674,21 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 				picQuantity = wdd.unMoveQty();
 			}
 			if(picQuantity>wdd.unMoveQty()){
-				result.put(WmsScanPickShell.ERROR_MESG, WmsScanPickShell.ERROR_PIC_MOVE);
+				result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_PIC_MOVE);
 			}else if(qq<picQuantity){
-				result.put(WmsScanPickShell.ERROR_MESG, WmsScanPickShell.ERROR_PIC_MOVE_INV);
+				result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_PIC_MOVE_INV);
 			}else{
 				hql = "FROM WmsBoxType bt WHERE bt.code =:code AND bt.status =:status";
 				WmsBoxType bt = (WmsBoxType) commonDao.findByQueryUniqueResult(hql, new String[]{"code","status"}, 
 						new Object[]{container,BaseStatus.ENABLED});
 				if(bt == null && checkBox){
-					result.put(WmsScanPickShell.ERROR_MESG, WmsScanPickShell.ERROR_CONTAINER_NULL);
+					result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_CONTAINER_NULL);
 				}else{
 					WmsPutawayRFManager wmsPutawayRFManager = (WmsPutawayRFManager) applicationContext.getBean("wmsPutawayRFManager");
 					WmsTransactionalManager transactionalManager = (WmsTransactionalManager) applicationContext.getBean("wmsTransactionalManager");
 					Long fromLocationId = wmsPutawayRFManager.findLoc(fromLocationCode);
 					if(fromLocationId==null || fromLocationId == 0L){
-						result.put(WmsScanPickShell.ERROR_MESG, WmsScanPickShell.ERROR_LOC_NULL);
+						result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_LOC_NULL);
 					}else{
 						//产生task,直接为可发运数据,原库位和目标库位(先找,再判断是否新建)同时做相应的减法和加法
 						hql = "FROM WmsInventory inventory" +
@@ -1175,14 +1698,14 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 						List<WmsInventory> srcInvs = commonDao.findByQuery(hql, 
 								new String[]{"location","itemCode"}, new Object[]{fromLocationCode,itemCode});
 						if(srcInvs==null || srcInvs.size()<=0){
-							result.put(WmsScanPickShell.ERROR_MESG, WmsScanPickShell.ERROR_LOSS);
+							result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_LOSS);
 						}else{
 							WmsLocation toLocation = (WmsLocation) commonDao.findByQueryUniqueResult("FROM WmsLocation l WHERE l.type =:type" +
 									" AND l.status = 'ENABLED' AND l.warehouse.id =:warehouse",
 									new String[]{"type","warehouse"},
-									new Object[]{WmsLocationType.SHIP,WmsWarehouseHolder.getWmsWarehouse().getId()});
+									new Object[]{WmsLocationType.SHIP,warehouseId});
 							if(toLocation==null){
-								result.put(WmsScanPickShell.ERROR_MESG, WmsScanPickShell.ERROR_SHIP_LOC_NULL);
+								result.put(WmsScanPickShellMessage.ERROR_MESG, WmsScanPickShellMessage.ERROR_SHIP_LOC_NULL);
 							}else{
 								wdd.setFromLocationId(fromLocationId);
 								wdd.setFromLocationCode(fromLocationCode);
@@ -1209,13 +1732,23 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 			,Double picQuantity,WmsLocation toLocation,Long fromLocationId,String fromLocationCode,
 			WmsTransactionalManager transactionalManager,Boolean isA,String container,String description){
 		Double availableQuantityBU = 0D,moveQty = 0D,ixQty = 0D,picQty = 0D;
+		Boolean isMathcing = true,secondSkip = false;
 		for(WmsInventory srcInv : srcInvs){
-			if(srcInv.getItemKey().getLotInfo().getSupplier().getCode()
-					.equals(wdd.getShipLotInfo().getSupplier()) && isA){//优先扣减需求供应商库存
+			if(isA){
+				isMathcing = srcInv.getItemKey().getLotInfo().getSupplier().getCode()
+						.equals(wdd.getShipLotInfo().getSupplier());
+			}else{
+				isMathcing = !srcInv.getItemKey().getLotInfo().getSupplier().getCode()
+						.equals(wdd.getShipLotInfo().getSupplier());
+			}
+			if(isMathcing){//优先扣减需求供应商库存
 				availableQuantityBU = srcInv.getAvailableQuantityBU();
 				moveQty = availableQuantityBU<=picQuantity?availableQuantityBU:picQuantity;
 				String hql = "FROM WmsInventoryExtend ix WHERE ix.inventory.id =:inventoryId";
 				List<WmsInventoryExtend> ixs = commonDao.findByQuery(hql, "inventoryId", srcInv.getId());
+				if(secondSkip){
+					break;
+				}
 				if(ixs!=null && ixs.size()>0){
 					for(WmsInventoryExtend ix : ixs){
 						wdd.setSrcInvExId(ix.getId());
@@ -1233,7 +1766,8 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 								fromLocationCode,transactionalManager,container);
 						inventoryLog(wdd, srcInv, toLocation, picQty,description);
 						picQuantity -= picQty;
-						if(picQuantity<=0){
+						if(picQuantity<=0){//做二级跳出
+							secondSkip = true;
 							break;
 						}
 					}
@@ -1244,7 +1778,7 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 							fromLocationCode,transactionalManager,container);
 					inventoryLog(wdd, srcInv, toLocation, moveQty,description);
 					picQuantity -= moveQty;
-					if(picQuantity<=0){
+					if(picQuantity<=0){//一级跳出
 						break;
 					}
 				}
@@ -1269,12 +1803,19 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 		task.setDescInventoryId(dstInventory.getId());
 		task.setToLocationId(toLocation.getId());
 		task.setToLocationCode(toLocation.getCode());
-		task.editMovedQuantityBU(quantity);
+		task.editMoveQty(quantity);
 		commonDao.store(task);
 		
 		wdd.move(quantity);
 		transactionalManager.updatePickTicketMovedQuantity(wdd,quantity);
-		workflowManager.doWorkflow(wdd.getMoveDoc(), "wmsMoveDocProcess.confirm");
+//		workflowManager.doWorkflow(wdd.getMoveDoc(), "wmsMoveDocProcess.confirm");
+		WmsMoveDoc moveDoc = wdd.getMoveDoc();
+		if("Y".equals(moveDoc.isFinish())){
+			moveDoc.setStatus(WmsMoveDocStatus.FINISHED);
+		}else{
+			moveDoc.setStatus(WmsMoveDocStatus.WORKING);
+		}
+		commonDao.store(moveDoc);
 		return task;
 	}
 	private void inventoryLog(WmsMoveDocDetail wdd,WmsInventory srcInv,WmsLocation toLocation
@@ -1287,6 +1828,7 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 				wdd.getMoveDoc().getBillType(), toLocation, srcInv.getItemKey(),
 				quantity, srcInv.getPackageUnit(),srcInv.getStatus(),description);
 	}
+	//wmsPickRFManager.spsPicking
 	@SuppressWarnings("unchecked")
 	public void spsPicking(Long id){
 		//系统先根据时序明细匹配库存目前的所在库位/库位可用量,用时序明细的总需求量做减法,得到预扣减信息<物料-库位-拣货量>
@@ -1294,6 +1836,7 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 		Set<WContainers> details = w.getDetails();
 		String hql = "SELECT appl.id FROM WmsPickTicketAndAppliance appl WHERE appl.sheetNo =:sheetNo" +
 				" AND appl.no =:boxTag";//AND (appl.qty-appl.pickQty)>0 这块后面再详细设计
+		hql = "SELECT wsp.id FROM WmsSpsProductLine wsp WHERE wsp.sheetNo =:sheetNo AND wsp.boxTag =:boxTag";
 		String itemCode = "";
 		Map<String,Double> itemQum = new HashMap<String, Double>();
 		Double qty = 0D;
@@ -1302,14 +1845,16 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 					new Object[]{w.getPickCode(),c.getContainer()});
 			if(appls!=null && appls.size()>0){
 				for(Long applid : appls){
-					WmsPickTicketAndAppliance appl = commonDao.load(WmsPickTicketAndAppliance.class, applid);
-					itemCode = appl.getPartNo();
+//					WmsPickTicketAndAppliance appl = commonDao.load(WmsPickTicketAndAppliance.class, applid);
+//					itemCode = appl.getPartNo();
+					WmsSpsProductLine appl = commonDao.load(WmsSpsProductLine.class, applid);
+					itemCode = appl.getItemCode();
 					if(itemQum.containsKey(itemCode)){
 						qty = itemQum.get(itemCode);
 					}else{
 						qty = 0D;
 					}
-					qty += appl.getAvailableQuantityBU();
+					qty += appl.getQty();
 					itemQum.put(itemCode, qty);
 				}
 				//依次匹配库存并决定每个库存的扣减量
@@ -1320,6 +1865,7 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 				hql = "SELECT inventory.location.code,(inventory.quantityBU-inventory.allocatedQuantityBU)" +
 						  " FROM WmsInventory inventory" +
 						  " WHERE inventory.lockLot = false" +
+						  " AND inventory.location.type =:type" +
 						  " AND inventory.itemKey.item.code =:itemCode" +// AND supplier.code =:supplierCode
 						  " AND (inventory.quantityBU - inventory.allocatedQuantityBU) > 0";
 				Iterator<Entry<String, Double>> ii = itemQum.entrySet().iterator();
@@ -1328,7 +1874,7 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 					itemCode = entry.getKey();
 					qty = entry.getValue();
 					List<Object[]> srcInvs = commonDao.findByQuery(hql, 
-							new String[]{"itemCode"}, new Object[]{itemCode});
+							new String[]{"type","itemCode"}, new Object[]{WmsLocationType.STORAGE,itemCode});
 					if(srcInvs!=null && srcInvs.size()>0){
 						for(Object[] obj : srcInvs){
 							locationCode = obj[0].toString();
@@ -1363,10 +1909,10 @@ public class DefaultWmsPickRFManager extends DefaultLimitQueryBaseManager
 						Entry<String, Double> e = i.next();
 						locationCode = e.getKey();
 						locQty = e.getValue();
-						Map<String,String> result = this.singlePicQty(w.getPickCode(),c.getContainer(), 
-								locationCode,itemCode,locQty,"时序任务拣货:"+c.getContainer(),false);
-						
-						messge = result.get(WmsScanPickShell.ERROR_MESG);
+						Map<String,String> result = this.singlePicQty(w.getPickCode(), 
+								c.getContainer(), itemCode, locQty, "时序任务拣货:"+c.getContainer(), false, w.getWarehouse().getId());
+//								singlePicQty(w.getPickCode(),c.getContainer(),locationCode,itemCode,locQty,"时序任务拣货:"+c.getContainer(),false,w.getWarehouse().getId());
+						messge = result.get(WmsScanPickShellMessage.ERROR_MESG);
 						if(!StringUtils.isEmpty(messge)){
 							c.setDescrption(messge);
 							commonDao.store(c);

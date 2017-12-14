@@ -363,3 +363,7 @@ INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WMSPurchaseStatus', 'OPEN'
 INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WMSPurchaseStatus', 'ENABLED');
 INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WMSPurchaseStatus', 'SENDED');
 INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WMSPurchaseStatus', 'BACKED');
+
+DELETE FROM ENUMERATE WHERE ENUM_TYPE = 'TypeOfCompanyAndBill';
+INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'TypeOfCompanyAndBill', 'PRINT_ASN');
+INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'TypeOfCompanyAndBill', 'SPS_ORDER_LINE');

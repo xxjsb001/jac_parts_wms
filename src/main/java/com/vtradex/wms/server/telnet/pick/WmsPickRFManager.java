@@ -103,12 +103,16 @@ public interface WmsPickRFManager extends WmsCommonRFManager{
 	 */
 	@Transactional
 	Map checkMoveDocByContainer(String container,Map<String,WmsBOLDTO> dtos);
+	@Transactional
+	Map checkMoveDocByBoxTag(String boxTag,Map<String,WmsBOLDTO> dtos);
 	
 	/**
 	 * 创建装车单BOL
 	 */
 	@Transactional
 	void createWmsBol(Map<String, WmsBOLDTO> dtos,String license);
+	@Transactional
+	void createWmsScanBol(Map<String, WmsBOLDTO> dtos,String license);
 	
 	List<Object[]> findUnPickMove(Long moveDocId);
 	@Transactional
@@ -138,10 +142,31 @@ public interface WmsPickRFManager extends WmsCommonRFManager{
 //	Map<String,String> findContainer(String container);
 //	Map<String,String> findLoc(String location);
 //	Map<String,String> findMoveDetail(String pickNo,String itemCode);
-	/**明细拣货*/
+	/**明细拣货 扫码移位单明细ID*/
 	@Transactional
-	Map<String,String> singlePicQty(String pickNo,String container,String fromLocationCode,String itemCode,Double picQuantity
-			,String description,Boolean checkBox);
+	Map<String,String> singlePicNewQty(String container,String moveDetailId,Double picQuantity
+			,String description,Boolean checkBox,Long warehouseId);
+	/**明细拣货 扫码拣货单号*/
+	@Transactional
+	Map<String,String> singlePicQty(String pickNo,String container,String itemCode,Double picQuantity
+			,String description,Boolean checkBox,Long warehouseId);
+	/**明细移位下架*/
+	@Transactional
+	Map<String,String> singleMoveQty(String pickNo,String fromLocationCode
+			,String itemCode,Double picQuantity,Long warehouseId);
+	/**明细移位上架*/
+	@Transactional
+	Map<String,String> singleMoveUpQty(String moveNo,String descLocationCode
+			,String itemCode,Double picQuantity,Long warehouseId);
 	@Transactional
 	void spsPicking(Long id);
+	@Transactional
+	Map<String,String> picBarCode(String moveDetailId,Boolean isPicking);
+	/**器具解绑*/
+	Map<String,String> unbindPicQty(String container
+			,String moveDetailId);
+	/**器具任务明细统计*/
+	Map<String,String> viewScanPickContainer(String container);
+	/**器具单签收*/
+	Map<String,String> signScanPickContainer(String container);
 }

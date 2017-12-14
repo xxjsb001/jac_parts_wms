@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="importWmsSpsProductLinePage">
+    <main>
+        <process id="wmsMoveDocProcess">
+            <formCommit id="import" title="import" process="wmsMoveDocProcess.import" enableType="none" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="importFile" className="file">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsItemManager" methodName="importWmsSpsProductLine" parameter="importFile"/>
+                </actions>
+                 <forwards>
+                    <forward name="resetWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

@@ -11,7 +11,6 @@ import com.vtradex.thorn.server.service.pojo.DefaultBaseManager;
 import com.vtradex.thorn.server.util.LocalizedMessage;
 import com.vtradex.wms.server.model.move.WmsMoveDocType;
 import com.vtradex.wms.server.model.organization.WmsBillType;
-import com.vtradex.wms.server.model.receiving.WmsSource;
 import com.vtradex.wms.server.model.shipping.WmsPickTicketDetail;
 import com.vtradex.wms.server.model.shipping.WmsPickTicketStatus;
 import com.vtradex.wms.server.utils.JavaTools;

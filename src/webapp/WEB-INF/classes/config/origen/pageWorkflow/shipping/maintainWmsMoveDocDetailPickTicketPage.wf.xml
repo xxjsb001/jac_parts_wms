@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="maintainWmsMoveDocDetailPickTicketPage">
+    <main>           
+           <process id="wmsMoveDocProcess">
+        	<tablePopup id="printMoveDocDetail" title="printMoveDocDetail" process="wmsMoveDocProcess.printMoveDocDetail" enableType="multi" containId="true" pageId="printMoveDocDetailPage">
+                <enableExpression/>
+            </tablePopup>
+        </process>       
+    </main>
+    <detail/>
+</page>

@@ -132,4 +132,6 @@ public interface WmsPutawayRFManager extends BaseManager {
 	/**RF扫码上架确认*/
 	@Transactional
 	String putAway(Long detailId,Double putQuantity,Long locId);
+	
+	Map<String,String> getItems(Long detailId);
 }

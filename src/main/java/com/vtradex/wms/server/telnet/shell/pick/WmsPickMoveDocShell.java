@@ -73,4 +73,10 @@ public class WmsPickMoveDocShell extends JacPageableBaseShell{
 		return params;
 	}
 
+	@Override
+	public String getUpShell() {
+		// TODO Auto-generated method stub
+		return WmsPickMoveDocShell.PAGE_ID;
+	}
+
 }

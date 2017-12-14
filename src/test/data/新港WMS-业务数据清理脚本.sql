@@ -1,4 +1,4 @@
------------------¼ğ»õ----------------
+-----------------æ‹£è´§----------------
 truncate table wms_job_log;
 delete from wms_task_and_station;
 delete from wms_movedoc_and_station;
@@ -13,11 +13,11 @@ SELECT 1 from wms_move_doc m where m.type = 'MV_PICKTICKET_PICKING' and m.id = m
 delete from wms_move_doc m where m.type = 'MV_PICKTICKET_PICKING';
 update wms_box_type b set b.is_bol = 'N',b.is_picking = 'N';
 
----------·¢»õµ¥------------------
+---------å‘è´§å•------------------
 delete from wms_pick_ticket_detail;
 delete from wms_pick_ticket;
 delete from w_sps_appliance;
----------ÖÊ¼ì--------------------
+---------è´¨æ£€--------------------
 delete from wms_quality_move_soi_log;
 delete from wms_task t where t.type = 'MV_QUALITY_MOVE';
 delete from wms_move_doc_detail mm where exists (
@@ -25,7 +25,7 @@ SELECT 1 from wms_move_doc m where m.type = 'MV_QUALITY_MOVE' and m.id = mm.move
 );
 delete from wms_move_doc m where m.type = 'MV_QUALITY_MOVE';
 truncate table w_qisplan;
----------²¹»õÒÆÎ»------------------
+---------è¡¥è´§ç§»ä½------------------
 DELETE FROM WMS_MOVE_DOC_LOCATION;
 delete from wms_task t where t.type = 'MV_REPLENISHMENT_MOVE';
 delete from wms_move_doc_detail mm where exists (
@@ -34,20 +34,20 @@ SELECT 1 from wms_move_doc m where m.type = 'MV_REPLENISHMENT_MOVE' and m.id = m
 delete from wms_move_doc m where m.type = 'MV_REPLENISHMENT_MOVE';
 
 
----------¿âÄÚÒÆÎ»-----------------
+---------åº“å†…ç§»ä½-----------------
 delete from wms_task t where t.type = 'MV_MOVE';
 delete from wms_move_doc_detail mm where exists (
 SELECT 1 from wms_move_doc m where m.type = 'MV_MOVE' and m.id = mm.move_doc_id
 );
 delete from wms_move_doc m where m.type = 'MV_MOVE';
 
-----------¿â´æÇåÀí----------------
+----------åƒåœ¾åº“å­˜æ¸…ç†----------------
 delete from wms_inventory_extend ix where exists (select 1 from wms_inventory i where i.quantity_bu = 0 and i.id = ix.inventory_id);
 delete from wms_inventory i where i.quantity_bu = 0;
 update wms_inventory i set i.putaway_quantity_bu = 0,i.allocated_quantity_bu = 0 where (i.putaway_quantity_bu>0 or i.allocated_quantity_bu>0);
 update wms_inventory_extend ix set ix.allocated_quantity_bu = 0 where ix.allocated_quantity_bu > 0;
 delete from wms_inventory_log;
----------½Ó¿ÚÏà¹Ø----------------
+---------æ¥å£ç›¸å…³----------------
 truncate table thorn_tasks;
 truncate table MIDDLE_ASN_SRM_DETAIL;
 truncate table MIDDLE_ORDER_JH;
@@ -62,10 +62,10 @@ truncate table wms_asn_detail;
 truncate table jac_pallet_serial;
 delete from wms_asn;
 delete from wms_task t where t.type = 'MV_PUTAWAY';
-----------ÅÌµã----------------------
+----------ç›˜ç‚¹----------------------
 truncate table wms_count_record;
 truncate table wms_count_detail;
 delete from wms_count_plan;
-----------ÈÕÖ¾-----------------------
+----------æ—¥å¿—-----------------------
 truncate table exception_log;
 truncate table thorn_rule_exception_log;

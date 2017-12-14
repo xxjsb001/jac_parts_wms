@@ -24,14 +24,14 @@
 		<property name="container" column="CONTAINER" type="string"/>
 		<property name="isConfirm" column="IS_CONFIRM" type="yes_no"/>
 		<property name="shipStatus" type="string" column="SHIP_STATUS" length="50"/>
-		<property name="boxTag" column="BOX_TAG" type="string" length="200"/>
+		<property name="boxTag" column="BOX_TAG" type="string" length="200"/> 		
 		<component name="updateInfo" class="com.vtradex.thorn.server.model.UpdateInfo">
 			<property name="creatorId" type="long" column="CREATOR_ID"/>
 			<property name="creator" type="string" length="50" column="CREATOR"/>
 			<property name="createdTime" type="timestamp" column="CREATED_TIME"/>
 			<property name="lastOperatorId" type="long" column="LAST_OPERATOR_ID"/>
 			<property name="lastOperator" type="string" length="50" column="LAST_OPERATOR"/>
-			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>
+			<property name="updateTime" type="timestamp" column="UPDATE_TIME"/>			
 		</component>
 	</class>
 </hibernate-mapping>

@@ -710,7 +710,7 @@ public class DefaultWmsDealInterfaceDataManager
 								+ "QTY,FWARE,ODR_SU,DWARE,PRODUCT_LINE,SHDK,IS_JP,"
 								+ "BATCH,STATION,SLR,FROM_SOURCE from "+MiddleTableName.W_ORDER_JH
 								+" WHERE status  = 1"
-//								+" WHERE upper(ODR_NO) = 'JH170929000004'"
+//								+" WHERE upper(ODR_NO) = 'JHnull17C0500124'"
 								+" ORDER BY upper(ODR_NO) desc";
 		
 		createPickTicketByMiddleData(warehouse,orderJhSql,MiddleTableName.W_ORDER_JH);
@@ -2567,8 +2567,8 @@ public class DefaultWmsDealInterfaceDataManager
 	}
 	
 	/**出库数据传MES*/
-	public void outBoundToMes(WmsBOLDetail detail,WmsMoveDoc moveDoc,
-						int i,WmsTask task,String billCode){
+	public void outBoundToMes(WmsBOLDetail detail,String blgName,WmsPickTicket pickTicket,WmsPickTicketDetail pickTicketDetail,
+						int i,String billCode,String supplyCode,Double planQuantityBU,String itemCode){
 		Connection connection = getConnection();
 		if(null == connection){//处理装车单第一条数据的时候获取连接,处理第二条数据的时候就不用再获取连接了
 			throw new BusinessException("数据库连接失败,请检查!!");
@@ -2576,69 +2576,22 @@ public class DefaultWmsDealInterfaceDataManager
 		String insertSql = insertMesSql();
 		PreparedStatement pre = null;
 		
-		WmsPickTicket pickTicket = commonDao.load(WmsPickTicket.class,moveDoc.getPickTicket().getId());
-		WmsMoveDocDetail moveDocDetail = commonDao.load(WmsMoveDocDetail.class,task.getMoveDocDetail().getId());
-		WmsPickTicketDetail pickTicketDetail = commonDao.load(WmsPickTicketDetail.class,moveDocDetail.getRelatedId());
+//		WmsPickTicket pickTicket = commonDao.load(WmsPickTicket.class,moveDoc.getPickTicket().getId());
 		
-		List<WmsMoveDocAndStation> mas = getmoveDocAndStation(moveDocDetail.getId());
-		String applianceType = null,applianceName = null;//器具型号,器具名称
-		Integer applianceAmount=0;
-		if(mas.size() > 0){
-			applianceType = mas.get(0).getType() == null ? null : mas.get(0).getType().toString();
-			applianceAmount = mas.get(0).getLoadage() == null ? 0 : mas.get(0).getLoadage();
-		}
 		String subCode = detail.getSubCode();//子单号
 		String mesCode = pickTicket.getRelatedBill1();//mes料单号
-		String supplyCode = moveDocDetail.getShipLotInfo().getSupplier();//供应商编码
 		String productionLine = getMayNullData1(pickTicketDetail.getProductionLine());//生产线
 		String station = pickTicketDetail.getStation();//工位
 		String remark = pickTicketDetail.getRemark();//备注
-		String itemCode = detail.getItemKey().getItem().getCode();//货品编码
+//		String itemCode = detail.getItemKey().getItem().getCode();//货品编码
 		try {
 			pre =connection.prepareStatement(insertSql);
 			
 			insertMes(pre, subCode, mesCode, billCode, i, pickTicket.getRequireArriveDate(), supplyCode, itemCode, 
-					moveDocDetail.getPlanQuantityBU(),detail.getQuantityBU(), moveDoc.getCompany().getCode(), 
-					pickTicket.getReceiveHouse(), productionLine, pickTicket.getReceiveDoc(), moveDoc.getBlg().getName(), 
-					detail.getBol().getVehicleNo(), pickTicketDetail.getIsJp(), pickTicket.getBatch(), station, applianceType, 
-					applianceName, applianceAmount, mas.size(), remark);
-//			pre.setString(1, subCode);//子单号
-//			pre.setString(2, getMayNullData1(mesCode));//MES料单号
-//			pre.setString(3, billCode);//单据类型
-//			pre.setInt(4, 10 * i);//行号
-//			pre.setTimestamp(5, Timestamp.valueOf
-//					(DateUtil.formatDateToStr
-//							(pickTicket.getRequireArriveDate() == null 
-//								? new Date() : pickTicket.getRequireArriveDate())));//生产日期
-//			pre.setTimestamp(6, Timestamp.valueOf(DateUtil.formatDateToStr(new Date())));
-//			pre.setString(7, getMayNullData1(supplyCode));//供应商
-//			pre.setString(8, detail.getItemKey().getItem().getCode());//货品编码
-//			pre.setDouble(9, moveDocDetail.getPlanQuantityBU());//订单数量
-//			pre.setDouble(10, detail.getQuantityBU());//发运数量
-//			pre.setString(11, moveDoc.getCompany().getCode());//货主
-//			pre.setString(12, getMayNullData1(pickTicket.getReceiveHouse()));//目的仓库
-//			pre.setString(13, productionLine);//生产线
-//			pre.setString(14, getMayNullData1(pickTicket.getReceiveDoc()));//收货道口
-//			pre.setString(15, moveDoc.getBlg().getName());//备料工
-//			pre.setString(16, detail.getBol().getVehicleNo());//车牌号
-//			if(null == pickTicketDetail.getIsJp()){//是否集配
-//				pre.setString(17,null);
-//			}else{
-//				pre.setString(17,pickTicketDetail.getIsJp() == true ? "Y" : "N" );
-//			}
-//			pre.setString(18, pickTicket.getBatch());//批次
-//			pre.setString(19, station);//工位
-//			pre.setString(20, applianceType);//器具类型
-//			pre.setString(21, applianceName);//器具名称
-//			pre.setInt(22, applianceAmount);//满载量
-//			pre.setInt(23, mas.size());//器具个数
-//			pre.setString(24, remark);//备注
-//			pre.setString(25, "1");//状态
-//			pre.executeUpdate();
-		
-			outBoundApplianceToMes( moveDocDetail, subCode, mesCode, billCode, 
-					connection, pre, supplyCode,  itemCode, detail.getQuantityBU(), 
-					productionLine, station, remark, mas);
+					planQuantityBU,detail.getQuantityBU(), pickTicket.getCompany().getCode(), 
+					pickTicket.getReceiveHouse(), productionLine, pickTicket.getReceiveDoc(), blgName, 
+					detail.getBol().getVehicleNo(), pickTicketDetail.getIsJp(), pickTicket.getBatch(), station, 
+					BaseStatus.NULLVALUE, BaseStatus.NULLVALUE, 0, 0, remark);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new BusinessException(e.getMessage());
@@ -2706,7 +2659,7 @@ public class DefaultWmsDealInterfaceDataManager
 				}
 				String insertSql = insertMesSql();
 				String hqlPP = "FROM WmsPickTicketDetail pp WHERE pp.lotPickCode =:lotPickCode" +
-						" AND pp.item.code =:item AND pp.supplier.code =:supplier";
+						" AND pp.item.code =:item";// AND pp.supplier.code =:supplier
 				//根据当前发运明细数据,通过获取发货单号+物料编码+供应商编码,找到原始的发货单信息
 				String hql = "FROM WmsBOLDetail bd WHERE bd.bol.id =:bolId ";
 				List<WmsBOLDetail> details = commonDao.findByQuery(hql, "bolId", bol.getId());
@@ -2717,13 +2670,16 @@ public class DefaultWmsDealInterfaceDataManager
 					avaliableQty = detail.getQuantityBU();
 					supplyCode = detail.getItemKey().getLotInfo().getSupplier().getCode();
 					itemCode = detail.getItemKey().getItem().getCode();
-					List<WmsPickTicketDetail> pps = commonDao.findByQuery(hqlPP,new String[]{"lotPickCode","item","supplier"},
-							new Object[]{bol.getPickCode(),itemCode,supplyCode});
+					List<WmsPickTicketDetail> pps = commonDao.findByQuery(hqlPP,new String[]{"lotPickCode","item"},//,"supplier"
+							new Object[]{bol.getPickCode(),itemCode});//,supplyCode
 
 					pre =connection.prepareStatement(insertSql);
 					for(WmsPickTicketDetail pp : pps){
-						ppQty = pp.getExpectedQuantityBU();
+						ppQty = pp.getUnShipLotQuantityBU();
 						shipQuantityBU = avaliableQty>ppQty?ppQty:avaliableQty;
+						if(shipQuantityBU<=0){
+							continue;
+						}
 						insertMes(pre, detail.getSubCode(), pp.getPickTicket().getRelatedBill1(), WmsMoveDocType.LOT_PICKING, i, 
 								detail.getRequireArriveDate(), supplyCode, itemCode, ppQty, shipQuantityBU, 
 								pp.getPickTicket().getCompany().getCode(), pp.getPickTicket().getReceiveHouse(), 

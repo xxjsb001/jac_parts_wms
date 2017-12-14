@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page id="editBatchPage">
+    <main>
+        <process id="wmsPickTicketBaseProcess">
+            <formCommit id="editBatch" title="editBatch" process="wmsPickTicketBaseProcess.editBatch" enableType="multi" multiMapping="false" download="false" closeTransactional="false" visibleType="none">
+                <enableExpression/>
+                <mappings>
+                    <mapping id="pickTicket.priority" className="int">
+                        <entries/>
+                    </mapping>
+                </mappings>
+                <actions>
+                    <action managerName="wmsPickTicketManager" methodName="editPriority" parameter="pickTicket.priority,parentObj"/>
+                </actions>
+                 <forwards>
+                    <forward name="refreshParent" newEnabled="true" editEnabled="true"/>
+                    <forward name="closeWindow" newEnabled="true" editEnabled="true"/>
+                </forwards>
+            </formCommit>
+        </process>
+    </main>
+    <detail/>
+</page>

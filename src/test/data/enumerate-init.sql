@@ -359,6 +359,11 @@ INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WmsLogTitle', 'CONTAINER_P
 INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WmsLogTitle', 'CONTAINER_BOL');
 INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WmsLogTitle', 'LOCATION_CHANGE');
 INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WmsLogTitle', 'CONTAINER_PIC_BACK');
+INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WmsLogTitle', 'PICK_PRINT');
+INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WmsLogTitle', 'CONTAINER_PRINT');
+INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WmsLogTitle', 'CONTAINER_SHIP');
+INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WmsLogTitle', 'CONTAINER_SCAN');
+INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WmsLogTitle', 'CONTAINER_SIGN');
 
 DELETE FROM ENUMERATE WHERE ENUM_TYPE = 'WmsBOLStatus';
 INSERT INTO ENUMERATE  VALUES (seq_enumerate.nextval,'WmsBOLStatus', 'OPEN');

@@ -41,9 +41,12 @@ public class WmsTask extends VersionalEntity {
 	private String originalBillCode;
 	
 	/**
-	 * 原始单据号
+	 * 原始单据号/扫码拣货时作为容器编码
 	 */
 	private String relatedBill;
+
+	
+
 	
 	/** 托盘号 */
 	private String pallet = BaseStatus.NULLVALUE;
@@ -102,11 +105,35 @@ public class WmsTask extends VersionalEntity {
 	
 	/** 异常标识*/
 	private Boolean exceptionFlag = Boolean.FALSE;
+	//器具标签
+	private String boxTag;
+	/**库内交接扫码时间*/
+	private Date scanBoxTime;
+	/**签收时间*/
+	private Date signTime;
+	
 	
 	public WmsTask(){
 
 	}
 	
+	public Date getSignTime() {
+		return signTime;
+	}
+
+	public void setSignTime(Date signTime) {
+		this.signTime = signTime;
+	}
+
+	public Date getScanBoxTime() {
+		return scanBoxTime;
+	}
+
+	public void setScanBoxTime(Date scanBoxTime) {
+		this.scanBoxTime = scanBoxTime;
+	}
+
+
 	public Boolean getExceptionFlag() {
 		return exceptionFlag;
 	}
@@ -138,7 +165,6 @@ public class WmsTask extends VersionalEntity {
 	public String getRelatedBill() {
 		return relatedBill;
 	}
-
 
 
 	public void setRelatedBill(String relatedBill) {
@@ -346,6 +372,9 @@ public class WmsTask extends VersionalEntity {
 	
 	public void addTiredMovedQuantityBU(Double tiredMovedQuantityBU) {
 		this.tiredMovedQuantityBU += tiredMovedQuantityBU;
+		if(this.tiredMovedQuantityBU>=this.movedQuantityBU){
+			this.status = WmsTaskStatus.FINISHED;
+		}
 	}
 
 	public boolean isFinished() {		
@@ -525,9 +554,22 @@ public class WmsTask extends VersionalEntity {
 			this.status = WmsTaskStatus.OPEN;
 		}
 	}
+	public void editMoveQty(Double quantityBU){
+		this.movedQuantityBU += quantityBU;
+		this.pickTime = new Date();
+		this.status = WmsTaskStatus.OPEN;
+	}
 	public void removeMove(){
 		this.moveDocDetail = null;
 		this.originalBillCode = null;
 		this.relatedBill= null;
+	}
+
+	public String getBoxTag() {
+		return boxTag;
+	}
+
+	public void setBoxTag(String boxTag) {
+		this.boxTag = boxTag;
 	}
 }

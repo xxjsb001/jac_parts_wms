@@ -1,3 +1,4 @@
+
 package com.vtradex.wms.server.service.base;
 
 import java.io.File;
@@ -10,6 +11,7 @@ import com.vtradex.thorn.server.service.BaseManager;
 import com.vtradex.wms.server.model.base.LotInfo;
 import com.vtradex.wms.server.model.inventory.WmsItemKey;
 import com.vtradex.wms.server.model.organization.WmsItem;
+import com.vtradex.wms.server.model.organization.WmsOrganization;
 import com.vtradex.wms.server.model.organization.WmsPackageUnit;
 import com.vtradex.wms.server.model.warehouse.WmsWarehouse;
 
@@ -90,5 +92,13 @@ public interface WmsItemManager extends BaseManager {
 	@Transactional
 	void sysInventoryMissDo(List<Object[]> doObj,Map<String,String> itemMap);
 	/**物料拣选分类维护**/
-	void importItemClass2(File file);
+	void importItemClass2(Long companyId,File file);
+	/**移位单导入**/
+	void importMoveDoc(Long companyId,File file);
+	/**三日计划排产顺序导入*/
+	void importWmsSpsProductLine(File file);
+	/**紧急/缺件补料单导入*/
+	void importJjPick(Long companyId,Long billTypeId,File file);
+	/**备料工物料关系导入*/
+	void importWmsBlgItem(File file);
 }

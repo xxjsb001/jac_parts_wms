@@ -50,38 +50,60 @@
         <menuItem title="maintainWmsPickTicketDetailPage" pageId="maintainWmsPickTicketDetailPage"/>
         <menuItem title="maintainWmsPickTicketAndAppliancePage" pageId="maintainWmsPickTicketAndAppliancePage"/>
         <menuItem title="maintainWmsMoveDocPickTicketPage" pageId="maintainWmsMoveDocPickTicketPage"/>
+        <menuItem title="maintainWmsMoveDocDetailPickTicketPage" pageId="maintainWmsMoveDocDetailPickTicketPage"/>
         <menuItem title="maintainWmsPickedRecordPage" pageId="maintainWmsPickedRecordPage"/>
-        <menuItem title="menu_maintainWmsPickTicketAndStationPage" pageId="maintainWmsPickTicketAndStationPage"/>
-        <menuItem title="menu_maintainWmsTaskAndStationPage" pageId="maintainWmsTaskAndStationPage"/>
-        <menuItem title="menu_wmsPickTicketAndStationGroupPage" pageId="wmsPickTicketAndStationGroupPage"/>
+        <!--拣货明细与物料器具对应关系 -->
+<!--         <menuItem title="menu_maintainWmsPickTicketAndStationPage" pageId="maintainWmsPickTicketAndStationPage"/> -->
+		<!--作业任务器具信息关系 -->
+<!--         <menuItem title="menu_maintainWmsTaskAndStationPage" pageId="maintainWmsTaskAndStationPage"/> -->
+        <!-- 物料器具拣货汇总 -->
+<!--         <menuItem title="menu_wmsPickTicketAndStationGroupPage" pageId="wmsPickTicketAndStationGroupPage"/> -->
         <menuItem title="menu_maintainWmsMasterBOLPage" pageId="maintainWmsMasterBOLPage"/>
         <menuItem title="menu_maintainWmsMasterBOLDetailPage" pageId="maintainWmsMasterBOLDetailPage"/>
-        <menuItem title="menu_maintainOweProductPage" pageId="maintainOweProductPage"/>
+		<!-- 欠品明细 -->
+<!--         <menuItem title="menu_maintainOweProductPage" pageId="maintainOweProductPage"/> -->
         <menuItem title="maintainWmsSxJhPickPage" pageId="maintainWmsSxJhPickPage"/>
+        <menuItem title="maintainWmsSpsProductLinePage" pageId="maintainWmsSpsProductLinePage"/>
+        <menuItem title="maintainWmsShipLotPage" pageId="maintainWmsShipLotPage"/>                 
     </menuItem>
+    <!-- 补货管理
     <menuItem title="menu_replenishment" dir="replenishment">
         <menuItem title="maintainWmsMoveDocReplenishmentPage" pageId="maintainWmsMoveDocReplenishmentPage"/>
     </menuItem>
-    <menuItem title="menu_quality" dir="quality">
-        <menuItem title="maintainWmsMoveDocQualityPage" pageId="maintainWmsMoveDocQualityPage"/>
-        <menuItem title="maintainWmsMoveDocQualityDetailPage" pageId="maintainWmsMoveDocQualityDetailPage"/>
-        <menuItem title="maintainWmsQualityMoveSoiLogPage" pageId="maintainWmsQualityMoveSoiLogPage"/>
-        <menuItem title="menu_maintainQisPlanPage" pageId="maintainQisPlanPage"/>
+     -->
+     <menuItem title="menu_move" dir="replenishment">
+        <menuItem title="menu_maintainMoveDocPage" pageId="maintainMoveDocPage"/>
+        <menuItem title="menu_maintainMoveDocDetailPage" pageId="maintainMoveDocDetailPage"/>
     </menuItem>
+    
+    <!-- 质检管理 -->
+<!--     <menuItem title="menu_quality" dir="quality"> -->
+<!--         <menuItem title="maintainWmsMoveDocQualityPage" pageId="maintainWmsMoveDocQualityPage"/> -->
+<!--         <menuItem title="maintainWmsMoveDocQualityDetailPage" pageId="maintainWmsMoveDocQualityDetailPage"/> -->
+<!--         <menuItem title="maintainWmsQualityMoveSoiLogPage" pageId="maintainWmsQualityMoveSoiLogPage"/> -->
+<!--         <menuItem title="menu_maintainQisPlanPage" pageId="maintainQisPlanPage"/> -->
+<!--     </menuItem> -->
+
     <menuItem title="menu_inventory" dir="inventory">
         <menuItem title="menu_maintainInventorySerialNoPage" pageId="maintainInventorySerialNoPage"/>
         <menuItem title="menu_maintainInventoryPage" pageId="maintainInventoryPage"/>
         <menuItem title="menu_maintainInventoryAccountPage" pageId="maintainInventoryAccountPage"/>
         <menuItem title="menu_viewInventoryLogPage" pageId="maintainInventoryLogPage"/>
-        <menuItem title="menu_maintainMisInventoryPage" pageId="maintainMisInventoryPage"/>
-        <menuItem title="menu_maintainStorageHeadPage" pageId="maintainStorageHeadPage"/>
-        <menuItem title="menu_maintainMesMisInventoryPage" pageId="maintainMesMisInventoryPage"/>
-        <menuItem title="maintainWmsSafeInventoryPage" pageId="maintainWmsSafeInventoryPage"/>
+        <!-- 报缺库存查询 -->
+<!--         <menuItem title="menu_maintainMisInventoryPage" pageId="maintainMisInventoryPage"/> -->
+		<!-- 日结管理
+        <menuItem title="menu_maintainStorageHeadPage" pageId="maintainStorageHeadPage"/> -->
+        
+        <!-- MES报缺管理 -->
+<!--         <menuItem title="menu_maintainMesMisInventoryPage" pageId="maintainMesMisInventoryPage"/> -->
+		<!-- 安全库存管理 -->
+<!--         <menuItem title="maintainWmsSafeInventoryPage" pageId="maintainWmsSafeInventoryPage"/> -->
     </menuItem>
-    <menuItem title="menu_count" dir="count">
-        <menuItem title="menu_menu_maintainWmsCountPlanPage" pageId="maintainWmsCountPlanPage"/>
-        <menuItem title="maintainWmsCountRecordViewPage" pageId="maintainWmsCountRecordViewPage"/>
-    </menuItem>
+    <!-- 盘点管理 -->
+<!--     <menuItem title="menu_count" dir="count"> -->
+<!--         <menuItem title="menu_menu_maintainWmsCountPlanPage" pageId="maintainWmsCountPlanPage"/> -->
+<!--         <menuItem title="maintainWmsCountRecordViewPage" pageId="maintainWmsCountRecordViewPage"/> -->
+<!--     </menuItem> -->
     <menuItem title="menu_rule" dir="rule">
         <menuItem title="t_ruleManager" dir="ruleManager">
             <menuItem title="t_maintainRulePage" pageId="maintainRulePage"/>

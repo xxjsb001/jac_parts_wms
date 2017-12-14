@@ -166,6 +166,11 @@
             <value>com/vtradex/wms/server/model/shipping/hbm/wmsBOLStateLog.hbm.xml</value>
         </constructor-arg>
     </bean>
+    <bean id="wmsShipLotHibernateMappingResource" class="com.vtradex.thorn.server.dao.hibernate.HibernateMappingResource">
+        <constructor-arg>
+            <value>com/vtradex/wms/server/model/shipping/hbm/wmsShipLot.hbm.xml</value>
+        </constructor-arg>
+    </bean>
     <!-- move -->
     <bean id="wmsTaskHibernateMappingResource" class="com.vtradex.thorn.server.dao.hibernate.HibernateMappingResource">
         <constructor-arg>
@@ -534,6 +539,10 @@
             <value>com/vtradex/wms/server/model/interfaces/hbm/wContainers.hbm.xml</value>
         </constructor-arg>
     </bean>
-    
+    <bean id="wmsSpsProductLineHibernateMappingResource" class="com.vtradex.thorn.server.dao.hibernate.HibernateMappingResource">
+        <constructor-arg>
+            <value>com/vtradex/wms/server/model/middle/hbm/wmsSpsProductLine.hbm.xml</value>
+        </constructor-arg>
+    </bean>
     
 </beans>

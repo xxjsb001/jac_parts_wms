@@ -353,4 +353,63 @@
             <ref bean="wmsPickRFManager"/>
         </constructor-arg>
     </bean>
+    <bean id="wmsScanPickNewShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsScanPickNewShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsScanBOLShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsScanBOLShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsScanBOLOverShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.pick.WmsScanBOLOverShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsScanMoveShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsScanMoveShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="wmsScanMoveUpShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.move.WmsScanMoveUpShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="unbindScanPickShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.view.UnbindScanPickShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="viewScanPickContainerShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.view.ViewScanPickContainerShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="viewScanPickShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.view.ViewScanPickShell" singleton="false">
+    </bean>
+     <bean id="signScanPickContainerShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.view.SignScanPickContainerShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPickRFManager"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="wmsPutAsnScanShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsPutAsnScanShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+    </bean>
+    <bean id="viewPutAsnDetailShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.ViewPutAsnDetailShell" singleton="false">
+    </bean>
+    <bean id="wmsPutAsnDetailShell" parent="abstractShell" class="com.vtradex.wms.server.telnet.shell.putaway.WmsPutAsnDetailShell" singleton="false">
+    	<constructor-arg index="0">
+            <ref bean="wmsPutawayRFManager"/>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <ref bean="wmsReceivingRFManager"/>
+        </constructor-arg>
+    </bean>
+    
  </beans>

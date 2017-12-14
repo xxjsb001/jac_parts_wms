@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages>
+    <editPage id="editBatchPage" title="editBatchPage" entityClass="com.vtradex.wms.server.model.shipping.WmsPickTicket" onClose="refreshParent">
+        <workflow/>
+        <initListeners/>
+        <inputUIs>
+            <hidden id="pickTicket.id" title="pickTicket.id" pageLocale="false" reserve="false"/>
+            <numberText id="pickTicket.priority" title="pickTicket.priority" row="5" col="1" defaultValue="0" span="1" readOnly="false" required="true" reserve="false" forceOverride="true" inVisible="false" validator="integer" returnType="Integer">
+                <visibleExpression/>
+                <hql/>
+                <eventListeners/>
+            </numberText>
+        </inputUIs>
+    </editPage>
+</pages>

@@ -54,6 +54,7 @@ import com.vtradex.wms.server.model.receiving.WmsReceivedRecord;
 import com.vtradex.wms.server.model.shipping.WmsBOLStateLog;
 import com.vtradex.wms.server.model.shipping.WmsPickTicket;
 import com.vtradex.wms.server.model.shipping.WmsPickTicketDetail;
+import com.vtradex.wms.server.model.shipping.WmsShipLot;
 import com.vtradex.wms.server.model.shipping.WmsWaveDoc;
 import com.vtradex.wms.server.model.shipping.WmsWaveDocDetail;
 import com.vtradex.wms.server.model.shipping.WmsWaveDocWorkMode;
@@ -1446,6 +1447,24 @@ public class DefaultWmsTransactionalManager extends DefaultBaseManager
 					WmsPickTicketDetail.class, mdd.getRelatedId());
 			pickTicketDetail.addPickedQuantityBU(movedQuantityBU);
 			commonDao.store(pickTicketDetail);
+			//回写发运计划
+			List<WmsShipLot> lots = commonDao.findByQuery("FROM WmsShipLot lot WHERE lot.pickTicket.id =:pickTicket" +
+					" AND lot.itemCode =:itemCode AND lot.expectedQuantityBU>lot.pickedQuantityBU ORDER BY lot.batch", 
+					new String[]{"pickTicket","itemCode"}, 
+					new Object[]{pickTicketDetail.getPickTicket().getId(),pickTicketDetail.getItem().getCode()});
+			if(lots!=null && lots.size()>0){
+				Double quantity =0D,availableQuantityBU = 0D,picQty = 0D;
+				for(WmsShipLot sl : lots){
+					quantity = sl.getUnPicQuantityBU();
+					picQty = quantity>=movedQuantityBU?movedQuantityBU:quantity;
+					sl.setPickedQuantityBU(picQty);
+					commonDao.store(sl);
+					availableQuantityBU -= picQty;
+					if(availableQuantityBU<=0){
+						break;
+					}
+				}
+			}
 		}
 	}
 

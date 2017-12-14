@@ -39,6 +39,7 @@
 		<property name="startReceivedDate" type="timestamp" column="START_RECEIVED_DATE"/>
 		<property name="endReceivedDate" type="timestamp" column="END_RECEIVED_DATE"/>
 		<property name="startShelvesDate" type="timestamp" column="START_SHELVES_DATE"/>
+		<property name="endShelvesDate" type="timestamp" column="END_SHELVES_DATE"/>
 		<property name="fromName" type="string" column="FROM_NAME" length="50"/>
 		<component name="fromContact" class="com.vtradex.wms.server.model.base.Contact">
             <property name="country" type="string">

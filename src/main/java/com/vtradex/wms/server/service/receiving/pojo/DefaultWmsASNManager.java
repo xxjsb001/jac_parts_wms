@@ -895,7 +895,14 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 		}
 		return cancelQty;
 	}
-	
+	public void cancelReceive(WmsReceivedRecord receivedRecord) {
+		
+		wmsInventoryManager.cancelReceive(receivedRecord);
+		
+		receivedRecord.cancelReceive(receivedRecord.getReceivedQuantity());
+		receivedRecord.cancelMovedQuantity(receivedRecord.getMovedQuantity());
+		commonDao.delete(receivedRecord);
+	}
 	public void cancelReceive(WmsReceivedRecord receivedRecord,Double cancelQtyBU) {
 		List<String> status = new ArrayList<String>();
 		status.add(WmsMoveDocStatus.OPEN);
@@ -1838,6 +1845,9 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 	}
 	//将来这块作成异步任务
 	public void confirmAccount(WmsASN asn) {
+		if(asn.getConfirmAccount()){
+			return;
+		}
 		//回传ERP
 		dealInterfaceDataManager.dealAsnData(asn);
 		asn.setConfirmAccount(Boolean.TRUE);
@@ -1916,6 +1926,62 @@ public class DefaultWmsASNManager extends DefaultBaseManager implements WmsASNMa
 		}
 		detail.getAsn().setIsCheckMT(Boolean.TRUE);
 		commonDao.store(detail.getAsn());
+	}
+	public void scanAsnConfirm(String asnCode){
+		Boolean iserror = false;
+		String mesg = "成功";
+		asnCode = asnCode==null?"-":asnCode.trim();
+		String hql = "FROM WmsASN asn WHERE asn.relatedBill1 =:code";
+		WmsASN asn = (WmsASN) commonDao.findByQueryUniqueResult(hql, 
+				new String[]{"code"}, new Object[]{asnCode});
+		if(asn==null){
+			hql = "FROM WmsASN asn WHERE asn.code =:code";
+			asn = (WmsASN) commonDao.findByQueryUniqueResult(hql, 
+					new String[]{"code"}, new Object[]{asnCode});
+			if(asn==null){
+				iserror = true;
+				mesg = MyUtils.font2("单据号不存在:"+asnCode);
+//				throw new BusinessException("单据号不存在:"+asnCode);
+			}
+		}
+		if(iserror){
+			LocalizedMessage.setMessage(mesg);
+		}else{
+			if(asn!=null){
+				//统计明细是否全部确认
+				Boolean beReceived = true;
+				Set<WmsASNDetail> details = asn.getDetails();
+				for(WmsASNDetail detail : details){
+					beReceived = detail.getBeReceived();
+					if(!beReceived){
+						iserror = true;
+						mesg = MyUtils.font2("明细未全部确认:"+asnCode);
+						break;
+//						throw new BusinessException("明细未全部确认:"+asnCode);
+					}
+				}
+				if(iserror){
+					LocalizedMessage.setMessage(mesg);
+				}else{
+					if(asn.getStatus().equals(WmsASNStatus.RECEIVED) 
+							|| asn.getStatus().equals(WmsASNStatus.RECEIVING)){
+						if(asn.getIsPrint()){
+							LocalizedMessage.setMessage(MyUtils.font2("重复过账:"+asnCode));
+						}else{
+							asn.setPrintDate(new Date());//打印上架单时间
+							asn.setPrintPerson(UserHolder.getUser().getName());//打印人
+							asn.setIsPrint(Boolean.TRUE);//是否打印
+							commonDao.store(asn);
+							Task task = new Task(HeadType.CONFIRM_ACCOUNT, 
+									"wmsDealTaskManager"+MyUtils.spiltDot+"confirmAccount", asn.getId());
+							commonDao.store(task);
+						}
+					}else{
+						LocalizedMessage.setMessage(MyUtils.font2("未完成收货:"+asnCode));
+					}
+				}
+			}
+		}
 	}
 	public Map printPutDirect(String asnCode){
 		asnCode = asnCode==null?"-":asnCode.trim();

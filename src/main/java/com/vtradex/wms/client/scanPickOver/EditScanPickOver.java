@@ -37,7 +37,7 @@ public class EditScanPickOver extends BaseCustomPopupTemplate implements IsSeria
 	
 	protected transient VerticalPanel mainPanel;
 	protected transient FormTable formTable;
-	protected transient TextUI pickCode;
+//	protected transient TextUI pickCode;
 	protected transient TextUI container;
 	protected transient TextAreaUI showLocation;
 	protected transient SaveButton saveButton;
@@ -65,19 +65,19 @@ public class EditScanPickOver extends BaseCustomPopupTemplate implements IsSeria
 	}
 	protected void initCodeUI(){
 		formTable =	new FormTable();
-		pickCode = GxtUIFactory.createTextUI("pickCode", false, false, 1, 250, false);
-		pickCode.addToTable(formTable, 1, 1);
-		((TextBox)pickCode.getInputWidget()).addKeyboardListener(new KeyboardListener() {
-			public void onKeyUp(Widget sender, char keyCode, int modifiers) {
-				if(KeyboardListener.KEY_ENTER == keyCode){
-					checkInputPickCode();
-				}
-			}
-			public void onKeyPress(Widget sender, char keyCode, int modifiers) {
-			}
-			public void onKeyDown(Widget sender, char keyCode, int modifiers) {
-			}
-		});
+//		pickCode = GxtUIFactory.createTextUI("pickCode", false, false, 1, 250, false);
+//		pickCode.addToTable(formTable, 1, 1);
+//		((TextBox)pickCode.getInputWidget()).addKeyboardListener(new KeyboardListener() {
+//			public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+//				if(KeyboardListener.KEY_ENTER == keyCode){
+//					checkInputPickCode();
+//				}
+//			}
+//			public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+//			}
+//			public void onKeyDown(Widget sender, char keyCode, int modifiers) {
+//			}
+//		});
 		container = GxtUIFactory.createTextUI("wts.container", false, false, 1, 250, false);
 		container.addToTable(formTable, 2, 1);
 		((TextBox)container.getInputWidget()).addKeyboardListener(new KeyboardListener() {
@@ -110,32 +110,32 @@ public class EditScanPickOver extends BaseCustomPopupTemplate implements IsSeria
 			return;
 		}
 		inputUIValues.put(PARAM_CONTAINER, mesInfo);
-		inputUIValues.put(PARAM_CODE, pickCode.getText().trim());
+//		inputUIValues.put(PARAM_CODE, pickCode.getText().trim());
 		getData().getWmsScanContainer(inputUIValues);
 	}
-	protected void checkInputPickCode() {
-		mesInfo = pickCode.getText().trim();
-		if(mesInfo.isEmpty()){
-			return;
-		}
-		container.setOnFocus();
-	}
-	protected void resetpickCode(){
-		pickCode.setValue("");
-		pickCode.setOnFocus();
-	}
-	protected void focusPickCode(){
-		pickCode.setValue("");
-		container.setValue("");
-		pickCode.setOnFocus();
-	}
+//	protected void checkInputPickCode() {
+//		mesInfo = pickCode.getText().trim();
+//		if(mesInfo.isEmpty()){
+//			return;
+//		}
+//		container.setOnFocus();
+//	}
+//	protected void resetpickCode(){
+//		pickCode.setValue("");
+//		pickCode.setOnFocus();
+//	}
+//	protected void focusPickCode(){
+//		pickCode.setValue("");
+//		container.setValue("");
+//		pickCode.setOnFocus();
+//	}
 	protected void focusContainer(){
 		container.setValue("");
 		container.setOnFocus();
 	}
-	protected void hiden(){
-		pickCode.setVisible(false);
-	}
+//	protected void hiden(){
+//		pickCode.setVisible(false);
+//	}
 	protected void initLED(String message){
 //		panel1.setHtml("<p>"+message);
 	}
@@ -158,7 +158,7 @@ public class EditScanPickOver extends BaseCustomPopupTemplate implements IsSeria
 			showLocation.setValue(mesMess);
 			ApplicationWindow.setMessgeLabel(mesMess, 180);
 //			hiden();
-			focusPickCode();
+			focusContainer();
 //			Window.alert(mesMess);
 		}else if(BusinessNode.ON_SUCCESS.equals(message)){
 			mesMess = getData().result.get(RETURN_NAME).toString();
@@ -167,11 +167,11 @@ public class EditScanPickOver extends BaseCustomPopupTemplate implements IsSeria
 			reportPrintNum = Integer.valueOf(getData().result.get(REPORT_PRINT_NUM).toString());
 			printUrl = getData().result.get(RETURN_PRINT_URL).toString();
 			directPrint(printUrl, reportPrintNum);
-			focusPickCode();
+			focusContainer();
 		}else{
 			mesMess = "未知错误,请联系信息部!";
 			ApplicationWindow.setMessgeLabel(mesMess, 180);
-			focusPickCode();
+			focusContainer();
 			Window.alert(mesMess);
 		}
 	}

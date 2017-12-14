@@ -435,7 +435,7 @@ public class WmsPickTicketDetail extends Entity {
 	 */
 	public void addPickedQuantityBU(Double quantityBU) {
 		this.pickedQuantityBU += quantityBU;
-		this.pickTicket.addPickedQuantityBU(quantityBU);
+		this.pickTicket.refreshPickQuantityBu();
 	}
 	
 	/**
@@ -444,7 +444,7 @@ public class WmsPickTicketDetail extends Entity {
 	 */
 	public void cancelPickedQuantityBU(Double quantityBU) {
 		this.pickedQuantityBU -= quantityBU;
-		this.pickTicket.cancelPickedQuantityBU(quantityBU);
+		this.pickTicket.refreshPickQuantityBu();
 	}
 
 	/**
@@ -455,6 +455,12 @@ public class WmsPickTicketDetail extends Entity {
 		this.shippedQuantityBU += quantity;
 		
 		this.pickTicket.ship();
+	}
+	/**
+	 * 获取批拣单未发运量
+	 */
+	public Double getUnShipLotQuantityBU() {
+		return this.expectedQuantityBU - this.shippedQuantityBU;
 	}
 	
 	/**

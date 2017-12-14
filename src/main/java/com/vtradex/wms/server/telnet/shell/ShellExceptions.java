@@ -1,6 +1,7 @@
 package com.vtradex.wms.server.telnet.shell;
 
 public interface ShellExceptions {
+	public static String MESSAGE = "";
 	
 	public static String CONTAINER_NULL_FINISH = "错误:器具型号已完成或不存在";
 	public static String CONTAINER_IS_USING = "错误:器具已有未发运拣货完成信息,请更换器具";

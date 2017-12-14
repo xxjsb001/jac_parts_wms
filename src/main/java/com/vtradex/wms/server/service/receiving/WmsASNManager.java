@@ -272,4 +272,10 @@ public interface WmsASNManager extends BaseManager {
 	/***扫码ASN打印上架单*/
 	@Transactional
 	Map printPutDirect(String asnCode);
+	/**扫码过账传接口给ERP*/
+	@Transactional
+	void scanAsnConfirm(String asnCode);
+	/**取消收货上架*/
+	@Transactional
+	void cancelReceive(WmsReceivedRecord receivedRecord);
 }

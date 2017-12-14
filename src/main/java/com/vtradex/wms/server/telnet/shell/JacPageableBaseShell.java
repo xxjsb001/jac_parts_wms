@@ -63,6 +63,8 @@ public abstract class JacPageableBaseShell extends Thorn4BaseShell{
 		String choose = getTextField("choose");
 		if(MyUtils.OVER.equals(choose)){
 			forward(ShellFactory.getMainShell());  
+		}else if(MyUtils.ZERO.equals(choose)){
+			forward(getUpShell());
 		}
 		if(choose.equalsIgnoreCase(UP)){
 			if(currentPage == 1){
@@ -236,6 +238,7 @@ public abstract class JacPageableBaseShell extends Thorn4BaseShell{
 	abstract public String[] getTableHeader();
 	abstract public String getHql();
 	abstract public String getNextShell();
+	abstract public String getUpShell();
 	abstract public Map<String, Object> getParams();
 	
 	

@@ -1843,7 +1843,7 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 		}
 	}
 
-	public void initInventoryByCVS(File file) {
+	public void initInventoryByCVS(Long companyId,File file) {
 		Integer error = 0;
 		String name = file.getName();
 		if (file == null) {
@@ -1864,20 +1864,20 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 			for (int rowIndex = 1; rowIndex < rowNum; rowIndex++) {
 				cellArray.add(dataSheet.getRow(rowIndex));
 				if (cellArray.size() > 0 && cellArray.size() % 50 == 0) {
-					error += this.resolveInventoryJac(cellArray);
+					error += this.resolveInventoryJac(companyId,cellArray);
 					cellArray.clear();
 				}
 			}
 			if (cellArray.size() > 0 && cellArray.size() < 50) {
-				error += this.resolveInventoryJac(cellArray);
+				error += this.resolveInventoryJac(companyId,cellArray);
 				cellArray.clear();
 			}
 		} catch (Exception e1) {
-
+			throw new BusinessException(e1.getMessage());
 		}
 		LocalizedMessage.addMessage("导入失败" + error + "条,请查看日志");
 	}
-	public int resolveInventoryJac(List<Cell[]> strList) throws ParseException {
+	public int resolveInventoryJac(Long companyId,List<Cell[]> strList) throws ParseException {
 		StringBuffer logBuffer = new StringBuffer("");
 		Integer errorNum = 0;
 		Cell[] strArr;
@@ -1893,7 +1893,7 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 		Map<String,WmsPackageUnit> ppp = new HashMap<String, WmsPackageUnit>();
 		Map<String,WmsOrganization> oos = new HashMap<String, WmsOrganization>();
 		Map<String,WmsWarehouseArea> was = new HashMap<String, WmsWarehouseArea>();
-		WmsWarehouse wmsWarehouse = null;
+		WmsWarehouse wmsWarehouse = WmsWarehouseHolder.getWmsWarehouse();
 		WmsWarehouseArea houseArea = null;
 		WmsLocation wmsLocation = null;
 		WmsItem wmsItem = null;
@@ -1902,50 +1902,42 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 		for (int i = 0; i < strList.size(); i++) {
 			String lineNum = "";
 			try {
+				//仓库编码 库区编码  库位编码 货品编码 货品名称  包装单位  托盘号  箱号  序列号
 				strArr = strList.get(i);
-				lineNum = strArr[38].getContents();// 行号
-				String wmsWarehouseCode = strArr[0].getContents();// 仓库编码
-				String wmsWarehouseAreaCode = strArr[1].getContents();// 库区编码
-				String wmsLocationCode = strArr[2].getContents();// 库位编码
-				String goodsCode = strArr[3].getContents();// 货品编码
-				String goodsName = strArr[4].getContents();// 货品名称
-				String packageUnitStr = strArr[5].getContents();// 包装单位
-				String pallet = strArr[6].getContents();// 托盘号
-				String carton = strArr[7].getContents();// 箱号
-				String serialNo = strArr[8].getContents();// 序列号
-				String buNum = strArr[9].getContents().trim().equals("") ? "0"
-						: strArr[9].getContents();// BU数
-				String inventoryStatus = strArr[10].getContents();// 库存状态
-				String supplierCode = strArr[17].getContents();// 供货商
-				String extendPropC1 = strArr[18].getContents();
-				String extendPropC2 = strArr[19].getContents();
-				String extendPropC3 = strArr[20].getContents();
-				String extendPropC4 = strArr[21].getContents();
-				String extendPropC5 = strArr[22].getContents();
-				String extendPropC6 = strArr[23].getContents();
-				String extendPropC7 = strArr[24].getContents();
-				String extendPropC8 = strArr[25].getContents();
-				String extendPropC9 = strArr[26].getContents();
-				String extendPropC10 = strArr[27].getContents();
-				String extendPropC11 = strArr[28].getContents();
-				String extendPropC12 = strArr[29].getContents();
-				String extendPropC13 = strArr[30].getContents();
-				String extendPropC14 = strArr[31].getContents();
-				String extendPropC15 = strArr[32].getContents();
-				String extendPropC16 = strArr[33].getContents();
-				String extendPropC17 = strArr[34].getContents();
-				String extendPropC18 = strArr[35].getContents();
-				String extendPropC19 = strArr[36].getContents();
-				String extendPropC20 = strArr[37].getContents();
+				lineNum = strArr[31].getContents();// 行号
+				String wmsWarehouseAreaCode = strArr[0].getContents();// 库区编码
+				String wmsLocationCode = strArr[1].getContents();// 库位编码
+				String goodsCode = strArr[2].getContents();// 货品编码
+				String goodsName = strArr[3].getContents();// 货品名称
+				String packageUnitStr = strArr[4].getContents();// 包装单位
+				String pallet = strArr[5].getContents();// 托盘号
+				String carton = strArr[6].getContents();// 箱号
+				String serialNo = strArr[7].getContents();// 序列号
+				String buNum = strArr[8].getContents().trim().equals("") ? "0"
+						: strArr[8].getContents();// BU数
+				String inventoryStatus = strArr[9].getContents();// 库存状态
+				String supplierCode = strArr[10].getContents();// 供货商
+				String extendPropC1 = strArr[11].getContents();
+				String extendPropC2 = strArr[12].getContents();
+				String extendPropC3 = strArr[13].getContents();
+				String extendPropC4 = strArr[14].getContents();
+				String extendPropC5 = strArr[15].getContents();
+				String extendPropC6 = strArr[16].getContents();
+				String extendPropC7 = strArr[17].getContents();
+				String extendPropC8 = strArr[18].getContents();
+				String extendPropC9 = strArr[19].getContents();
+				String extendPropC10 = strArr[20].getContents();
+				String extendPropC11 = strArr[21].getContents();
+				String extendPropC12 = strArr[22].getContents();
+				String extendPropC13 = strArr[23].getContents();
+				String extendPropC14 = strArr[24].getContents();
+				String extendPropC15 = strArr[25].getContents();
+				String extendPropC16 = strArr[26].getContents();
+				String extendPropC17 = strArr[27].getContents();
+				String extendPropC18 = strArr[28].getContents();
+				String extendPropC19 = strArr[29].getContents();
+				String extendPropC20 = strArr[30].getContents();
 
-				// 仓库
-				wmsWarehouse = wss.get(wmsWarehouseCode);
-				if (wmsWarehouse == null) {
-					errorNum++;
-					logBuffer.append(lineNum + "行仓库异常/");
-					// log.debug(lineNum+",1 error \n");
-					continue;
-				}
 				//库区
 				if(was.containsKey(wmsWarehouseAreaCode)){
 					houseArea = was.get(wmsWarehouseAreaCode);
@@ -1954,14 +1946,14 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 							.findByQueryUniqueResult(
 									"from WmsWarehouseArea house where house.code=:code AND house.warehouse.code=:warehouseCode AND house.status='ENABLED'",
 									new String[] { "code", "warehouseCode" },
-									new Object[] { wmsWarehouseAreaCode,
-											wmsWarehouseCode });
+									new Object[] { wmsWarehouseAreaCode,wmsWarehouse.getCode()});
 				}
 				if (houseArea == null) {
-					errorNum++;
-					logBuffer.append(lineNum + "行库区异常/");
+					throw new OriginalBusinessException(lineNum + "行库区异常/");
+					//errorNum++;
+					//logBuffer.append(lineNum + "行库区异常/");
 					// log.debug(lineNum+",2 error \n");
-					continue;
+					//continue;
 				}else{
 					was.put(wmsWarehouseAreaCode, houseArea);
 				}
@@ -1974,14 +1966,14 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 									" from WmsLocation location where location.code=:code AND location.warehouse.code=:warehouse AND location.warehouseArea.code=:warehouseArea AND location.status='ENABLED'",
 									new String[] { "code", "warehouse",
 											"warehouseArea" }, new Object[] {
-											wmsLocationCode, wmsWarehouseCode,
-											wmsWarehouseAreaCode });
+											wmsLocationCode, wmsWarehouse.getCode(),wmsWarehouseAreaCode });
 				}
 				if (wmsLocation == null) {
-					logBuffer.append(lineNum + "行库位异常/");
-					errorNum++;
+					throw new OriginalBusinessException(lineNum + "行库位异常/");
+					//logBuffer.append(lineNum + "行库位异常/");
+					//errorNum++;
 					// log.debug(lineNum+",3 error \n");
-					continue;
+					//continue;
 				}else if(!wlss.containsKey(wmsLocationCode)){
 					wlss.put(wmsLocationCode, wmsLocation);
 				}
@@ -1991,15 +1983,17 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 				}else{
 					wmsItem = (WmsItem) commonDao
 							.findByQueryUniqueResult(
-									"from WmsItem wi where wi.code = :code AND wi.name=:name AND wi.status='ENABLED'",
-									new String[] { "code", "name" }, new Object[] {
-											goodsCode, goodsName });
+									"from WmsItem wi where wi.code = :code AND wi.status='ENABLED'" +//AND wi.name=:name 
+									" AND wi.company.id =:companyId",
+									new String[] { "code", "companyId" }, new Object[] {//"name",
+											goodsCode, companyId});//goodsName ,
 				}
 				if (wmsItem == null) {
-					logBuffer.append(lineNum + "行货品异常/");
-					errorNum++;
+					throw new OriginalBusinessException(lineNum + "行货品异常/");
+					//logBuffer.append(lineNum + "行货品异常/");
+					//errorNum++;
 					// log.debug(lineNum+",4 error \n");
-					continue;
+					//continue;
 				}else if(!wiss.containsKey(goodsCode)){
 					wiss.put(goodsCode, wmsItem);
 				}
@@ -2009,15 +2003,16 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 				}else{
 					packageUnit = (WmsPackageUnit) commonDao
 							.findByQueryUniqueResult(
-									"from WmsPackageUnit wpu where wpu.item.code=:code and wpu.unit=:unit",
-									new String[] { "code", "unit" }, new Object[] {
-											goodsCode, packageUnitStr });
+									"from WmsPackageUnit wpu where wpu.item.id=:item and wpu.unit=:unit",
+									new String[] { "item", "unit" }, new Object[] {
+											wmsItem.getId(), packageUnitStr });
 				}
 				if (packageUnit == null) {
-					errorNum++;
-					logBuffer.append(lineNum + "行包装异常/");
+					throw new OriginalBusinessException(lineNum + "行包装异常/");
+					//errorNum++;
+					//logBuffer.append(lineNum + "行包装异常/");
 					// log.debug(lineNum+"6 error \n");
-					continue;
+					//continue;
 				}else if(!ppp.containsKey(goodsCode+packageUnitStr)){
 					ppp.put(goodsCode+packageUnitStr, packageUnit);
 				}
@@ -2032,38 +2027,32 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 									new Object[] { supplierCode });
 				}
 				if (supplier == null) {
-					errorNum++;
-					logBuffer.append(lineNum + "行供应商异常/");
-					// log.debug(lineNum+"6 error \n");
-					continue;
+					throw new OriginalBusinessException(lineNum + "行供应商异常/");
 				}else if(!oos.containsKey(supplierCode)){
 					oos.put(supplierCode, supplier);
 				}
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				Date storageDate = StringUtils
-						.isEmpty(strArr[11].getContents())
-						|| strArr[11].equals("-") ? null : sdf
-						.parse((strArr[11].getContents()));// 收货日期
+						.isEmpty(extendPropC2)
+						|| extendPropC2.equals("-") ? null : sdf
+						.parse((extendPropC2));// 收货日期
 				Date produceDate = StringUtils
-						.isEmpty(strArr[14].getContents())
-						|| strArr[14].equals("-") ? null : sdf.parse(strArr[14]
-						.getContents());// 生产日期
-				Date expireDate = StringUtils.isEmpty(strArr[15].getContents())
-						|| strArr[15].equals("-") ? null : sdf.parse(strArr[15]
-						.getContents());// 失效日期
-				Date warnDate = StringUtils.isEmpty(strArr[16].getContents())
-						|| strArr[16].getContents().equals("-") ? null : sdf
-						.parse(strArr[16].getContents());// 近效期
+						.isEmpty(extendPropC4)
+						|| extendPropC4.equals("-") ? null : sdf.parse(extendPropC4);// 生产日期
+				Date expireDate = StringUtils.isEmpty(extendPropC5)
+						|| extendPropC5.equals("-") ? null : sdf.parse(extendPropC5);// 失效日期
+				Date warnDate = StringUtils.isEmpty(extendPropC6)
+						|| extendPropC6.equals("-") ? null : sdf.parse(extendPropC6);// 近效期
 				Date receivedDate = sdf
 						.parse(com.vtradex.thorn.server.util.DateUtil
 								.formatDateYMDToStr(new Date()));
                 LotInfo lotInfo = new LotInfo();
-                lotInfo.setStorageDate(storageDate);
-                lotInfo.setProductDate(produceDate);
+                lotInfo.setStorageDate(storageDate==null?new Date():storageDate);
+                lotInfo.setProductDate(produceDate==null?new Date():produceDate);
                 lotInfo.setExpireDate(expireDate);
                 lotInfo.setWarnDate(warnDate);
                 lotInfo.setReceivedDate(receivedDate);
-				lotInfo.setSoi(strArr[12].getContents());// 收货单号
+				lotInfo.setSoi("initSoi");// 收货单号
 				lotInfo.setSupplier(supplier);
 				lotInfo.setExtendPropC1(StringUtils.isEmpty(extendPropC1)
 						? null : extendPropC1);
@@ -2109,7 +2098,7 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 				WmsItemKey wmsItemKey = wmsItemManager.getItemKey(wmsWarehouse,
 						lotInfo.getSoi(), wmsItem, lotInfo);// 货品批次属性
 				WmsInventory wmsInventory = this.getInventoryWithNew(
-						wmsLocation, wmsItemKey, packageUnit, inventoryStatus);
+						wmsLocation, wmsItemKey, packageUnit, StringUtils.isEmpty(inventoryStatus)?BaseStatus.NULLVALUE:inventoryStatus);
 				WmsInventoryExtend wmsSerialNo = this.inventoryExtendManager
 						.addInventoryExtend(wmsInventory, pallet, carton,
 								serialNo,
@@ -2127,9 +2116,7 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 				wmsSerialNo.setInventory(wmsInventory);
 				this.refreshLocationUseRate(wmsLocation,  1);
 			} catch (Exception e) {
-				logBuffer.append(lineNum + "行导入失败/");
-				errorNum++;
-				logger.error("", e);
+				throw new OriginalBusinessException(e.getMessage());
 			}
 		}
 		ExceptionLog log = EntityFactory.getEntity(ExceptionLog.class);
@@ -2464,7 +2451,70 @@ public class DefaultWmsInventoryManager extends DefaultBaseManager implements
 			throw new BusinessException("发货库位拣货分配数量不足，不能取消删除上架单！");
 		}
 	}
-
+	public void cancelReceive(WmsReceivedRecord receivedRecord) {
+		Double cancelQtyBU = receivedRecord.getReceivedQuantity();
+		WmsLocation location = commonDao.load(WmsLocation.class,
+				receivedRecord.getLocationId());
+		List<WmsInventory> inventorys = getInventoryBySoi(
+				receivedRecord.getLocationId(), receivedRecord.getItemKey()
+						.getId());
+		Boolean secondSkip = false;
+		for (WmsInventory inventory : inventorys) {
+			Double cancelQty = 0D;
+			if (inventory.getAvailableQuantityBU() >= cancelQtyBU) {
+				cancelQty = cancelQtyBU;
+			} else {
+				cancelQty = inventory.getAvailableQuantityBU();
+			}
+			if(secondSkip){
+				break;
+			}
+			inventory.removeQuantityBU(cancelQty);
+			commonDao.store(inventory);
+			String hql = "FROM WmsInventoryExtend ix WHERE ix.inventory.id =:inventoryId";
+			List<WmsInventoryExtend> ixs = commonDao.findByQuery(hql, "inventoryId", inventory.getId());
+			if(ixs!=null && ixs.size()>0){
+				Double ixQty = 0D,picQty = 0D;
+				for(WmsInventoryExtend ix : ixs){
+					ixQty = ix.getQuantityBU();
+					picQty = ixQty<=cancelQty?ixQty:cancelQty;//实际可减量
+					ix.removeQuantity(picQty);
+					commonDao.store(ix);
+					if(ix.getQuantityBU()<=0){
+						commonDao.delete(ix);
+					}
+					WmsInventoryLog log = new WmsInventoryLog(
+							WmsInventoryLogType.CANCEL_RECEIVING, -1, receivedRecord
+									.getAsn().getCode(), receivedRecord.getAsn()
+									.getBillType(), inventory.getLocation(),receivedRecord.getAsn().getSupplier(), inventory
+									.getItemKey(), picQty,
+							inventory.getPackageUnit(), inventory.getStatus(), "取消收货");
+					commonDao.store(log);
+					cancelQtyBU -= picQty;
+					if(cancelQtyBU<=0){//做二级跳出
+						secondSkip = true;
+						break;
+					}
+				}
+			}else{
+				WmsInventoryLog log = new WmsInventoryLog(
+						WmsInventoryLogType.CANCEL_RECEIVING, -1, receivedRecord
+								.getAsn().getCode(), receivedRecord.getAsn()
+								.getBillType(), inventory.getLocation(),receivedRecord.getAsn().getSupplier(), inventory
+								.getItemKey(), cancelQty,
+						inventory.getPackageUnit(), inventory.getStatus(), "取消收货");
+				commonDao.store(log);
+				
+				cancelQtyBU -= cancelQty;
+				if(cancelQtyBU<=0){//一级跳出
+					break;
+				}
+			}
+		}
+		if(cancelQtyBU>0){
+			throw new BusinessException("库存不足,不能取消收货!");
+		}
+	}
 	public void cancelReceive(WmsReceivedRecord receivedRecord,
 			Double cancelQtyBU) {
 		WmsLocation location = commonDao.load(WmsLocation.class,
